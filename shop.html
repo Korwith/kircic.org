@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop</title>
+  <style>
+    body {
+      background-color: #333333;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding-top: 20px;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    .item-container {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 20px;
+    }
+
+    .item {
+      flex-basis: 30%;
+      padding: 20px;
+      border-radius: 10px;
+      background-color: #222222;
+      color: #ffffff;
+    }
+
+    .item h2 {
+      margin-bottom: 10px;
+    }
+
+    .item p {
+      margin-bottom: 20px;
+    }
+
+    .item button {
+      background-color: #006600;
+      color: #ffffff;
+      border: none;
+      border-radius: 4px;
+      padding: 8px 24px;
+      /* Adjusted padding to make the button wider */
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .item button:hover {
+      background-color: #004400;
+    }
+
+    .item select {
+      background-color: #555555;
+      color: #ffffff;
+      border: none;
+      border-radius: 4px;
+      padding: 4px;
+      margin-top: 10px;
+      width: 80px;
+      height: 30px;
+    }
+
+    .cart-icon {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+    }
+
+    .cart-icon img {
+      width: 100%;
+      height: 100%;
+    }
+
+    .dot {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background-color: #ff0000;
+      color: #ffffff;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      font-size: 12px;
+      line-height: 20px;
+      text-align: center;
+    }
+
+    .clear-cart {
+      background-color: #ff0000;
+      color: #ffffff;
+      border: none;
+      border-radius: 4px;
+      padding: 8px 16px;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+
+    .clear-cart:hover {
+      background-color: #cc0000;
+    }
+
+    .show-cart-items {
+      background-color: #ffa500;
+      color: #ffffff;
+      border: none;
+      border-radius: 4px;
+      padding: 8px 16px;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+
+    .show-cart-items:hover {
+      background-color: #cc8400;
+    }
+
+    .checkout-button {
+      background-color: #1DA1F2;
+      /* Twitter blue color */
+      color: #ffffff;
+      border: none;
+      border-radius: 4px;
+      padding: 8px 16px;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+
+    .checkout-button:hover {
+      background-color: #0C87B8;
+      /* Darker shade of Twitter blue */
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Hidden Shop</h1>
+  <div class="item-container">
+    <div class="item">
+      <h2>Low Price Gummies</h2>
+      <p>$5.99</p>
+      <button onclick="addToCart('Low Price Gummies', 1)">Add to Cart</button>
+      <select class="item-amount">
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+      </select>
+    </div>
+    <div class="item">
+      <h2>Medium Price Gummies</h2>
+      <p>$9.99</p>
+      <button onclick="addToCart('Medium Price Gummies', 2)">Add to Cart</button>
+      <select class="item-amount">
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+      </select>
+    </div>
+
+    <div class="item">
+      <h2>High Price Gummies</h2>
+      <p>$14.99</p>
+      <button onclick="addToCart('High Price Gummies', 3)">Add to Cart</button>
+      <select class="item-amount">
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+      </select>
+    </div>
+  </div>
+  <div class="item-container">
+    <div class="item">
+      <h2>Extra Low Price Gummies</h2>
+      <p>$3.99</p>
+      <button onclick="addToCart('Extra Low Price Gummies', 4)">Add to Cart</button>
+      <select class="item-amount">
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+      </select>
+    </div>
+    <div class="item">
+      <h2>Extra High Price Gummies</h2>
+      <p>$19.99</p>
+      <button onclick="addToCart('Extra High Price Gummies', 5)">Add to Cart</button>
+      <select class="item-amount">
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+      </select>
+    </div>
+
+    <div class="item">
+      <h2>Super Price Gummies</h2>
+      <p>$29.99</p>
+      <button onclick="addToCart('Super Price Gummies', 6)">Add to Cart</button>
+      <select class="item-amount">
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+      </select>
+    </div>
+  </div>
+  <div class="cart-icon">
+    <img src="cart-icon.png" alt="Cart Icon">
+    <div class="dot" id="cart-count"></div>
+  </div>
+  <button class="clear-cart" onclick="clearCart()">Clear Cart</button>
+  <button class="show-cart-items" onclick="showCartItems()">Show Cart Items</button>
+  <button class="checkout-button" onclick="window.location.href='/checkout'">Proceed to Checkout</button>
+
+  <script>
+    // Cart functionality
+    var cart = {};
+
+    function addToCart(itemName, itemId) {
+      var amountSelect = document.getElementsByClassName("item-amount");
+      var amount = parseInt(amountSelect[itemId - 1].value);
+
+      if (amount > 0) {
+        if (cart[itemName] === undefined) {
+          cart[itemName] = amount;
+        } else {
+          cart[itemName] += amount;
+        }
+      }
+
+      updateCartCount();
+    }
+
+    function clearCart() {
+      cart = {};
+      updateCartCount();
+    }
+
+    function updateCartCount() {
+      var cartCount = document.getElementById("cart-count");
+      var itemCount = Object.values(cart).reduce((a, b) => a + b, 0);
+
+      if (itemCount > 0) {
+        cartCount.style.display = "block";
+        cartCount.innerText = itemCount;
+      } else {
+        cartCount.style.display = "none";
+      }
+    }
+
+    function showCartItems() {
+      alert("Cart Items:\n" + JSON.stringify(cart, null, 2));
+    }
+  </script>
+</body>
+
+</html>
