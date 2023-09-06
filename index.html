@@ -1,71 +1,146 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset="UTF-8">
-    <title>Kirhub</title>
+    <title>Kircic :p</title>
     <style>
         body {
-            margin: 0;
+            background-color: #202020;
             padding: 0;
-            background: #181818;
+            margin: 0;
         }
-        
-        header {
-            background-color: #003300;
-            padding: 20px;
-            color: #FFFFFF;
-            display: flex;
-            align-items: center;
-            height: 10px;
+
+        .topbar {
+            background-color: #151515;
+            overflow: hidden;
+            /* Clear the floated buttons */
+            text-align: left;
+            /* Align text to the left */
         }
-        
-        .logo {
-            background-image: url("kirhub.png");
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            width: 100px; /* Adjust the width and height as needed */
-            height: 100px;
-            margin-right: 20px;
-        }
-        
-        .nav-buttons {
-            display: flex;
-        }
-        
-        .nav-button {
-            margin-right: 10px;
-            padding: 8px 12px;
-            background-color: #003300;
-            color: #FFFFFF;
+
+        .topbar button {
+            height: 80px;
+            /* Adjust the button height */
+            width: 200px;
+            background-color: #4CAF50;
+            border: dashed #1a3e1b;
+            color: white;
+            text-align: center;
             text-decoration: none;
-            border-radius: 4px;
-            transition: background-color 0.3s ease;
-            height: 100%;
+            font-size: 20px;
+            cursor: pointer;
+            float: left;
+            /* Float the buttons to the left */
+            margin-right: 10px;
+            margin-bottom: 10px;
         }
-        
-        .nav-button:hover {
-            background-color: #009900;
+
+        #gamebutton {
+            background-color: rgb(210, 210, 73);
+            border: dashed rgb(113, 113, 27)
+        }
+
+        #game,
+        #accounts {
+            width: 400px;
+            height: 485px;
+            display: none;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        #discordbutton {
+            background-color: #856DB7;
+            border: dashed #4f406d;
+        }
+
+        #youtubebutton {
+            background-color: #C62C26;
+            border: dashed #831c19
+        }
+
+        #accountsbutton {
+            background-color: #1a3e1b;
+            border: dashed #0c1e0d
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 30px;
+        }
+
+        img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 100px;
+            height: 100px
+        }
+
+        p {
+            font-size: 21px;
+            text-align:center;
+        }
+
+        iframe {
+            z-index:999;
+        }
+
+        #content1 {
+            width: 30%;
+            height: 100px;
+        }
+
+        #content2 {
+            width: 30%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: dashed rgb(58, 51, 50)
+        }
+
+        #content3 {
+            width: 50%;
+            left: 100%;
+            transform: translateX(-100%);
+            width: 30%
+        }
+
+        div {
+            position: absolute;
         }
 
         * {
-            font-family: Verdana, sans-serif;
-            color:white;
+            font-family: monospace;
+            color: white;
         }
     </style>
 </head>
+
 <body>
-    <header>
-        <div class="logo"></div>
-        <nav class="nav-buttons">
-            <a href="2048.html" class="nav-button">2048</a>
-            <a href="#" class="nav-button">---</a>
-            <a href="#" class="nav-button">---</a>
-            <a href="https://discord.gg/p8ZZXZqnag" class="nav-button">Discord</a>
-        </nav>
+    <header class="topbar">
+        <button>Home</button>
+        <button onclick='toggle()' id="gamebutton">2048</button>
+        <button onclick="accounts()" id="accountsbutton">Accounts</button>
+        <button onclick="youtube1()" id="youtubebutton">Kircic YouTube</button>
+        <button onclick='discordlink()' id="discordbutton">Discord Server</button>
     </header>
-    <h1>working on it</h1>
-    <!-- Rest of the website content -->
-    
+    <iframe src='https://www.kirhub.com/2048.html' id="game"></iframe>
+    <iframe src='services.html' id="accounts"></iframe>
+    <br>
+    <img src="resources/kir.png"></img>
+    <h1 id='toptext'>welcome to kirhub</h1>
+    <div id='content1'>
+        <p id='p1'>balls</p>
+    </div>
+    <div id='content2'>
+        <p id='p2'>balls 2</p>
+    </div>
+    <div id="content3">
+        <p id='p3'>balls 3</p>
+    </div>
+    <script src="scripts/topbarscript.js"></script>
+    <script src="scripts/settext.js"></script>
 </body>
+
 </html>

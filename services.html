@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Services</title>
+    <style>
+        body {
+            background-color: #202020;
+        }
+
+        div {
+            width: 375px;
+            height: 130px;
+            border: dashed rgb(98, 98, 94);
+            background-color: rgb(145, 145, 145);
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom:10px;
+        }
+
+        .top {
+            font-size: 30px;
+        }
+
+        div span,
+        div a {
+            margin-left: 5px;
+            margin-top: 5px;
+            font-size: 24px;
+        }
+
+        #placeholder {
+            display: none;
+        }
+
+        .photo {
+            display: block;
+            margin-left: 67%;
+            margin-top: -21%;
+            width: 120px;
+            height: 120px;
+        }
+
+        * {
+            font-family: monospace;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="placeholder">
+        <span class="top">Service Name</span><br>
+        <span class="user">> Username</span><br>
+        <a class="link" target="_blank">> Link</a>
+        <img class="photo" src="resources/kir.png"></img>
+    </div>
+
+    <script>
+        var placeholder = document.getElementById('placeholder');
+        var serviceList = {
+            0: {
+                service: 'Discord',
+                user: 'kircic',
+                link: 'https://discord.com/users/543990414223343626',
+                color: "#3e48ad",
+                border: "#2a3175",
+                image: 'discord.png',
+            },
+
+            1: {
+                service: 'YouTube',
+                user: 'kircic',
+                link: 'https://www.youtube.com/channel/UCLcCNfyLG_jQev4MdkHtCZw',
+                color: "#C62C26",
+                border: "#831c19",
+                image: 'youtube.png',
+            },
+
+            2: {
+                service: 'Roblox',
+                user: 'Kircic',
+                link: 'https://www.roblox.com/users/989007/profile',
+                color: "#191B1D",
+                border: "#0A0B0C",
+                image: 'roblox.png',
+            }
+        }
+
+        for (var data in serviceList) {
+            var clone = placeholder.cloneNode(true);
+            document.body.appendChild(clone);
+            clone.style.display = 'block';
+
+            // Check if the element with class "photo" exists in the clone
+            var photo = clone.getElementsByClassName('photo')[0];
+            photo.src = 'resources/' + serviceList[data].image;
+            clone.getElementsByClassName('top')[0].innerHTML = '> ' + serviceList[data].service;
+            clone.getElementsByClassName('user')[0].innerHTML = '> ' + serviceList[data].user;
+            clone.style.backgroundColor = serviceList[data].color;
+            clone.style.borderColor = serviceList[data].border;
+
+            var link = clone.getElementsByClassName('link')[0];
+            link.href = serviceList[data].link;
+        }
+    </script>
+</body>
+
+</html>
