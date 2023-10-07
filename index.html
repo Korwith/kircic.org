@@ -2,19 +2,13 @@
 <html>
 
 <head>
+    <title>Home | Kirhub</title>
     <link rel="icon" type="image/x-icon" href="sub/kir.png">
     <style>
         body {
             margin: 0px;
             background-color: #151515;
             overflow: hidden;
-        }
-
-        #header {
-            height: 75px;
-            width: 100%;
-            margin: 0px;
-            border: none;
         }
 
         .title {
@@ -143,7 +137,7 @@
         }
 
         header {
-            height: 100vh;
+            height:75px;
             background-color: #101010;
             align-items: center;
             display: flex;
@@ -158,6 +152,7 @@
             color: white;
             margin-right: 7px;
             transition: border 0.3s;
+            font-size:18px;
         }
 
         header button:hover {
@@ -184,7 +179,7 @@
             background-color: #080808;
             border: 2px solid #050505;
             aspect-ratio: 1;
-            background-image: url(kir.png);
+            background-image: url(sub/kir.png);
             background-size: contain;
         }
 
@@ -201,7 +196,13 @@
 </head>
 
 <body>
-    <iframe id='header' src="sub/header.html"></iframe>
+    <header>
+        <button class="home"></button>
+        <button class="discord">Discord Server</button>
+        <button class="youtube">YouTube</button>
+        <button class="accounts">Accounts</button>
+    </header>
+
     <div id="pic"></div>
     <h1 class="title">welcome to kirhub</h1>
     <div id='projectsframe'>
@@ -258,27 +259,23 @@
         }(key);
     }
 
-    var discordbutton = document.getElementsByClassName('discord')[0];
-    var buttontolink = {
-        ['discordbutton']: 'https://discord.com/invite/p8ZZXZqnag',
-        ['youtubebutton']: 'https://www.youtube.com/channel/UCLcCNfyLG_jQev4MdkHtCZw',
-        ['accountsbutton']: 'https://www.kirhub.com/services.html'
+    var home = document.querySelector('.home')
+    var discord  = document.querySelector('.discord');
+    var youtube = document.querySelector('.youtube');
+    var accounts = document.querySelector('.accounts');
+
+    discord.onclick = function() {
+        window.open('https://discord.com/invite/p8ZZXZqnag', '_blank');
     }
 
-    for (var i in buttontolink) {
-        var buttons = document.getElementsByClassName(buttontolink[i]);
-
-        for (var j = 0; j < buttons.length; j++) {
-            buttons[j].addEventListener('click', function () {
-                var link = this.getAttribute('data-link');
-                if (link) {
-                    window.open(link, '_blank');
-                }
-            });
-        }
+    youtube.onclick = function() {
+        window.open('https://www.youtube.com/channel/UCLcCNfyLG_jQev4MdkHtCZw', '_blank');
     }
 
-    var homebutton = document.getElementsByClassName('home')[0];
+    accounts.onclick = function() {
+        window.open('https://www.kirhub.com/services.html', '_blank')
+    }
+
     homebutton.onclick = function () {
         alert('you found me');
     }
