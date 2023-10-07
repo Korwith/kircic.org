@@ -2,112 +2,143 @@
 <html>
 
 <head>
-    <title>Kircic :p</title>
     <style>
         body {
-            background-color: #202020;
-            padding: 0;
-            margin: 0;
-        }
-
-        .topbar {
+            margin: 0px;
             background-color: #151515;
             overflow: hidden;
-            /* Clear the floated buttons */
-            text-align: left;
-            /* Align text to the left */
         }
 
-        .topbar button {
-            height: 80px;
-            /* Adjust the button height */
-            width: 200px;
-            background-color: #4CAF50;
-            border: dashed #1a3e1b;
-            color: white;
+        #header {
+            height: 75px;
+            width: 100%;
+            margin: 0px;
+            border: none;
+        }
+
+        .title {
             text-align: center;
-            text-decoration: none;
-            font-size: 20px;
-            cursor: pointer;
-            float: left;
-            /* Float the buttons to the left */
-            margin-right: 10px;
-            margin-bottom: 10px;
         }
 
-        #gamebutton {
-            background-color: rgb(210, 210, 73);
-            border: dashed rgb(113, 113, 27)
-        }
-
-        #game,
-        #accounts {
-            width: 400px;
-            height: 485px;
-            display: none;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        #discordbutton {
-            background-color: #856DB7;
-            border: dashed #4f406d;
-        }
-
-        #youtubebutton {
-            background-color: #C62C26;
-            border: dashed #831c19
-        }
-
-        #accountsbutton {
-            background-color: #1a3e1b;
-            border: dashed #0c1e0d
-        }
-
-        h1 {
-            text-align: center;
-            font-size: 30px;
-        }
-
-        img {
+        #pic {
+            width: 10%;
             display: block;
             margin-left: auto;
             margin-right: auto;
-            width: 100px;
-            height: 100px
+            aspect-ratio: 1;
+            background-size: contain;
+            background-color: #080808;
+            border: 4px solid #050505;
+            cursor: pointer;
+            background-image: url(sub/kir.png);
+            transition: background-image 0.3s, border 0.3s
         }
 
-        p {
-            font-size: 21px;
-            text-align:center;
+        #pic:hover {
+            background-image: url(sub/kirhappy.png);
+            border: 4px solid white;
         }
 
-        iframe {
-            z-index:999;
-        }
-
-        #content1 {
+        #projectsframe {
+            background-color: #101010;
             width: 30%;
-            height: 100px;
-        }
-
-        #content2 {
-            width: 30%;
-            left: 50%;
-            transform: translateX(-50%);
-            border: dashed rgb(58, 51, 50)
-        }
-
-        #content3 {
-            width: 50%;
-            left: 100%;
-            transform: translateX(-100%);
-            width: 30%
-        }
-
-        div {
+            height: 85vh;
+            display: block;
+            top: 80px;
+            margin-left: 7px;
+            aspect-ratio: 0.5;
             position: absolute;
+            border: 5px solid #090909;
+        }
+
+        #secondaryframe {
+            background-color: #101010;
+            width: 30%;
+            height: 85vh;
+            display: block;
+            top: 80px;
+            margin-left: 7px;
+            aspect-ratio: 0.5;
+            position: absolute;
+            transform: translate(-100%);
+            left: calc(100% - 14px);
+            border: 4px solid #070707;
+        }
+
+        #secondaryframe span {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        h2 {
+            font-size: 26px;
+            text-align: center;
+        }
+
+        h3 {
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .project {
+            margin-left: auto;
+            margin-right: auto;
+            width: 95%;
+            aspect-ratio: 4;
+            background-color: #090909;
+            border: 4px dashed #070707;
+            cursor: pointer;
+            margin-bottom: 10px;
+            margin: 5px 5px;
+            transition: border 0.3s, margin-left 0.3s;
+        }
+
+        .project:hover {
+            border: 4px solid white;
+            margin-left: 5%;
+        }
+
+        .project img {
+            aspect-ratio: 1;
+            height: 90%;
+            margin: 5px 5px;
+            float: left;
+        }
+
+        .project span {
+            display: block;
+            font-size: 20px;
+        }
+
+        #rythmpic {
+            aspect-ratio: 1;
+            height: 90%;
+            float: left;
+            border-radius: 50%;
+            background-color: black;
+            box-shadow: inset 0 0 0 5px white;
+        }
+
+        .iconholder {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .iconholder img {
+            aspect-ratio: 1;
+            width: 10%;
+            transition: border 0.3s;
+            border: 4px solid black;
+            margin-right: 5%;
+            margin-left: 5%;
+        }
+
+        .iconholder img:hover {
+            border: 4px solid white;
         }
 
         * {
@@ -118,29 +149,62 @@
 </head>
 
 <body>
-    <header class="topbar">
-        <button>Home</button>
-        <button onclick='toggle()' id="gamebutton">2048</button>
-        <button onclick="accounts()" id="accountsbutton">Accounts</button>
-        <button onclick="youtube1()" id="youtubebutton">Kircic YouTube</button>
-        <button onclick='discordlink()' id="discordbutton">Discord Server</button>
-    </header>
-    <iframe src='https://www.kirhub.com/2048.html' id="game"></iframe>
-    <iframe src='services.html' id="accounts"></iframe>
-    <br>
-    <img src="resources/kir.png"></img>
-    <h1 id='toptext'>welcome to kirhub</h1>
-    <div id='content1'>
-        <p id='p1'>balls</p>
+    <iframe id='header' src="sub/header.html"></iframe>
+    <div id="pic"></div>
+    <h1 class="title">welcome to kirhub</h1>
+    <div id='projectsframe'>
+        <h2>Projects</h2>
+        <div class='project' id='2048'>
+            <img src='sub/2048.png'></img>
+            <span>2048 Recreation</span>
+            <span>> ??/??/23</span>
+            <span>> not done</span>
+        </div>
+        <div class='project' id='minesweeper'>
+            <img src='sub/flag.png'></img>
+            <span>Minesweeper Recreation</span>
+            <span>> 10/1/23</span>
+        </div>
+        <div class='project' id='rythm'>
+            <img id='rythmpic'></img>
+            <span>Rythm Game</span>
+            <span>> 10/1/23</span>
+            <span>> for paris</span>
+        </div>
     </div>
-    <div id='content2'>
-        <p id='p2'>balls 2</p>
+
+    <div id='secondaryframe'>
+        <h2>About Me</h2>
+        <h3>can code in lua, html, css, js</h3>
+        <div class="iconholder">
+            <img src="sub/lua.png"></img>
+            <img src="sub/js.png"></img>
+            <img src="sub/html5.png"></img>
+            <img src="sub/css.png"></img>
+        </div>
+        <h3>hobbies</h3>
+        <span>> web development</span>
+        <span>> minecraft</span>
+        <span>> 2048</span>
+        <span>> minesweeper</span>
     </div>
-    <div id="content3">
-        <p id='p3'>balls 3</p>
-    </div>
-    <script src="scripts/topbarscript.js"></script>
-    <script src="scripts/settext.js"></script>
 </body>
+
+<script>
+    var buttontolink = {
+        '2048': '',
+        'minesweeper': 'sub/minesweeper.html',
+        'rythm': 'sub/rythm.html'
+    }
+
+    for (var key in buttontolink) {
+        var button = document.getElementById(key);
+        button.onclick = function (currentKey) {
+            return function () {
+                window.open(buttontolink[currentKey], '_blank');
+            };
+        }(key);
+    }
+</script>
 
 </html>
