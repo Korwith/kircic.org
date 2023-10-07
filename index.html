@@ -141,6 +141,57 @@
             border: 4px solid white;
         }
 
+        header {
+            height: 100vh;
+            background-color: #101010;
+            align-items: center;
+            display: flex;
+            margin-left: 7px;
+        }
+
+        header button {
+            height: 80%;
+            aspect-ratio: 3;
+            border: 2px solid black;
+            cursor: pointer;
+            color: white;
+            margin-right: 7px;
+            transition: border 0.3s;
+        }
+
+        header button:hover {
+            opacity: 0.8;
+            border: 2px dashed white;
+        }
+
+        .discord {
+            background-color: #856DB7;
+            border: 2px dashed #4f406d;
+        }
+
+        .youtube {
+            background-color: #C62C26;
+            border: 2px dashed #831c19;
+        }
+
+        .accounts {
+            background-color: #2488a3;
+            border: 2px dashed #144e5e;
+        }
+
+        .home {
+            background-color: #080808;
+            border: 2px solid #050505;
+            aspect-ratio: 1;
+            background-image: url(kir.png);
+            background-size: contain;
+        }
+
+        .home:hover {
+            border: 2px solid white;
+            opacity: 1;
+        }
+
         * {
             font-family: monospace;
             color: white;
@@ -205,6 +256,33 @@
             };
         }(key);
     }
+
+    var discordbutton = document.getElementsByClassName('discord')[0];
+    var buttontolink = {
+        ['discordbutton']: 'https://discord.com/invite/p8ZZXZqnag',
+        ['youtubebutton']: 'https://www.youtube.com/channel/UCLcCNfyLG_jQev4MdkHtCZw',
+        ['accountsbutton']: 'https://www.kirhub.com/services.html'
+    }
+
+    for (var i in buttontolink) {
+        var buttons = document.getElementsByClassName(buttontolink[i]);
+
+        for (var j = 0; j < buttons.length; j++) {
+            buttons[j].addEventListener('click', function () {
+                var link = this.getAttribute('data-link');
+                if (link) {
+                    window.open(link, '_blank');
+                }
+            });
+        }
+    }
+
+    var homebutton = document.getElementsByClassName('home')[0];
+    homebutton.onclick = function () {
+        alert('you found me');
+    }
+
+
 </script>
 
 </html>
