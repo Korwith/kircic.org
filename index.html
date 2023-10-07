@@ -4,11 +4,17 @@
 <head>
     <title>Home | Kirhub</title>
     <link rel="icon" type="image/x-icon" href="sub/kir.png">
+    <meta property="og:image" content="sub/kirhappy.png">
+    <meta name="title" content="Kirhub | Home">
+    <meta name="description" content="a place where all your hopes and dreams come true">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="language" content="English">
+
     <style>
         body {
             margin: 0px;
             background-color: #151515;
-            overflow:hidden;
+            overflow: hidden;
         }
 
         .title {
@@ -44,8 +50,8 @@
             aspect-ratio: 0.5;
             position: absolute;
             border: 5px solid #090909;
-            overflow-y:auto;
-            overflow-x:hidden;
+            overflow-y: auto;
+            overflow-x: hidden;
         }
 
         #secondaryframe {
@@ -139,7 +145,7 @@
         }
 
         header {
-            height:75px;
+            height: 75px;
             background-color: #101010;
             align-items: center;
             display: flex;
@@ -154,7 +160,7 @@
             color: white;
             margin-right: 7px;
             transition: border 0.3s;
-            font-size:18px;
+            font-size: 18px;
         }
 
         header button:hover {
@@ -276,19 +282,19 @@
     }
 
     var home = document.querySelector('.home')
-    var discord  = document.querySelector('.discord');
+    var discord = document.querySelector('.discord');
     var youtube = document.querySelector('.youtube');
     var accounts = document.querySelector('.accounts');
 
-    discord.onclick = function() {
+    discord.onclick = function () {
         window.open('https://discord.com/invite/p8ZZXZqnag', '_blank');
     }
 
-    youtube.onclick = function() {
+    youtube.onclick = function () {
         window.open('https://www.youtube.com/channel/UCLcCNfyLG_jQev4MdkHtCZw', '_blank');
     }
 
-    accounts.onclick = function() {
+    accounts.onclick = function () {
         window.open('https://www.kirhub.com/services.html', '_blank')
     }
 
