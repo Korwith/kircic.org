@@ -8,7 +8,7 @@
         body {
             margin: 0px;
             background-color: #151515;
-            overflow: hidden;
+            overflow:hidden;
         }
 
         .title {
@@ -24,7 +24,7 @@
             background-size: contain;
             background-color: #080808;
             border: 4px solid #050505;
-            cursor: pointer;
+            cursor: grab;
             background-image: url(sub/kir.png);
             transition: background-image 0.3s, border 0.3s
         }
@@ -44,6 +44,8 @@
             aspect-ratio: 0.5;
             position: absolute;
             border: 5px solid #090909;
+            overflow-y:auto;
+            overflow-x:hidden;
         }
 
         #secondaryframe {
@@ -219,10 +221,22 @@
             <span>> 10/1/23</span>
         </div>
         <div class='project' id='rythm'>
-            <img id='rythmpic'></img>
+            <img src="sub/osu.png"></img>
             <span>Rythm Game</span>
             <span>> 10/1/23</span>
             <span>> for paris</span>
+        </div>
+        <h2>Legacy</h2>
+        <div class="project" id="kirhubv1">
+            <img src="sub/kir.png"></img>
+            <span>Kirhub 1.0</span>
+            <span>> 02/15/22</span>
+        </div>
+        <div class='project' id='enchant'>
+            <img src="sub/enchant.webp"></img>
+            <span>Enchanting Wiki</span>
+            <span>> 09/16/21</span>
+            <span>> not up to date</span>
         </div>
     </div>
 
@@ -247,7 +261,9 @@
     var buttontolink = {
         '2048': '',
         'minesweeper': 'sub/minesweeper.html',
-        'rythm': 'sub/rythm.html'
+        'rythm': 'sub/rythm.html',
+        'kirhubv1': 'sub/me/index.html',
+        'enchant': 'sub/enchant/index.html'
     }
 
     for (var key in buttontolink) {
