@@ -1,5 +1,4 @@
 var buttontolink = {
-    '2048': '',
     'minesweeper': 'sub/minesweeper.html',
     'rhythm': 'sub/rhythm.html',
     'kirhubv1': 'sub/me/index.html',
