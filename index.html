@@ -14,10 +14,13 @@
         body {
             margin: 0px;
             background-color: #151515;
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
         .title {
+            position: absolute;
+            transform: translate(-50%);
+            left: 50%;
             text-align: center;
         }
 
@@ -200,6 +203,27 @@
             font-family: monospace;
             color: white;
         }
+
+        @media screen and (max-width: 767px) {
+            #secondaryframe {
+                width: 100vw;
+                position: relative;
+                margin-left: auto;
+                margin-right: auto;
+                left: 100%;
+                height: 65vh;
+                margin-bottom: 5vh;
+            }
+
+            #projectsframe {
+                height:auto;
+                width: 100vw;
+                position: relative;
+                margin-left: auto;
+                margin-right: auto;
+                overflow-y: auto;
+            }
+        }
     </style>
 </head>
 
@@ -213,6 +237,22 @@
 
     <div id="pic"></div>
     <h1 class="title">welcome to kirhub</h1>
+    <div id='secondaryframe'>
+        <h2>About Me</h2>
+        <h3>can code in lua, js, html, css</h3>
+        <div class="iconholder">
+            <img src="sub/lua.png"></img>
+            <img src="sub/js.png"></img>
+            <img src="sub/html5.png"></img>
+            <img src="sub/css.png"></img>
+        </div>
+        <h3>hobbies</h3>
+        <span>> web development</span>
+        <span>> minecraft</span>
+        <span>> 2048</span>
+        <span>> minesweeper</span>
+    </div>
+
     <div id='projectsframe'>
         <h2>Projects</h2>
         <div class='project' id='2048'>
@@ -220,6 +260,7 @@
             <span>2048 Recreation</span>
             <span>> ??/??/23</span>
             <span>> not done</span>
+            <span>> doesnt work yet</span>
         </div>
         <div class='project' id='minesweeper'>
             <img src='sub/flag.png'></img>
@@ -232,9 +273,9 @@
             <span>> 10/1/23</span>
             <span>> for paris</span>
         </div>
-        <h2>Legacy</h2>
+        <h2>Legacy [Not Updated]</h2>
         <div class="project" id="kirhubv1">
-            <img src="sub/kir.png"></img>
+            <img style='filter:grayscale(100%)' src="sub/kir.png"></img>
             <span>Kirhub 1.0</span>
             <span>> 02/15/22</span>
         </div>
@@ -244,22 +285,6 @@
             <span>> 09/16/21</span>
             <span>> not up to date</span>
         </div>
-    </div>
-
-    <div id='secondaryframe'>
-        <h2>About Me</h2>
-        <h3>can code in lua, html, css, js</h3>
-        <div class="iconholder">
-            <img src="sub/lua.png"></img>
-            <img src="sub/js.png"></img>
-            <img src="sub/html5.png"></img>
-            <img src="sub/css.png"></img>
-        </div>
-        <h3>hobbies</h3>
-        <span>> web development</span>
-        <span>> minecraft</span>
-        <span>> 2048</span>
-        <span>> minesweeper</span>
     </div>
 </body>
 
