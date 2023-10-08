@@ -2,7 +2,15 @@
 <html>
 
 <head>
-    <title>Minesweeper</title>
+    <title>Minesweeper | Kirhub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="minesweeper_assets/flag.png">
+    <meta property="twitter:image" content="https://www.kirhub.com/sub/minesweeper_assets/flag.png">
+    <meta name="title" content="Minesweeper | Kirhub">
+    <meta name="description" content="a place where all your hopes and dreams come true">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="language" content="English">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body {
             background-color: black;
@@ -206,6 +214,30 @@
             background-size:contain;
             z-index:999;
             display:none;
+        }
+
+        @media screen and (max-width: 767px) {
+            #game {
+                aspect-ratio:0.83;
+                width:100vw;
+                height:100vw;
+            }
+
+            #action {
+                aspect-ratio:1;
+                width:100vw;
+                height:100vw;
+            }
+
+            .placeholder {
+                aspect-ratio:1;
+                width:10vw;
+                height:10vw;
+            }
+
+            #menu {
+                width:100vw;
+            }
         }
     </style>
 </head>
