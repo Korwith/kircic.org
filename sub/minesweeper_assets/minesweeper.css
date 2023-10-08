@@ -1,0 +1,227 @@
+body {
+    background-color: black;
+}
+
+#game {
+    width: 500px;
+    height: 600px;
+    background-color: gray;
+    transform: translate(-50%, 0%);
+    left: 50%;
+    position: absolute;
+}
+
+#action {
+    width: 500px;
+    height: 500px;
+    background-color: blue;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+}
+
+#menu {
+    width: 500px;
+    height: 100px;
+    background-color: #151515;
+    border: 5px solid #101010;
+    box-sizing: border-box;
+}
+
+#placeholder {
+    display: none;
+}
+
+.placeholder {
+    background-image: url(closed.png);
+    background-size: cover;
+    width: 50px;
+    height: 50px;
+    background-color: #c0c0c0;
+    border: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: help;
+    user-select: none;
+}
+
+.placeholder:hover {
+    background-color: #9F9F9F;
+}
+
+.placeholder:active {
+    background-image: url(0.png);
+}
+
+.activesquare {
+    background-image: url(0.png);
+    background-size: cover;
+    border: 0px;
+    cursor: pointer;
+}
+
+#flagplaceholder {
+    display: none;
+}
+
+.flag {
+    background-image: url(flag.png);
+    background-size: cover;
+    width: 50px;
+    height: 50px;
+}
+
+#simplesquare0 {
+    display: none;
+}
+
+.simplesquare {
+    background-color: rgba(255, 255, 255, 0);
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+}
+
+.mine {
+    background-image: url(mine.png)
+}
+
+.activemine {
+    background-image: url(mine_red.png);
+}
+
+.zero {
+    background-image: url(0.png);
+    cursor: default;
+}
+
+.one {
+    background-image: url(1.png);
+}
+
+.two {
+    background-image: url(2.png);
+}
+
+.three {
+    background-image: url(3.png);
+}
+
+.four {
+    background-image: url(4.png);
+
+}
+
+.five {
+    background-image: url(5.png);
+}
+
+.six {
+    background-image: url(6.png);
+}
+
+.seven {
+    background-image: url(7.png);
+}
+
+.eight {
+    background-image: url(8.png);
+}
+
+#menu button {
+    height: 100%;
+    width: 33%;
+    cursor: pointer;
+    font-size: 20px;
+    border-radius: 4px;
+}
+
+#menu button:hover {
+    opacity: 0.8;
+}
+
+#restart {
+    background-color: #3bcf2d;
+}
+
+#flagging {
+    background-color: rgb(225, 50, 50);
+}
+
+#infoholder {
+    width: 32%;
+    height: 100%;
+    float: right;
+}
+
+.imageholder {
+    width: 20%;
+    height: 100%;
+    float: left;
+}
+
+.textholder {
+    width: 80%;
+    height: 100%;
+    float: right;
+}
+
+.imageholder img {
+    aspect-ratio: 1;
+    height: 33%;
+    vertical-align: middle;
+}
+
+.textholder span {
+    height: 33%;
+    display: block;
+}
+
+.addbg {
+    background-image: url(0.png);
+    background-size: contain;
+}
+
+* {
+    font-family: "Arial Black", Gadget, sans-serif;
+    color: white;
+}
+
+#mouseflag {
+    height:25px;
+    width:25px;
+    background-image: url(flag.png);
+    position:fixed;
+    background-size:contain;
+    z-index:999;
+    display:none;
+}
+
+@media screen and (max-width: 767px) {
+    #game {
+        aspect-ratio:0.83;
+        width:100vw;
+        height:100vw;
+    }
+
+    #action {
+        aspect-ratio:1;
+        width:100vw;
+        height:100vw;
+    }
+
+    .placeholder {
+        aspect-ratio:1;
+        width:10vw;
+        height:10vw;
+    }
+
+    #menu {
+        width:100vw;
+    }
+}
