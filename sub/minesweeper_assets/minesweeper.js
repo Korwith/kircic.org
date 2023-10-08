@@ -336,6 +336,8 @@ function stopTick() {
 }
 
 function start() {
+    playing = false;
+    stopTick(); // Stop the timer
     playing = true;
     bombgen();
     squaregen();
@@ -347,8 +349,6 @@ function start() {
 
 document.addEventListener('keydown', function (event) {
     if (event.key.toLowerCase() == 'r') {
-        playing = false;
-        stopTick(); // Stop the timer
         start();
     } else if (event.key.toLowerCase() == 'f') {
         toggleflagging();
@@ -376,3 +376,8 @@ function toggleflagging() {
         flaggingbutton.style.backgroundColor = 'rgb(225, 50, 50)';
     }
 }
+
+var restart = document.getElementById('restart');
+restart.addEventListener('click', function(event) {
+    start();
+});
