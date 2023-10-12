@@ -12,6 +12,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
     <style>
+        html, body {
+            touch-action: manipulation;
+             touch-action-delay: none;
+        }
+        
         body {
             background-color: black;
             margin: 0;
@@ -152,6 +157,12 @@
             .backgroundHolder {
                 width: 100vh;
                 height: 100vh;
+            }
+            
+            * {
+                user-drag: none;
+                user-select: none;
+                touch-action: none;
             }
         }
     </style>
