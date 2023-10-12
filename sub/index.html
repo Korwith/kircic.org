@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Flappy Bird | Kirhub</title>
+    <style>
+        body {
+            background-color: black;
+            margin: 0;
+        }
+
+        .backgroundHolder {
+            overflow: hidden;
+            aspect-ratio: 1;
+            width: 600px;
+            display: flex;
+            flex-direction: row;
+            position: absolute;
+        }
+
+        .background {
+            background-image: url(img/background.png);
+            height: 600px;
+            aspect-ratio: 144/256;
+            background-size: contain;
+            margin: 0;
+        }
+
+        #player {
+            aspect-ratio: 34/24;
+            width: 50px;
+            top:40%;
+            position: absolute;
+            margin-left: 30px;
+        }
+
+        .playerpic {
+            background-size: contain;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.5s;
+            transform: rotate(15deg);
+        }
+
+        #placeholderpipe {
+            display: none;
+        }
+
+        #game {
+            aspect-ratio: 1;
+            height: 600px;
+        }
+
+        .fullpipe {
+            height: 600px;
+            width: 52px;
+            left: 600px;
+            position: absolute;
+        }
+
+        .touch {
+            aspect-ratio: 52/320;
+            position: absolute;
+            height: 50%;
+            background-image: url(img/pipe_green.png);
+            background-size: contain;
+        }
+
+        .toppipe {
+            transform: scaleY(-1);
+            margin-top: -70px;
+        }
+
+        .bottompipe {
+            bottom: 0;
+            margin-bottom: -70px;
+        }
+
+        .lookingup {
+            transform: rotate(-15deg);
+        }
+
+        #controls {
+            width: 100%;
+            height: 100px;
+            top: 100%;
+            position: relative;
+            border: 4px solid #101010;
+            box-sizing: border-box;
+            transform: translateY(-100%);
+            background-color: #151515;
+        }
+
+        .s1 {
+            background-image: url(img/yellowbird1.png);
+        }
+
+        .s2 {
+            background-image: url(img/yellowbird2.png);
+        }
+
+        .s3 {
+            background-image: url(img/yellowbird3.png);
+        }
+
+        button {
+            aspect-ratio: 2;
+            height: 100%;
+            background-size: contain;
+            background-color: rgb(0, 0, 0, 0);
+            border: none;
+            outline:none;
+        }
+
+        .play {
+            aspect-ratio: 107/60;
+            background-image: url(img/play.png);
+            background-size:cover;
+            transform:translate(-50%);
+            left:50%;
+            position:absolute;
+        }
+
+        .jump {
+            aspect-ratio: 1;
+            background-image: url(img/jump.png);
+            float: left;
+        }
+
+        .pause {
+            background-image:url(img/pause.png);
+        }
+
+        .unpause {
+            background-image:url(img/unpause.png);
+        }
+
+        @media screen and (max-width: 767px) {
+            #game {
+                height: 100vh;
+                width: 100vh;
+                overflow-y: hidden;
+            }
+
+            .backgroundHolder {
+                width: 100vh;
+                height: 100vh;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="game">
+        <div class="backgroundHolder">
+            <div class="background bg1"></div>
+            <div class="background bg2"></div>
+            <div class="background bg3"></div>
+        </div>
+        <div class="pipeholder"></div>
+        <div id="player">
+            <div class="playerpic"></div>
+        </div>
+        <div id='placeholderpipe'>
+            <div class="touch toppipe"></div>
+            <div class="touch bottompipe"></div>
+        </div>
+        <div id="controls">
+            <button class="play" type='button' tabindex="-1"></button>
+            <button class="jump" type="button" tabindex="-1"></button>
+        </div>
+    </div>
+
+    <script>
+        var speed = 4; // 4 by default
+        var frequency = 1000; // 1000ms by default
+        var gapHeight = 200; // Fixed gap height
+
+        var game = document.querySelector('#game');
+        var player = document.querySelector('#player');
+        var playerpic = document.querySelector('.playerpic');
+        var velocity = 1;
+        var placeholderpipe = document.querySelector('#placeholderpipe');
+        var pipeholder = document.querySelector('.pipeholder');
+        var allpipes = [];
+        var score = 0;
+        var sprite = 1;
+        var lost = true;
+        var paused = false;
+
+        function areTouching(element1, element2) {
+            const rect1 = element1.getBoundingClientRect();
+            const rect2 = element2.getBoundingClientRect();
+            const touchingX = rect1.left <= rect2.right && rect1.right >= rect2.left;
+            const touchingY = rect1.top <= rect2.bottom && rect1.bottom >= rect2.top;
+            return touchingX && touchingY;
+        }
+
+        function switchSprite() {
+            if (sprite > 3) {
+                sprite = 1;
+            }
+
+            playerpic.classList.remove('s1', 's2', 's3');
+            playerpic.classList.add('s' + sprite);
+
+            sprite++;
+            setTimeout(switchSprite, 200);
+        }
+        switchSprite();
+
+        function fallCheck() {
+            if (!lost && !paused && !document.hidden) {
+                var selectedBg = document.querySelector('.background');
+                var bgRect = selectedBg.getBoundingClientRect();
+                var floorpx = bgRect.bottom;
+                var playerRect = player.getBoundingClientRect();
+                var playerbottompx = playerRect.bottom;
+                var playerleftpx = playerRect.left;
+
+                if (playerbottompx < floorpx) {
+                    if (velocity < 6) {
+                        velocity += 0.25;
+                    }
+                    if (velocity < 0) {
+                        playerpic.classList.add('lookingup');
+                    } else {
+                        playerpic.classList.remove('lookingup');
+                    }
+
+                    player.style.top = parseFloat(playerRect.top) + velocity + 'px';
+                } else {
+                    lost = true;
+                }
+
+                for (var i = 0; i < allpipes.length; i++) {
+                    var selectedpipe = allpipes[i];
+                    var pipeRect = selectedpipe.getBoundingClientRect();
+                    var pipeleft = parseInt(pipeRect.left);
+                    selectedpipe.style.left = pipeleft - speed + 'px';
+
+                    if (pipeleft < -100) {
+                        allpipes.splice(i, 1);
+                        selectedpipe.remove();
+                    }
+                }
+
+                var touch = document.querySelectorAll('.touch');
+                for (var i = 0; i < touch.length; i++) {
+                    var element = touch[i];
+                    if (!element.classList.contains('marked')) {
+                        if (areTouching(playerpic, element)) {
+                            element.classList.add('marked');
+                            lost = true;
+                        }
+                    }
+                }
+
+                var firstpipe = document.querySelector('.fullpipe');
+                if (firstpipe) {
+                    var firstpipeRect = firstpipe.getBoundingClientRect();
+                    var firstpipeLeft = parseInt(firstpipeRect.left);
+
+                    if (playerleftpx > firstpipeLeft) {
+                        if (!firstpipe.classList.contains('marked')) {
+                            firstpipe.classList.add('marked');
+                            score++;
+                            console.log(score);
+                        }
+                    }
+                }
+            }
+
+            setTimeout(fallCheck, 1000 / 60);
+        }
+        fallCheck();
+
+
+        function getRandomPx() {
+            return Math.floor(Math.random() * 30);
+        }
+
+        function newPipe() {
+            if (!lost && !paused && !document.hidden) {
+                var gap = 100;
+                var clone = document.querySelector('#placeholderpipe').cloneNode(true);
+                var gameRectRight = game.getBoundingClientRect().right;
+                clone.style.left = gameRectRight + 'px';
+                clone.removeAttribute('id');
+                clone.classList.add('fullpipe');
+
+                var randomNumber = getRandomPx();
+                clone.style.transform = 'translateY(' + -randomNumber + '%)';
+
+                pipeholder.appendChild(clone);
+                allpipes.push(clone);
+            }
+            setTimeout(newPipe, frequency);
+        }
+        newPipe();
+
+        function dojump() {
+            velocity = -5;
+        }
+
+        function pausegame() {
+            console.log(paused)
+        }
+
+        document.addEventListener('keydown', function (event) {
+            if (event.keyCode == 32) {
+                event.preventDefault();
+                dojump();
+            }
+        });
+
+        var jumpbutton = document.querySelector('.jump');
+        jumpbutton.onclick = function() {
+            dojump();
+        };
+
+        var playbutton = document.querySelector('.play');
+        playbutton.onclick = function() {
+            if (lost) {
+                console.log('if')
+                lost = false;
+                playbutton.classList.add('pause');
+            } else {
+                paused = !paused;
+                if (paused) {
+                    playbutton.classList.add('unpause')
+                } else {
+                    playbutton.classList.remove('unpause')
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
