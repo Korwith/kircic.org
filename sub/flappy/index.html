@@ -12,6 +12,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <style>
+        html, body {
+            touch-action: manipulation;
+        }
+
         body {
             background-color: black;
             margin: 0;
@@ -140,6 +144,11 @@
 
         .unpause {
             background-image: url(img/unpause.png);
+        }
+
+        * {
+            user-select: none;
+            touch-action: none;
         }
 
         @media screen and (max-width: 767px) {
