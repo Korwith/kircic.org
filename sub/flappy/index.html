@@ -10,7 +10,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="language" content="English">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
     <style>
         body {
             background-color: black;
@@ -116,16 +116,16 @@
             background-size: contain;
             background-color: rgb(0, 0, 0, 0);
             border: none;
-            outline:none;
+            outline: none;
         }
 
         .play {
             aspect-ratio: 107/60;
             background-image: url(img/play.png);
-            background-size:cover;
-            transform:translate(-50%);
-            left:50%;
-            position:absolute;
+            background-size: cover;
+            transform: translate(-50%);
+            left: 50%;
+            position: absolute;
         }
 
         .jump {
@@ -135,11 +135,11 @@
         }
 
         .pause {
-            background-image:url(img/pause.png);
+            background-image: url(img/pause.png);
         }
 
         .unpause {
-            background-image:url(img/unpause.png);
+            background-image: url(img/unpause.png);
         }
 
         @media screen and (max-width: 767px) {
@@ -177,6 +177,16 @@
             <button class="jump" type="button" tabindex="-1"></button>
         </div>
     </div>
+
+    <script src="fastclick/lib/fastclick.js"></script>
+    
+    <script>
+        if ('addEventListener' in document) {
+            document.addEventListener('DOMContentLoaded', function () {
+                FastClick.attach(document.body);
+            }, false);
+        }
+    </script>
 
     <script>
         var speed = 4; // 4 by default
@@ -322,12 +332,12 @@
         });
 
         var jumpbutton = document.querySelector('.jump');
-        jumpbutton.onclick = function() {
+        jumpbutton.onclick = function () {
             dojump();
         };
 
         var playbutton = document.querySelector('.play');
-        playbutton.onclick = function() {
+        playbutton.onclick = function () {
             if (lost) {
                 console.log('if')
                 lost = false;
