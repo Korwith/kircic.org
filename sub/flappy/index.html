@@ -24,20 +24,14 @@
         }
 
         .backgroundHolder {
-            overflow: hidden;
+            background-image:url(img/background.png);
+            background-repeat:repeat-x;
+            background-size:contain;
             aspect-ratio: 1;
-            width: 600px;
+            height: 80vh;
             display: flex;
             flex-direction: row;
             position: absolute;
-        }
-
-        .background {
-            background-image: url(img/background.png);
-            height: 600px;
-            aspect-ratio: 144/256;
-            background-size: contain;
-            margin: 0;
         }
 
         #player {
@@ -49,11 +43,11 @@
         }
 
         .playerpic {
+            width:100%;
+            height:100%;
             background-size: contain;
-            width: 100%;
-            height: 100%;
             transition: transform 0.5s;
-            transform: rotate(15deg);
+            transform: rotate(15deg),
         }
 
         #placeholderpipe {
@@ -63,13 +57,13 @@
         #game {
             position: relative;
             aspect-ratio: 1;
-            height: 600px;
+            height: 80vh;
         }
 
         .fullpipe {
-            height: 600px;
+            height: 110vh;
             width: 52px;
-            left: 600px;
+            /* left: 600px; */
             position: absolute;
         }
 
@@ -83,12 +77,12 @@
 
         .toppipe {
             transform: scaleY(-1);
-            margin-top: -70px;
+            margin-top: -10vh;
         }
 
         .bottompipe {
             bottom: 0;
-            margin-bottom: -70px;
+            margin-bottom: -10vh;
         }
 
         .lookingup {
@@ -159,7 +153,10 @@
             #game {
                 width: 100vw;
                 overflow-x: hidden;
-                position: relative;
+            }
+
+            #controls {
+                top:80vh;
             }
 
             .backgroundHolder {
@@ -173,10 +170,6 @@
 <body>
     <div id="game">
         <div class="backgroundHolder">
-            <div class="background bg1"></div>
-            <div class="background bg2"></div>
-            <div class="background bg3"></div>
-        </div>
         <div class="pipeholder"></div>
         <div id="player">
             <div class="playerpic"></div>
@@ -241,7 +234,7 @@
 
         function fallCheck() {
             if (!lost && !paused && !document.hidden) {
-                var selectedBg = document.querySelector('.background');
+                var selectedBg = document.querySelector('.backgroundHolder');
                 var bgRect = selectedBg.getBoundingClientRect();
                 var floorpx = bgRect.bottom;
                 var playerRect = player.getBoundingClientRect();
@@ -370,12 +363,12 @@
             lost = true;
             playbutton.classList.remove('pause');
             playbutton.classList.remove('unpause');
-            console.log(playbutton.classList);
         }
 
         function start() {
             lost = false;
             playbutton.classList.add('pause');
+            player.style.top = '175px';
 
             var all = pipeholder.querySelectorAll('.fullpipe');
             for (var i = 0; i < all.length; i++) {
