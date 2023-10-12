@@ -45,6 +45,7 @@
             width: 50px;
             position: absolute;
             margin-left: 30px;
+            top:175px;
         }
 
         .playerpic {
@@ -259,7 +260,7 @@
 
                     player.style.top = parseFloat(playerRect.top) + velocity + 'px';
                 } else {
-                    lost = true;
+                    losegame();
                 }
 
                 for (var i = 0; i < allpipes.length; i++) {
@@ -280,7 +281,7 @@
                     if (!element.classList.contains('marked')) {
                         if (areTouching(playerpic, element)) {
                             element.classList.add('marked');
-                            lost = true;
+                            losegame();
                         }
                     }
                 }
@@ -351,9 +352,14 @@
         var playbutton = document.querySelector('.play');
         playbutton.onclick = function () {
             if (lost) {
-                console.log('if')
                 lost = false;
                 playbutton.classList.add('pause');
+
+                var all = pipeholder.querySelectorAll('.fullpipe');
+                for (var i = 0; i < all.length; i++) {
+                    var toremove = all[i];
+                    toremove.remove();
+                }
             } else {
                 paused = !paused;
                 if (paused) {
@@ -362,6 +368,13 @@
                     playbutton.classList.remove('unpause')
                 }
             }
+        }
+
+        function losegame() {
+            lost = true;
+            playbutton.classList.remove('pause');
+            playbutton.classList.remove('unpause');
+            console.log(playbutton.classList);
         }
     </script>
 </body>
