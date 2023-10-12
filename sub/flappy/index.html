@@ -12,8 +12,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <style>
-        html, body {
+        html,
+        body {
             touch-action: manipulation;
+            overflow-x: hidden;
         }
 
         body {
@@ -58,6 +60,7 @@
         }
 
         #game {
+            position: relative;
             aspect-ratio: 1;
             height: 600px;
         }
@@ -153,18 +156,14 @@
 
         @media screen and (max-width: 767px) {
             #game {
-                height: 100vh;
                 width: 100vw;
-                overflow-y: hidden;
+                overflow-x: hidden;
+                position: relative;
             }
 
             .backgroundHolder {
                 width: 100vh;
                 height: 100vh;
-            }
-
-            #controls {
-                top:100%;
             }
         }
     </style>
