@@ -1,8 +1,8 @@
 var buttontolink = {
     'minesweeper': 'sub/minesweeper.html',
     'rhythm': 'sub/rhythm.html',
-    'kirhubv1': 'sub/me/index.html',
-    'enchant': 'sub/enchant/index.html',
+    'kirhubv1': 'sub/legacy/me/index.html',
+    'enchant': 'sub/legacy/enchant/index.html',
     'math': 'sub/math.html',
     'flappy': 'sub/flappy/index.html'
 }
