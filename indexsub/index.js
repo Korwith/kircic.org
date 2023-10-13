@@ -3,7 +3,8 @@ var buttontolink = {
     'rhythm': 'sub/rhythm.html',
     'kirhubv1': 'sub/me/index.html',
     'enchant': 'sub/enchant/index.html',
-    'math': 'sub/math.html'
+    'math': 'sub/math.html',
+    'flappy': 'sub/flappy/index.html'
 }
 
 for (var key in buttontolink) {
