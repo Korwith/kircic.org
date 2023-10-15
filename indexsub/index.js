@@ -4,7 +4,7 @@ var buttontolink = {
     'kirhubv1': 'sub/legacy/me/index.html',
     'enchant': 'sub/legacy/enchant/index.html',
     'math': 'sub/math.html',
-    'flappy': 'sub/flappy/index.html'
+    'flappy': 'sub/flappy/game.html'
 }
 
 for (var key in buttontolink) {
