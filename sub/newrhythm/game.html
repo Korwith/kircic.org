@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Rhythm | Kirhub</title>
+    <link rel="icon" type="image/x-icon" href="img/none.png">
+    <meta property="twitter:image" content="https://www.kirhub.com/sub/osu.png">
+    <meta name="title" content="Rhythm | Kirhub">
+    <meta name="description" content="a place where all your hopes and dreams come true">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="language" content="English">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+
+    <style>
+        body {
+            background-color: #151515;
+            margin: 0;
+            overflow:hidden;
+        }
+
+        #game {
+            aspect-ratio: 9/16;
+            height: 100vh;
+            background-color: #090909;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+        }
+
+        #squareholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+
+        #buttonholder {
+            aspect-ratio: 16/4;
+            display: flex;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+
+        #buttonholder button {
+            position: static;
+            cursor: pointer;
+        }
+
+        #buttonholder button:active {
+            border-style: inset;
+        }
+
+        #placeholder {
+            display: none;
+        }
+
+        .square {
+            aspect-ratio: 1;
+            margin: 0;
+            width: 25%;
+            box-sizing: border-box;
+            display: block;
+            background-color: rgb(0, 0, 0, 0);
+            border: 15px outset white;
+            font-size: 30px;
+            position: absolute;
+        }
+
+        .column {
+            width:25%;
+            height:100%;
+            border:2px solid gray;
+        }
+
+        .b1 {
+            border-color: #92D299;
+        }
+
+        .b2 {
+            border-color: #FED22E;
+        }
+
+        .b3 {
+            border-color: #FA81BC;
+        }
+
+        .b4 {
+            border-color: #FF935E;
+        }
+
+        * {
+            color: white;
+            font-family: 'Arial Black', Arial, sans-serif;
+        }
+
+        @media screen and (max-width: 767px) {
+            #game {
+                width: 100vw;
+                height: 100vh;
+            }
+
+            #buttonholder {
+                position:fixed;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="game">
+        <div id="placeholder" class="square"></div>
+        <div id="squareholder">
+            <div id='c1' class="column"></div>
+            <div id='c2' class="column"></div>
+            <div id='c3' class="column"></div>
+            <div id='c4' class="column"></div>
+        </div>
+        <div id="buttonholder">
+            <button id='one' class="square b1">S</button>
+            <button id='two' class="square b2">D</button>
+            <button id='three' class="square b3">J</button>
+            <button id='four' class="square b4">K</button>
+        </div>
+    </div>
+
+    <script>
+        var squareholder = document.querySelector('#squareholder');
+        var placeholder = document.querySelector('#placeholder');
+        var active = false;
+        var allsquares = [];
+
+        var numberToId = {
+            1: 'one',
+            2: 'two',
+            3: 'three',
+            4: 'four'
+        }
+
+        function make(count) {
+            for (var i = 0; i < count; i++) {
+                var setclass = Math.floor(Math.random() * 4) + 1;
+                var clone = placeholder.cloneNode(true);
+                var buttonid = numberToId[setclass];
+                var selectedcolumn = document.querySelector('#c' + setclass);
+                var selectedbutton = document.querySelector('#' + buttonid);
+
+                clone.removeAttribute('id');
+                clone.classList.add('b' + setclass);
+
+                selectedcolumn.appendChild(clone);
+                allsquares.push(clone);
+            }
+        }
+
+        function newSquares() {
+            var chance = Math.floor(Math.random() * 4) + 1;
+            if (chance == 4) { // 1 out of 4 chance to make double square
+                make(2);
+            } else {
+                make(1);
+            }
+
+            if (active) {
+                setTimeout(newSquares, 500);
+            }
+        }
+
+        function shiftSquares() {
+            if (active) {
+                for (var i = 0; i < allsquares.length; i++) {
+                    var selectedsquare = allsquares[i];
+                    var selectedsquarerect = selectedsquare.getBoundingClientRect();
+                    selectedsquare.style.top = selectedsquarerect.top + 20 + 'px';
+
+                    if (parseInt(selectedsquare.style.top) > window.screen.height) {
+                        allsquares.splice(i, 1);
+                        selectedsquare.remove();
+                    }
+                }
+                setTimeout(shiftSquares, 1000/60);
+            }
+        }
+
+        function start() {
+            active = true;
+            newSquares();
+            shiftSquares();
+        }
+
+        start();
+    </script>
+</body>
+
+</html>
