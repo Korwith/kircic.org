@@ -194,6 +194,10 @@ header button:hover {
 }
 
 @media screen and (max-width: 767px) {
+    body {
+        overflow-x:hidden;
+    }
+
     header {
         overflow-x:scroll;
     }
