@@ -141,7 +141,6 @@ header {
     display: flex;
     margin-left: 7px;
     width: 100%;
-    overflow-x: scroll;
 }
 
 header button {
@@ -194,6 +193,10 @@ header button:hover {
 }
 
 @media screen and (max-width: 767px) {
+    header {
+        overflow-x:scroll;
+    }
+    
     #aboutmeframe {
         width: 100vw;
         position: relative;
@@ -202,7 +205,6 @@ header button:hover {
         margin-bottom:5vh;
         overflow-y: auto;
         min-height: auto;
-        /* Automatically adjust height based on content */
     }
 
     #projectsframe {
