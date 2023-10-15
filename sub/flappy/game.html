@@ -155,7 +155,7 @@
             user-select: none;
             touch-action: none;
             color:white;
-            font-family:'Arial Black';
+            font-family: 'Arial Black', Arial, sans-serif;
         }
 
         @media screen and (max-width: 767px) {
@@ -398,7 +398,7 @@
             playbutton.classList.add('pause');
             player.style.top = '175px';
             scoreText.innerHTML = 0;
-            
+
             var all = pipeholder.querySelectorAll('.fullpipe');
             for (var i = 0; i < all.length; i++) {
                 var toremove = all[i];
