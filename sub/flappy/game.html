@@ -122,6 +122,7 @@
 
         .play {
             aspect-ratio:107/60;
+            height:100%;
             background-image: url(img/play.png);
             background-size: cover;
             transform: translate(-50%);
@@ -143,9 +144,18 @@
             background-image: url(img/unpause.png);
         }
 
+        .score {
+            aspect-ratio:1;
+            height:100%;
+            float:right;
+            text-align:center;
+        }
+
         * {
             user-select: none;
             touch-action: none;
+            color:white;
+            font-family:'Arial Black';
         }
 
         @media screen and (max-width: 767px) {
@@ -192,6 +202,7 @@
         <div id="controls">
             <button class="play" type='button' tabindex="-1"></button>
             <button class="jump" type="button" tabindex="-1"></button>
+            <span class="score">0</span>
         </div>
     </div>
 
@@ -207,21 +218,26 @@
 
     <script>
         var speed = 4; // 4 by default
-        var frequency = 1000; // 1000ms by default
+        var frequency = 1500; // 1500ms by default
         var gapHeight = 200; // Fixed gap height
 
         var game = document.querySelector('#game');
         var player = document.querySelector('#player');
         var playerpic = document.querySelector('.playerpic');
-        var velocity = 1;
+        var scoreText = document.querySelector('.score');
+        var controls = document.querySelector('#controls');
         var placeholderpipe = document.querySelector('#placeholderpipe');
         var pipeholder = document.querySelector('.pipeholder');
         var allpipes = [];
+        var velocity = 1;
         var score = 0;
         var sprite = 1;
         var lost = true;
         var paused = false;
 
+        if (window.screen.width < 768) {
+            frequency = 1000;
+        }
         function areTouching(element1, element2) {
             const rect1 = element1.getBoundingClientRect();
             const rect2 = element2.getBoundingClientRect();
@@ -299,7 +315,7 @@
                         if (!firstpipe.classList.contains('marked')) {
                             firstpipe.classList.add('marked');
                             score++;
-                            console.log(score);
+                            scoreText.innerHTML = score;
                         }
                     }
                 }
@@ -378,15 +394,21 @@
 
         function start() {
             lost = false;
+            score = 0;
             playbutton.classList.add('pause');
             player.style.top = '175px';
-
+            scoreText.innerHTML = 0;
+            
             var all = pipeholder.querySelectorAll('.fullpipe');
             for (var i = 0; i < all.length; i++) {
                 var toremove = all[i];
                 toremove.remove();
             }
         }
+
+        // Score Counter
+        var fsize = controls.clientHeight * 0.8;
+        scoreText.style.fontSize = fsize + 'px';
     </script>
 </body>
 
