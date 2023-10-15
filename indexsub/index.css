@@ -213,6 +213,7 @@ header button:hover {
     }
 
     #projectsframe {
+        aspect-ratio:unset;
         height: auto;
         width: 100vw;
         position: relative;
