@@ -41,7 +41,7 @@ body {
     aspect-ratio: 0.5;
     position: absolute;
     border: 5px solid #090909;
-    overflow: hidden; /* Hide scroll bars and clip overflow */
+    overflow-y:scroll;
     white-space: nowrap; /* Prevent text from wrapping */
     transform: translate(-100%);
     left: calc(100% - 14px);
