@@ -210,6 +210,8 @@ header button:hover {
         margin-bottom:5vh;
         overflow-y: auto;
         min-height: auto;
+        
+        box-sizing:border-box;
     }
 
     #projectsframe {
@@ -222,6 +224,8 @@ header button:hover {
         overflow-y: auto;
         transform: translate(0%);
         left: 0%;
+        
+        box-sizing:border-box;
     }
 
     h1 {
