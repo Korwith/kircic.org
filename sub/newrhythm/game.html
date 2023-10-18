@@ -15,7 +15,7 @@
         body {
             background-color: #151515;
             margin: 0;
-            overflow:hidden;
+            overflow: hidden;
         }
 
         #game {
@@ -40,8 +40,8 @@
             aspect-ratio: 16/4;
             display: flex;
             position: absolute;
-            bottom: 0;
             width: 100%;
+            bottom: 0;
         }
 
         #buttonholder button {
@@ -70,9 +70,10 @@
         }
 
         .column {
-            width:25%;
-            height:100%;
-            border:2px solid gray;
+            width: 25%;
+            height: 100%;
+            border: 2px solid gray;
+            transition: background-color 0.1s, opacity 0.1s;
         }
 
         .b1 {
@@ -91,6 +92,54 @@
             border-color: #FF935E;
         }
 
+        .bg1 {
+            background-color: #92D299;
+        }
+
+        .bg2 {
+            background-color: #FED22E;
+        }
+
+        .bg3 {
+            background-color: #FA81BC;
+        }
+
+        .bg4 {
+            background-color: #FF935E;
+        }
+
+        .error {
+            background-color: red;
+        }
+
+        .active {
+            opacity: 1;
+            border-color: white;
+        }
+
+        .moving {
+            animation: slide 1s linear infinite;
+        }
+
+        .caught {
+            border-color: rgb(0, 0, 0, 0);
+        }
+
+
+        .goodoverlay {
+            opacity: 0.8;
+        }
+
+        @keyframes slide {
+            0% {
+                top: 0;
+            }
+
+            100% {
+                top: calc(100%);
+            }
+        }
+
         * {
             color: white;
             font-family: 'Arial Black', Arial, sans-serif;
@@ -103,7 +152,7 @@
             }
 
             #buttonholder {
-                position:fixed;
+                position: fixed;
             }
         }
     </style>
@@ -127,6 +176,7 @@
     </div>
 
     <script>
+        var game = document.querySelector('#game');
         var squareholder = document.querySelector('#squareholder');
         var placeholder = document.querySelector('#placeholder');
         var active = false;
@@ -149,6 +199,21 @@
 
                 clone.removeAttribute('id');
                 clone.classList.add('b' + setclass);
+                clone.classList.add('moving');
+
+                var columnsquares = selectedcolumn.getElementsByClassName('square');
+                if (columnsquares.length == 0) {
+                    console.log('no squares in this column');
+                    clone.classList.add('bottommost');
+                } else {
+                    console.log(columnsquares.length)
+                }
+
+                clone.addEventListener('animationiteration', function (event) {
+                    if (event.animationName === 'slide') {
+                        event.target.remove();
+                    }
+                });
 
                 selectedcolumn.appendChild(clone);
                 allsquares.push(clone);
@@ -168,32 +233,99 @@
             }
         }
 
-        function shiftSquares() {
-            if (active) {
-                for (var i = 0; i < allsquares.length; i++) {
-                    var selectedsquare = allsquares[i];
-                    var selectedsquarerect = selectedsquare.getBoundingClientRect();
-                    selectedsquare.style.top = selectedsquarerect.top + 20 + 'px';
-
-                    if (parseInt(selectedsquare.style.top) > window.screen.height) {
-                        allsquares.splice(i, 1);
-                        selectedsquare.remove();
-                    }
-                }
-                setTimeout(shiftSquares, 1000/60);
-            }
-        }
-
         function start() {
             active = true;
             newSquares();
-            shiftSquares();
         }
-
         start();
 
-        //Mobie
+        var keyMap = {
+            83: 1,
+            68: 2,
+            74: 3,
+            75: 4
+        }
+
+        document.addEventListener('keydown', function (event) {
+            var k = keyMap[event.keyCode];
+            var targetclass = numberToId[k];
+            if (k) {
+                var button = document.querySelector('#' + targetclass);
+                button.classList.add('active');
+                checkAccuracy(k);
+            }
+        });
+
+        document.addEventListener('keyup', function (event) {
+            var k = keyMap[event.keyCode];
+            var targetclass = numberToId[k];
+            if (k) {
+                var button = document.querySelector('#' + targetclass);
+                button.classList.remove('active');
+            }
+        });
+
+        for (var i in numberToId) {
+            (function (index) {
+                var selectedbutton = document.querySelector('#' + numberToId[index]);
+
+                selectedbutton.addEventListener('mousedown', function (event) {
+                    event.target.classList.add('active');
+                    checkAccuracy(index);
+                });
+
+                selectedbutton.addEventListener('mouseup', function (event) {
+                    event.target.classList.remove('active');
+                });
+            })(i);
+        }
+
+        function checkAccuracy(columnnumber) {
+            var column = document.querySelector('#c' + columnnumber);
+            var button = document.querySelector('#' + numberToId[columnnumber]);
+
+            var buttonrecttop = parseInt(button.getBoundingClientRect().top);
+            var buttonrectbottom = parseInt(button.getBoundingClientRect().bottom);
+
+            var squares = column.querySelectorAll('.square:not(.caught)');
+
+            if (squares.length > 0) {
+                var bottommost;
+                var lowestbottom = 0;
+                var lowesttop = 0;
+
+                for (var i = 0; i < squares.length; i++) {
+                    var foundsquare = squares[i];
+                    var foundsquarerect = foundsquare.getBoundingClientRect();
+                    var foundsquarerectbottom = parseInt(foundsquarerect.bottom);
+                    var foundsquarerecttop = parseInt(foundsquarerect.top);
+
+                    if (foundsquarerectbottom > lowestbottom) {
+                        bottommost = foundsquare;
+                        lowestbottom = foundsquarerectbottom;
+                        lowesttop = foundsquarerecttop;
+                    }
+                }
+
+                if (lowestbottom > buttonrecttop && lowesttop < buttonrectbottom) {
+                    bottommost.classList.add('caught');
+                    flash(columnnumber)
+                }
+            }
+        }
+
+        function flash(columnnumber) {
+            var column = document.querySelector('#c' + columnnumber);
+            var addclass = 'bg' + columnnumber;
+            column.classList.add(addclass);
+
+            setTimeout(function () {
+                column.classList.remove(addclass);
+            }, 100);
+        }
     </script>
+
+    <script src="fastclick.js"></script>
 </body>
 
 </html>
