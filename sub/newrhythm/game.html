@@ -246,6 +246,13 @@
             3: 'three',
             4: 'four'
         }
+        
+        var idToNum = {
+            'one':1,
+            'two':2,
+            'three':3,
+            'four':4
+        }
 
         function make(count) {
             for (var i = 0; i < count; i++) {
@@ -434,14 +441,7 @@
             }
         }
         
-    // ... Your existing code ...
-
     var activeButtons = {}; // Keep track of active buttons
-
-    // Function to simulate a click event on a button
-    function simulateButtonClick(buttonId) {
-        alert('buttonId');
-    }
 
     // Add touchstart event listeners to the buttons
     var buttons = document.querySelectorAll('#buttonholder button');
@@ -451,8 +451,7 @@
             var buttonId = event.target.id;
             activeButtons[buttonId] = true;
             event.target.classList.add('active');
-            checkAccuracy(buttonId);
-            simulateButtonClick(buttonId); // Simulate a click event
+            checkAccuracy(idToNum[buttonId]);
         });
 
         button.addEventListener('touchend', function (event) {
@@ -469,7 +468,7 @@
         
         // Iterate through active buttons and check accuracy
         for (var buttonId in activeButtons) {
-            checkAccuracy(buttonId);
+            checkAccuracy(idToNum[buttonId]);
         }
     });
 
