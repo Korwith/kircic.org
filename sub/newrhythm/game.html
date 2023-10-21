@@ -433,6 +433,41 @@
                 }, 1000);
             }
         }
+        
+        // ... Your existing code ...
+
+    var activeButtons = {}; // Keep track of active buttons
+
+    // Add touchstart event listeners to the buttons
+    var buttons = document.querySelectorAll('#buttonholder button');
+    buttons.forEach(function (button) {
+        button.addEventListener('touchstart', function (event) {
+            event.preventDefault();
+            var buttonId = event.target.id;
+            activeButtons[buttonId] = true;
+            event.target.classList.add('active');
+            checkAccuracy(buttonId);
+        });
+
+        button.addEventListener('touchend', function (event) {
+            var buttonId = event.target.id;
+            delete activeButtons[buttonId];
+            event.target.classList.remove('active');
+        });
+    });
+
+    // Listen for the touchframereported event to handle multiple button presses
+    game.addEventListener('touchframereported', function (event) {
+        event.preventDefault();
+        var touches = event.touches;
+        
+        // Iterate through active buttons and check accuracy
+        for (var buttonId in activeButtons) {
+            checkAccuracy(buttonId);
+        }
+    });
+
+    // ... The rest of your existing code ...
     </script>
 
     <script src="fastclick.js"></script>
