@@ -137,16 +137,6 @@
             display: block;
             font-size: 30px;
             transition: font-size 0.1s, color 0.1s;
-
-            text-shadow:
-                -2px -2px 0 #fff,
-                /* Top-left shadow */
-                2px -2px 0 #fff,
-                /* Top-right shadow */
-                -2px 2px 0 #fff,
-                /* Bottom-left shadow */
-                2px 2px 0 #fff;
-            /* Bottom-right shadow */
         }
 
         .streakbad {
@@ -292,7 +282,7 @@
         function newSquares() {
             var chance = Math.floor(Math.random() * 4) + 1;
             if (chance == 4) { // 1 out of 4 chance to make double square
-                make(2);
+                make(1);
             } else {
                 make(1);
             }
