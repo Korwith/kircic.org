@@ -125,9 +125,48 @@
             border-color: rgb(0, 0, 0, 0);
         }
 
+        #infoholder {
+            width: 100%;
+            position: absolute;
+            bottom: 30vh;
+        }
 
-        .goodoverlay {
-            opacity: 0.8;
+        .streak {
+            color: green;
+            text-align: center;
+            display: block;
+            font-size: 30px;
+            transition: font-size 0.1s, color 0.1s;
+
+            text-shadow:
+                -2px -2px 0 #fff,
+                /* Top-left shadow */
+                2px -2px 0 #fff,
+                /* Top-right shadow */
+                -2px 2px 0 #fff,
+                /* Bottom-left shadow */
+                2px 2px 0 #fff;
+            /* Bottom-right shadow */
+        }
+
+        .streakbad {
+            color: red;
+        }
+
+        .increasesize {
+            font-size: 44px;
+        }
+
+        .lives {
+            font-size: 20px;
+            text-align: center;
+            display: block;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .shown {
+            opacity: 1;
         }
 
         @keyframes slide {
@@ -167,6 +206,12 @@
             <div id='c3' class="column"></div>
             <div id='c4' class="column"></div>
         </div>
+
+        <div id="infoholder">
+            <span class="streak"></span>
+            <span class="lives">❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️</span>
+        </div>
+
         <div id="buttonholder">
             <button id='one' class="square b1">S</button>
             <button id='two' class="square b2">D</button>
@@ -179,8 +224,12 @@
         var game = document.querySelector('#game');
         var squareholder = document.querySelector('#squareholder');
         var placeholder = document.querySelector('#placeholder');
+        var streaktext = document.querySelector('.streak');
+        var livestext = document.querySelector('.lives');
         var active = false;
         var allsquares = [];
+        var currentstreak = 0;
+        var lives = 10;
 
         var numberToId = {
             1: 'one',
@@ -211,6 +260,13 @@
 
                 clone.addEventListener('animationiteration', function (event) {
                     if (event.animationName === 'slide') {
+                        if (!event.target.classList.contains('caught')) {
+                            streaktext.classList.add('streakbad');
+                            currentstreak = 0;
+                            updateStreak();
+                            updateLives();
+                        }
+
                         event.target.remove();
                     }
                 });
@@ -308,8 +364,15 @@
                 }
 
                 if (lowestbottom > buttonrecttop && lowesttop < buttonrectbottom) {
+                    currentstreak++;
                     bottommost.classList.add('caught');
+                    streaktext.classList.remove('streakbad');
+                    updateStreak();
                     flash(columnnumber)
+                } else {
+                    streaktext.classList.add('streakbad');
+                    currentstreak = 0;
+                    updateStreak();
                 }
             }
         }
@@ -322,6 +385,74 @@
             setTimeout(function () {
                 column.classList.remove(addclass);
             }, 100);
+        }
+
+        function updateStreak() {
+            streaktext.classList.add('increasesize');
+
+            setTimeout(function () {
+                streaktext.classList.remove('increasesize');
+                streaktext.innerHTML = currentstreak + 'x'
+            }, 100);
+        }
+
+        var livesdb = true;
+        var debounceTimeout;
+
+        function updateLives() {
+            if (livesdb) {
+                clearTimeout(debounceTimeout); // Clear the previous timeout
+                livesdb = false;
+                debounceTimeout = setTimeout(function () {
+                    livesdb = true;
+                }, 1000); // Set the debounce timeout
+
+                var livesemoji = '❤️';
+                var liveslostemoji = '🩶';
+
+                lives--;
+                livestext.classList.add('shown');
+
+                if (lives >= 0) {
+                    livestext.innerHTML = livesemoji.repeat(lives) + liveslostemoji.repeat(10 - lives);
+                } else {
+                    active = false;
+                }
+
+                setTimeout(function () {
+                    livestext.classList.remove('shown');
+                }, 1000);
+            }
+        }
+
+        document.addEventListener('touchstart', function (event) {
+            event.preventDefault(); // Prevent the default behavior
+
+            for (var i = 0; i < event.changedTouches.length; i++) {
+                var touch = event.changedTouches[i];
+                var column = findColumn(touch);
+
+                if (column) {
+                    checkAccuracy(column);
+                }
+            }
+        });
+
+        function findColumn(touch) {
+            var buttons = document.querySelectorAll('.square');
+            for (var i = 0; i < buttons.length; i++) {
+                var button = buttons[i];
+                var rect = button.getBoundingClientRect();
+                if (
+                    touch.clientX >= rect.left &&
+                    touch.clientX <= rect.right &&
+                    touch.clientY >= rect.top &&
+                    touch.clientY <= rect.bottom
+                ) {
+                    return button.dataset.column;
+                }
+            }
+            return null;
         }
     </script>
 
