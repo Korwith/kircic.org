@@ -434,9 +434,19 @@
             }
         }
         
-        // ... Your existing code ...
+    // ... Your existing code ...
 
     var activeButtons = {}; // Keep track of active buttons
+
+    // Function to simulate a click event on a button
+    function simulateButtonClick(buttonId) {
+        var button = document.getElementById(buttonId);
+        var clickEvent = new MouseEvent('click', {
+            bubbles: true,
+            cancelable: true,
+        });
+        button.dispatchEvent(clickEvent);
+    }
 
     // Add touchstart event listeners to the buttons
     var buttons = document.querySelectorAll('#buttonholder button');
@@ -447,6 +457,7 @@
             activeButtons[buttonId] = true;
             event.target.classList.add('active');
             checkAccuracy(buttonId);
+            simulateButtonClick(buttonId); // Simulate a click event
         });
 
         button.addEventListener('touchend', function (event) {
