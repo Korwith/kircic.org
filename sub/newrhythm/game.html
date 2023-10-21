@@ -433,36 +433,6 @@
                 }, 1000);
             }
         }
-
-        document.addEventListener('touchstart', function (event) {
-            event.preventDefault(); // Prevent the default behavior
-
-            for (var i = 0; i < event.changedTouches.length; i++) {
-                var touch = event.changedTouches[i];
-                var column = findColumn(touch);
-
-                if (column) {
-                    checkAccuracy(column);
-                }
-            }
-        });
-
-        function findColumn(touch) {
-            var buttons = document.querySelectorAll('.square');
-            for (var i = 0; i < buttons.length; i++) {
-                var button = buttons[i];
-                var rect = button.getBoundingClientRect();
-                if (
-                    touch.clientX >= rect.left &&
-                    touch.clientX <= rect.right &&
-                    touch.clientY >= rect.top &&
-                    touch.clientY <= rect.bottom
-                ) {
-                    return button.dataset.column;
-                }
-            }
-            return null;
-        }
     </script>
 
     <script src="fastclick.js"></script>
