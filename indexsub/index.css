@@ -193,7 +193,7 @@ header button:hover {
 }
 
 #playhere {
-    width: 35%;
+    width: 33%;
     height: calc(100% - 75px);
     position: absolute;
     bottom: 0;
@@ -205,7 +205,7 @@ header button:hover {
 }
 
 #playoverlay {
-    width: 35%;
+    width: 33%;
     height: calc(100% - 75px);
     position: absolute;
     bottom: 0;
