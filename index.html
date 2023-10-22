@@ -46,13 +46,13 @@
             <img src='sub/flappy/img/favicon.png'></img>
             <span>Flappy Bird Recreation</span>
             <span>> 10/10/23</span>
-            <span>> Mobile Support</span>
+            <span class="mobile">> Mobile Support</span>
         </div>
         <div class='project' id='minesweeper'>
             <img src='sub/flag.png'></img>
             <span>Minesweeper Recreation</span>
             <span>> 10/1/23</span>
-            <span>> Mobile Support</span>
+            <span class="mobile">> Mobile Support</span>
         </div>
         <h2>Projects</h2>
         <!-- <div class='project' id='2048'>
@@ -62,21 +62,27 @@
             <span>> not done</span>
             <span>> doesnt work yet</span>
         </div> -->
+        <div class='project' id='rhythm2'>
+            <img src="sub/osu.png"></img>
+            <span>Rhythm Game [v2]</span>
+            <span>> 10/17/23</span>
+            <span class="mobile">> Mobile Support</span>
+        </div>
         <div class='project' id='math'>
             <img src='sub/math.png'></img>
             <span>Simple Math Game</span>
             <span>> 10/8/23</span>
-            <span>> Mobile Support</span>
-        </div>
-        <div class='project' id='rhythm'>
-            <img src="sub/osu.png"></img>
-            <span>Rhythm Game</span>
-            <span>> 10/1/23</span>
-            <span>> For Paris</span>
+            <span class="mobile">> Mobile Support</span>
         </div>
         <h2>Legacy [Not Updated]</h2>
+        <div class='project' id='rhythm'>
+            <img class='gray' src="sub/osu.png"></img>
+            <span>Rhythm Game</span>
+            <span>> 10/1/23</span>
+            <span class="nomobile">> No Mobile Support</span>
+        </div>
         <div class="project" id="kirhubv1">
-            <img style='filter:grayscale(100%)' src="sub/kir.png"></img>
+            <img class="gray" src="sub/kir.png"></img>
             <span>Kirhub 1.0</span>
             <span>> 02/15/22</span>
         </div>
@@ -85,6 +91,15 @@
             <span>Enchanting Wiki</span>
             <span>> 09/16/21</span>
             <span>> not up to date</span>
+        </div>
+    </div>
+
+    <iframe id="playhere" class="hidden"></iframe>
+    <div id="playoverlay" class="hidden">
+        <div class="playcontrols">
+            <button class="newtab">Open</button>
+            <button class="close">X</button>
+            <span class="message"></span>
         </div>
     </div>
 
