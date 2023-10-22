@@ -41,8 +41,9 @@ body {
     aspect-ratio: 0.5;
     position: absolute;
     border: 5px solid #090909;
-    overflow-y:scroll;
-    white-space: nowrap; /* Prevent text from wrapping */
+    overflow-y: scroll;
+    white-space: nowrap;
+    /* Prevent text from wrapping */
     transform: translate(-100%);
     left: calc(100% - 14px);
 }
@@ -105,15 +106,6 @@ h3 {
 .project span {
     display: block;
     font-size: 20px;
-}
-
-#rhythmpic {
-    aspect-ratio: 1;
-    height: 90%;
-    float: left;
-    border-radius: 50%;
-    background-color: black;
-    box-shadow: inset 0 0 0 5px white;
 }
 
 .iconholder {
@@ -188,6 +180,71 @@ header button:hover {
     opacity: 1;
 }
 
+.gray {
+    filter: grayscale(100%);
+}
+
+.mobile {
+    color: green;
+}
+
+.nomobile {
+    color: red;
+}
+
+#playhere {
+    width: 68%;
+    height: calc(100% - 75px);
+    position: absolute;
+    bottom: 0;
+    box-sizing: border-box;
+    border: 5px dashed white;
+    transition:opacity 0.5s;
+}
+
+.hidden {
+    pointer-events:none;
+    opacity:0;
+}
+
+.playcontrols {
+    position: absolute;
+    top:0;
+    right:0;
+    width: 120px;
+    height: fit-content;
+    border:5px solid #144e5e;
+}
+
+.playcontrols button {
+    height:40px;
+    pointer-events:all;
+    cursor:pointer;
+    border: 2px solid black;
+    box-sizing:border-box;
+}
+
+.newtab {
+    float:left;
+    width:80px;
+    background-color:#144e5e;
+}
+
+.close {
+    float:right;
+    width:40px;
+    background-color:red;
+}
+
+#playoverlay {
+    width: 68%;
+    height: calc(100% - 75px);
+    position: absolute;
+    bottom: 0;
+    box-sizing: border-box;
+    pointer-events: none;
+}
+
 * {
     font-family: monospace;
     color: white;
@@ -195,27 +252,26 @@ header button:hover {
 
 @media screen and (max-width: 767px) {
     body {
-        overflow-x:hidden;
+        overflow-x: hidden;
     }
 
     header {
-        overflow-x:scroll;
+        overflow-x: scroll;
     }
-    
+
     #aboutmeframe {
         width: 100vw;
         position: relative;
         margin-left: auto;
         margin-right: auto;
-        margin-bottom:5vh;
+        margin-bottom: 5vh;
         overflow-y: auto;
         min-height: auto;
-        
-        box-sizing:border-box;
+        box-sizing: border-box;
     }
 
     #projectsframe {
-        aspect-ratio:unset;
+        aspect-ratio: unset;
         height: auto;
         width: 100vw;
         position: relative;
@@ -224,11 +280,19 @@ header button:hover {
         overflow-y: auto;
         transform: translate(0%);
         left: 0%;
-        
-        box-sizing:border-box;
+
+        box-sizing: border-box;
     }
 
     h1 {
-        font-size:3vh;
+        font-size: 3vh;
+    }
+
+    #playhere {
+        display: none;
+    }
+
+    #playoverlay {
+        display:none;
     }
 }
