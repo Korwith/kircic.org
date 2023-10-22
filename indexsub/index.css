@@ -193,13 +193,26 @@ header button:hover {
 }
 
 #playhere {
-    width: 68%;
+    width: 35%;
     height: calc(100% - 75px);
     position: absolute;
     bottom: 0;
     box-sizing: border-box;
     border: 5px dashed white;
     transition:opacity 0.5s;
+    left:50%;
+    transform:translateX(-50%);
+}
+
+#playoverlay {
+    width: 35%;
+    height: calc(100% - 75px);
+    position: absolute;
+    bottom: 0;
+    box-sizing: border-box;
+    pointer-events: none;
+    left:50%;
+    transform:translateX(-50%);
 }
 
 .hidden {
@@ -234,15 +247,6 @@ header button:hover {
     float:right;
     width:40px;
     background-color:red;
-}
-
-#playoverlay {
-    width: 68%;
-    height: calc(100% - 75px);
-    position: absolute;
-    bottom: 0;
-    box-sizing: border-box;
-    pointer-events: none;
 }
 
 * {
