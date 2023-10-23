@@ -270,8 +270,8 @@ header button:hover {
         margin-right: auto;
         margin-bottom: 5vh;
         overflow-y: auto;
-        min-height: auto;
         box-sizing: border-box;
+        height:fit-content;
     }
 
     #projectsframe {
