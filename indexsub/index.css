@@ -249,6 +249,13 @@ header button:hover {
     background-color:red;
 }
 
+.notice {
+    position:absolute;
+    bottom:0;
+    transform: translateX(-50%);
+    left:50%;
+}
+
 * {
     font-family: monospace;
     color: white;
@@ -299,12 +306,5 @@ header button:hover {
 
     #playoverlay {
         display:none;
-    }
-    
-    .notice {
-        position:absolute;
-        bottom:0;
-        transform: translateX(-50%);
-        left:50%;
     }
 }
