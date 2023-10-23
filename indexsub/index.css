@@ -264,6 +264,7 @@ header button:hover {
     }
 
     #aboutmeframe {
+        aspect-ratio:unset;
         width: 100vw;
         position: relative;
         margin-left: auto;
