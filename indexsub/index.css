@@ -271,7 +271,7 @@ header button:hover {
         margin-bottom: 5vh;
         overflow-y: auto;
         box-sizing: border-box;
-        height:fit-content;
+        height:auto;
     }
 
     #projectsframe {
