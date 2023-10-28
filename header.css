@@ -1,4 +1,5 @@
 header {
+    box-sizing:border-box;
     height: 75px;
     background-color: #101010;
     align-items: center;
