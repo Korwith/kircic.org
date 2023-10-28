@@ -7,6 +7,7 @@ header {
     width: 100%;
     margin-bottom: 10px;
     position:relative;
+    overflow-x:hidden !important;
 }
 
 header button {
@@ -51,8 +52,8 @@ header button:hover {
     body {
         overflow-x:hidden;
     }
-    
+
     header {
-        overflow-x:scroll;
+        overflow-x:scroll !important;
     }
 }
