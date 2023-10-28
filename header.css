@@ -7,7 +7,6 @@ header {
     width: 100%;
     margin-bottom: 10px;
     position:relative;
-    overflow-x:scroll;
 }
 
 header button {
@@ -46,4 +45,10 @@ header button:hover {
     background-size: contain;
     border-image: linear-gradient(to bottom right, #b827fc 0%, #2c90fc 25%, #b8fd33 50%, #fec837 75%, #fd1892 100%);
     border-image-slice: 1;
+}
+
+@media (max-width: 767px) {
+    header {
+        overflow-x:scroll;
+    }
 }
