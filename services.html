@@ -2,115 +2,338 @@
 <html>
 
 <head>
-    <title>Services</title>
+    <title>Accounts</title>
+    <link rel="stylesheet" href="header.css" media="screen">
     <style>
         body {
-            background-color: #202020;
+            background-color: #131313;
+            overflow-x:hidden;
+            margin: 0;
+            padding: 0;
         }
 
-        div {
-            width: 375px;
-            height: 130px;
-            border: dashed rgb(98, 98, 94);
-            background-color: rgb(145, 145, 145);
+        #holder,
+        #secondaryholder {
+            background-color: #101010;
+            border: 5px solid #090909;
+            padding: 30px;
+            width: 50%;
             margin-left: auto;
             margin-right: auto;
-            margin-bottom:10px;
-        }
-
-        .top {
-            font-size: 30px;
-        }
-
-        div span,
-        div a {
-            margin-left: 5px;
-            margin-top: 5px;
-            font-size: 24px;
+            display: grid;
+            gap: 5px;
+            justify-content: space-between;
+            grid-template-columns: repeat(3, 1fr);
         }
 
         #placeholder {
             display: none;
         }
 
-        .photo {
+        .service {
+            background-color: #090909;
+            border: 5px solid #000000;
+            aspect-ratio: 5/7;
+            box-sizing: border-box;
+            cursor: pointer;
+            transition: border 0.3s;
+            padding: 20px;
+            position: relative;
+        }
+
+        div span {
             display: block;
-            margin-left: 67%;
-            margin-top: -21%;
-            width: 120px;
-            height: 120px;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            padding-bottom: 20px;
+        }
+
+        .servicename {
+            bottom: 25px;
+        }
+
+        .service:hover {
+            border: 5px solid #fff !important;
+        }
+
+        .icon {
+            aspect-ratio: 1;
+            width: 100%;
+            background-size: calc(100% - 30px);
+            background-repeat: no-repeat;
+            background-position: center;
+            background-color: #090909;
+            border: 5px solid black;
+            box-sizing: border-box;
+            padding: 10px;
+        }
+
+        .seperator {
+            text-align: center;
+        }
+
+        .home {
+            border-image:unset;
+        }
+
+        .accounts {
+            border-image: linear-gradient(to bottom right, #b827fc 0%, #2c90fc 25%, #b8fd33 50%, #fec837 75%, #fd1892 100%);
+            border-image-slice: 1;
         }
 
         * {
+            color: #fff;
+            font-size: 24px;
             font-family: monospace;
-            color: white;
+        }
+
+        @media (max-width: 767px) {
+            #holder, #secondaryholder {
+                padding:0px;
+                width:100%;
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
     </style>
 </head>
 
 <body>
-    <div id="placeholder">
-        <span class="top">Service Name</span><br>
-        <span class="user">> Username</span><br>
-        <a class="link" target="_blank">> Link</a>
-        <img class="photo" src="resources/kir.png"></img>
+    <header>
+        <button class="home"></button>
+        <button class="accounts">Accounts</button>
+        <button class="discord"></button>
+    </header>
+
+    <div id='placeholder' class="service">
+        <div class="icon"></div>
+        <span class="servicename"></span>
+        <span class="name"></span>
     </div>
 
+    <h1 class="seperator">Actively Used</h1>
+
+    <div id="holder"></div>
+
+    <h1 class="seperator">Other</h1>
+
+    <div id="secondaryholder"></div>
+
+    <script src="header.js"></script>
     <script>
-        var placeholder = document.getElementById('placeholder');
-        var serviceList = {
-            0: {
+        var holder = document.querySelector('#holder');
+        var secondaryholder = document.querySelector('#secondaryholder');
+        var placeholder = document.querySelector('#placeholder');
+
+        var serviceList = [
+            {
                 service: 'Discord',
-                user: 'kircic',
+                name: '@kircic',
+                icon: 'icon/discord.svg',
                 link: 'https://discord.com/users/543990414223343626',
-                color: "#3e48ad",
-                border: "#2a3175",
-                image: 'discord.png',
+                bgcolor: 'rgb(62, 72, 173)',
+                bordercolor: 'rgb(42, 49, 117)',
+                used: true,
             },
 
-            1: {
+            {
                 service: 'YouTube',
-                user: 'kircic',
+                name: '@Kircic',
+                icon: 'icon/youtube.svg',
                 link: 'https://www.youtube.com/channel/UCLcCNfyLG_jQev4MdkHtCZw',
-                color: "#C62C26",
-                border: "#831c19",
-                image: 'youtube.png',
+                bgcolor: 'rgb(198, 44, 38)',
+                bordercolor: 'rgb(131, 28, 25)',
+                used: true,
             },
 
-            2: {
+            {
+                service: 'YouTube',
+                name: '@Kylous',
+                icon: 'icon/youtube.svg',
+                link: 'https://www.youtube.com/channel/UCYSQKr4FxEgqtIWaZ_YAPdg',
+                bgcolor: 'rgb(198, 44, 38)',
+                bordercolor: 'rgb(131, 28, 25)',
+                used: false,
+            },
+
+            {
+                service: 'YouTube',
+                name: '@Kryban',
+                icon: 'icon/youtube.svg',
+                link: 'https://www.youtube.com/channel/UCVIUo-rFoaQ9uF6UuE1z_0w',
+                bgcolor: 'rgb(198, 44, 38)',
+                bordercolor: 'rgb(131, 28, 25)',
+                used: false,
+            },
+
+            {
+                service: 'YouTube',
+                name: '@Korwith',
+                icon: 'icon/youtube.svg',
+                link: 'https://www.youtube.com/channel/UCDzQs_97SElvILJl7-cPRxQ',
+                bgcolor: 'rgb(198, 44, 38)',
+                bordercolor: 'rgb(131, 28, 25)',
+                used: false,
+            },
+
+            {
+                service: 'Github',
+                name: '@Korwith',
+                icon: 'icon/github.svg',
+                link: 'https://github.com/Korwith',
+                bgcolor: '#1F1F1F',
+                bordercolor: 'rgb(10, 11, 12)',
+                used: true,
+            },
+
+            {
+                service: 'Spotify',
+                name: '@kir',
+                icon: 'icon/spotify.svg',
+                link: 'https://open.spotify.com/user/64w6zhl2osfs9ogt0jvutipxb',
+                bgcolor: '#1ED760',
+                bordercolor: '#169c46',
+                used: false,
+            },
+
+            {
+                service: 'Xbox',
+                name: '@YellowishTub88',
+                icon: 'icon/xbox.svg',
+                link: 'https://www.xbox.com/en-US/play/user/YellowishTub88',
+                bgcolor: '#107C10',
+                bordercolor: '#0a470a',
+                used: false,
+            },
+
+            {
+                service: 'Twitch',
+                name: '@zap_tie',
+                icon: 'icon/twitch.svg',
+                link: 'https://www.twitch.tv/zap_tie',
+                bgcolor: '#9146FF',
+                bordercolor: '#6b33bd',
+                used: false,
+            },
+
+            {
+                service: 'Github',
+                name: '@Kircic8',
+                icon: 'icon/github.svg',
+                link: 'https://github.com/Kircic8',
+                bgcolor: '#1F1F1F',
+                bordercolor: 'rgb(10, 11, 12)',
+                used: false,
+            },
+
+            {
                 service: 'Roblox',
-                user: 'Kircic',
+                name: '@Kircic',
+                icon: 'icon/roblox.png',
                 link: 'https://www.roblox.com/users/989007/profile',
-                color: "#191B1D",
-                border: "#0A0B0C",
-                image: 'roblox.png',
+                bgcolor: '#1F1F1F',
+                bordercolor: 'rgb(10, 11, 12)',
+                used: false,
             },
 
-            3: {
-                service: 'Monkeytype',
-                user: 'kircic',
-                link: 'https://monkeytype.com/profile/kircic',
-                color: "#D79921",
-                border: "#a67619",
-                image: "monkeytype.ico",
+            {
+                service: 'Instagram',
+                name: '@thad.real',
+                icon: 'icon/instagram.svg',
+                link: 'https://www.instagram.com/thad.real',
+                bgcolor: '#E1306C',
+                bordercolor: '#a6234f',
+                used: true,
             },
+
+            {
+                service: 'Instagram',
+                name: '@thad.fake',
+                icon: 'icon/instagram.svg',
+                link: 'https://www.instagram.com/thad.fake',
+                bgcolor: '#E1306C',
+                bordercolor: '#a6234f',
+                used: false,
+            },
+
+            {
+                service: 'Instagram',
+                name: '@thad2.0',
+                icon: 'icon/instagram.svg',
+                link: 'https://www.instagram.com/thad2.0',
+                bgcolor: '#E1306C',
+                bordercolor: '#a6234f',
+                used: true,
+            },
+
+            {
+                service: 'Instagram',
+                name: '@thad0.5',
+                icon: 'icon/instagram.svg',
+                link: 'https://www.instagram.com/thad0.5',
+                bgcolor: '#E1306C',
+                bordercolor: '#a6234f',
+                used: false,
+            },
+
+            {
+                service: 'Instagram',
+                name: '@thad3.5',
+                icon: 'icon/instagram.svg',
+                link: 'https://www.instagram.com/thad3.5',
+                bgcolor: '#E1306C',
+                bordercolor: '#a6234f',
+                used: false,
+            },
+
+            {
+                service: 'Instagram',
+                name: '@thad4.0',
+                icon: 'icon/instagram.svg',
+                link: 'https://www.instagram.com/thad4.0',
+                bgcolor: '#E1306C',
+                bordercolor: '#a6234f',
+                used: false,
+            },
+
+            {
+                service: 'Instagram',
+                name: '@thad5.0',
+                icon: 'icon/instagram.svg',
+                link: 'https://www.instagram.com/thad5.0',
+                bgcolor: '#E1306C',
+                bordercolor: '#a6234f',
+                used: false,
+            },
+        ]
+
+        var findholder = {
+            true: holder,
+            false: secondaryholder,
         }
 
-        for (var data in serviceList) {
+        for (var i in serviceList) {
+            var data = serviceList[i];
             var clone = placeholder.cloneNode(true);
-            document.body.appendChild(clone);
-            clone.style.display = 'block';
+            var icon = clone.querySelector('.icon');
+            var whichholder = findholder[data.used];
 
-            // Check if the element with class "photo" exists in the clone
-            var photo = clone.getElementsByClassName('photo')[0];
-            photo.src = 'resources/' + serviceList[data].image;
-            clone.getElementsByClassName('top')[0].innerHTML = '> ' + serviceList[data].service;
-            clone.getElementsByClassName('user')[0].innerHTML = '> ' + serviceList[data].user;
-            clone.style.backgroundColor = serviceList[data].color;
-            clone.style.borderColor = serviceList[data].border;
+            clone.querySelector('.name').innerHTML = data.name;
+            clone.querySelector('.servicename').innerHTML = data.service;
+            clone.style.backgroundColor = data.bgcolor;
+            clone.style.borderColor = data.bordercolor;
+            icon.style.backgroundImage = 'url(' + data.icon + ')';
+            icon.style.borderColor = data.bordercolor;
 
-            var link = clone.getElementsByClassName('link')[0];
-            link.href = serviceList[data].link;
+            (function (data) {
+                clone.addEventListener('click', function () {
+                    window.open(data.link, '_blank');
+                });
+            })(data);
+
+            clone.removeAttribute('id');
+            whichholder.appendChild(clone);
         }
     </script>
 </body>
