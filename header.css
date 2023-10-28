@@ -48,6 +48,10 @@ header button:hover {
 }
 
 @media (max-width: 767px) {
+    body {
+        overflow-x:hidden;
+    }
+    
     header {
         overflow-x:scroll;
     }
