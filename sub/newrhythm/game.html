@@ -235,8 +235,10 @@
         @media screen and (max-width: 767px) {
             #game {
                 width: 100vw;
-                height: 100vh;
-                position:relative;
+                height: calc(100vh - constant(safe-area-inset-bottom));
+                position: absolute;
+                top: 0;
+                left: 0;
             }
 
             #buttonholder {
