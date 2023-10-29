@@ -1,4 +1,8 @@
-html, body {
+html {
+    overflow-x:hidden;
+}
+
+body {
     margin: 0px;
     padding: 0px;
     background-color: #151515;
