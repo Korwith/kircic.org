@@ -20,25 +20,6 @@ for (var key in buttontolink) {
 var gameframe = document.querySelector('#playhere');
 var gameframeoverlay = document.querySelector('#playoverlay');
 var home = document.querySelector('.home')
-var discord = document.querySelector('.discord');
-var youtube = document.querySelector('.youtube');
-var accounts = document.querySelector('.accounts');
-
-discord.onclick = function () {
-    window.open('https://discord.com/invite/p8ZZXZqnag', '_blank');
-}
-
-youtube.onclick = function () {
-    window.open('https://www.youtube.com/channel/UCLcCNfyLG_jQev4MdkHtCZw', '_blank');
-}
-
-accounts.onclick = function () {
-    window.open('https://www.kirhub.com/services.html', '_blank')
-}
-
-home.onclick = function () {
-    alert('you found me');
-}
 
 function checkMobile() {
     return (window.innerWidth < 767);
