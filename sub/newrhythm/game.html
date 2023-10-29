@@ -235,10 +235,9 @@
         @media screen and (max-width: 767px) {
             #game {
                 width: 100vw;
-                height: calc(100vh - constant(safe-area-inset-bottom));
+                height: 100vh;
                 position: absolute;
-                top: 0;
-                left: 0;
+                left:50%;
             }
 
             #buttonholder {
@@ -554,6 +553,20 @@
         }
     }
 
+    function adjustGameHeight() {
+      const gameDiv = document.getElementById('game');
+      const screenHeight = window.innerHeight;
+    
+      // Adjust the game's height to fit the viewport height minus the Safari address bar
+      gameDiv.style.height = screenHeight + 'px';
+    }
+    
+    // Initial adjustment
+    adjustGameHeight();
+    
+    // Listen for orientation changes or resizing
+    window.addEventListener('resize', adjustGameHeight);
+    window.addEventListener('orientationchange', adjustGameHeight);
     </script>
 
     <script src="fastclick.js"></script>
