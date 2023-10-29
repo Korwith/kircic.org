@@ -11,14 +11,14 @@
     <meta name="language" content="English">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="indexsub/index.css">
+    <link rel="stylesheet" type="text/css" href="header.css">
 </head>
 
 <body>
     <header>
         <button class="home"></button>
-        <button class="discord">Discord Server</button>
-        <button class="youtube">YouTube</button>
         <button class="accounts">Accounts</button>
+        <button class="discord">Discord</button>
     </header>
 
     <div id="pic"></div>
@@ -33,16 +33,19 @@
             <img src="sub/css.png"></img>
         </div>
         <h3>hobbies</h3>
-        <span>> web development</span>
-        <span>> minecraft</span>
-        <span>> monkeytype</span>
-        <span>> 2048</span>
-        <span>> minesweeper</span>
+        <div class="hobbies">
+            <span>> web development</span>
+            <span>> minecraft</span>
+            <span>> monkeytype</span>
+            <span>> 2048</span>
+            <span>> minesweeper</span>
+        </div>
         
-       <h3 class='notice'> © 2023 Kirhub</h3>
+       <h3 class='notice'> © 2023 Kirhub™</h3>
     </div>
 
     <div id='projectsframe'>
+        <h2>Projects</h2>
         <h3>everything here programmed by me</h3>
         <h2>Favorites</h2>
         <div class='project' id='flappy'>
@@ -57,14 +60,7 @@
             <span>> 10/1/23</span>
             <span class="mobile">> Mobile Support</span>
         </div>
-        <h2>Projects</h2>
-        <!-- <div class='project' id='2048'>
-            <img src='sub/2048.png'></img>
-            <span>2048 Recreation</span>
-            <span>> ??/??/23</span>
-            <span>> not done</span>
-            <span>> doesnt work yet</span>
-        </div> -->
+        <h2>Other</h2>
         <div class='project' id='rhythm2'>
             <img src="sub/osu.png"></img>
             <span>Rhythm Game [v2]</span>
@@ -101,6 +97,7 @@
         </div>
     </div>
 
+    <script src="header.js"></script>
     <script src="indexsub/index.js"></script>
 </body>
 </html>

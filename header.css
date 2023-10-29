@@ -23,8 +23,7 @@ header button {
 }
 
 header button:hover {
-    opacity: 0.8;
-    border: 2px dashed white;
+    border-width:2px;
 }
 
 .discord {
@@ -36,12 +35,12 @@ header button:hover {
 
 .accounts {
     background-color: #202020;
-    border: 5px dashed #144e5e;
+    border: 5px solid rgb(160, 62, 173);
 }
 
 .home {
     background-color: #080808;
-    border: 2px solid #050505;
+    border: 5px solid rgb(173, 156, 62);;
     aspect-ratio: 1;
     background-image: url(icon/kir.png);
     background-size: contain;
@@ -50,10 +49,6 @@ header button:hover {
 }
 
 @media (max-width: 767px) {
-    body {
-        overflow-x:hidden !important;
-    }
-
     header {
         overflow-x:scroll !important;
     }

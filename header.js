@@ -5,10 +5,10 @@ discord.onclick = function() {
 
 var home = document.querySelector('.home');
 home.onclick = function() {
-    window.open('index.html');
+    window.location.href = 'index.html';
 }
 
 var accounts = document.querySelector('.accounts');
 accounts.onclick = function() {
-    window.open('services.html');
+    window.location.href = 'services.html';
 }
