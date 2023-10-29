@@ -225,9 +225,8 @@ h3 {
 }
 
 @media screen and (max-width: 767px) {
-    html {
-        overflow-x: hidden;
-        overflow-y: hidden;
+    body {
+        overflow:hidden;
     }
     
     header {
