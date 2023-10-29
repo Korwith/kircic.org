@@ -251,7 +251,7 @@ h3 {
         position: relative;
         margin-left: auto;
         margin-right: auto;
-        overflow-y: auto;
+        overflow-y: hidden;
         transform: translate(0%);
         left: 0%;
         box-sizing: border-box;
