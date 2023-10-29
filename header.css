@@ -28,7 +28,7 @@ header button:hover {
 }
 
 .discord {
-    background-color: rgb(20,20,20);
+    background-color: #202020;
     border: 5px solid rgb(62, 72, 173);
     left:calc(100% - 14px);
     box-sizing:border-box;
