@@ -225,7 +225,7 @@ h3 {
 }
 
 @media screen and (max-width: 767px) {
-    html, body {
+    body {
         overflow-y:scroll;
     }
     
