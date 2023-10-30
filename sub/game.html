@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Kirhub | Calculator</title>
+    <style>
+        body {
+            background-color: #202020;
+        }
+
+        #holder {
+            aspect-ratio: 0.85;
+            height: 85vh;
+            background-color: #343940;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 15px;
+            padding-right: 15px;
+            border-radius: 3%;
+            box-shadow: 3px 3px 3px 3px black;
+        }
+
+        #toppart {
+            background-color: black;
+            height: 35%;
+            margin-left: auto;
+            margin-right: auto;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            position: relative;
+            padding: 10px;
+        }
+
+        #toppart h1 {
+            margin: 0;
+            height: 25%;
+        }
+
+        #toppart span {
+            display: block;
+            height: 15%;
+        }
+
+        #calculatortext {
+            width: 95%;
+            height: 45%;
+            background-color: #7F9192;
+            bottom: 10px;
+            position: absolute;
+            border-radius: 5px;
+            color: black;
+            justify-content: flex-end;
+            align-items: flex-end;
+            display: flex;
+            font-size: 48px;
+            font-family: "Courier New", monospace;
+            font-weight: bolder;
+            text-overflow: ellipsis;
+        }
+
+        #buttons {
+            height: 55%;
+            width: 100%;
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 5px;
+        }
+
+        #buttons button {
+            background-color: #1F1F1F;
+            box-shadow: 1px 1px 1px 1px black;
+            cursor: pointer;
+            display: block;
+            font-size: 20px;
+        }
+
+        #equal {
+            width: calc(200% + 5px);
+        }
+
+        .redbutton {
+            background-color: rgb(255, 68, 68) !important;
+        }
+
+        .orangebutton {
+            background-color: #ffa928 !important;
+        }
+
+        .greenbutton {
+            background-color: rgb(80, 255, 80) !important;
+        }
+
+        * {
+            color: white;
+            font-family: Arial Black, monospace;
+        }
+
+        @media screen and (max-width: 767px) {
+            #holder {
+                width: 90vw;
+                height: unset;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="holder">
+        <div id="toppart">
+            <h1>Calculator</h1>
+            <span>Kirhub</span>
+            <div id="calculatortext"></div>
+        </div>
+        <div id="buttons">
+            <button class="number">7</button>
+            <button class="number">8</button>
+            <button class="number">9</button>
+            <button id="delete" class="redbutton">Del</button>
+            <button id='clear' class="redbutton">C</button>
+            <button class="number">4</button>
+            <button class="number">5</button>
+            <button class="number">6</button>
+            <button id="multiply" class="orangebutton">×</button>
+            <button id="plus" class="orangebutton">+</button>
+            <button class="number">1</button>
+            <button class="number">2</button>
+            <button class="number">3</button>
+            <button id="divide" class="orangebutton">÷</button>
+            <button id="minus" class="orangebutton">-</button>
+            <button class="number">0</button>
+            <button id="decimal">.</button>
+            <button id="exponent">xʸ</button>
+            <button id="equal" class="greenbutton">=</button>
+        </div>
+    </div>
+
+    <script>
+        var calculatortext = document.querySelector('#calculatortext');
+        var clear = document.querySelector('#clear');
+        var del = document.querySelector('#delete');
+        var decimal = document.querySelector('#decimal');
+        var equal = document.querySelector('#equal');
+        var numberButtons = document.querySelectorAll('.number');
+        var operation = '';
+
+        var idToOperation = {
+            'multiply': '*',
+            'divide': '/',
+            'plus': '+',
+            'minus': '-',
+            'exponent': '**'
+        }
+
+        for (var i = 0; i < numberButtons.length; i++) {
+            var element = numberButtons[i];
+            element.addEventListener('click', function () {
+                operation = operation + this.innerHTML;
+                updateScreen();
+            });
+        }
+
+        for (var i in idToOperation) {
+            var element = document.querySelector('#' + i);
+            (function (id) {
+                element.addEventListener('click', function () {
+                    if (isLastCharacterANumber(operation)) {
+                        operation = operation + idToOperation[id];
+                        updateScreen();
+                    }
+                });
+            })(i);
+        }
+
+        clear.addEventListener('click', function () {
+            decimalAdded = false;
+            operation = '';
+            updateScreen();
+        });
+
+        del.addEventListener('click', function () {
+            operation = removeLastCharacter(operation);
+            updateScreen();
+        });
+
+        var decimalAdded = false;
+
+        decimal.addEventListener('click', function () {
+            var lastChar = operation.slice(-1);
+
+            if (!decimalAdded || (decimalAdded && /\d/.test(lastChar))) {
+                operation = operation + '.';
+                decimalAdded = true;
+            }
+            updateScreen();
+        });
+
+        function solve() {
+            try {
+                var attempt = eval(operation);
+                operation = attempt.toFixed(4).toString();
+                updateScreen();
+            } catch (error) {
+                operation = '';
+                updateScreen(true);
+            }
+        }
+
+        equal.addEventListener('click', solve);
+
+        function updateScreen(error) {
+            if (!error) {
+                calculatortext.innerHTML = operation;
+            } else {
+                calculatortext.innerHTML = 'Error';
+            }
+        }
+
+        function isLastCharacterANumber(str) {
+            var lastChar = str.charAt(str.length - 1);
+            var lastNumber = +lastChar;
+            return !isNaN(lastNumber) && isFinite(lastNumber) && str.length > 0;
+        }
+
+        function removeLastCharacter(str) {
+            return str.slice(0, -1);
+        }
+    </script>
+</body>
+
+</html>
