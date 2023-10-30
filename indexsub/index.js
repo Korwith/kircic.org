@@ -4,7 +4,8 @@ var buttontolink = {
     'enchant': 'sub/legacy/enchant/index.html',
     'math': 'sub/math.html',
     'flappy': 'sub/flappy/game.html',
-    'rhythm2': 'sub/newrhythm/game.html'
+    'rhythm2': 'sub/newrhythm/game.html',
+    'calculator': 'sub/calculator.html'
 }
 
 for (var key in buttontolink) {
