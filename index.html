@@ -2,7 +2,15 @@
 <html>
 
 <head>
-    <title>Kirhub</title>
+    <title>Home | Kirhub</title>
+    <link rel="icon" type="image/x-icon" href="sub/kir.png">
+    <meta property="twitter:image" content="https://www.kirhub.com/sub/assets/kirhappy.png">
+    <meta name="title" content="Kirhub | Home">
+    <meta name="description" content="a place where all your hopes and dreams come true">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="language" content="English">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <style>
         body {
             background-color: #101010;
@@ -25,7 +33,7 @@
             aspect-ratio: 1;
             float: left;
             height: calc(90% - 5px);
-            background-image: url(assets/kir.png);
+            background-image: url(sub/assets/kir.png);
             background-size: contain;
             background-color: rgba(0, 0, 0, 0);
             cursor: pointer;
@@ -141,19 +149,19 @@
         }
 
         .lua {
-            background-image: url(assets/lua.svg);
+            background-image: url(sub/assets/lua.svg);
         }
 
         .js {
-            background-image: url(assets/js.svg);
+            background-image: url(sub/assets/js.svg);
         }
 
         .html {
-            background-image: url(assets/html.svg);
+            background-image: url(sub/assets/html.svg);
         }
 
         .css {
-            background-image: url(assets/css.svg);
+            background-image: url(sub/assets/css.svg);
         }
 
         .languageicons div:hover {
@@ -381,7 +389,7 @@
 
             clone.style.backgroundColor = data.color;
             foundIcon.style.borderColor = darkenColor(data.color)
-            foundIcon.style.backgroundImage = `url(assets/${data.icon})`;
+            foundIcon.style.backgroundImage = `url(sub/assets/${data.icon})`;
             foundTitle.innerHTML = data.name;
             foundDate.innerHTML = `[${data.date}]`
             clone.removeAttribute('id');
