@@ -338,6 +338,14 @@
             #normal {
                 margin-top:40vw;
             }
+
+            .hardGrid {
+                grid-template-columns: repeat(16, 1fr);
+            }
+
+            .square {
+                
+            }
         }
     </style>
 </head>
@@ -448,6 +456,10 @@
                 true: 20,
             }
             var rowCount = difficultyCounts[hard];
+            if (window.innerWidth < 767 && hard == true) {
+                rowCount = rowCount - 4;
+            }
+
             game.removeAttribute('class');
 
             if (hard) {
