@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Kirhub</title>
+    <style>
+        body {
+            background-color: #101010;
+            box-sizing: border-box;
+            margin: 0;
+        }
+
+        header {
+            background-color: #202020;
+            width: 100%;
+            height: 55px;
+            box-shadow: black 5px 5px 10px
+        }
+
+        #placeholder {
+            display: none;
+        }
+
+        .hamburger {
+            aspect-ratio: 1;
+            float: left;
+            height: calc(90% - 5px);
+            background-image: url(assets/kir.png);
+            background-size: contain;
+            background-color: rgba(0, 0, 0, 0);
+            cursor: pointer;
+            transition: filter 0.2s;
+            margin-left: 5px;
+            margin-top:5px;
+            box-sizing:border-box;
+            border:3px solid;
+            border-image: linear-gradient(to bottom right, #b827fc 0%, #2c90fc 25%, #b8fd33 50%, #fec837 75%, #fd1892 100%);
+            border-image-slice:1;
+        }
+
+        .hamburger:hover {
+            filter: brightness(80%);
+        }
+
+        .rightheader {
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-right: 5px;
+            height: calc(100% - 20px);
+            aspect-ratio: 12;
+            float: right;
+        }
+
+        .rightheader button {
+            height: 100%;
+            width: calc(33.33% - 5px);
+            text-transform: uppercase;
+            border-radius: 3px;
+            border: 0;
+            cursor: pointer;
+            transition: background-color 0.2s, filter 0.2s;
+        }
+
+        .rightheader button:hover {
+            filter: brightness(80%);
+        }
+
+        .discordbutton {
+            background-color: #3E48AD;
+        }
+
+        .accountsbutton {
+            background-color: #A03EAD;
+        }
+
+        .homebutton {
+            background-color: #FB9B00;
+        }
+
+        .aboutme {
+            width: 60%;
+            height: fit-content;
+            padding-bottom: 20px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 50px;
+            border-radius: 8px;
+            background-color: #202020;
+            box-sizing: border-box;
+            border: 3px solid #252525;
+            box-shadow: #050505 10px 10px 10px;
+        }
+
+        .aboutme h1 {
+            text-align: center;
+            font-size: 28px;
+        }
+
+        * {
+            font-family: "Arial Black";
+            color: white;
+        }
+
+        .languageicons {
+            margin-left: auto;
+            margin-right: auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10%;
+            width: 65%;
+        }
+
+        .languageicons div {
+            aspect-ratio: 1;
+            box-sizing: border-box;
+            border: 4px solid #151515;
+            border-radius: 10px;
+            transition: border 0.2s;
+            background-size: 80%;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .aboutmeinfo {
+            margin-top: 15px;
+        }
+
+        .aboutmeinfo span {
+            display: block;
+            width: 100%;
+            text-align: center;
+        }
+
+        .hobbiestxt {
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+        .hobby {
+            font-size: 12px;
+        }
+
+        .lua {
+            background-image: url(assets/lua.svg);
+        }
+
+        .js {
+            background-image: url(assets/js.svg);
+        }
+
+        .html {
+            background-image: url(assets/html.svg);
+        }
+
+        .css {
+            background-image: url(assets/css.svg);
+        }
+
+        .languageicons div:hover {
+            border: 4px solid white
+        }
+
+        .projects span {
+            display: block;
+            width: 100%;
+            text-align: center;
+        }
+
+        .favs {
+            color: gold;
+        }
+
+        .normal {
+            margin-top: 40px;
+            color: white;
+        }
+
+        .legacy {
+            margin-top: 40px;
+        }
+
+        .holdertext {
+            font-size: 22px;
+            margin-bottom: 10px
+        }
+
+        .projectsgrid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10%;
+            padding: 10px;
+        }
+
+        .proj {
+            aspect-ratio: 3/4;
+            border-radius: 8px;
+            box-sizing: border-box;
+            border: 5px solid black;
+            box-shadow:black 4px 4px 12px;
+            transition: border 0.3s, box-shadow 0.3s;
+            cursor:pointer;
+            background-size:contain;
+        }
+
+        .proj:hover {
+            border:5px solid white;
+            box-shadow:white 4px 4px 24px;
+        }
+
+        .proj span {
+            margin-left:auto;
+            margin-right:auto;
+            width:90%;
+            text-shadow:2px 2px 4px black;
+        }
+
+        .projicon {
+            aspect-ratio: 1;
+            width: 60%;
+            margin: 20%;
+            margin-bottom: 5px;
+            border-radius: 8px;
+            box-sizing: border-box;
+            background-color:#151515;
+            border: 5px solid black;
+            background-repeat:no-repeat;
+            background-position:center;
+            background-size:85%;
+        }
+
+        @media (max-width: 768px) {
+            .headercenter {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .aboutme {
+                width: calc(100% - 30px);
+                margin: 15px;
+            }
+
+            .languageicons {
+                width: 80%;
+            }
+
+            .projectsgrid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .rightheader {
+                aspect-ratio:unset;
+                width:calc(100% - 65px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <button class="hamburger"></button>
+        <div class="rightheader">
+            <button class="homebutton">Home</button>
+            <button class="accountsbutton">Accounts</button>
+            <button class="discordbutton">Discord</button>
+        </div>
+    </header>
+
+    <div class="aboutme">
+        <h1>About Me</h1>
+
+        <div class="languageicons">
+            <div class="lua"></div>
+            <div class="js"></div>
+            <div class="html"></div>
+            <div class="css"></div>
+        </div>
+
+        <div class="aboutmeinfo">
+            <span class="languagetxt">Lua, JavaScript, HTML, CSS</span>
+            <span class="hobbiestxt">Hobbies</span>
+            <span class="hobby">> Web Development</span>
+            <span class="hobby">> Minecraft</span>
+            <span class="hobby">> Minesweeper</span>
+            <span class="hobby">> 2048</span>
+            <span class="hobby">> Monkeytype</span>
+        </div>
+    </div>
+
+    <div class="projects aboutme">
+        <h1>Projects</h1>
+        <span class="favs holdertext">Favorites</span>
+        <div id="favoriteholder" class="projectsgrid"></div>
+        <span class="normal holdertext">Other</span>
+        <div id="normalholder" class="projectsgrid"></div>
+        <span class="legacy holdertext">Legacy [Not Updated]</span>
+        <div id="legacyholder" class="projectsgrid"></div>
+    </div>
+
+    <div class="proj" id="placeholder">
+        <div class="projicon"></div>
+        <span class="projtitle">test</span>
+        <span class="projdate">test</span>
+    </div>
+
+    <script>
+        var placeholder = document.querySelector('#placeholder');
+        var projectData = [
+            {
+                name: 'Minesweeper Recreation',
+                date: '11/10/23',
+                icon: 'flag.png',
+                color: '#FC716B',
+                link: 'sub/minesweeper.html',
+                category: 'favorite',
+            },
+            {
+                name: 'Flappy Bird Recreation',
+                date: '10/10/23',
+                icon: 'flappy.png',
+                color: '#F7DA21',
+                link: 'sub/flappy/game.html',
+                category: 'favorite',
+            },
+            {
+                name: 'Calculator',
+                date: '10/30/23',
+                icon: 'calculator.svg',
+                color: '#FB9B00',
+                link: 'sub/calculator.html',
+                category: 'normal',
+            },
+            {
+                name: 'Rhythm Game [v2]',
+                date: '10/17/23',
+                icon: 'osu.png',
+                color: '#e46bfc',
+                link: 'sub/newrhythm/game.html',
+                category: 'normal',
+            },
+            {
+                name: 'Simple Math Game',
+                date: '10/8/23',
+                icon: 'math.png',
+                color: '#966bfc',
+                link: 'sub/math.html',
+                category: 'normal',
+            },
+            {
+                name: 'Kirhub 3.0',
+                date: 'Before 11/12/23',
+                icon: 'kir.png',
+                color: '#303030',
+                link: 'sub/legacy/oldindex/index.html',
+                category: 'legacy',
+            },
+            {
+                name: 'Rhythm Game',
+                date: '10/1/23',
+                icon: 'osu.png',
+                color: '#303030',
+                link: 'sub/legacy/oldrhythm/rhythm.html',
+                category: 'legacy',
+            },
+            {
+                name: 'Enchanting Wiki',
+                date: '9/16/21',
+                icon: 'enchant.webp',
+                color: '#303030',
+                link: 'sub/legacy/enchant/index.html',
+                category: 'legacy',
+            },
+        ]
+
+        for (var i in projectData) {
+            var data = projectData[i];
+            var clone = placeholder.cloneNode(true);
+            var selectedGrid = document.querySelector('#' + data.category + 'holder');
+            var foundIcon = clone.querySelector('.projicon');
+            var foundTitle = clone.querySelector('.projtitle');
+            var foundDate = clone.querySelector('.projdate');
+
+            clone.style.backgroundColor = data.color;
+            foundIcon.style.borderColor = darkenColor(data.color)
+            foundIcon.style.backgroundImage = `url(assets/${data.icon})`;
+            foundTitle.innerHTML = data.name;
+            foundDate.innerHTML = `[${data.date}]`
+            clone.removeAttribute('id');
+            selectedGrid.appendChild(clone);
+
+            (function(data) {
+                clone.onclick = function() {
+                    window.open(data.link, '_blank');
+                }
+            })(data);
+        }
+    </script>
+</body>
+
+</html>
