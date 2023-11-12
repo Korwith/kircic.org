@@ -19,6 +19,7 @@
             -ms-content-zooming: none;
             max-zoom: 1;
             min-zoom: 1;
+            overflow:none;
         }
 
         button {
@@ -193,7 +194,8 @@
             padding: 0;
             border: 8px solid #202020;
             text-shadow: 3px 3px black;
-
+            font-size:24px;
+            
             transition:
                 transform 0.6s cubic-bezier(0.075, 0.82, 0.165, 1),
                 box-shadow 0.6s cubic-bezier(0.075, 0.82, 0.165, 1),
@@ -202,7 +204,7 @@
         }
 
         #normal {
-            margin-top: 45%;
+            margin-top: 40%;
             background-image: url(minesweeper_assets/flag.png);
             box-shadow: 0 12px 0px #151515;
             margin-bottom: 10%;
@@ -274,7 +276,7 @@
 
         .verticaltext {
             display: block;
-            font-size: 18px;
+            font-size: 16px;
         }
 
         #title {
@@ -304,10 +306,38 @@
             background-size: cover;
         }
 
+        .gamebutton {
+            font-size:24px;
+        }
+
         * {
             color: white;
             font-family: "Arial Black", Gadget, sans-serif, monospace;
-            font-size: 24px;
+        }
+
+        @media screen and (max-width: 767px) {
+            #holder {
+                aspect-ratio:5/6;
+                width: 100vw;
+            }
+
+            #cover {
+                aspect-ratio:5/6;
+                width:100vw;
+            }
+
+            #game {
+                aspect-ratio: 1;
+                width: 100vw;
+            }
+
+            #menu {
+                width: 100vw;
+            }
+
+            #normal {
+                margin-top:40vw;
+            }
         }
     </style>
 </head>
