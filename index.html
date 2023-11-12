@@ -3,7 +3,7 @@
 
 <head>
     <title>Home | Kirhub</title>
-    <link rel="icon" type="image/x-icon" href="sub/kir.png">
+    <link rel="icon" type="image/x-icon" href="sub/assets/kir.png">
     <meta property="twitter:image" content="https://www.kirhub.com/sub/assets/kirhappy.png">
     <meta name="title" content="Kirhub | Home">
     <meta name="description" content="a place where all your hopes and dreams come true">
@@ -102,11 +102,6 @@
         .aboutme h1 {
             text-align: center;
             font-size: 28px;
-        }
-
-        * {
-            font-family: "Arial Black";
-            color: white;
         }
 
         .languageicons {
@@ -236,6 +231,11 @@
             background-size:85%;
         }
 
+        * {
+            font-family: "Arial Black", "Arial Bold", monospace;
+            color: white;
+        }
+
         @media (max-width: 768px) {
             .headercenter {
                 margin-left: auto;
@@ -312,6 +312,22 @@
 
     <script>
         var placeholder = document.querySelector('#placeholder');
+        var home = document.querySelector('.homebutton');
+        var accounts = document.querySelector('.accountsbutton');
+        var discord = document.querySelector('.discordbutton');
+
+        home.onclick = function() {
+            window.location.href = 'index.html';
+        }
+
+        accounts.onclick = function() {
+            window.location.href = 'accounts.html';
+        }
+
+        discord.onclick = function() {
+            window.open('https://discord.gg/invite/p8ZZXZqnag', '_blank');
+        }
+
         var projectData = [
             {
                 name: 'Minesweeper Recreation',
