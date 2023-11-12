@@ -19,7 +19,7 @@
             -ms-content-zooming: none;
             max-zoom: 1;
             min-zoom: 1;
-            overflow:none;
+            overflow: none;
         }
 
         button {
@@ -194,8 +194,8 @@
             padding: 0;
             border: 8px solid #202020;
             text-shadow: 3px 3px black;
-            font-size:24px;
-            
+            font-size: 24px;
+
             transition:
                 transform 0.6s cubic-bezier(0.075, 0.82, 0.165, 1),
                 box-shadow 0.6s cubic-bezier(0.075, 0.82, 0.165, 1),
@@ -307,7 +307,7 @@
         }
 
         .gamebutton {
-            font-size:24px;
+            font-size: 24px;
         }
 
         * {
@@ -317,13 +317,13 @@
 
         @media screen and (max-width: 767px) {
             #holder {
-                aspect-ratio:5/6;
+                aspect-ratio: 5/6;
                 width: 100vw;
             }
 
             #cover {
-                aspect-ratio:5/6;
-                width:100vw;
+                aspect-ratio: 5/6;
+                width: 100vw;
             }
 
             #game {
@@ -336,16 +336,14 @@
             }
 
             #normal {
-                margin-top:40vw;
+                margin-top: 40vw;
             }
 
             .hardGrid {
                 grid-template-columns: repeat(16, 1fr);
             }
 
-            .square {
-                
-            }
+            .square {}
         }
     </style>
 </head>
@@ -431,20 +429,25 @@
         }
 
         function makeBombs(hard) {
-            var bombCount = hard
-                ? Math.floor(Math.random() * 11) + 60 // Range: [60, 70)
-                : Math.floor(Math.random() * 5) + 10; // Range: [10, 15)
+            var bombCount = 0;
+            var gridSize = 10; // Default grid size
+
+            if (hard) {
+                if (isMobileDevice()) {
+                    gridSize = 16;
+                    bombCount = Math.floor(Math.random() * (45 - 35 + 1)) + 35;
+                } else {
+                    gridSize = 20;
+                    bombCount = Math.floor(Math.random() * (60 - 50 + 1)) + 50;
+                 }
+            } else {
+                bombCount = Math.floor(Math.random() * 17-13) + 13;
+            }
 
             for (var i = 0; i < bombCount; i++) {
-                var randomX = hard
-                    ? Math.floor(Math.random() * 20)
-                    : Math.floor(Math.random() * 10);
-
-                var randomY = hard
-                    ? Math.floor(Math.random() * 20)
-                    : Math.floor(Math.random() * 10);
-
-                bombLocations.push(randomX + '_' + randomY)
+                var randomX = Math.floor(Math.random() * gridSize);
+                var randomY = Math.floor(Math.random() * gridSize);
+                bombLocations.push(randomX + '_' + randomY);
             }
 
             bombcounttext.innerHTML = 'Mines: ' + bombCount;
@@ -784,9 +787,11 @@
         }
         document.addEventListener('keydown', functionToggleByKeyPress)
 
-        function makeRandomNumber(x, y) {
-            return Math.floor(Math.random() * (y - x + 1)) + x;
+        function isMobileDevice() {
+            var maxWidthForMobile = 768; // You might need to adjust this value
+            return window.innerWidth <= maxWidthForMobile;
         }
+
     </script>
 </body>
 
