@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Minesweeper | Kirhub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="minesweeper_minesweeper_assets/flag.png">
+    <meta property="twitter:image" content="https://www.kirhub.com/sub/minesweeper_minesweeper_assets/flag.png">
+    <meta name="title" content="Minesweeper | Kirhub">
+    <meta name="description" content="a place where all your hopes and dreams come true">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="language" content="English">
+
+    <style>
+        body {
+            background-color: #202020;
+            margin: 0;
+            touch-action: manipulation;
+            -ms-content-zooming: none;
+            max-zoom: 1;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        #holder {
+            aspect-ratio: 5/6;
+            height: 100vh;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: black;
+            position: relative;
+            background-image: url(minesweeper_assets/zero.png);
+        }
+
+        #cover {
+            aspect-ratio: 5/6;
+            height: 100vh;
+            left: 50%;
+            top: 0;
+            transform: translateX(-50%);
+            position: absolute;
+            background-size: 10%;
+            transition: opacity 0.8s;
+        }
+
+        #game {
+            aspect-ratio: 1;
+            width: 100%;
+            display: grid;
+        }
+
+        .normalGrid {
+            grid-template-columns: repeat(10, 1fr);
+        }
+
+        .hardGrid {
+            grid-template-columns: repeat(20, 1fr);
+        }
+
+        #controls {
+            aspect-ratio: 5.5;
+            width: 100%;
+            display: grid;
+            gap: 5px;
+            grid-template-columns: repeat(3, 1fr);
+            position: absolute;
+            box-sizing: border-box;
+            border: 5px solid #151515;
+            background-color: #101010;
+        }
+
+        #placeholder {
+            display: none;
+        }
+
+        .square {
+            width: 100%;
+            background-size: 100%;
+            background-image: url(minesweeper_assets/outset.png);
+            border: 0;
+            cursor: default;
+        }
+
+        .square:active {
+            background-image: url(minesweeper_assets/0.png)
+        }
+
+        .zero {
+            background-image: url(minesweeper_assets/0.png);
+            cursor: default !important;
+        }
+
+        .one {
+            background-image: url(minesweeper_assets/1.png)
+        }
+
+        .two {
+            background-image: url(minesweeper_assets/2.png)
+        }
+
+        .three {
+            background-image: url(minesweeper_assets/3.png)
+        }
+
+        .four {
+            background-image: url(minesweeper_assets/4.png)
+        }
+
+        .five {
+            background-image: url(minesweeper_assets/5.png)
+        }
+
+        .six {
+            background-image: url(minesweeper_assets/6.png)
+        }
+
+        .seven {
+            background-image: url(minesweeper_assets/7.png)
+        }
+
+        .eight {
+            background-image: url(minesweeper_assets/8.png)
+        }
+
+        .number {
+            cursor: pointer;
+        }
+
+        .lostmine {
+            background-image: url(minesweeper_assets/mine_red.png) !important;
+        }
+
+        .mine {
+            background-image: url(minesweeper_assets/mine.png);
+        }
+
+        .flag {
+            background-image: url(minesweeper_assets/flag.png);
+        }
+
+        #restart {
+            box-sizing: border-box;
+            border: 5px solid #085F8B;
+            background-color: #0a76ac;
+            transition: transform 0.6s cubic-bezier(0.075, 0.82, 0.165, 1), box-shadow 0.6s cubic-bezier(0.075, 0.82, 0.165, 1);
+            box-shadow: 0 8px 0px #075379;
+            border-radius: 8px;
+        }
+
+        #restart:hover {
+            transform: translateY(4px);
+            box-shadow: 0 4px 0px #06415f;
+        }
+
+        #flagging {
+            box-sizing: border-box;
+            border: 5px solid #8a2121;
+            background-color: #B82C2C;
+            transition:
+                transform 0.6s cubic-bezier(0.075, 0.82, 0.165, 1),
+                box-shadow 0.6s cubic-bezier(0.075, 0.82, 0.165, 1),
+                background-color 0.2s,
+                border-color 0.2s;
+            box-shadow: 0 8px 0px #6d1a1a;
+            border-radius: 8px;
+        }
+
+        #flagging:hover {
+            transform: translateY(4px);
+            box-shadow: 0 4px 0px #6d1a1a;
+        }
+
+        .enabled {
+            background-color: #33AA28 !important;
+            border-color: #27811e !important;
+            box-shadow: 0 4px 0px #1a5714 !important;
+            transform: translateY(4px) !important;
+        }
+
+        .startButton {
+            aspect-ratio: 3.5;
+            width: 60%;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+            border-radius: 8px;
+            background-size: 9%;
+            background-position: center;
+            box-sizing: border-box;
+            padding: 0;
+            border: 8px solid #202020;
+            text-shadow: 3px 3px black;
+
+            transition:
+                transform 0.6s cubic-bezier(0.075, 0.82, 0.165, 1),
+                box-shadow 0.6s cubic-bezier(0.075, 0.82, 0.165, 1),
+                background-color 0.2s,
+                border-color 0.2s;
+        }
+
+        #normal {
+            margin-top: 45%;
+            background-image: url(minesweeper_assets/flag.png);
+            box-shadow: 0 12px 0px #151515;
+            margin-bottom: 10%;
+        }
+
+        #hard {
+            background-image: url(minesweeper_assets/mine.png);
+            border-color: #8a2121;
+            box-shadow: 0 12px 0px #6d1a1a;
+        }
+
+        #normal:hover {
+            transform: translateY(6px);
+            box-shadow: 0 6px 0px #151515;
+        }
+
+        #hard:hover {
+            transform: translateY(6px);
+            box-shadow: 0 6px 0px #6d1a1a;
+        }
+
+        .shadow {
+            width: 100%;
+            height: 100%;
+            background-color: rgb(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+        }
+
+        .redoverlay {
+            background-color: rgb(255, 0, 0, 0.4);
+        }
+
+        .hide {
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        .verticalimages {
+            aspect-ratio: 1/3;
+            height: 100%;
+            float: left;
+            background-color: pink;
+            display: grid;
+            grid-template-rows: repeat(3, 1fr);
+        }
+
+        .bottomicon {
+            aspect-ratio: 1;
+            background-size: 100%;
+        }
+
+        .clockicon {
+            background-image: url(minesweeper_assets/time.png);
+            background-size: 100%;
+            width: 100%;
+            height: 100%;
+        }
+
+        .verticalinfo {
+            aspect-ratio: 4.5/3;
+            height: 100%;
+            display: grid;
+            grid-template-rows: repeat(3, 1fr);
+            float: right;
+        }
+
+        .verticaltext {
+            display: block;
+            font-size: 18px;
+        }
+
+        #title {
+            text-align: center;
+            font-size: 48px;
+            text-shadow: 3px 3px black;
+        }
+
+        .titlenormal {
+            color: rgb(105, 105, 105);
+        }
+
+        .titlewon {
+            color: rgb(148, 255, 106);
+        }
+
+        .titlelost {
+            color: rgb(255, 70, 70);
+        }
+
+        #hoverflag {
+            aspect-ratio: 1;
+            background-image: url(minesweeper_assets/flag.png);
+            width: 16px;
+            height: 16px;
+            position: absolute;
+            background-size: cover;
+        }
+
+        * {
+            color: white;
+            font-family: 'Arial Black', 'sans serif', 'monospace';
+            font-size: 24px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="holder">
+        <div id="game"></div>
+        <div id="controls">
+            <button onclick="restartGame()" id="restart" class="gamebutton">Restart</button>
+            <button onclick='toggleFlagging()' id="flagging" class="gamebutton">Flag</button>
+            <div>
+                <div class="verticalimages">
+                    <div class="bottomicon zero">
+                        <div class="clockicon"></div>
+                    </div>
+                    <div class="bottomicon mine"></div>
+                    <div class="bottomicon flag"></div>
+                </div>
+                <div class="verticalinfo">
+                    <span class="verticaltext timecount">Time: 0s</span>
+                    <span class="verticaltext minecount">Mines: 69</span>
+                    <span class="verticaltext flagcount">Flags: 420</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="cover" class="zero">
+        <h1 id="title" class="titlenormal">Minesweeper</h1>
+        <button id='normal' class="startButton" onclick="start(false)">
+            <div class="shadow">Normal</div>
+        </button>
+
+        <button id='hard' class="startButton" onclick="start(true)">
+            <div class="shadow redoverlay">Expert</div>
+        </button>
+    </div>
+
+    <button id='placeholder' class="square"></button>
+    <div id="hoverflag" class="hide"></div>
+
+    <script>
+        var holder = document.querySelector('#holder');
+        var game = document.querySelector('#game');
+        var placeholder = document.querySelector('#placeholder');
+        var flagButton = document.querySelector('#flagging');
+        var restartButton = document.querySelector('#restart');
+        var cover = document.querySelector('#cover');
+        var title = document.querySelector('#title');
+        var hoverflag = document.querySelector('#hoverflag');
+        var timecount = document.querySelector('.timecount');
+        var bombcounttext = document.querySelector('.minecount');
+        var flagcount = document.querySelector('.flagcount');
+        var bombLocations = [];
+        var flagLocations = [];
+        var canclick = false;
+        var flagging = false;
+        var time = 0;
+        var numberCountToWin;
+        var gamemode;
+
+        var numberToClass = {
+            0: 'zero',
+            1: 'one',
+            2: 'two',
+            3: 'three',
+            4: 'four',
+            5: 'five',
+            6: 'six',
+            7: 'seven',
+            8: 'eight'
+        }
+
+        var classToNumber = {
+            'zero': 0,
+            'one': 1,
+            'two': 2,
+            'three': 3,
+            'four': 4,
+            'five': 5,
+            'six': 6,
+            'seven': 7,
+            'eight': 8
+        }
+
+        function makeBombs(hard) {
+            var bombCount = hard
+                ? Math.floor(Math.random() * 11) + 60 // Range: [60, 70)
+                : Math.floor(Math.random() * 5) + 10; // Range: [10, 15)
+
+            for (var i = 0; i < bombCount; i++) {
+                var randomX = hard
+                    ? Math.floor(Math.random() * 20)
+                    : Math.floor(Math.random() * 10);
+
+                var randomY = hard
+                    ? Math.floor(Math.random() * 20)
+                    : Math.floor(Math.random() * 10);
+
+                bombLocations.push(randomX + '_' + randomY)
+            }
+
+            bombcounttext.innerHTML = 'Mines: ' + bombCount;
+        }
+
+        function makeBoard(hard) {
+            var difficultyCounts = {
+                false: 10,
+                true: 20,
+            }
+            var rowCount = difficultyCounts[hard];
+            game.removeAttribute('class');
+
+            if (hard) {
+                game.classList.add('hardGrid');
+            } else {
+                game.classList.add('normalGrid')
+            }
+
+            var squares = game.querySelectorAll('.square'); // Assuming '.square' is the class name of elements to be removed
+            squares.forEach(function (square) {
+                square.remove();
+            });
+
+            for (var x = 0; x < rowCount; x++) {
+                for (var y = 0; y < rowCount; y++) {
+                    var clone = placeholder.cloneNode(true);
+                    clone.removeAttribute('id');
+                    clone.setAttribute('x', x);
+                    clone.setAttribute('y', y);
+                    game.appendChild(clone);
+
+                    (function (x, y) {
+                        var pos = x + '_' + y;
+                        clone.addEventListener('click', function (event) {
+                            if (!canclick) { return }
+
+                            if (event.button == 0) {
+                                if (!numberFromSquare(pos)) {
+                                    if (!flagging) {
+                                        if (!flagLocations.includes(pos)) {
+                                            if (!bombLocations.includes(pos)) {
+                                                bombsAroundSquare(pos);
+                                                fixBadSquare(pos);
+                                            } else {
+                                                lostGame(pos);
+                                            }
+                                        } else {
+                                            flag(pos);
+                                        }
+                                    }  else {
+                                        flag(pos);
+                                    }
+                                } else {
+                                    revealSurrounding(pos);
+                                }
+                            }
+
+                            if (document.querySelectorAll('.number').length == numberCountToWin) {
+                                clearInterval(timer);
+                                setTimeout(handleGameEnd(true), 1500);
+                            }
+                        });
+
+                        clone.addEventListener('contextmenu', function (event) {
+                            event.preventDefault();
+                            if (!canclick) { return }
+                            flag(pos);
+                        })
+                    })(x, y)
+                }
+            }
+
+            makeBombs(hard);
+            numberCountToWin = (rowCount ** 2) - bombLocations.length;
+        }
+
+        function setNumber(pos, count) {
+            var currentpos = posFromString(pos);
+            var square = getSquare(currentpos.x, currentpos.y)
+            var addClass = numberToClass[count];
+
+            if (square) {
+                if (!square.classList.contains('number') && !square.classList.contains('flag')) {
+                    square.classList.add('number');
+                    square.classList.add(addClass);
+                }
+            }
+        }
+
+        function findSurroundingSquares(pos) {
+            var currentpos = posFromString(pos);
+            var offsets = [
+                { x: -1, y: -1 }, { x: 0, y: -1 }, { x: 1, y: -1 },
+                { x: -1, y: 0 }, { x: 1, y: 0 },
+                { x: -1, y: 1 }, { x: 0, y: 1 }, { x: 1, y: 1 }
+            ]
+            var surrounding = [];
+
+            for (var i in offsets) {
+                var newX = currentpos.x + offsets[i].x;
+                var newY = currentpos.y + offsets[i].y;
+                var newpos = newX + '_' + newY;
+                var square = getSquare(newX, newY);
+
+                if (square) {
+                    surrounding.push(newpos);
+                }
+            }
+
+            return surrounding;
+        }
+
+        function checkBomb(pos) {
+            var currentpos = posFromString(pos);
+            var square = getSquare(currentpos.x, currentpos.y);
+
+            if (!square.classList.contains('flag')) {
+                if (bombLocations.includes(pos)) {
+                    lostGame(pos);
+                }
+            }
+        }
+
+        function bombsAroundSquare(pos) {
+            var currentpos = posFromString(pos);
+            var square = getSquare(currentpos.x, currentpos.y)
+            var surrounding = findSurroundingSquares(pos);
+            var zeros = [];
+
+            checkBomb(pos);
+            if (flagLocations.includes(pos)) {
+                var flagIndex = flagLocations.indexOf(pos);
+                flagLocations.splice(flagIndex, 1);
+                square.classList.remove('flag');
+                flagcount.innerHTML = 'Flags: ' + flagLocations.length;
+            };
+
+            var count = 0;
+            for (var i in surrounding) {
+                if (bombLocations.includes(surrounding[i])) {
+                    count++;
+                }
+            }
+
+            if (count == 0) {
+                for (var i in surrounding) {
+                    var surroundingpos = surrounding[i];
+                    var newpos = posFromString(surroundingpos);
+                    var newsquare = getSquare(newpos.x, newpos.y);
+
+                    if (!newsquare.classList.contains('number')) {
+                        setNumber(surroundingpos, 0)
+                        bombsAroundSquare(surroundingpos);
+                    }
+                }
+            } else {
+                square.classList.add('number');
+                square.classList.add(numberToClass[count]);
+
+                if (square.classList.contains('zero')) {
+                    square.classList.remove('zero');
+                }
+            }
+        }
+
+        function numberFromSquare(pos) {
+            var squarepos = posFromString(pos);
+            var square = getSquare(squarepos.x, squarepos.y);
+
+            for (var className in classToNumber) {
+                if (square.classList.contains(className)) {
+                    return classToNumber[className];
+                }
+            }
+        }
+
+        function revealSurrounding(pos) {
+            var squarenumber = numberFromSquare(pos);
+            var squarepos = posFromString(pos);
+            var square = getSquare(squarepos.x, squarepos.y);
+            var surrounding = findSurroundingSquares(pos);
+            var foundflags = [];
+            var foundbombs = [];
+
+            for (var i in surrounding) {
+                var foundsquareposstring = surrounding[i];
+                var foundsquarepos = posFromString(foundsquareposstring);
+                var foundsquare = getSquare(foundsquarepos.x, foundsquarepos.y);
+
+                if (foundsquare.classList.contains('flag')) {
+                    foundflags.push(foundsquareposstring);
+                } else if (bombLocations.includes(foundsquarepos)) {
+                    foundbombs.push(foundsquareposstring);
+                }
+            }
+
+            if (squarenumber == foundflags.length) {
+                for (var i in surrounding) {
+                    if (!foundflags.includes(surrounding[i])) {
+                        bombsAroundSquare(surrounding[i]);
+                        fixBadSquare(surrounding[i]);
+                    }
+                }
+            }
+        }
+
+        function fixBadSquare(pos) {
+            // BANDAID FOR PROBLEM SQUARES IDK HOW ELSE TO FIX THIS
+            // literally just checks "did it work? no? ok do it here then"
+            var thissquarexy = posFromString(pos);
+            var thissquare = getSquare(thissquarexy.x, thissquarexy.y);
+            if (thissquare.classList == 'square') {
+                thissquare.classList.add('number');
+                thissquare.classList.add('zero');
+            }
+        }
+
+        function flag(pos) {
+            var flagpos = posFromString(pos);
+            var flagsquare = getSquare(flagpos.x, flagpos.y);
+
+            if (!flagsquare.classList.contains('number')) {
+                if (!flagLocations.includes(pos)) {
+                    flagLocations.push(pos);
+                    flagsquare.classList.add('flag');
+                } else {
+                    var flagIndex = flagLocations.indexOf(pos);
+                    flagLocations.splice(flagIndex, 1);
+                    flagsquare.classList.remove('flag');
+                }
+
+                flagcount.innerHTML = 'Flags: ' + flagLocations.length;
+            }
+        }
+
+        function startTimer() {
+            timer = setInterval(function () {
+                time++;
+                timecount.innerHTML = 'Time: ' + time + 's';
+            }, 1000);
+        }
+
+        function handleGameEnd(won) {
+            title.classList = '';
+            if (won) {
+                title.classList.add('titlewon');
+                title.innerHTML = 'You won! (' + time + 's)';
+            } else {
+                title.classList.add('titlelost');
+                title.innerHTML = 'You lost! (' + time + 's)';
+            }
+
+            canclick = false;
+            clearInterval(timer);
+            document.removeEventListener('keydown', functionToggleByKeyPress)
+
+            setTimeout(function () {
+                if (!canclick) { //make sure the game hasnt restarted
+                    cover.classList.remove('hide');
+                }
+            }, 1500);
+        }
+
+        function lostGame(pos) {
+            var lostsquarepos = posFromString(pos);
+            var lostsquare = getSquare(lostsquarepos.x, lostsquarepos.y);
+            lostsquare.classList.add('lostmine');
+
+            for (var i in bombLocations) {
+                var foundpos = posFromString(bombLocations[i]);
+                var foundsquare = getSquare(foundpos.x, foundpos.y);
+                foundsquare.classList.add('mine');
+            }
+
+            handleGameEnd(false);
+        }
+
+        function start(mode) {
+            bombLocations = [];
+            flagLocations = [];
+            flagcount.innerHTML = 'Flags: 0';
+            timecount.innerHTML = 'Time: 0s';
+            time = 0;
+            canclick = true;
+            cover.classList.add('hide');
+            gamemode = mode;
+
+            makeBoard(mode);
+            startTimer();
+            document.addEventListener('keydown', functionToggleByKeyPress);
+        }
+
+        function posFromString(pos) {
+            var split = pos.split('_');
+            return { x: parseInt(split[0]), y: parseInt(split[1]) };
+        }
+
+        function getSquare(x, y) {
+            return document.querySelector('[x="' + x + '"][y="' + y + '"]');
+        }
+
+        function toggleFlagging() {
+            flagging = !flagging;
+
+            if (flagging) {
+                flagButton.classList.add('enabled');
+                hoverflag.classList.remove('hide');
+                document.addEventListener('mousemove', moveHoverFlag);
+            } else {
+                flagButton.classList.remove('enabled');
+                hoverflag.classList.add('hide');
+                document.removeEventListener('mousemove', moveHoverFlag);
+            }
+        }
+
+        function restartGame() {
+            clearInterval(timer);
+            start(gamemode);
+        }
+
+        function moveHoverFlag(event) {
+            hoverflag.style.left = event.clientX + 6 + 'px';
+            hoverflag.style.top = event.clientY - 10 + 'px';
+        }
+
+        function functionToggleByKeyPress(event) {
+            if (event.keyCode == 70) {
+                toggleFlagging();
+            } else if (event.keyCode == 82) {
+                restartGame();
+            }
+        }
+        document.addEventListener('keydown', functionToggleByKeyPress)
+
+        function makeRandomNumber(x, y) {
+            return Math.floor(Math.random() * (y - x + 1)) + x;
+        }
+    </script>
+</body>
+
+</html>
