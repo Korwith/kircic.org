@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-
+ 
 <head>
     <title>Home | Kirhub</title>
     <link rel="icon" type="image/x-icon" href="sub/assets/kir.png">
@@ -10,25 +10,25 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="language" content="English">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+ 
     <style>
         body {
             background-color: #101010;
             box-sizing: border-box;
             margin: 0;
         }
-
+ 
         header {
             background-color: #202020;
             width: 100%;
             height: 55px;
             box-shadow: black 5px 5px 10px
         }
-
+ 
         #placeholder {
             display: none;
         }
-
+ 
         .hamburger {
             aspect-ratio: 1;
             float: left;
@@ -45,23 +45,23 @@
             border-image: linear-gradient(to bottom right, #b827fc 0%, #2c90fc 25%, #b8fd33 50%, #fec837 75%, #fd1892 100%);
             border-image-slice:1;
         }
-
+ 
         .hamburger:hover {
             filter: brightness(80%);
         }
-
+ 
         .rightheader {
             padding-top: 10px;
             padding-bottom: 10px;
             padding-right: 5px;
             height: calc(100% - 20px);
-            aspect-ratio: 12;
+            aspect-ratio: 16;
             float: right;
         }
-
+ 
         .rightheader button {
             height: 100%;
-            width: calc(33% - 5px);
+            width: calc(25% - 10px);
             text-transform: uppercase;
             border-radius: 3px;
             border: 0;
@@ -69,39 +69,48 @@
             text-shadow:2px 2px 4px black;
             transition: background-color 0.2s, filter 0.2s, transform 0.2s, box-shadow 0.2s;
         }
-
+ 
         .rightheader button:hover {
             filter: brightness(80%);
             transform: translateY(2px);
         }
-
+ 
         .discordbutton {
             background-color: #3E48AD;
             box-shadow:0px 5px 0px #242966;
         }
-
+ 
         .discordbutton:hover {
             box-shadow:0px 3px 0px #242966;
         }
-
+ 
         .accountsbutton {
             background-color: #A03EAD;
             box-shadow:0px 5px 0px #5e2466;
         }
-
+ 
         .accountsbutton:hover {
             box-shadow:0px 3px 0px #5e2466;
         }
-
+ 
         .homebutton {
             background-color: #FB9B00;
             box-shadow:0px 5px 0px #ac6a00;
         }
-
+ 
         .homebutton:hover {
             box-shadow:0px 3px 0px #ac6a00;
         }
-
+ 
+        .updatesbutton {
+            background-color:#4fad3e;
+            box-shadow:0px 5px 0px #326f28;
+        }
+ 
+        .updatesbutton:hover {
+            box-shadow:0px 3px 0px #326f28;
+        }
+ 
         .aboutme {
             width: 60%;
             height: fit-content;
@@ -115,12 +124,12 @@
             border: 3px solid #252525;
             box-shadow: #050505 10px 10px 10px;
         }
-
+ 
         .aboutme h1 {
             text-align: center;
             font-size: 28px;
         }
-
+ 
         .languageicons {
             margin-left: auto;
             margin-right: auto;
@@ -129,7 +138,7 @@
             gap: 10%;
             width: 65%;
         }
-
+ 
         .languageicons div {
             aspect-ratio: 1;
             box-sizing: border-box;
@@ -140,61 +149,61 @@
             background-repeat: no-repeat;
             background-position: center;
         }
-
+ 
         .aboutmeinfo {
             margin-top: 15px;
         }
-
+ 
         .aboutmeinfo span {
             display: block;
             width: 100%;
             text-align: center;
         }
-
+ 
         .hobbiestxt {
             margin-top: 10px;
             font-size: 16px;
         }
-
+ 
         .hobby {
             font-size: 12px;
         }
-
+ 
         .lua {
             background-image: url(sub/assets/lua.svg);
         }
-
+ 
         .js {
             background-image: url(sub/assets/js.svg);
         }
-
+ 
         .html {
             background-image: url(sub/assets/html.svg);
         }
-
+ 
         .css {
             background-image: url(sub/assets/css.svg);
         }
-
+ 
         .languageicons div:hover {
             border: 4px solid white
         }
-
+ 
         .projects span {
             display: block;
             width: 100%;
             text-align: center;
         }
-
+ 
         .favs {
             color: gold;
         }
-
+ 
         .holdertext {
             font-size: 22px;
             margin-bottom: 10px
         }
-
+ 
         .projectsgrid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -202,7 +211,7 @@
             padding: 10px;
             margin-bottom:30px;
         }
-
+ 
         .proj {
             aspect-ratio: 3/4;
             border-radius: 8px;
@@ -213,19 +222,19 @@
             cursor:pointer;
             background-size:contain;
         }
-
+ 
         .proj:hover {
             border:5px solid white;
             box-shadow:white 4px 4px 24px;
         }
-
+ 
         .proj span {
             margin-left:auto;
             margin-right:auto;
             width:90%;
             text-shadow:2px 2px 4px black;
         }
-
+ 
         .projicon {
             aspect-ratio: 1;
             width: 60%;
@@ -239,67 +248,91 @@
             background-position:center;
             background-size:85%;
         }
-
+ 
         #legacyholder div {
             filter:grayscale(100%);
         }
-
+ 
+        .animicon {
+            aspect-ratio:1;
+            width:12vw;
+            background-size:100%;
+            background-image:url(sub/assets/kir.png);
+            transition:box-shadow 0.3s, border 0.3s, background-image 0.3s;
+        }
+ 
+        .animicon:hover {
+            cursor:pointer;
+            border:3px solid white;
+            box-shadow:#fff 0px 0px 40px;
+            background-image:url(sub/assets/kirhappy.png);
+        }
+ 
         * {
             font-family: "Arial Black", "Arial Bold", monospace;
             color: white;
         }
-
+ 
         @media (max-width: 768px) {
             .headercenter {
                 margin-left: auto;
                 margin-right: auto;
             }
-
+ 
             .aboutme {
                 width: calc(100% - 30px);
                 margin: 15px;
             }
-
+ 
             .languageicons {
                 width: 80%;
             }
-
+ 
             .projectsgrid {
                 grid-template-columns: repeat(2, 1fr);
             }
-
-            .homebutton {
-                display:none;
-            }
-
+ 
             .rightheader {
                 aspect-ratio:unset;
                 width:calc(100% - 65px);
             }
+ 
+            .animicon {
+                width:25vw;
+                margin-left:auto;
+                margin-right:auto;
+            }
         }
     </style>
 </head>
-
+ 
 <body>
     <header>
         <button class="hamburger"></button>
         <div class="rightheader">
             <button class="homebutton">Home</button>
+            <button class="updatesbutton">Updates</button>
             <button class="accountsbutton">Accounts</button>
             <button class="discordbutton">Discord</button>
         </div>
     </header>
-
+ 
+    <div class="animicon aboutme">
+        <div class="actualicon">
+ 
+        </div>
+    </div>
+ 
     <div class="aboutme">
         <h1>About Me</h1>
-
+ 
         <div class="languageicons">
             <div class="lua"></div>
             <div class="js"></div>
             <div class="html"></div>
             <div class="css"></div>
         </div>
-
+ 
         <div class="aboutmeinfo">
             <span class="languagetxt">Lua, JavaScript, HTML, CSS</span>
             <span class="hobbiestxt">Hobbies</span>
@@ -310,7 +343,7 @@
             <span class="hobby">> Monkeytype</span>
         </div>
     </div>
-
+ 
     <div class="projects aboutme">
         <h1>Projects</h1>
         <span class="favs holdertext">Favorites</span>
@@ -320,31 +353,36 @@
         <span class="legacy holdertext">Legacy [Not Updated]</span>
         <div id="legacyholder" class="projectsgrid"></div>
     </div>
-
+ 
     <div class="proj" id="placeholder">
         <div class="projicon"></div>
         <span class="projtitle">test</span>
         <span class="projdate">test</span>
     </div>
-
+ 
     <script>
         var placeholder = document.querySelector('#placeholder');
         var home = document.querySelector('.homebutton');
+        var updates = document.querySelector('.updatesbutton')
         var accounts = document.querySelector('.accountsbutton');
         var discord = document.querySelector('.discordbutton');
-
+ 
         home.onclick = function() {
             window.location.href = 'index.html';
         }
-
+ 
+        updates.onclick = function() {
+            window.location.href = 'updates.html';
+        }
+ 
         accounts.onclick = function() {
             window.location.href = 'services.html';
         }
-
+ 
         discord.onclick = function() {
             window.open('https://discord.gg/invite/p8ZZXZqnag', '_blank');
         }
-
+ 
         var projectData = [
             {
                 name: 'Minesweeper Recreation [v2]',
@@ -419,7 +457,7 @@
                 category: 'legacy',
             },
         ]
-
+ 
         for (var i in projectData) {
             var data = projectData[i];
             var clone = placeholder.cloneNode(true);
@@ -427,14 +465,14 @@
             var foundIcon = clone.querySelector('.projicon');
             var foundTitle = clone.querySelector('.projtitle');
             var foundDate = clone.querySelector('.projdate');
-
+ 
             clone.style.backgroundColor = data.color;
             foundIcon.style.backgroundImage = `url(sub/assets/${data.icon})`;
             foundTitle.innerHTML = data.name;
             foundDate.innerHTML = `[${data.date}]`
             clone.removeAttribute('id');
             selectedGrid.appendChild(clone);
-
+ 
             (function(data) {
                 clone.onclick = function() {
                     window.open(data.link, '_blank');
@@ -443,5 +481,5 @@
         }
     </script>
 </body>
-
+ 
 </html>
