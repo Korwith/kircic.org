@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Updates | Kirhub</title>
+    <link rel="icon" type="image/x-icon" href="sub/assets/kir.png">
+    <meta property="twitter:image" content="https://www.kirhub.com/sub/assets/kirhappy.png">
+    <meta name="title" content="Updates | Kirhub">
+    <meta name="description" content="a place where all your hopes and dreams come true">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="language" content="English">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        body {
+            overflow-x:hidden;
+            margin: 0;
+            background-color: #151515;
+        }
+
+        header {
+            background-color: #202020;
+            width: 100%;
+            height: 55px;
+            box-shadow: black 5px 5px 10px
+        }
+
+        .hamburger {
+            aspect-ratio: 1;
+            float: left;
+            height: calc(90% - 5px);
+            background-image: url(sub/assets/kir.png);
+            background-size: contain;
+            background-color: rgba(0, 0, 0, 0);
+            cursor: pointer;
+            transition: filter 0.2s;
+            margin-left: 5px;
+            margin-top: 5px;
+            box-sizing: border-box;
+            border: 3px solid;
+            border-image: linear-gradient(to bottom right, #b827fc 0%, #2c90fc 25%, #b8fd33 50%, #fec837 75%, #fd1892 100%);
+            border-image-slice: 1;
+        }
+
+        .hamburger:hover {
+            filter: brightness(80%);
+        }
+
+        .rightheader {
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-right: 5px;
+            height: calc(100% - 20px);
+            aspect-ratio: 16;
+            float: right;
+        }
+
+        .rightheader button {
+            height: 100%;
+            width: calc(25% - 10px);
+            text-transform: uppercase;
+            border-radius: 3px;
+            border: 0;
+            cursor: pointer;
+            text-shadow: 2px 2px 4px black;
+            transition: background-color 0.2s, filter 0.2s, transform 0.2s, box-shadow 0.2s;
+        }
+
+        .rightheader button:hover {
+            filter: brightness(80%);
+            transform: translateY(2px);
+        }
+
+        .discordbutton {
+            background-color: #3E48AD;
+            box-shadow: 0px 5px 0px #242966;
+        }
+
+        .discordbutton:hover {
+            box-shadow: 0px 3px 0px #242966;
+        }
+
+        .accountsbutton {
+            background-color: #A03EAD;
+            box-shadow: 0px 5px 0px #5e2466;
+        }
+
+        .accountsbutton:hover {
+            box-shadow: 0px 3px 0px #5e2466;
+        }
+
+        .homebutton {
+            background-color: #FB9B00;
+            box-shadow: 0px 5px 0px #ac6a00;
+        }
+
+        .homebutton:hover {
+            box-shadow: 0px 3px 0px #ac6a00;
+        }
+
+        .updatesbutton {
+            background-color: #4fad3e;
+            box-shadow: 0px 5px 0px #326f28;
+        }
+
+        .updatesbutton:hover {
+            box-shadow: 0px 3px 0px #326f28;
+        }
+
+        #updategrid {
+            margin-top: 50px;
+            padding: 10px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 60%;
+            height: fit-content;
+        }
+
+        .updateholder {
+            width: 100%;
+            border: 3px solid #252525;
+            background-color: #202020;
+            border-radius: 8px;
+            box-sizing: border-box;
+            border: 3px solid #252525;
+            box-shadow: #050505 10px 10px 10px;
+            padding-bottom: 30px;
+            margin-bottom: 50px;
+        }
+
+        .updateholder h2 {
+            width: 100%;
+            text-align: center;
+        }
+
+        .updateholder span {
+            width: 100%;
+            display: block;
+            text-align: center;
+        }
+
+        .title {
+            font-size: 30px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #placeholder {
+            display: none;
+        }
+
+        * {
+            font-family: "Arial Black", "Arial Bold", monospace;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .headercenter {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .updateholder {
+                width: calc(100% - 30px);
+                margin-bottom:30px;
+            }
+
+            #updategrid {
+                width:100%;
+            }
+
+            .rightheader {
+                aspect-ratio: unset;
+                width: calc(100% - 65px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <button class="hamburger"></button>
+        <div class="rightheader">
+            <button class="homebutton">Home</button>
+            <button class="updatesbutton">Updates</button>
+            <button class="accountsbutton">Accounts</button>
+            <button class="discordbutton">Discord</button>
+        </div>
+    </header>
+
+    <div id="updategrid">
+        <span class="title">Updates</span>
+        <div id='placeholder' class="updateholder">
+            <h2 class="updatetitle">11/15/23: General fixes</h2>
+            <span id='placeholder' class="updateinfo">added</span>
+        </div>
+    </div>
+
+    <script>
+        var updategrid = document.querySelector('#updategrid');
+        var placeholder = document.querySelector('#placeholder');
+
+        var updateInfo = [
+            {
+                name: 'Added updates page',
+                date: '11/15/23',
+                added: [
+                    '+ updates button in the header',
+                    '+ this page you are on right now',
+                ]
+            },
+            {
+                name: 'Added link to home page',
+                date: '11/14/23',
+                added: [
+                    '+ put minesweeper legacy back on the home page',
+                    '+ in the legacy section'
+                ]
+            },
+            {
+                name: 'TEST TEST TEST TEST',
+                date: '99/99/99',
+                added: [
+                    'just trying',
+                    'to see',
+                    'if the updates',
+                    'load in correctly',
+                    'which they should...'
+                ]
+            },
+        ]
+
+        for (var i in updateInfo) {
+            var info = updateInfo[i];
+            var clone = placeholder.cloneNode(true);
+            var foundTitle = clone.querySelector('.updatetitle');
+            var foundInfo = clone.querySelector('.updateinfo');
+
+            foundTitle.innerHTML = info.date + ': ' + info.name;
+            for (var i in info.added) {
+                var infoclonetext = info.added[i];
+                var infoclone = foundInfo.cloneNode(true);
+
+                infoclone.innerHTML = infoclonetext;
+                infoclone.removeAttribute('id');
