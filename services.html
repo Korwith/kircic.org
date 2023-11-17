@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html>
 
 <head>
     <title>Accounts</title>
-    <link rel="stylesheet" href="header.css" media="screen">
+    <link rel="stylesheet" href="headeronly.css" media="screen">
     <link rel="icon" type="image/x-icon" href="sub/kir.png">
     <meta property="twitter:image" content="https://www.kirhub.com/sub/kirhappy.png">
     <meta name="title" content="Kirhub | Accounts">
@@ -110,9 +111,12 @@
 
 <body>
     <header>
-        <button class="home"></button>
-        <button class="accounts">Accounts</button>
-        <button class="discord">Discord</button>
+        <button class="hamburger"></button>
+        <div class="rightheader">
+            <button class="homebutton">Home</button>
+            <button class="accountsbutton">Accounts</button>
+            <button class="discordbutton">Discord</button>
+        </div>
     </header>
 
     <div id='placeholder' class="service">
@@ -129,7 +133,6 @@
 
     <div id="secondaryholder"></div>
 
-    <script src="header.js"></script>
     <script>
         var holder = document.querySelector('#holder');
         var secondaryholder = document.querySelector('#secondaryholder');
@@ -248,9 +251,9 @@
 
             {
                 service: 'Instagram',
-                name: '@thad.real',
+                name: '@thadcoolfr',
                 icon: 'icon/instagram.svg',
-                link: 'https://www.instagram.com/thad.real',
+                link: 'https://www.instagram.com/thadcoolfr',
                 bgcolor: '#E1306C',
                 bordercolor: '#a6234f',
                 used: true,
@@ -345,6 +348,8 @@
             whichholder.appendChild(clone);
         }
     </script>
+
+    <script src="headeronly.js"></script>
 </body>
 
 </html>
