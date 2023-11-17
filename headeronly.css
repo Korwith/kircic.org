@@ -94,4 +94,8 @@ header {
         aspect-ratio:unset;
         width:calc(100% - 65px);
     }
+    
+    .homebutton {
+        display:none;
+    }
 }
