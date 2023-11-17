@@ -96,7 +96,7 @@ header {
     }
     
     .rightheader button {
-        width:calc(33% - 5px);
+        width:calc(33% - 10px);
     }
     
     .homebutton {
