@@ -79,3 +79,10 @@ header {
 .homebutton:hover {
     box-shadow: 0px 3px 0px #ac6a00;
 }
+
+@media (max-width:768px) {
+    .rightheader {
+        aspect-ratio:unset;
+        width:calc(100% - 65px);
+    }
+}
