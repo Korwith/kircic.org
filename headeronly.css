@@ -95,6 +95,10 @@ header {
         width:calc(100% - 65px);
     }
     
+    .rightheader button {
+        width:calc(33% - 5px);
+    }
+    
     .homebutton {
         display:none;
     }
