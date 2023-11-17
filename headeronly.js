@@ -1,8 +1,13 @@
 var placeholder = document.querySelector('#placeholder');
+var hamburger = document.querySelector('.hamburger');
 var home = document.querySelector('.homebutton');
 var updates = document.querySelector('.updatesbutton')
 var accounts = document.querySelector('.accountsbutton');
 var discord = document.querySelector('.discordbutton');
+
+hamburger.onclick = function() {
+    window.location.href = 'index.html';
+}
 
 home.onclick = function () {
     window.location.href = 'index.html';
