@@ -1,4 +1,5 @@
 var placeholder = document.querySelector('#placeholder');
+var pagetitle = document.querySelector('.pagetitle');
 var hamburger = document.querySelector('.hamburger');
 var home = document.querySelector('.homebutton');
 var updates = document.querySelector('.updatesbutton')
@@ -24,3 +25,5 @@ accounts.onclick = function () {
 discord.onclick = function () {
     window.open('https://discord.gg/invite/p8ZZXZqnag', '_blank');
 }
+
+pagetitle.innerHTML = document.title.split('|')[0];
