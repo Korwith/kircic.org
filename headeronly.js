@@ -4,6 +4,7 @@ var hamburger = document.querySelector('.hamburger');
 var home = document.querySelector('.homebutton');
 var updates = document.querySelector('.updatesbutton')
 var accounts = document.querySelector('.accountsbutton');
+var contribute = document.querySelector('.contributorsbutton');
 var discord = document.querySelector('.discordbutton');
 
 hamburger.onclick = function() {
@@ -20,6 +21,10 @@ updates.onclick = function () {
 
 accounts.onclick = function () {
     window.location.href = 'services.html';
+}
+
+contribute.onclick = function () {
+    window.location.href = 'contributers.html';
 }
 
 discord.onclick = function () {
