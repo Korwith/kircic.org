@@ -24,7 +24,7 @@ accounts.onclick = function () {
 }
 
 contribute.onclick = function () {
-    window.location.href = 'contributers.html';
+    window.location.href = 'contributors.html';
 }
 
 discord.onclick = function () {
