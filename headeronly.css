@@ -3,6 +3,7 @@ header {
     width: 100%;
     height: 55px;
     box-shadow: black 5px 5px 10px;
+    position:relative;
 }
 
 .hamburger {
@@ -27,18 +28,18 @@ header {
 }
 
 .rightheader {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-right: 5px;
-    height: calc(100% - 20px);
-    aspect-ratio: 16;
-    float: right;
+    position:absolute;
+    height:calc(90% - 15px);
+    top:calc(50% - 4px);
+    width:55%;
+    left:100%;
+    transform: translate(-100%, -50%);
 }
 
 .rightheader button {
     height: 100%;
-    width: calc(25% - 10px);
     text-transform: uppercase;
+    width:calc(20% - 5px);
     border-radius: 3px;
     border: 0;
     cursor: pointer;
@@ -69,6 +70,15 @@ header {
 
 .accountsbutton:hover {
     box-shadow: 0px 3px 0px #5e2466;
+}
+
+.contributorsbutton {
+    background-color:#f542ec;
+    box-shadow: 0px 5px 0px #b62faf;
+}
+
+.contributorsbutton:hover {
+    box-shadow: 0px 3px 0px #b62faf;
 }
 
 .homebutton {
@@ -106,11 +116,11 @@ header {
 @media (max-width:768px) {
     .rightheader {
         aspect-ratio:unset;
-        width:calc(100% - 65px);
+        width:calc(100% - 60px);
     }
     
     .rightheader button {
-        width:calc(33% - 10px);
+        width:calc(25% - 5px);
     }
     
     .homebutton {
