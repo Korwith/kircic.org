@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Contributors | Kirhub</title>
+    <link rel="icon" type="image/x-icon" href="sub/assets/kir.png">
+    <meta property="twitter:image" content="https://www.kirhub.com/sub/assets/kirhappy.png">
+    <meta name="title" content="Contributors | Kirhub">
+    <meta name="description" content="a place where all your hopes and dreams come true">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="language" content="English">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="headeronly.css">
+
+    <style>
+        body {
+            margin: 0;
+            background-color: #202020;
+        }
+
+        h1 {
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        .peoplebox {
+            width: 60%;
+            height: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 25px;
+            border-radius: 8px;
+            background-color: #202020;
+            box-sizing: border-box;
+            border: 3px solid #252525;
+            box-shadow: #050505 10px 10px 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .specialperson {
+            aspect-ratio: 1;
+            border-radius: 100%;
+            height: 150px;
+            margin: 15px;
+            position: relative;
+            cursor: pointer;
+            background-size: contain;
+        }
+
+        .specialperson span {
+            left: 50%;
+            bottom: calc(10% - 5px);
+            transform: translateX(-50%);
+            position: absolute;
+        }
+
+        .paris {
+            border: 3px solid pink !important;
+            box-shadow: 0px 0px 10px pink;
+            transition: box-shadow 0.2s;
+            background-image: url(imageboard/paris.png);
+        }
+
+        .yusamika {
+            border: 3px solid yellow !important;
+            box-shadow: 0px 0px 10px yellow;
+            transition: box-shadow 0.2s;
+            background-image: url(imageboard/parisc.jpg);
+        }
+
+        .paris:hover {
+            box-shadow: 0px 0px 40px pink;
+        }
+
+        .yusamika:hover {
+            box-shadow: 0px 0px 40px yellow;
+        }
+
+        * {
+            font-family: "Arial Black", "Arial Bold", monospace;
+            color: white;
+            text-shadow: 2px 2px 4px black;
+        }
+
+        #mouseoverlay {
+            padding-left: 20px;
+            padding-right: 20px;
+            height: 30px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 5px;
+            position: absolute;
+            opacity: 0;
+            transition: opacity 0.1s;
+        }
+
+        .enabled {
+            opacity: 1 !important;
+        }
+
+        .imageholder {
+            pointer-events: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 0 5px;
+        }
+
+        .imageholder:after {
+            display: block;
+            margin: 5px;
+            flex: 999 999 auto;
+
+        }
+
+        .imageframe {
+            background-color: black;
+            height: auto;
+            width: 33%;
+            display: inline-block;
+            border-radius: 8px;
+            flex: 0 0 calc(33.33% - 5px);
+            margin-bottom: 5px;
+            box-sizing: border-box;
+        }
+
+        .image {
+            width: 100%;
+            height: auto;
+            margin: 0;
+            border-top-right-radius: 8px;
+            border-top-left-radius: 8px;
+        }
+
+        .imagetext {
+            height: 75px;
+            width: 100%;
+            background-color: #151515;
+            box-sizing: border-box;
+            border: 5px solid #101010;
+            border-bottom-right-radius: 8px;
+            border-bottom-left-radius: 8px;
+        }
+
+        .imagetext span {
+            display: block;
+            width: 100%;
+            height: 50%;
+            text-align: center;
+        }
+
+        .who {
+            color: gray;
+        }
+
+        #placeholder {
+            display: none;
+        }
+
+        @media (max-width: 768px) {}
+    </style>
+</head>
+
+<body>
+    <header>
+        <button class="hamburger"></button>
+        <span class="pagetitle">Home</span>
+        <div class="rightheader">
+            <button class="homebutton">Home</button>
+            <button class="updatesbutton">Updates</button>
+            <button class="accountsbutton">Accounts</button>
+            <button class="contributorsbutton">Contributors</button>
+            <button class="discordbutton">Discord</button>
+        </div>
+    </header>
+
+    <h1>A Special Thanks To:</h1>
+    <div class="peoplebox">
+        <div class="specialperson paris">
+            <span>@paros</span>
+        </div>
+        <div class="specialperson yusamika">
+            <span>@Yusamika</span>
+        </div>
+    </div>
+
+    <h1>Image Board</h1>
+    <div class="peoplebox imageholder">
+        <div id="placeholder" class="imageframe">
+            <img class="image"></img>
+            <div class="imagetext">
+                <span class="title">Google Logo</span>
+                <span class="who">@unilerk</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="mouseoverlay">"if you see this, you stink"</div>
+
+    <script>
+        var paris = document.querySelector('.paris');
+        var overlay = document.querySelector('#mouseoverlay');
+        var placeholder = document.querySelector('#placeholder');
+        var imageholder = document.querySelector('.imageholder');
+        var peopleClass = {
+            'paris': [
+                'if you see this, you stink',
+                'apples bananas all that sort',
+                'five nights at freddys',
+                'the animitronics do get quirky at night'
+            ],
+
+            'yusamika': [
+                'praise jonAmo',
+                'say hi',
+                'eternally bored',
+                'hows your day been?',
+                'to jonAmo',
+                'cant sleep',
+                'im tired',
+                '4 AM',
+                'play antichamber',
+                'play ultrakill',
+                'play celeste',
+                'play brogue (if you like ascii art)',
+                'ascii art is amazing',
+                'yo can you play some music?',
+                'i should sleep',
+                'i should go to bed',
+                'i should be doing homework',
+                'watch any good movies lately?',
+                'im not sure what to do',
+                'at least i have my friends',
+                'anyway, how are you?',
+                'reading is for neeerds',
+                'so... hows your day been?',
+                'thoughts? just in general',
+                'im adding as many quotes as i can think of',
+                'tell me a joke',
+                'tell me a story',
+                'wanna hear a joke?',
+                'wanna hear a story?',
+                'quote invalid: please reload',
+                'error: quote not found',
+                'DOUBLE XP',
+                'literalkatgod says hello',
+                'merry birthday',
+                'merry christmas',
+                'happy christmas',
+                'happy birthday',
+                'happy easter',
+                'good morning',
+                'good afternoon',
+                'god evening',
+                'my sources say yes',
+                'oh im sorry to hear that',
+                'ive lost count of the days',
+                'hello neighbor!',
+                'dont get too excited my friend',
+                'i heard the 640x480 resolution was passed down to us by god',
+                'what bird does a twitter make?',
+                'what chomp do a teeth do',
+                'i give you an A for aoutstanding on this one',
+                'let me decompile you',
+                '[object Object]',
+                'null',
+                'NaN',
+                'false',
+                'huge wave of dizziness just hit me',
+                'breakcore my beloved',
+                'is this thing working?',
+                'yall ever heard of the griffone?',
+                'yever heard of gooby?',
+                '☃',
+            ]
+        }
+
+        function moveOverlay(event) {
+            overlay.style.left = event.x + 15 + 'px';
+            overlay.style.top = event.y - 30 + 'px';
+        }
+
+        for (var i in peopleClass) {
+            var circle = document.querySelector('.' + i);
+            (function (circle) {
+                var quotes = peopleClass[i];
+
+                circle.addEventListener('mouseenter', function () {
+                    var randomIndex = Math.floor(Math.random() * quotes.length);
+                    overlay.innerHTML = quotes[randomIndex];
+
+                    document.addEventListener('mousemove', moveOverlay);
+                    overlay.classList.add('enabled');
+                });
+
+                circle.addEventListener('mouseleave', function () {
+                    setTimeout(function () {
+                        document.removeEventListener('mousemove', moveOverlay);
+                    }, 200);
+                    overlay.classList.remove('enabled');
+                });
+            })(circle);
+
+        }
+        var imageData = [
+            {
+                title: 'Wanted',
+                person: 'ashechan',
+                link: 'wanted.png',
+            },
+
+            {
+                title: 'OH MY GAH',
+                person: 'paros',
+                link: 'omg.jpeg',
+            },
+
+            {
+                title: 'Bill',
+                person: 'unilerk',
+                link: 'bill.png'
+            },
+
+            {
+                title: 'Vending Machine',
+                person: 'unilerk',
+                link: 'vending.png'
+            },
+
+            {
+                title: 'Splatoon',
+                person: 'pichu',
+                link: 'splatoon.jpg'
+            },
+
+            {
+                title: 'Cat Door',
+                person: 'ashechan',
+                link: 'catdoor.png',
+            }
+        ]
+
+        for (var i in imageData) {
+            var data = imageData[i];
+            var clone = placeholder.cloneNode(true);
+            var image = clone.querySelector('.image');
+            var title = clone.querySelector('.title');
+            var person = clone.querySelector('.who');
+            image.src = 'contribute/' + data.link;
+            title.innerHTML = data.title;
+            person.innerHTML = data.person;
+
+            clone.removeAttribute('id');
+            imageholder.appendChild(clone);
+        }
+    </script>
+
+    <script src="headeronly.js"></script>
+</body>
+</html>
