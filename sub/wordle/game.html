@@ -74,7 +74,7 @@
         }
 
         #keyboard {
-            position: absolute;
+            position: fixed;
             bottom: 0;
             width: 100%;
             height: calc(40% - 40px)
@@ -122,6 +122,10 @@
         @media screen and (max-width:500px) {
             #holder {
                 width:100vw;
+            }
+            
+            #keyboard {
+                aspect-ratio:4;
             }
         }
     </style>
