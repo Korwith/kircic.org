@@ -23,13 +23,13 @@ header {
     border-image-slice: 1;
 }
 
-.hamburger:hover {
+.hamburger:hover, .mobilediscord:hover {
     filter: brightness(80%);
 }
 
 .rightheader {
     position:absolute;
-    height:calc(90% - 15px);
+    height:calc(90% - 10px);
     top:calc(50% - 4px);
     width:55%;
     left:100%;
@@ -99,6 +99,24 @@ header {
     box-shadow: 0px 3px 0px #326f28;
 }
 
+.mobilediscord {
+    aspect-ratio: 1;
+    float: right;
+    height: calc(90% - 5px);
+    background-image: url(sub/assets/discord.svg);
+    background-size: 90%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: rgba(0, 0, 0, 0);
+    cursor: pointer;
+    transition: filter 0.2s;
+    margin-right: 5px;
+    margin-top: 5px;
+    box-sizing: border-box;
+    border: 3px solid #323A8A;
+    display: none;
+}
+
 .pagetitle {
     display:block;
     float:left;
@@ -115,16 +133,30 @@ header {
 
 @media (max-width:768px) {
     .rightheader {
+        position: absolute;
+        left:50%;
+        top:calc(50% - 3px);
+        transform: translate(-50%, -50%);
+        float: none;
         aspect-ratio:unset;
-        width:calc(100% - 60px);
+        width:calc(100% - 105px);
+        text-align:center;
     }
     
     .rightheader button {
-        width:calc(25% - 2px);
+        width:calc(33% - 4px);
     }
     
     .homebutton {
         display:none;
+    }
+
+    .discordbutton {
+        display:none;
+    }
+
+    .mobilediscord {
+        display:block;
     }
 
     .pagetitle {
