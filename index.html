@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
  
@@ -109,12 +108,14 @@
         }
  
         .favs {
+            margin:0;
             color: gold;
         }
  
         .holdertext {
             font-size: 22px;
-            margin-bottom: 10px
+            margin: 30px;
+            transform: translateY(30px)
         }
  
         .projectsgrid {
@@ -182,7 +183,8 @@
         }
  
         * {
-            font-family: "Arial Black", "Arial Bold", monospace;
+            font-family: "Arial Black", Arial;
+            font-weight:900;
             color: white;
         }
  
@@ -220,6 +222,7 @@
             <button class="contributorsbutton">Contributors</button>
             <button class="discordbutton">Discord</button>
         </div>
+        <button class='mobilediscord'></button>
     </header>
  
     <div class="animicon aboutme">
@@ -251,11 +254,11 @@
  
     <div class="projects aboutme">
         <h1>Projects</h1>
-        <span class="favs holdertext">Favorites</span>
+        <h1 class="favs holdertext">Favorites</h1>
         <div id="favoriteholder" class="projectsgrid"></div>
-        <span class="normal holdertext">Other</span>
+        <h1 class="normal holdertext">Other</h1>
         <div id="normalholder" class="projectsgrid"></div>
-        <span class="legacy holdertext">Legacy [Not Updated]</span>
+        <h1 class="legacy holdertext">Legacy [Not Updated]</h1>
         <div id="legacyholder" class="projectsgrid"></div>
     </div>
  
@@ -267,27 +270,7 @@
  
     <script>
         var placeholder = document.querySelector('#placeholder');
-        var home = document.querySelector('.homebutton');
-        var updates = document.querySelector('.updatesbutton')
-        var accounts = document.querySelector('.accountsbutton');
-        var discord = document.querySelector('.discordbutton');
- 
-        home.onclick = function() {
-            window.location.href = 'index.html';
-        }
- 
-        updates.onclick = function() {
-            window.location.href = 'updates.html';
-        }
- 
-        accounts.onclick = function() {
-            window.location.href = 'services.html';
-        }
- 
-        discord.onclick = function() {
-            window.open('https://discord.gg/invite/p8ZZXZqnag', '_blank');
-        }
- 
+
         var projectData = [
             {
                 name: 'Minesweeper Recreation [v2]',
@@ -295,6 +278,14 @@
                 icon: 'flag.png',
                 color: '#FC716B',
                 link: 'sub/minesweeper.html',
+                category: 'favorite',
+            },
+            {
+                name: 'Wordle Recreation',
+                date: '12/1/23',
+                icon: 'wordle.png',
+                color: '#538D4E',
+                link: 'sub/wordle/game.html',
                 category: 'favorite',
             },
             {
