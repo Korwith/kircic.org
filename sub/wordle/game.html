@@ -12,7 +12,7 @@
     <style>
         html, body {
             margin: 0;
-            background-color: #303030;
+            background-color: #202020;
             touch-action: manipulation;
             overflow-x: hidden;
         }
@@ -72,14 +72,15 @@
         }
 
         .not {
-            background-color:gray;
+            background-color:gray !important;
         }
 
         #keyboard {
-            position: fixed;
+            position: absolute;
             bottom: 0;
             width: 100%;
-            height: calc(40% - 40px)
+            height: calc(40% - 40px);
+            transition: opacity 1s;
         }
 
         .krow {
@@ -110,7 +111,7 @@
             border-radius: 8px;
             border: 0;
             cursor: pointer;
-            color: black;
+            color:black;
             transition: background-color 0.3s
         }
 
@@ -118,10 +119,60 @@
             background-color:lightgray;
         }
 
+        .notification {
+            width:fit-content;
+            background-color:rgba(0, 0, 0, 0.4);
+            padding:5px;
+            color:white;
+            margin-left:auto;
+            margin-right:auto;
+            transform: translateY(-100%);
+            transition: transform 0.2s;
+        }
+
+        .show {
+            transform: translateY(4px);
+        }
+
+        .buttonholder {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: calc(40% - 40px);
+            pointer-events: none;
+        }
+
+        .play {
+            aspect-ratio:5;
+            display: block;
+            position: absolute;
+            cursor: pointer;
+            color: white;
+            background-color: rgb(83, 128, 64);
+            box-sizing: border-box;
+            border: 2px solid darkgreen;
+            left: 50%;
+            width: calc(60% - 40px);
+            font-size:22px;
+            text-shadow: 2px 2px 4px black;
+            pointer-events: all;
+            transform: translate(-50%, -50%);
+            transition: opacity 1s, background-color 0.2s;
+        }
+
+        .play:hover {
+            background-color: darkgreen;
+        }
+
+        .hide {
+            opacity: 0;
+            pointer-events: none !important;
+        }
+
         * {
+            font-family: "Arial Black", Arial;
             user-select: none;
             touch-action: none;
-            font-family: "Arial Black", Arial;
             font-weight:900;
         }
 
@@ -129,14 +180,26 @@
             #holder {
                 width:100vw;
             }
-            
-            #keyboard {
-                aspect-ratio:4;
-            }
-            
+
             #gamegrid {
+                width:calc(80% - 40px);
+                height:calc(80% - 40px);
+            }
+
+            #keyboard {
+                position:fixed;
+                width:100vw;
+            }
+
+            .buttonholder {
+                position:fixed;
+                width:100vw;
+            }
+
+            .play {
+                position:fixed;
+                bottom: 0;
                 width: calc(80% - 40px);
-                height: calc(80% - 40px);
             }
         }
     </style>
@@ -144,6 +207,8 @@
 
 <body>
     <div id='holder'>
+        <div class='notification'>Test</div>
+
         <div id="gamegrid">
             <div class="row" id="placeholder">
                 <div class="box"></div>
@@ -167,6 +232,7 @@
                 <button>O</button>
                 <button>P</button>
             </div>
+
             <div class="krow" id="k2">
                 <button>A</button>
                 <button>S</button>
@@ -178,6 +244,7 @@
                 <button>K</button>
                 <button>L</button>
             </div>
+
             <div class="krow" id="k3">
                 <button id="go">ENTER</button>
                 <button>Z</button>
@@ -189,6 +256,10 @@
                 <button>M</button>
                 <button id="back">BACK</button>
             </div>
+        </div>
+
+        <div class='buttonholder'>
+            <button class='play hide'>Play Again</button>
         </div>
     </div>
 
@@ -202,6 +273,8 @@
         var keyboardButtons = keyboard.querySelectorAll('button');
         var enterButton = document.querySelector('#go');
         var backspaceButton = document.querySelector('#back');
+        var notification = document.querySelector('.notification');
+        var playButton = document.querySelector('.play');
         var currentRow = 0;
         var currentLetter = 0;
         var validWordData = words.split('\n');
@@ -209,6 +282,12 @@
         var selectedWord = '';
         var currentWord = '';
         var playing = true;
+
+        var specialWords = {
+            'paris': 'I love her!',
+            'stink': 'Yay stink!',
+            'lover': 'Paris!',
+        }
 
         function makeGrid() {
             for (var y = 0; y < 6; y++) {
@@ -222,10 +301,13 @@
         function checkWord() {
             var currentRowElement = document.querySelector(`[row="${currentRow}"]`);
             var letterArray = currentRowElement.querySelectorAll('.box');
+            var specialMessage = specialWords[currentWord];
 
             if (playing) {
                 if (currentLetter == 5) {
                     if (validWordData.includes(currentWord)) {
+                        var correctCount = 0;
+
                         for (var i = 0; i < 5; i++) {
                             var thisBox = currentRowElement.querySelectorAll('.box')[i];
                             var thisKeyboardButton = document.querySelector(`[letter="${currentWord[i]}"]`);
@@ -235,6 +317,7 @@
                                 thisBox.classList.remove('somewhat');
                                 thisKeyboardButton.classList.add('correct');
                                 thisKeyboardButton.classList.remove('somewhat');
+                                correctCount++;
                             }
 
                             else if (selectedWord.includes(currentWord[i])) {
@@ -247,12 +330,20 @@
                             }
                         }
 
+                        if (specialMessage) {
+                            showNotification(specialMessage);
+                        }
+
                         if (currentRow < 5) {
                             currentWord = '';
                             currentLetter = 0;
                             currentRow++;
                         } else {
-                            lostGame();
+                            endGame(false);
+                        }
+
+                        if (correctCount == 5) {
+                            endGame(true);
                         }
                     }
                 }
@@ -295,7 +386,11 @@
             }
 
             else if (event.keyCode == 13) {
-                checkWord();
+                if (playing) {
+                    checkWord();
+                } else {
+                    restart();
+                }
             }
 
             else if (event.keyCode == 8) {
@@ -309,9 +404,42 @@
             document.addEventListener('keydown', keyListener)
         }
 
-        function lostGame() {
+        function restart() {
+            selectedWord = dailyWordData[Math.floor(Math.random() * dailyWordData.length)];
+            currentWord = '';
+            currentLetter = 0;
+            currentRow = 0;
+            playButton.classList.add('hide');
+            keyboard.classList.remove('hide');
+
+            var boxes = document.querySelectorAll('.box');
+            for (var i = 0; i < boxes.length; i++) {
+                var box = boxes[i];
+                box.innerHTML = '';
+                box.classList = '';
+                box.classList.add('box');
+            }
+
+            var keyButtons = keyboard.querySelectorAll('button');
+            for (var i = 0; i < keyButtons.length; i++) {
+                var key = keyButtons[i];
+                key.classList = '';
+            }
+
+            showNotification('New game started!')
+            playing = true;
+        }
+
+        function endGame(won) {
             playing = false;
-            alert(selectedWord);
+            playButton.classList.remove('hide');
+            keyboard.classList.add('hide');
+
+            if (won) {
+                showNotification(`You won in ${currentRow} rows!`)
+            } else {
+                showNotification('You lost!')
+            }
         }
 
         // TOUCH KEYBOARD LISTEN
@@ -329,11 +457,15 @@
             }
         }
 
-        enterButton.addEventListener('click', checkWord);
-        backspaceButton.addEventListener('click', backspace);
+        function hideNotification() {
+            notification.classList.remove('show');
+        }
+
+        function showNotification(message) {
+            notification.classList.add('show');
+            notification.innerHTML = message;
+            setTimeout(hideNotification, 1000);
+        }
 
         load();
-    </script>
-</body>
-
-</html>
+        playButton.addEventListener('click', restart);
