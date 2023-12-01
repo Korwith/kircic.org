@@ -1,1 +1,339 @@
-Moved to a new address
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Wordle | Kirhub</title>
+    <meta name="title" content="Worldle | Kirhub">
+    <meta name="description" content="a place where all your hopes and dreams come true">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="language" content="English">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        html, body {
+            margin: 0;
+            background-color: #303030;
+            touch-action: manipulation;
+            overflow-x: hidden;
+        }
+
+        #placeholder {
+            display: none;
+        }
+
+        #holder {
+            position: relative;
+            margin-left: auto;
+            margin-right: auto;
+            height: 100vh;
+            aspect-ratio: 5/6;
+        }
+
+        #gamegrid {
+            position: absolute;
+            width: calc(60% - 40px);
+            height: calc(60% - 40px);
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            pointer-events:none;
+        }
+
+        .row {
+            aspect-ratio: 5;
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+        }
+
+        .box {
+            aspect-ratio: 1;
+            width: calc(100% - 10px);
+            margin-left: auto;
+            margin-right: auto;
+            border: 2px solid gray;
+            display: inline-block;
+            font-size: 30px;
+            text-transform: uppercase;
+            align-content: center;
+            text-align: center;
+            color: white;
+            transition: background-color 0.3s, border 0.3s;
+        }
+
+        .somewhat {
+            background-color: #B59F3B !important;
+            border: 2px solid #B59F3B
+        }
+
+        .correct {
+            background-color: #538D4E !important;
+            border:2px solid #538D4E;
+        }
+
+        .not {
+            background-color:gray;
+        }
+
+        #keyboard {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: calc(40% - 40px)
+        }
+
+        .krow {
+            width: 100%;
+            height: 33%;
+            display: grid;
+            gap: 5px;
+        }
+
+        #k1 {
+            grid-template-columns: repeat(10, 1fr);
+        }
+
+        #k2 {
+            grid-template-columns: repeat(9, 1fr);
+            margin-left: 5%;
+            margin-right: 10%;
+            width: 90%;
+        }
+
+        #k3 {
+            grid-template-columns: repeat(9, 1fr);
+        }
+
+        .krow button {
+            height: calc(100% - 5px);
+            width: 100%;
+            border-radius: 8px;
+            border: 0;
+            cursor: pointer;
+            color: black;
+            transition: background-color 0.3s
+        }
+
+        .krow button:hover {
+            background-color:lightgray;
+        }
+
+        * {
+            user-select: none;
+            touch-action: none;
+            font-family: "Arial Black", Arial;
+            font-weight:900;
+        }
+
+        @media screen and (max-width:500px) {
+            #holder {
+                width:100vw;
+            }
+            
+            #keyboard {
+                aspect-ratio:4;
+            }
+            
+            #gamegrid {
+                width: calc(80% - 40px);
+                height: calc(80% - 40px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id='holder'>
+        <div id="gamegrid">
+            <div class="row" id="placeholder">
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+                <div class="box"></div>
+            </div>
+        </div>
+
+        <div id="keyboard">
+            <div class="krow" id="k1">
+                <button>Q</button>
+                <button>W</button>
+                <button>E</button>
+                <button>R</button>
+                <button>T</button>
+                <button>Y</button>
+                <button>U</button>
+                <button>I</button>
+                <button>O</button>
+                <button>P</button>
+            </div>
+            <div class="krow" id="k2">
+                <button>A</button>
+                <button>S</button>
+                <button>D</button>
+                <button>F</button>
+                <button>G</button>
+                <button>H</button>
+                <button>J</button>
+                <button>K</button>
+                <button>L</button>
+            </div>
+            <div class="krow" id="k3">
+                <button id="go">ENTER</button>
+                <button>Z</button>
+                <button>X</button>
+                <button>C</button>
+                <button>V</button>
+                <button>B</button>
+                <button>N</button>
+                <button>M</button>
+                <button id="back">BACK</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="data/validwords.js"></script>
+    <script src="data/selectwords.js"></script>
+
+    <script>
+        var placeholder = document.querySelector('#placeholder');
+        var grid = document.querySelector('#gamegrid');
+        var keyboard = document.querySelector('#keyboard');
+        var keyboardButtons = keyboard.querySelectorAll('button');
+        var enterButton = document.querySelector('#go');
+        var backspaceButton = document.querySelector('#back');
+        var currentRow = 0;
+        var currentLetter = 0;
+        var validWordData = words.split('\n');
+        var dailyWordData = dailyWords.split('\n');
+        var selectedWord = '';
+        var currentWord = '';
+        var playing = true;
+
+        function makeGrid() {
+            for (var y = 0; y < 6; y++) {
+                var clone = placeholder.cloneNode(true);
+                clone.removeAttribute('id');
+                clone.setAttribute('row', y);
+                grid.appendChild(clone);
+            }
+        }
+
+        function checkWord() {
+            var currentRowElement = document.querySelector(`[row="${currentRow}"]`);
+            var letterArray = currentRowElement.querySelectorAll('.box');
+
+            if (playing) {
+                if (currentLetter == 5) {
+                    if (validWordData.includes(currentWord)) {
+                        for (var i = 0; i < 5; i++) {
+                            var thisBox = currentRowElement.querySelectorAll('.box')[i];
+                            var thisKeyboardButton = document.querySelector(`[letter="${currentWord[i]}"]`);
+                            
+                            if (currentWord[i] == selectedWord[i]) {
+                                thisBox.classList.add('correct');
+                                thisBox.classList.remove('somewhat');
+                                thisKeyboardButton.classList.add('correct');
+                                thisKeyboardButton.classList.remove('somewhat');
+                            }
+
+                            else if (selectedWord.includes(currentWord[i])) {
+                                thisBox.classList.add('somewhat');
+                                thisKeyboardButton.classList.add('somewhat');
+                            }
+
+                            else {
+                                thisKeyboardButton.classList.add('not');
+                            }
+                        }
+
+                        if (currentRow < 5) {
+                            currentWord = '';
+                            currentLetter = 0;
+                            currentRow++;
+                        } else {
+                            lostGame();
+                        }
+                    }
+                }
+            }
+        }
+
+        function backspace() {
+            var currentRowElement = document.querySelector(`[row="${currentRow}"]`);
+            var letterArray = currentRowElement.querySelectorAll('.box');
+
+            if (playing) {
+                if (currentLetter > 0) {
+                    currentWord = currentWord.substring(0, currentWord.length - 1);
+                    currentLetter--;
+
+                    letterArray[currentLetter].innerHTML = '';
+                }
+            }
+        }
+
+        function addLetter(key) {
+            var currentRowElement = document.querySelector(`[row="${currentRow}"]`);
+            var letterArray = currentRowElement.querySelectorAll('.box');
+
+            if (playing) {
+                if (currentLetter < 5) {
+                    letterArray[currentLetter].innerHTML = key.toLowerCase();
+                    currentWord = currentWord + key.toLowerCase();
+                    currentLetter++;
+                }
+            }
+        }
+
+        function keyListener(event) {
+            var alphabet = 'abcdefghijklmnopqrstuvwxyz';
+            event.preventDefault();
+
+            if (alphabet.includes(event.key)) {
+                addLetter(event.key);
+            }
+
+            else if (event.keyCode == 13) {
+                checkWord();
+            }
+
+            else if (event.keyCode == 8) {
+                backspace();
+            }
+        }
+
+        function load() {
+            selectedWord = dailyWordData[Math.floor(Math.random() * dailyWordData.length)];
+            makeGrid();
+            document.addEventListener('keydown', keyListener)
+        }
+
+        function lostGame() {
+            playing = false;
+            alert(selectedWord);
+        }
+
+        // TOUCH KEYBOARD LISTEN
+        for (var i = 0; i < keyboardButtons.length; i++) {
+            var button = keyboardButtons[i];
+
+            if (button.innerHTML.length == 1) {
+                button.setAttribute('letter', button.innerHTML.toLowerCase());
+
+                (function (button) {
+                    button.onclick = function () {
+                        addLetter(button.innerHTML);
+                    }
+                })(button);
+            }
+        }
+
+        enterButton.addEventListener('click', checkWord);
+        backspaceButton.addEventListener('click', backspace);
+
+        load();
+    </script>
+</body>
+
+</html>
