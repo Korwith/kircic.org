@@ -103,7 +103,7 @@ header {
     aspect-ratio: 1;
     float: right;
     height: calc(90% - 5px);
-    background-image: url(sub/assets/discord.svg);
+    background-image: url(icon/discord.svg);
     background-size: 90%;
     background-repeat: no-repeat;
     background-position: center;
