@@ -291,9 +291,15 @@
 
         var specialWords = {
             'paris': 'I love her!',
+            'mommy': 'I love you mom!',
             'stink': 'Yay stink!',
             'lover': 'Paris!',
             'scout': 'Hi the cat!',
+            'pussy': '🤨',
+            'penis': '🍆',
+            'riley': '🐐🐐🐐',
+            'names': 'Doofy Cloober',
+            'emoji': '😄😆😅🤣🙂🫠😉😊😇🥰',
         }
 
         function makeGrid() {
@@ -352,6 +358,8 @@
                         if (correctCount == 5) {
                             endGame(true);
                         }
+                    } else {
+                        showNotification(`Invalid word (${currentWord})`)
                     }
                 }
             }
