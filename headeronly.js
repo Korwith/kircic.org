@@ -6,6 +6,7 @@ var updates = document.querySelector('.updatesbutton')
 var accounts = document.querySelector('.accountsbutton');
 var contribute = document.querySelector('.contributorsbutton');
 var discord = document.querySelector('.discordbutton');
+var mobilediscord = document.querySelector('.mobilediscord');
 
 hamburger.onclick = function() {
     window.location.href = 'index.html';
@@ -28,6 +29,10 @@ contribute.onclick = function () {
 }
 
 discord.onclick = function () {
+    window.open('https://discord.gg/invite/p8ZZXZqnag', '_blank');
+}
+
+mobilediscord.onclick = function() {
     window.open('https://discord.gg/invite/p8ZZXZqnag', '_blank');
 }
 
