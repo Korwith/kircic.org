@@ -444,7 +444,7 @@
             if (won) {
                 showNotification(`You won in ${currentRow} rows!`)
             } else {
-                showNotification('You lost!')
+                showNotification(`You lost! (${selectedWord})`)
             }
         }
 
@@ -470,7 +470,7 @@
         function showNotification(message) {
             notification.classList.add('show');
             notification.innerHTML = message;
-            setTimeout(hideNotification, 1000);
+            setTimeout(hideNotification, 2000);
         }
 
         load();
