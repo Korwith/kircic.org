@@ -45,7 +45,8 @@ header {
     cursor: pointer;
     text-shadow: 2px 2px 4px black;
     transition: background-color 0.2s, filter 0.2s, transform 0.2s, box-shadow 0.2s;
-    font-family: "Arial Black", "Arial Bold", monospace;
+    font-family: "Arial Black", Arial;
+    font-weight:900;
     color: white;
 }
 
