@@ -30,6 +30,7 @@
             #game {
                 aspect-ratio: 1;
                 height: 100%;
+                width: 100%;
                 position: relative;
             }
 
@@ -57,10 +58,12 @@
 
             @media screen and (max-width:767px) {
                 #holder {
-                    aspect-ratio: 10/15;
                     width: 100vw;
-                    height: unset;
-                    position: fixed;
+                    height: 150vw;
+                }
+
+                #game {
+                    aspect-ratio:unset;
                 }
 
                 .square {
