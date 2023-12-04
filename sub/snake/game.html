@@ -180,9 +180,8 @@
                 var percentX = x * 5;
                 var percentY = y * 5;
                 var height = whichHeight();
-                alert(height)
                 
-                if (percentX >= 100 || percentX < 0 || percentY >= whichHeight() || percentY < 0) {
+                if (percentX >= 100 || percentX < 0 || percentY >= height || percentY < 0) {
                     return true;
                 }
             }
