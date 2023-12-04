@@ -63,8 +63,10 @@
 
             @media screen and (max-width:767px) {
                 #holder {
-                    aspect-ratio:10/15;
+                    aspect-ratio:10/12;
                     width: 100%;
+                    position: fixed;
+                    top: 0
                 }
 
                 #game {
@@ -138,7 +140,7 @@
             function whichHeight() {
                 var height;
                 if (mobile) {
-                    height = 150;
+                    height = 120;
                 } else {
                     height = 100;
                 }
