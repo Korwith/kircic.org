@@ -177,11 +177,13 @@
             }
 
             function outOfBounds(x, y) { // FINISH THIS
+                var head = snakeTable[snakeTable.length - 1];
                 var percentX = x * 5;
                 var percentY = y * 5;
                 var height = whichHeight();
                 
                 if (percentX >= 100 || percentX < 0 || percentY >= height || percentY < 0) {
+                    head.classList.add('dead');
                     return true;
                 }
             }
@@ -223,7 +225,6 @@
 
                 if (touchingSquare) {
                     if (touchingSquare.classList.contains('snake')) {
-                        head.classList.add('dead');
                         kill();
                     }
 
