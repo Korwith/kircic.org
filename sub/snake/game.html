@@ -373,10 +373,10 @@
 
             function start() {
                 var apples = document.querySelectorAll('.apple');
+                var snakePart = document.querySelectorAll('.snake');
 
-                for (var i in snakeTable) {
-                    snakeTable[i].remove();
-                    snakeTable.splice(i, 1);
+                for (var i = 0; i < snakePart.length; i++) {
+                    snakePart[i].remove();
                 }
 
                 for (var i = 0; i < apples.length; i++) {
@@ -386,6 +386,7 @@
                 score = 0;
                 addQueue = 0;
                 facingQueue = [];
+                snakeTable = [];
                 facing = 'right';
 
                 var clone = placeholder.cloneNode(true);
