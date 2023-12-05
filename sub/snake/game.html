@@ -23,9 +23,6 @@
                 margin-left: auto;
                 margin-right: auto;
                 box-sizing: border-box;
-                border: 3px solid maroon;
-                border-left: 0;
-                border-top: 0;
                 height: 100vh;
                 background-color: black;
                 position: relative;
@@ -61,6 +58,10 @@
 
             #cover {
                 position: absolute;
+                box-sizing: border-box;
+                border: 3px solid maroon;
+                border-left: 0;
+                border-top: 0;
                 width: 100%;
                 height: 100%;
                 top: 0;
@@ -101,6 +102,16 @@
 
             #play:hover {
                 box-shadow: 0px 0px 20px red;
+            }
+
+            #score {
+                display: block;
+                position: absolute;
+                bottom: 10px;
+                left: 10px;
+                width:50px;
+                height:50px;
+                font-size:36px;
             }
 
             * {
@@ -149,6 +160,8 @@
                 <div id="placeholder" class="square"></div>
             </div>
 
+            <span id="score">0</span>
+
             <div id="cover">
                 <h1 class="title">Snake</h1>
                 <button id="play">Play</button>
@@ -160,10 +173,12 @@
             var game = document.querySelector('#game');
             var placeholder = document.querySelector('#placeholder');
             var startButton = document.querySelector('#play');
+            var scoreDisplay = document.querySelector('#score');
             var cover = document.querySelector('#cover');
             var snakeTable = [];
             var facingQueue = [];
             var addQueue = 0;
+            var score = 0;
             var mobile = false;
             var speed = 100;
             var playing = false;
@@ -301,7 +316,9 @@
                     else if (touchingSquare.classList.contains('apple')) {
                         touchingSquare.remove();
                         addQueue++;
+                        score++;
                         makeApple(1);
+                        updateScore();
                     }
                 }
 
@@ -345,16 +362,28 @@
                 }
             }
 
+            function updateScore() {
+                scoreDisplay.innerHTML = score;
+            }
+
             function kill() {
                 playing = false;
                 cover.classList.remove('hidden');
             }
 
             function start() {
+                var apples = document.querySelectorAll('.apple');
+
                 for (var i in snakeTable) {
                     snakeTable[i].remove();
                     snakeTable.splice(i, 1);
                 }
+
+                for (var i = 0; i < apples.length; i++) {
+                    apples[i].remove();
+                }
+
+                score = 0;
                 addQueue = 0;
                 facingQueue = [];
                 facing = 'right';
@@ -367,6 +396,7 @@
                 snakeTable.push(clone);
 
                 playing = true;
+                updateScore();
                 makeApple(2);
                 renderMove();
                 document.addEventListener('keydown', keyListener);
