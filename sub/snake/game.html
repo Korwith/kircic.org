@@ -4,17 +4,17 @@
 
     <head>
         <title>Snake</title>
-            <meta name="title" content="Snake | Kirhub">
-            <meta name="description" content="a place where all your hopes and dreams come true">
-            <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-            <meta name="language" content="English">
-            <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="title" content="Snake | Kirhub">
+        <meta name="description" content="a place where all your hopes and dreams come true">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="language" content="English">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <style>
             body {
                 background-color: #202020;
                 margin: 0;
-                touch-action:manipulation;
+                touch-action: manipulation;
                 overflow: hidden;
             }
 
@@ -22,10 +22,13 @@
                 aspect-ratio: 1;
                 margin-left: auto;
                 margin-right: auto;
-                border: 3px solid red;
                 box-sizing: border-box;
+                border: 3px solid maroon;
+                border-left: 0;
+                border-top: 0;
                 height: 100vh;
-                background-color:black;
+                background-color: black;
+                position: relative;
             }
 
             #placeholder {
@@ -56,14 +59,73 @@
                 background-color: gray;
             }
 
+            #cover {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                background:
+                    linear-gradient(maroon 3px, transparent 1px) 0 0 / 10% 10%,
+                    linear-gradient(90deg, maroon 3px, transparent 1px) 0 0 / 10% 10%,
+                    #330000;
+                transition: opacity 2s;
+            }
+
+            .hidden {
+                opacity: 0;
+                pointer-events: none;
+            }
+
+            .title {
+                text-align: center;
+                padding: 30px;
+                font-size: 60px;
+            }
+
+            #play {
+                aspect-ratio: 4;
+                position: absolute;
+                display: block;
+                box-sizing: border-box;
+                transform: translateX(-50%);
+                bottom: 8%;
+                left: 50%;
+                width: 50%;
+                border: 5px solid #660000;
+                background-color: #550000;
+                border-radius: 10px;
+                font-size: 32px;
+                cursor: pointer;
+                transition: box-shadow 0.3s;
+            }
+
+            #play:hover {
+                box-shadow: 0px 0px 20px red;
+            }
+
             * {
+                font-family: "Arial Black", Arial;
+                font-weight: 900;
+                text-shadow: 2px 2px 4px black;
+                color: white;
                 user-select: none;
                 touch-action: none;
             }
 
             @media screen and (max-width:767px) {
+                #cover {
+                    background:
+                        linear-gradient(maroon 3px, transparent 1px) 0 0 / 10vw 10vw,
+                        linear-gradient(90deg, maroon 3px, transparent 1px) 0 0 / 10vw 10vw,
+                        #330000;
+                }
+
+                #play {
+                    width:75%;
+                }
+
                 #holder {
-                    aspect-ratio:unset;
+                    aspect-ratio: unset;
                     width: 100vw;
                     height: 160vw;
                     position: fixed;
@@ -71,7 +133,7 @@
                 }
 
                 #game {
-                    aspect-ratio:unset;
+                    aspect-ratio: unset;
                 }
 
                 .square {
@@ -86,16 +148,24 @@
             <div id="game">
                 <div id="placeholder" class="square"></div>
             </div>
+
+            <div id="cover">
+                <h1 class="title">Snake</h1>
+                <button id="play">Play</button>
+            </div>
         </div>
 
         <script>
             var holder = document.querySelector('#holder');
             var game = document.querySelector('#game');
             var placeholder = document.querySelector('#placeholder');
+            var startButton = document.querySelector('#play');
+            var cover = document.querySelector('#cover');
             var snakeTable = [];
             var facingQueue = [];
             var addQueue = 0;
             var mobile = false;
+            var speed = 100;
             var playing = false;
             var facing = 'right';
 
@@ -145,7 +215,7 @@
                 } else {
                     height = 100;
                 }
-                
+
                 return height;
             }
 
@@ -181,7 +251,7 @@
                 var percentX = x * 5;
                 var percentY = y * 5;
                 var height = whichHeight();
-                
+
                 if (percentX >= 100 || percentX < 0 || percentY >= height || percentY < 0) {
                     head.classList.add('dead');
                     return true;
@@ -271,15 +341,24 @@
             function renderMove() {
                 if (playing) {
                     makeSquare();
-                    setTimeout(renderMove, 150);
+                    setTimeout(renderMove, speed);
                 }
             }
 
             function kill() {
                 playing = false;
+                cover.classList.remove('hidden');
             }
 
             function start() {
+                for (var i in snakeTable) {
+                    snakeTable[i].remove();
+                    snakeTable.splice(i, 1);
+                }
+                addQueue = 0;
+                facingQueue = [];
+                facing = 'right';
+
                 var clone = placeholder.cloneNode(true);
                 clone.removeAttribute('id');
                 clone.setAttribute('x', 0);
@@ -291,23 +370,19 @@
                 makeApple(2);
                 renderMove();
                 document.addEventListener('keydown', keyListener);
+
+                cover.classList.add('hidden');
             }
 
             function handleScreenSize() {
                 if (window.innerWidth < 767) {
                     mobile = true;
+                    speed = 150;
                 } else {
                     mobile = false;
+                    speed = 100;
                 }
             }
-
-            handleScreenSize();
-            window.onresize = handleScreenSize;
-
-            start();
-
-            document.addEventListener('touchstart', handleTouchStart, false);
-            document.addEventListener('touchmove', handleTouchMove, false);
 
             var xDown = null;
             var yDown = null;
@@ -352,6 +427,11 @@
                 yDown = null;
             };
 
+            handleScreenSize();
+            window.onresize = handleScreenSize;
+            document.addEventListener('touchstart', handleTouchStart, false);
+            document.addEventListener('touchmove', handleTouchMove, false);
+            startButton.onclick = start;
         </script>
     </body>
 
