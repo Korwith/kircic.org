@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Connections | Kirhub</title>
+    <style>
+        body {
+            background-color: #202020;
+            margin: 0;
+        }
+
+        #placeholder {
+            display: none;
+        }
+
+        #holder {
+            aspect-ratio: 5/6;
+            height: 100vh;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+        }
+
+        #gamegrid {
+            aspect-ratio: 1.5;
+            width: 100%;
+            display: grid;
+            gap: 5px;
+            grid-template-columns: repeat(4, calc(25% - 3px));
+            grid-template-rows: repeat(4, 1fr);
+        }
+
+        #gamegrid button {
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            cursor: pointer;
+            border: 3px solid black;
+            background-color: #151515;
+            box-sizing: border-box;
+            border-radius: 8px;
+            font-size: 14px;
+            text-transform: uppercase;
+            transition: border 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #gamegrid button:hover {
+            border: 3px solid gray;
+        }
+
+        .selected {
+            border: 3px solid white !important;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 40px;
+            margin: 0;
+        }
+
+        .subtext {
+            text-align: center;
+            font-size: 20px;
+            margin: 0;
+            margin-bottom: 20px;
+            transition: color 0.3s;
+        }
+
+        .buttonholder {
+            width: 100%;
+            height: 10%;
+            margin-top: 5%;
+        }
+
+        .buttonholder button {
+            width: calc(33.33% - 4px);
+            height: 100%;
+            background-color: #151515;
+            border: 3px solid;
+            border-color: black;
+            border-radius: 8px;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0px 6px 0px 0px black;
+            transition: transform 0.3s, box-shadow 0.3s, backgrund-color 0.3s;
+        }
+
+        .buttonholder button:hover {
+            transform: translateY(4px);
+            background-color: #121212;
+            box-shadow: 0px 2px 0px 0px black;
+        }
+
+        #submit {
+            background-color: #538D4E;
+            border: 3px solid #31512e;
+            box-shadow: 0px 6px 0px 0px #1e321c;
+        }
+
+        #submit:hover {
+            background-color: #406d3c;
+            box-shadow: 0px 2px 0px 0px #1e321c;
+        }
+
+        .closehint {
+            color: #538D4E;
+        }
+
+        .badhint {
+            color: #BA383C;
+        }
+
+        .disabled {
+            pointer-events: none;
+        }
+
+        .r1success {
+            grid-row: 1;
+            background-color: #E46BFC !important;
+            border-color: #ad50bf !important;
+        }
+
+        .r2success {
+            grid-row: 2;
+            background-color: #BA383C !important;
+            border-color: #85282b !important;
+        }
+
+        .r3success {
+            grid-row: 3;
+            background-color: #966BFC !important;
+            border-color: #6e4eba !important;
+        }
+
+        .r4success {
+            grid-row: 4;
+            background-color: #f7da21 !important;
+            border-color: #b09b19 !important;
+        }
+
+        .livesholder {
+            width: 100%;
+            height: 4%;
+            margin-top: 5%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .livesholder div {
+            aspect-ratio: 1;
+            height: 100%;
+            background-color: gray;
+            border-radius: 100%;
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+
+        * {
+            font-family: "Arial Black", Arial;
+            color: white;
+            text-shadow: 2px 2px 4px black;
+        }
+
+        @media screen and (max-width:767px) {
+            #holder {
+                width: 100vw;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="holder">
+        <h1 class="title">Connections</h1>
+        <h2 class="subtext">Create four groups of four!</h2>
+
+        <div id="gamegrid"></div>
+        <button id="placeholder">test</button>
+
+        <div class="buttonholder">
+            <button id="refresh">Refresh</button>
+            <button id="deselect">Deselect All</button>
+            <button id="submit">Submit</button>
+        </div>
+
+        <div class="livesholder"></div>
+        <div id="lifeplaceholder"></div>
+    </div>
+
+    <script src="data.js"></script>
+    <script>
+        var placeholder = document.querySelector('#placeholder');
+        var lifeplaceholder = document.querySelector('#lifeplaceholder');
+        var notif = document.querySelector('.subtext');
+        var grid = document.querySelector('#gamegrid');
+        var deselect = document.querySelector('#deselect');
+        var submit = document.querySelector('#submit');
+        var refresh = document.querySelector('#refresh');
+        var livesholder = document.querySelector('.livesholder');
+        var connectionsData = Connections;
+        var currentConnections = [];
+        var cloneQueue = [];
+        var selected = [];
+        var currentRow = 0;
+        var lives = 4;
+        var won = false;
+
+        function getRandomNumbers() {
+            for (var i = 0; i < 4; i++) {
+                var randomNumber = Math.floor(Math.random() * Connections.length);
+                currentConnections.push(Connections[randomNumber])
+            }
+        }
+
+        // Generates queue of random data
+        function generateRandomQueue() {
+            for (var i in currentConnections) {
+                var thisOne = currentConnections[i];
+                for (var x in thisOne.data) {
+                    cloneQueue.push(thisOne.data[x]);
+                }
+            }
+        }
+
+        // Creates squares in random positions
+        // Users recursion to find a random index, runs 16 times until queue cleared
+        function clearQueue() {
+            var randomQueueIndex = Math.floor(Math.random() * cloneQueue.length);
+            var randomQueueName = cloneQueue[randomQueueIndex];
+            cloneQueue.splice(randomQueueIndex, 1);
+
+            var clone = placeholder.cloneNode(true);
+            clone.removeAttribute('id');
+            clone.innerHTML = randomQueueName;
+            grid.appendChild(clone);
+
+            if (cloneQueue.length > 0) {
+                clearQueue();
+            }
+        }
+
+        // Creates onclick events for selecting
+        function assignFunctions() {
+            var allButtons = document.querySelectorAll('#gamegrid button');
+
+            for (var i = 0; i < allButtons.length; i++) {
+                var button = allButtons[i];
+
+                (function (button) {
+                    button.onclick = function () {
+                        if (!selected.includes(button)) {
+                            if (selected.length < 4) {
+                                selected.push(button);
+                                button.classList.add('selected');
+                            }
+                        } else {
+                            var selectedIndex = selected.indexOf(button);
+                            selected.splice(selectedIndex, 1);
+                            button.classList.remove('selected');
+                        }
+                    }
+                })(button);
+            }
+        }
+
+        // Clears selected list
+        function deselectAll() {
+            for (var i = 0; i < selected.length; i++) {
+                var selectedElement = selected[i];
+                selectedElement.classList.remove('selected');
+            }
+
+            selected = [];
+        }
+
+        // Turns selected button elements into strings and ultamitely an array
+        function selectedTextToString() {
+            var selectedToString = [];
+
+            for (var i in selected) {
+                var thisElement = selected[i];
+                selectedToString.push(thisElement.innerHTML);
+            }
+
+            return selectedToString;
+        }
+
+        // Checks if the selected words match with the data
+        function checkConnections() {
+            var sortedSelected = selectedTextToString().sort();
+            var success;
+
+            if (selected.length == 4) {
+                for (var i in currentConnections) {
+                    var info = currentConnections[i];
+                    var name = info.name;
+                    var data = info.data;
+                    var searchSuccess = 0;
+
+                    for (var x = 0; x < 4; x++) {
+                        var word = data[x];
+                        if (sortedSelected.includes(word)) {
+                            searchSuccess++;
+                        }
+                    }
+
+                    if (searchSuccess == 3) {
+                        pushNotification('One away!', true);
+                    }
+
+                    if (searchSuccess == 4) {
+                        currentRow++;
+                        checkSuccess();
+                        pushNotification(`Uncovered: ${name}`, true);
+                        success = true;
+                    }
+                }
+
+                if (!success) {
+                    lives--;
+                    updateLives();
+                }
+            } else {
+                pushNotification('Select four', false);
+            }
+        }
+
+        // When the selected is correct
+        function checkSuccess() {
+            for (var i = 0; i < selected.length; i++) {
+                var thisButton = selected[i];
+                thisButton.classList.add(`r${currentRow}success`);
+                thisButton.classList.add('disabled');
+            }
+
+            if (currentRow == 4) {
+                gameWon();
+            }
+            deselectAll();
+        }
+
+        // Gives the user a notification of choice
+        function pushNotification(text, status) {
+            var statusToClass = {
+                true: 'closehint',
+                false: 'badhint'
+            }
+            var thisClass = statusToClass[status];
+
+            notif.innerHTML = text;
+            notif.classList.add(thisClass);
+
+            setTimeout(function () {
+                notif.innerHTML = 'Create four groups of four!';
+                notif.classList = 'subtext';
+            }, 2500);
+        }
+
+        // Initialization
+        function start() {
+            currentConnections = [];
+            cloneQueue = [];
+            selected = [];
+            currentRow = 0;
+            lives = 4;
+            won = false;
+
+            clearBoard();
+            getRandomNumbers();
+            generateRandomQueue();
+            clearQueue();
+            assignFunctions();
+            updateLives();
+        }
+
+        // Deletes all buttons
+        function clearBoard() {
+            var allButtons = document.querySelectorAll('#gamegrid button');
+
+            for (var i = 0; i < allButtons.length; i++) {
+                var thisButton = allButtons[i];
+                thisButton.remove();
+            }
+        }
+
+        // Updates lives
+        function updateLives() {
+            var allLivesDisplay = livesholder.querySelectorAll('div');
+
+            for (var i = 0; i < allLivesDisplay.length; i++) {
+                var thisElement = allLivesDisplay[i];
+                thisElement.remove();
+            }
+
+            for (var i = 0; i < lives; i++) {
+                var clone = lifeplaceholder.cloneNode(true);
+                clone.removeAttribute('id');
+                livesholder.appendChild(clone);
+            }
+        }
+
+        // Handles the game won, shows play again
+        function gameWon() {
+
+        }
+
+        deselect.onclick = deselectAll;
+        submit.onclick = checkConnections;
+        refresh.onclick = start;
+
+        start();
+    </script>
+</body>
+
+</html>
