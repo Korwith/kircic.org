@@ -8,7 +8,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="language" content="English">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
-    
+
     <style>
         body {
             background-color: #202020;
@@ -41,7 +41,7 @@
             height: 100%;
             text-align: center;
             cursor: pointer;
-            border: 3px solid black;
+            border: 3px solid rgba(0, 0, 0, 0.35);
             background-color: #151515;
             box-sizing: border-box;
             border-radius: 8px;
@@ -79,7 +79,8 @@
             width: 100%;
             height: 10%;
             margin-top: 5%;
-            text-align:center;
+            text-align: center;
+            position:relative;
         }
 
         .buttonholder button {
@@ -101,13 +102,13 @@
             box-shadow: 0px 2px 0px 0px black;
         }
 
-        #submit {
+        #submit, #playagain {
             background-color: #538D4E;
             border: 3px solid #31512e;
             box-shadow: 0px 6px 0px 0px #1e321c;
         }
 
-        #submit:hover {
+        #submit:hover, #playagain:hover {
             background-color: #406d3c;
             box-shadow: 0px 2px 0px 0px #1e321c;
         }
@@ -122,30 +123,31 @@
 
         .disabled {
             pointer-events: none;
+            background-color: rgb(120, 171, 105) !important;
+        }
+
+        .lostsquare {
+            background-color: #BA383C !important;
         }
 
         .r1success {
             grid-row: 1;
-            background-color: #E46BFC !important;
-            border-color: #ad50bf !important;
+            filter:brightness(100%);
         }
 
         .r2success {
             grid-row: 2;
-            background-color: #BA383C !important;
-            border-color: #85282b !important;
+            filter: brightness(80%);
         }
 
         .r3success {
             grid-row: 3;
-            background-color: #966BFC !important;
-            border-color: #6e4eba !important;
+            filter: brightness(60%);
         }
 
         .r4success {
             grid-row: 4;
-            background-color: #f7da21 !important;
-            border-color: #b09b19 !important;
+            filter: brightness(40%);
         }
 
         .livesholder {
@@ -159,47 +161,62 @@
         .livesholder div {
             aspect-ratio: 1;
             height: 100%;
-            background-color: gray;
+            border: 2px solid #31512E;
+            background-color: #406D3C;
+            box-sizing: border-box;
             border-radius: 100%;
             margin-left: 5px;
             margin-right: 5px;
         }
 
+        #playagain {
+            width:100%;
+            height:100%;
+            position:absolute;
+            left:0;
+        }
+
+        .hideplay {
+            opacity:0;
+            pointer-events:none;
+            transition: opacity 0.3s;
+        }
+
         * {
             font-family: "Arial Black", Arial;
-            font-weight:900;
+            font-weight: 900;
             color: white;
             text-shadow: 2px 2px 4px black;
-            touch-action:none;
-            user-select:none;
+            touch-action: none;
+            user-select: none;
         }
 
         @media screen and (max-width:767px) {
             #holder {
                 width: 100vw;
             }
-            
+
             #gamegrid button {
-                font-size:10px;
+                font-size: 10px;
             }
-            
+
             .buttonholder {
                 position: fixed;
-                bottom:75px;
+                bottom: 75px;
                 width: calc(100% - 15px);
                 transform: translateX(-50%);
                 left: 50%;
             }
-            
+
             .livesholder {
-                position:fixed;
-                bottom:10px;
+                position: fixed;
+                bottom: 10px;
             }
-            
+
             #gamegrid {
-                position:fixed;
-                top:50%;
-                left:50%;
+                position: fixed;
+                top: 50%;
+                left: 50%;
                 width: calc(100% - 15px);
                 transform: translate(-50%, -50%);
             }
@@ -219,12 +236,13 @@
             <button id="refresh">Refresh</button>
             <button id="deselect">Deselect</button>
             <button id="submit">Submit</button>
+            <button id="playagain" class="hideplay">Play Again</button>
         </div>
 
         <div class="livesholder"></div>
         <div id="lifeplaceholder"></div>
     </div>
-
+    
     <script src="data.js"></script>
     <script>
         var placeholder = document.querySelector('#placeholder');
@@ -234,19 +252,31 @@
         var deselect = document.querySelector('#deselect');
         var submit = document.querySelector('#submit');
         var refresh = document.querySelector('#refresh');
+        var playAgain = document.querySelector('#playagain');
         var livesholder = document.querySelector('.livesholder');
         var connectionsData = Connections;
         var currentConnections = [];
         var cloneQueue = [];
         var selected = [];
         var currentRow = 0;
-        var lives = 4;
+        var lives = 5;
         var won = false;
 
+        // Adds random connections to currentConnections
         function getRandomNumbers() {
-            for (var i = 0; i < 4; i++) {
+            function getOne() {
                 var randomNumber = Math.floor(Math.random() * Connections.length);
-                currentConnections.push(Connections[randomNumber])
+                var thisData = Connections[randomNumber];
+
+                if (!currentConnections.includes(thisData)) {
+                    currentConnections.push(thisData);
+                } else {
+                    getOne();
+                }
+            }
+
+            for (var i = 0; i < 4; i++) {
+                getOne();
             }
         }
 
@@ -357,6 +387,10 @@
                 if (!success) {
                     lives--;
                     updateLives();
+
+                    if (lives == 0) {
+                        handleGameEnd(false);
+                    }
                 }
             } else {
                 pushNotification('Select four', false);
@@ -372,8 +406,9 @@
             }
 
             if (currentRow == 4) {
-                gameWon();
+                handleGameEnd(true);
             }
+
             deselectAll();
         }
 
@@ -386,12 +421,8 @@
             var thisClass = statusToClass[status];
 
             notif.innerHTML = text;
+            notif.classList = 'subtext';
             notif.classList.add(thisClass);
-
-            setTimeout(function () {
-                notif.innerHTML = 'Create four groups of four!';
-                notif.classList = 'subtext';
-            }, 2500);
         }
 
         // Initialization
@@ -400,8 +431,14 @@
             cloneQueue = [];
             selected = [];
             currentRow = 0;
-            lives = 4;
+            lives = 5;
             won = false;
+            playAgain.classList.add('hideplay');
+            refresh.classList.remove('hideplay');
+            deselect.classList.remove('hideplay');
+            submit.classList.remove('hideplay');
+            notif.classList = 'subtext';
+            notif.innerHTML = 'Create four groups of four!'
 
             clearBoard();
             getRandomNumbers();
@@ -438,16 +475,39 @@
         }
 
         // Handles the game won, shows play again
-        function gameWon() {
+        function handleGameEnd(won) {
+            playAgain.classList.remove('hideplay');
+            refresh.classList.add('hideplay');
+            deselect.classList.add('hideplay');
+            submit.classList.add('hideplay');
 
+            if (won) {
+                pushNotification('You win!', true);
+            } else {
+                var allButtons = document.querySelectorAll('#gamegrid button');
+
+                for (var i = 0; i < allButtons.length; i++) {
+                    var thisButton = allButtons[i];
+                    if (!thisButton.classList.contains('disabled')) {
+                        thisButton.classList.add('lostsquare');
+                        thisButton.classList.add('disabled');
+                    }
+                }
+
+                pushNotification('You lost!', false)
+            }
+
+            deselectAll();
         }
 
         deselect.onclick = deselectAll;
         submit.onclick = checkConnections;
         refresh.onclick = start;
+        playAgain.onclick = start;
 
         start();
     </script>
+
 </body>
 
 </html>
