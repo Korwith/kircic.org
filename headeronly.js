@@ -1,39 +1,47 @@
-var placeholder = document.querySelector('#placeholder');
-var pagetitle = document.querySelector('.pagetitle');
-var hamburger = document.querySelector('.hamburger');
-var home = document.querySelector('.homebutton');
-var updates = document.querySelector('.updatesbutton')
-var accounts = document.querySelector('.accountsbutton');
-var contribute = document.querySelector('.contributorsbutton');
-var discord = document.querySelector('.discordbutton');
-var mobilediscord = document.querySelector('.mobilediscord');
+var pageTitle = document.querySelector('#pageTitle')
+var homeIcon = document.querySelector('#homeIcon');
+var mobieDiscordButton = document.querySelector('#mobileDiscordButton');
+var homeButton = document.querySelector('.homeButton');
+var updatesButton = document.querySelector('.updatesButton');
+var accountsButton = document.querySelector('.accountsButton');
+var peopleButton = document.querySelector('.peopleButton');
+var discordButton = document.querySelector('.discordButton');
 
-hamburger.onclick = function() {
-    window.location.href = 'index.html';
+var buttonToLink = [
+    {button: homeIcon, link: 'index.html'},
+    {button: homeButton, link: 'index.html'},
+    {button: updatesButton, link: 'updates.html'},
+    {button: accountsButton, link: 'accounts.html'},
+    {button: peopleButton, link: 'contributors.html'}
+]
+
+var externalLinks = [
+    {button: discordButton, link: 'https://discord.gg/invite/p8ZZXZqnag'},
+    {button: mobieDiscordButton, link: 'https://discord.gg/invite/p8ZZXZqnag'}
+]
+
+for (var i = 0; i < buttonToLink.length; i++) {
+    (function(i) {
+        var thisData = buttonToLink[i];
+        var thisButton = thisData.button;
+        var thisLink = thisData.link;
+
+        thisButton.onclick = function() {
+            window.location.href = thisLink;
+        }
+    })(i);
 }
 
-home.onclick = function () {
-    window.location.href = 'index.html';
+for (var i = 0; i < externalLinks.length; i++) {
+    (function(i) {
+        var thisData = externalLinks[i];
+        var thisButton = thisData.button;
+        var thisLink = thisData.link;
+
+        thisButton.onclick = function() {
+            window.open(thisLink, '_blank');
+        }
+    })(i)
 }
 
-updates.onclick = function () {
-    window.location.href = 'updates.html';
-}
-
-accounts.onclick = function () {
-    window.location.href = 'services.html';
-}
-
-contribute.onclick = function () {
-    window.location.href = 'contributors.html';
-}
-
-discord.onclick = function () {
-    window.open('https://discord.gg/invite/p8ZZXZqnag', '_blank');
-}
-
-mobilediscord.onclick = function() {
-    window.open('https://discord.gg/invite/p8ZZXZqnag', '_blank');
-}
-
-pagetitle.innerHTML = document.title.split('|')[0];
+pageTitle.innerHTML = document.title.split('|')[0];
