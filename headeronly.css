@@ -1,166 +1,161 @@
 header {
-    background-color: #202020;
-    width: 100%;
     height: 55px;
-    box-shadow: black 5px 5px 10px;
-    position:relative;
+    box-shadow: 0px 0px 10px 0px #000000;
+    background-color: #202020;
+    color: white;
+    font-family: "Arial Black", 'Arial';
+    font-weight: 900;
+    text-shadow: 2px 2px 4px black;
 }
 
-.hamburger {
-    aspect-ratio: 1;
+.headerLeft {
+    height: calc(100% - 10px);
+    width: 20%;
+    padding: 5px;
     float: left;
-    height: calc(90% - 5px);
-    background-image: url(sub/assets/kir.png);
-    background-size: contain;
-    background-color: rgba(0, 0, 0, 0);
+}
+
+.headerRight {
+    height: calc(100% - 10px);
+    width: fit-content;
+    padding: 5px;
+    float: right;
+}
+
+.headerRight button {
+    aspect-ratio: 3.5;
+    height: calc(100% - 5px);
+    border-radius: 6px;
+    border: 0;
+    transition: filter 0.3s, box-shadow 0.3s, transform 0.3s;
+    font-family: "Arial Black", 'Arial';
+    font-weight: 900;
+    text-shadow: 2px 2px 4px black;
+    color: white;
+    text-transform: uppercase;
     cursor: pointer;
-    transition: filter 0.2s;
-    margin-left: 5px;
-    margin-top: 5px;
-    box-sizing: border-box;
+}
+
+.headerRight button:hover {
+    transform: translateY(4px);
+}
+
+.headerLeft div {
+    aspect-ratio: 1;
+    height: calc(100% - 6px);
+    cursor: pointer;
+    float: left;
+    transition: filter 0.3s;
     border: 3px solid;
+}
+
+#homeIcon {
+    background-image: url(icon/kir.png);
+    background-size: cover;
     border-image: linear-gradient(to bottom right, #b827fc 0%, #2c90fc 25%, #b8fd33 50%, #fec837 75%, #fd1892 100%);
     border-image-slice: 1;
 }
 
-.hamburger:hover, .mobilediscord:hover {
-    filter: brightness(80%);
-}
-
-.rightheader {
-    position:absolute;
-    height:calc(90% - 10px);
-    top:calc(50% - 4px);
-    width:55%;
-    left:100%;
-    transform: translate(-100%, -50%);
-}
-
-.rightheader button {
-    height: 100%;
-    text-transform: uppercase;
-    width:calc(20% - 5px);
-    border-radius: 3px;
-    border: 0;
-    cursor: pointer;
-    text-shadow: 2px 2px 4px black;
-    transition: background-color 0.2s, filter 0.2s, transform 0.2s, box-shadow 0.2s;
-    font-family: "Arial Black", Arial;
-    font-weight:900;
-    color: white;
-}
-
-.rightheader button:hover {
-    filter: brightness(80%);
-    transform: translateY(2px);
-}
-
-.discordbutton {
-    background-color: #3E48AD;
-    box-shadow: 0px 5px 0px #242966;
-}
-
-.discordbutton:hover {
-    box-shadow: 0px 3px 0px #242966;
-}
-
-.accountsbutton {
-    background-color: #A03EAD;
-    box-shadow: 0px 5px 0px #5e2466;
-}
-
-.accountsbutton:hover {
-    box-shadow: 0px 3px 0px #5e2466;
-}
-
-.contributorsbutton {
-    background-color:#f542ec;
-    box-shadow: 0px 5px 0px #b62faf;
-}
-
-.contributorsbutton:hover {
-    box-shadow: 0px 3px 0px #b62faf;
-}
-
-.homebutton {
-    background-color: #FB9B00;
-    box-shadow: 0px 5px 0px #ac6a00;
-}
-
-.homebutton:hover {
-    box-shadow: 0px 3px 0px #ac6a00;
-}
-
-.updatesbutton {
-    background-color: #4fad3e;
-    box-shadow: 0px 5px 0px #326f28;
-}
-
-.updatesbutton:hover {
-    box-shadow: 0px 3px 0px #326f28;
-}
-
-.mobilediscord {
-    aspect-ratio: 1;
-    float: right;
-    height: calc(90% - 5px);
+#mobileDiscordButton {
     background-image: url(icon/discord.svg);
     background-size: 90%;
-    background-repeat: no-repeat;
     background-position: center;
-    background-color: rgba(0, 0, 0, 0);
-    cursor: pointer;
-    transition: filter 0.2s;
-    margin-right: 5px;
-    margin-top: 5px;
-    box-sizing: border-box;
-    border: 3px solid #323A8A;
+    background-repeat: no-repeat;
+    background-color: rgba(62, 72, 173, 0.5);
+    border: 3px solid rgb(62, 72, 173);
+    margin-left: 5px;
     display: none;
 }
 
-.pagetitle {
-    display:block;
-    float:left;
-    height:100%;
-    width:50px;
-    align-items:center;
-    text-align:center;
-    display:flex;
-    margin-left:15px;
-    font-size:24px;
-    text-shadow: 2px 2px 4px black;
-    font-family: "Arial Black", "Arial Bold", monospace;
+.headerLeft div:hover,
+.headerRight button:hover {
+    filter: brightness(80%);
 }
 
-@media (max-width:768px) {
-    .rightheader {
-        position: absolute;
-        left:50%;
-        top:calc(50% - 3px);
-        transform: translate(-50%, -50%);
-        float: none;
-        aspect-ratio:unset;
-        width:calc(100% - 105px);
-        text-align:center;
-    }
-    
-    .rightheader button {
-        width:calc(33% - 4px);
-    }
-    
-    .homebutton {
-        display:none;
+#pageTitle {
+    display: flex;
+    height: 100%;
+    width: calc(100% - 60px);
+    float: right;
+    align-items: center;
+    font-size: 24px;
+}
+
+.homeButton {
+    background-color: rgb(251, 155, 0);
+    box-shadow: 0px 5px 0px 0px rgba(251, 155, 0, 0.7);
+}
+
+.homeButton:hover {
+    box-shadow: 0px 2px 0px 0px rgba(251, 155, 0, 0.7)
+}
+
+.updatesButton {
+    background-color: rgb(79, 173, 62);
+    box-shadow: 0px 5px 0px 0px rgba(79, 173, 62, 0.7);
+}
+
+.updatesButton:hover {
+    box-shadow: 0px 2px 0px 0px rgba(79, 173, 62, 0.7)
+}
+
+.accountsButton {
+    background-color: rgb(160, 62, 173);
+    box-shadow: 0px 5px 0px 0px rgba(160, 62, 173, 0.7);
+}
+
+.accountsButton:hover {
+    box-shadow: 0px 2px 0px 0px rgba(160, 62, 173, 0.7);
+}
+
+.peopleButton {
+    background-color: rgb(245, 66, 236);
+    box-shadow: 0px 5px 0px 0px rgba(245, 66, 236, 0.7);
+}
+
+.peopleButton:hover {
+    box-shadow: 0px 2px 0px 0px rgba(245, 66, 236, 0.7);
+}
+
+.discordButton {
+    background-color: rgb(62, 72, 173);
+    box-shadow: 0px 5px 0px 0px rgba(62, 72, 173, 0.7);
+}
+
+.discordButton:hover {
+    box-shadow: 0px 2px 0px 0px rgba(62, 72, 173, 0.7)
+}
+
+@media screen and (max-width: 930px) {
+    .headerLeft {
+        aspect-ratio: unset;
+        width: 95px;
+        height: calc(100% - 10px);
     }
 
-    .discordbutton {
-        display:none;
+    #pageTitle {
+        display: none;
     }
 
-    .mobilediscord {
-        display:block;
+    .headerRight {
+        width: calc(100% - 115px);
+        text-align: left;
     }
 
-    .pagetitle {
-        display:none;
+    .headerRight button {
+        aspect-ratio: unset;
+        width: calc(33% - 3px);
+    }
+
+    .homeButton {
+        display: none;
+    }
+
+    .discordButton {
+        display: none;
+    }
+
+    #mobileDiscordButton {
+        display: block;
     }
 }
