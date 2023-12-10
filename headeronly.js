@@ -11,7 +11,7 @@ var buttonToLink = [
     {button: homeIcon, link: 'index.html'},
     {button: homeButton, link: 'index.html'},
     {button: updatesButton, link: 'updates.html'},
-    {button: accountsButton, link: 'accounts.html'},
+    {button: accountsButton, link: 'services.html'},
     {button: peopleButton, link: 'contributors.html'}
 ]
 
