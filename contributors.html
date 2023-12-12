@@ -64,8 +64,8 @@
         }
 
         .yusamika {
-            border: 3px solid yellow !important;
-            box-shadow: 0px 0px 10px yellow;
+            border: 3px solid #af69af !important;
+            box-shadow: 0px 0px 10px #af69af;
             transition: box-shadow 0.2s;
             background-image: url(contribute/Yusamika.png);
         }
@@ -75,7 +75,7 @@
         }
 
         .yusamika:hover {
-            box-shadow: 0px 0px 40px yellow;
+            box-shadow: 0px 0px 40px #af69af;
         }
 
         * {
@@ -93,10 +93,15 @@
             position: absolute;
             opacity: 0;
             transition: opacity 0.1s;
+
+            display: none;
+            pointer-events : none;
+            /* prevent overlay from sinking mouse input */
         }
 
         .enabled {
             opacity: 1 !important;
+            display: block !important;
         }
 
         .imageholder {
@@ -300,9 +305,12 @@
                 });
 
                 circle.addEventListener('mouseleave', function () {
-                    setTimeout(function () {
+                    //setTimeout(function () {
                         document.removeEventListener('mousemove', moveOverlay);
-                    }, 200);
+                    //}, 200);
+                    // this timeout doesnt do anything for some reason
+                    // it just makes it so if you hover over 2 bubbles in quick succession
+                    // the overlay will get frozen in place. no good.
                     overlay.classList.remove('enabled');
                 });
             })(circle);
