@@ -300,8 +300,8 @@
         }
 
         function moveOverlay(event) {
-            overlay.style.left = event.x + 15 + 'px';
-            overlay.style.top = event.y - 30 + 'px';
+            overlay.style.left = (event.x + window.scrollX) + 15 + 'px';
+            overlay.style.top = (event.y + window.scrollY) - 30 + 'px';
         }
 
         for (var i in peopleClass) {
