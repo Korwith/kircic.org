@@ -51,7 +51,7 @@
 
         .specialperson span {
             left: 50%;
-            bottom: calc(10% - 5px);
+            bottom: calc(10% - 3px);
             transform: translateX(-50%);
             position: absolute;
         }
@@ -64,10 +64,20 @@
         }
 
         .yusamika {
-            border: 3px solid yellow !important;
-            box-shadow: 0px 0px 10px yellow;
+            border: 3px solid #af69af !important;
+            box-shadow: 0px 0px 10px #af69af;
             transition: box-shadow 0.2s;
             background-image: url(contribute/Yusamika.png);
+            overflow: hidden;
+        }
+
+        .yusamika a {
+            text-decoration: underline rgb(77, 69, 69);
+            transition: text-decoration 0.2s;
+        }
+
+        .yusamika a:hover {
+            text-decoration: underline #af69af;
         }
 
         .paris:hover {
@@ -75,7 +85,7 @@
         }
 
         .yusamika:hover {
-            box-shadow: 0px 0px 40px yellow;
+            box-shadow: 0px 0px 40px #af69af;
         }
 
         * {
@@ -93,10 +103,15 @@
             position: absolute;
             opacity: 0;
             transition: opacity 0.1s;
+
+            display: none;
+            pointer-events : none;
+            /* prevent overlay from sinking mouse input */
         }
 
         .enabled {
             opacity: 1 !important;
+            display: block !important;
         }
 
         .imageholder {
@@ -186,7 +201,7 @@
             <span>@paros</span>
         </div>
         <div class="specialperson yusamika">
-            <span>@Yusamika</span>
+            <span><a href="https://discord.com/users/738990436907090020">@Yusamika</a></span>
         </div>
     </div>
 
@@ -278,12 +293,15 @@
                 'yall ever heard of the griffone?',
                 'yever heard of gooby?',
                 '☃',
+                "#MadeItHereWithMyFriends 🎆",
+                "<3",
+                "type a 97 in the chat... if you care",
             ]
         }
 
         function moveOverlay(event) {
-            overlay.style.left = event.x + 15 + 'px';
-            overlay.style.top = event.y - 30 + 'px';
+            overlay.style.left = (event.x + window.scrollX) + 15 + 'px';
+            overlay.style.top = (event.y + window.scrollY) - 30 + 'px';
         }
 
         for (var i in peopleClass) {
@@ -300,9 +318,12 @@
                 });
 
                 circle.addEventListener('mouseleave', function () {
-                    setTimeout(function () {
+                    //setTimeout(function () {
                         document.removeEventListener('mousemove', moveOverlay);
-                    }, 200);
+                    //}, 200);
+                    // this timeout doesnt do anything for some reason
+                    // it just makes it so if you hover over 2 bubbles in quick succession
+                    // the overlay will get frozen in place. no good.
                     overlay.classList.remove('enabled');
                 });
             })(circle);
