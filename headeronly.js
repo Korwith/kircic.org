@@ -15,7 +15,7 @@ updatesButton.onclick = function() {
 }
 
 accountsButton.onclick = function() {
-    window.location.href = 'accounts.html';
+    window.location.href = 'services.html';
 }
 
 peopleButton.onclick = function() {
