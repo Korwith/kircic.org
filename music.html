@@ -209,7 +209,7 @@
             }
 
             .album {
-                width: 100%;
+                width: calc(100% - 20px);
                 height: 100%;
                 margin: 10px;
                 border-radius: 16px;
@@ -374,6 +374,15 @@
                     height: calc(100% - 55px - 60px);
                 }
 
+                .albumGrid {
+                    width:calc(100% - 20px);
+                    grid-template-columns: repeat(2, 1fr);
+                }
+
+                .shrinkAlbumGrid {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+
                 .songHolder {
                     width: 100%;
                 }
@@ -386,6 +395,10 @@
 
                 .playbackHolder {
                     position: fixed;
+                }
+
+                .bottomText {
+                    display: none;
                 }
             }
         </style>
