@@ -219,6 +219,7 @@
                 background-color: #151515;
                 cursor: pointer;
                 display: flex;
+                position: relative;
                 flex-direction: column;
                 transition: border-color 0.2s, box-shadow 0.2s;
             }
@@ -241,7 +242,7 @@
             .albumInfo {
                 margin: 10px;
                 margin-bottom: 0;
-                flex: 1;
+                flex: 1
             }
 
             .albumInfo span {
@@ -387,6 +388,10 @@
 
                 .songHolder {
                     width: 100%;
+                }
+                
+                .albumInfo {
+                    bottom: 0
                 }
 
                 .expandAlbumHolder {
