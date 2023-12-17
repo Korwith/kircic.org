@@ -15,166 +15,166 @@
     <style>
         body {
             margin: 0;
-            background-color: #202020;
+            background-color: #303030;
         }
 
         h1 {
-            margin-top: 50px;
+            margin-top: 40px;
             text-align: center;
         }
 
-        .peoplebox {
+        .peopleBox {
             width: 60%;
             height: fit-content;
             margin-left: auto;
             margin-right: auto;
-            margin-top: 25px;
-            border-radius: 8px;
-            background-color: #202020;
             box-sizing: border-box;
-            border: 3px solid #252525;
-            box-shadow: #050505 10px 10px 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
         }
 
-        .specialperson {
-            aspect-ratio: 1;
+        .topBox {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            background-color: #151515;
+            border-radius: 16px;
+            border: 2px solid gray;
+            box-shadow: 4px 4px 8px 0px black;
+            padding-bottom: 20px;
+        }
+
+        .topBox div {
+            height: calc(100% - 50px);
+            margin: 25px;
+        }
+
+        .person {
+            aspect-ratio: 1/1;
             border-radius: 100%;
-            height: 150px;
-            margin: 15px;
-            position: relative;
+            border: 2px solid;
+            border-color: gray;
+            background-size: cover;
             cursor: pointer;
-            background-size: contain;
+            position: relative;
+            transition: border-color 0.3s;
         }
 
-        .specialperson span {
-            left: 50%;
-            bottom: calc(10% - 3px);
-            transform: translateX(-50%);
+        .person span {
             position: absolute;
+            text-align: center;
+            width: 100%;
+            height: 20px;
+            bottom: 0;
+            transform: translateY(100%);
+        }
+
+        .person::after {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translate(-50%, 100%);
+        }
+
+        .person:hover {
+            border-color: white;
         }
 
         .paris {
-            border: 3px solid pink !important;
-            box-shadow: 0px 0px 10px pink;
-            transition: box-shadow 0.2s;
-            background-image: url(contribute/Paris.png);
+            background-image: url(contributor/paris.png);
         }
 
         .yusamika {
-            border: 3px solid #af69af !important;
-            box-shadow: 0px 0px 10px #af69af;
-            transition: box-shadow 0.2s;
-            background-image: url(contribute/Yusamika.png);
-            overflow: hidden;
+            background-image: url(contributor/yusa.png);
         }
 
-        .yusamika a {
-            text-decoration: underline rgb(77, 69, 69);
-            transition: text-decoration 0.2s;
+        .spiffy {
+            background-image: url(contributor/spiffy.jpeg);
         }
 
-        .yusamika a:hover {
-            text-decoration: underline #af69af;
+        .seph {
+            background-image: url(contributor/seph.jpg);
         }
 
-        .paris:hover {
-            box-shadow: 0px 0px 40px pink;
+        .sincore {
+            background-image: url(contributor/sincore.png);
         }
 
-        .yusamika:hover {
-            box-shadow: 0px 0px 40px #af69af;
+        .ashe {
+            background-image: url(contributor/ashe.png);
+        }
+
+        .pichu {
+            background-image: url(contributor/pichu.jpeg);
+        }
+
+        .unilerk {
+            background-image: url(contributor/unilerk.png)
+        }
+
+        .paris::after {
+            content: 'Paris';
+        }
+
+        .yusamika::after {
+            content: 'Yusa';
+        }
+
+        .spiffy::after {
+            content: 'Spiffy';
+        }
+
+        .seph::after {
+            content: 'Seph';
+        }
+
+        .sincore::after {
+            content: 'Sincore';
+        }
+
+        .ashe::after {
+            content: 'Ashe';
+        }
+
+        .pichu::after {
+            content: 'Pichu'
+        }
+
+        .unilerk::after {
+            content: 'Unilerk';
+        }
+
+        .quote {
+            position: absolute;
+            height: 25px;
+            width: unset;
+            padding-left: 10px;
+            padding-right: 10px;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .hide {
+            display: none;
         }
 
         * {
-            font-family: "Arial Black", "Arial Bold", monospace;
             color: white;
+            font-family: "Arial Black", Arial;
+            font-weight: 900;
             text-shadow: 2px 2px 4px black;
         }
 
-        #mouseoverlay {
-            padding-left: 20px;
-            padding-right: 20px;
-            height: 30px;
-            background-color: rgba(0, 0, 0, 0.5);
-            border-radius: 5px;
-            position: absolute;
-            opacity: 0;
-            transition: opacity 0.1s;
+        @media screen and (max-width: 767px) {
+            .topBox {
+                grid-template-columns: repeat(2, 1fr);
+            }
 
-            display: none;
-            pointer-events : none;
-            /* prevent overlay from sinking mouse input */
+            .allBox {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .peopleBox {
+                width: calc(100% - 20px);
+            }
         }
-
-        .enabled {
-            opacity: 1 !important;
-            display: block !important;
-        }
-
-        .imageholder {
-            pointer-events: none;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: flex-start;
-            padding: 0 5px;
-        }
-
-        .imageholder:after {
-            display: block;
-            margin: 5px;
-            flex: 999 999 auto;
-
-        }
-
-        .imageframe {
-            background-color: black;
-            height: auto;
-            width: 33%;
-            display: inline-block;
-            border-radius: 8px;
-            flex: 0 0 calc(33.33% - 5px);
-            margin-bottom: 5px;
-            box-sizing: border-box;
-        }
-
-        .image {
-            width: 100%;
-            height: auto;
-            margin: 0;
-            border-top-right-radius: 8px;
-            border-top-left-radius: 8px;
-        }
-
-        .imagetext {
-            height: 75px;
-            width: 100%;
-            background-color: #151515;
-            box-sizing: border-box;
-            border: 5px solid #101010;
-            border-bottom-right-radius: 8px;
-            border-bottom-left-radius: 8px;
-        }
-
-        .imagetext span {
-            display: block;
-            width: 100%;
-            height: 50%;
-            text-align: center;
-        }
-
-        .who {
-            color: gray;
-        }
-
-        #placeholder {
-            display: none;
-        }
-
-        @media (max-width: 768px) {}
     </style>
 </head>
 
@@ -194,44 +194,34 @@
         </div>
     </header>
 
-    <h1>A Special Thanks To:</h1>
-    <div class="peoplebox">
-        <div class="specialperson paris">
-            <span>@paros</span>
-        </div>
-        <div class="specialperson yusamika">
-            <span><a href="https://discord.com/users/738990436907090020">@Yusamika</a></span>
-        </div>
-    </div>
-
-    <h1>Image Board</h1>
-    <div class="peoplebox imageholder">
-        <div id="placeholder" class="imageframe">
-            <img class="image"></img>
-            <div class="imagetext">
-                <span class="title">Google Logo</span>
-                <span class="who">@unilerk</span>
-            </div>
+    <h1>Thank You</h1>
+    <div class="peopleBox">
+        <div class="topBox">
+            <div class="person paris"></div>
+            <div class="person yusamika"></div>
+            <div class="person spiffy"></div>
+            <div class="person seph"></div>
+            <div class="person sincore"></div>
+            <div class="person ashe"></div>
+            <div class="person unilerk"></div>
+            <div class="person pichu"></div>
         </div>
     </div>
 
-    <div id="mouseoverlay">"if you see this, you stink"</div>
+    <div class="quote hide"></div>
 
     <script>
-        var paris = document.querySelector('.paris');
-        var overlay = document.querySelector('#mouseoverlay');
-        var placeholder = document.querySelector('#placeholder');
-        var imageholder = document.querySelector('.imageholder');
-        var peopleClass = {
-            'paris': [
+        var quote = document.querySelector('.quote');
+        var people = document.querySelectorAll('.person');
+
+        var quoteList = {
+            paris: [
                 'if you see this, you stink',
-                'apples bananas all that sort',
                 'five nights at freddys',
-                'the animitronics do get quirky at night'
+                'YAY STINK!'
             ],
 
-            'yusamika': [
-                'praise jonAmo',
+            yusamika: ['praise jonAmo',
                 'say hi',
                 'eternally bored',
                 'hows your day been?',
@@ -295,92 +285,43 @@
                 "#MadeItHereWithMyFriends 🎆",
                 "<3",
                 "type a 97 in the chat... if you care",
-            ]
+            ],
+
+            spiffy: ['lightning mcqueen crocs'],
+            seph: ['none yet'],
+            sincore: ['none yet'],
+            ashe: ['al capone'],
+            unilerk: ['Psalm 18:2'],
+            pichu: ['Apl saus']
         }
 
-        function moveOverlay(event) {
-            overlay.style.left = (event.x + window.scrollX) + 15 + 'px';
-            overlay.style.top = (event.y + window.scrollY) - 30 + 'px';
+        function mouseMoveListener(event) {
+            quote.style.left = event.x + 10 + 'px';
+            quote.style.top = event.y - 20 + 'px';
         }
 
-        for (var i in peopleClass) {
-            var circle = document.querySelector('.' + i);
-            (function (circle) {
-                var quotes = peopleClass[i];
+        for (var i = 0; i < people.length; i++) {
+            var cir = people[i];
 
-                circle.addEventListener('mouseenter', function () {
-                    var randomIndex = Math.floor(Math.random() * quotes.length);
-                    overlay.innerHTML = quotes[randomIndex];
+            (function (cir) {
+                cir.addEventListener('mouseenter', function () {
+                    var person = Array.from(cir.classList)[1];
+                    var personQuoteList = quoteList[person];
+                    var selectedQuoteIndex = Math.floor(Math.random() * personQuoteList.length);
+                    var selectedQuote = personQuoteList[selectedQuoteIndex];
+                    quote.innerHTML = selectedQuote;
 
-                    document.addEventListener('mousemove', moveOverlay);
-                    overlay.classList.add('enabled');
+                    quote.classList.remove('hide');
+                    document.addEventListener('mousemove', mouseMoveListener);
                 });
 
-                circle.addEventListener('mouseleave', function () {
-                    //setTimeout(function () {
-                        document.removeEventListener('mousemove', moveOverlay);
-                    //}, 200);
-                    // this timeout doesnt do anything for some reason
-                    // it just makes it so if you hover over 2 bubbles in quick succession
-                    // the overlay will get frozen in place. no good.
-                    overlay.classList.remove('enabled');
-                });
-            })(circle);
-
-        }
-        var imageData = [
-            {
-                title: 'Wanted',
-                person: 'ashechan',
-                link: 'wanted.png',
-            },
-
-            {
-                title: 'OH MY GAH',
-                person: 'paros',
-                link: 'omg.jpeg',
-            },
-
-            {
-                title: 'Bill',
-                person: 'unilerk',
-                link: 'bill.png'
-            },
-
-            {
-                title: 'Vending Machine',
-                person: 'unilerk',
-                link: 'vending.png'
-            },
-
-            {
-                title: 'Splatoon',
-                person: 'pichu',
-                link: 'splatoon.jpeg'
-            },
-
-            {
-                title: 'Cat Door',
-                person: 'ashechan',
-                link: 'catdoor.png',
-            }
-        ]
-
-        for (var i in imageData) {
-            var data = imageData[i];
-            var clone = placeholder.cloneNode(true);
-            var image = clone.querySelector('.image');
-            var title = clone.querySelector('.title');
-            var person = clone.querySelector('.who');
-            image.src = 'contribute/' + data.link;
-            title.innerHTML = data.title;
-            person.innerHTML = data.person;
-
-            clone.removeAttribute('id');
-            imageholder.appendChild(clone);
+                cir.addEventListener('mouseleave', function () {
+                    quote.classList.add('hide');
+                    document.removeEventListener('mousemove', mouseMoveListener);
+                })
+            })(cir);
         }
     </script>
-
-    <script src="headeronly.js"></script>
 </body>
+
 </html>
