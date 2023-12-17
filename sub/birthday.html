@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Birthday | Kirhub</title>
+        <link rel="icon" type="image/x-icon" href="sub/assets/kir.png">
+        <meta property="twitter:image" content="https://www.kirhub.com/sub/assets/kirhappy.png">
+        <meta name="title" content="Birthday | Kirhub">
+        <meta name="description" content="is it my birthday?">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="language" content="English">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="headeronly.css">
+    
+        <style>
+            body {
+                background-color: black;
+            }
+
+            h1 {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                margin: 0;
+                font-size: 100px;
+            }
+
+            h2 {
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                margin:0;
+                font-size: 20px;
+            }
+
+            * {
+                color: white;
+                font-family: "Arial Black", Arial;
+                font-weight: 900;
+                text-transform: uppercase;
+            }
+        </style>
+    </head>
+
+    <body>
+        <h2>Is it my birthday?</h2>
+        <h1></h1>
+
+        <script>
+            var text = document.querySelector('h1');
+            var time = new Date();
+            var month = time.getMonth();
+            var date = time.getDate();
+
+            if (month == 1 && date == 10) {
+                text.innerHTML = 'Yes';
+            } else {
+                text.innerHTML = 'No';
+            }
+        </script>
+    </body>
+</html>
