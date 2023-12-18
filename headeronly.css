@@ -34,6 +34,19 @@ header {
     border-image-slice: 1;
 }
 
+.headerRight>*>a {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.headerLeft {
+    width: 7%;
+}
+
 #mobileDiscordButton {
     display: none;
     background: linear-gradient(to bottom, #404EED, #5865F2);
