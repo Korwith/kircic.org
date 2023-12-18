@@ -301,8 +301,8 @@
         }
 
         function mouseMoveListener(event) {
-            quote.style.left = event.x + 10 + 'px';
-            quote.style.top = event.y - 20 + 'px';
+            quote.style.left = event.x + window.scrollX + 10 + 'px';
+            quote.style.top = event.y + window.scrollY - 20 + 'px';
         }
 
         for (var i = 0; i < people.length; i++) {
