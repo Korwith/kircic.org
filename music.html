@@ -34,7 +34,7 @@
             .contentHolder {
                 width: 100%;
                 height: calc(100% - 55px);
-                position: relative;
+                position: absolute; /* i dont know why this is needed but it is */
             }
 
             .songHolder {
@@ -528,39 +528,39 @@
                         tracklist: [
                             {
                                 name: '12AM Wave',
-                                dir: 'midnight/Spiffy Beat 63.m4a'
+                                dir: 'midnight/Spiffy Beat 63.mp3'
                             },
                             {
                                 name: 'Vapor',
-                                dir: 'midnight/Spiffy Beat 72.m4a'
+                                dir: 'midnight/Spiffy Beat 72.mp3'
                             },
                             {
                                 name: 'Motel (Lights Off)',
-                                dir: 'midnight/Spiffy Beat 81.m4a'
+                                dir: 'midnight/Spiffy Beat 81.mp3'
                             },
                             {
                                 name: 'Timeless Love',
-                                dir: 'midnight/Spiffy Beat 78.m4a'
+                                dir: 'midnight/Spiffy Beat 78.mp3'
                             },
                             {
                                 name: 'In My Dreams',
-                                dir: 'midnight/Spiffy Beat 80.m4a'
+                                dir: 'midnight/Spiffy Beat 80.mp3'
                             },
                             {
                                 name: 'Disco Love',
-                                dir: 'midnight/Spiffy Beat 82.m4a'
+                                dir: 'midnight/Spiffy Beat 82.mp3'
                             },
                             {
                                 name: 'Backseat Ride',
-                                dir: 'midnight/Spiffy Beat 79.m4a'
+                                dir: 'midnight/Spiffy Beat 79.mp3'
                             },
                             {
                                 name: 'Sweet',
-                                dir: 'midnight/Spiffy Beat 83.m4a'
+                                dir: 'midnight/Spiffy Beat 83.mp3'
                             },
                             {
                                 name: 'Midnight Romance (Cloud 9)',
-                                dir: 'midnight/Spiffy Beat 84.m4a'
+                                dir: 'midnight/Spiffy Beat 84.mp3'
                             }
                         ]
                     }
@@ -626,6 +626,7 @@
                             clone.setAttribute('song', thisSongInfo.name);
                             clone.setAttribute('songId', songId);
                             songNameText.innerHTML = (songId + 1) + '. ' + thisSongInfo.name;
+                            console.log(thisSongObject.duration)
                             songLengthText.innerHTML = formatSeconds(thisSongObject.duration);
                             totalLength += thisSongObject.duration;
 

@@ -6,29 +6,20 @@ var accountsButton = document.querySelector('.accountsButton');
 var peopleButton = document.querySelector('.peopleButton');
 var musicButton = document.querySelector('.musicButton');
 
-homeButton.onclick = function() {
-    window.location.href = 'index.html';
-}
+homeButton.setAttribute('title', 'Home');
+homeButton.innerHTML = '<a href="index.html" style="padding:0; margin:0; width: 110%; height: 110%; display:block;"></a>';
 
-updatesButton.onclick = function() {
-    window.location.href = 'updates.html';
-}
+updatesButton.setAttribute('title', 'Updates');
+updatesButton.innerHTML = '<a href="updates.html">Updates</a>';
 
-accountsButton.onclick = function() {
-    window.location.href = 'services.html';
-}
+accountsButton.setAttribute('title', 'Services');
+accountsButton.innerHTML = '<a href="services.html">Services</a>';
 
-peopleButton.onclick = function() {
-    window.location.href = 'contributors.html';
-}
+peopleButton.setAttribute('title', 'Contributors');
+peopleButton.innerHTML = '<a href="contributors.html">Contributors</a>';
 
-musicButton.onclick = function() {
-    window.location.href = 'music.html';
-}
+discordButton.setAttribute('title', 'Discord');
+discordButton.innerHTML = '<a href="https://discord.com/invite/p8ZZXZqnag" target="_blank">Discord</a>';
 
-function discord() {
-    window.open('https://discord.com/invite/p8ZZXZqnag', '_blank');
-}
-
-discordButton.onclick = discord;
-mobileDiscord.onclick = discord;
+mobileDiscord.setAttribute('title', 'Discord');
+mobileDiscord.innerHTML = '<a href="https://discord.com/invite/p8ZZXZqnag" target="_blank">Discord</a>';
