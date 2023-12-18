@@ -338,7 +338,7 @@
                     var person = Array.from(cir.classList)[1];
                     var personQuoteList = quoteList[person];
                     var selectedQuoteIndex = Math.floor(Math.random() * personQuoteList.length);
-                    var selectedQuote = personQuoteList[personQuoteList.length - 1];
+                    var selectedQuote = personQuoteList[selectedQuoteIndex];
                     quote.innerHTML = selectedQuote;
 
                     quote.classList.remove('hide');
