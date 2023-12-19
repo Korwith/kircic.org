@@ -6,6 +6,7 @@ header {
 }
 
 .headerLeft {
+    width: 120px;
     height: calc(100% - 10px);
     margin: 5px;
     display: flex;
@@ -41,10 +42,6 @@ header {
     align-items: center;
     justify-content: center;
     text-decoration: none;
-}
-
-.headerLeft {
-    width: 7%;
 }
 
 #mobileDiscordButton {
@@ -157,7 +154,7 @@ header {
     }
 
     .headerLeft {
-        width: unset;
+        width: 55px;
         height:calc(100% - 10px);
         aspect-ratio: 0.5;
         flex-direction: column;
