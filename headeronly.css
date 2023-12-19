@@ -154,7 +154,7 @@ header {
     }
 
     .headerLeft {
-        height:calc(100% - 10px);
+        height:100px;
         aspect-ratio: 0.5;
         flex-direction: column;
     }
