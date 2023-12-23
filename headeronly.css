@@ -76,6 +76,8 @@ header {
     align-items: center;
     justify-content: center;
     text-decoration: none;
+    text-shadow: 2px 2px 4px black;
+    text-transform:uppercase;
 }
 
 .headerLeft button:hover, .headerRight button:hover {
