@@ -18,6 +18,9 @@ accountsButton.innerHTML = '<a href="services.html">Services</a>';
 peopleButton.setAttribute('title', 'Contributors');
 peopleButton.innerHTML = '<a href="contributors.html">Contributors</a>';
 
+musicButton.setAttribute('title', 'Music');
+musicButton.innerHTML = '<a href="music.html">Music</a>';
+
 discordButton.setAttribute('title', 'Discord');
 discordButton.innerHTML = '<a href="https://discord.com/invite/p8ZZXZqnag" target="_blank">Discord</a>';
 
