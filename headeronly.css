@@ -23,7 +23,7 @@ header {
 .homeButton {
     background: none;
     border: 3px solid;
-    background-image: url(https://www.kirhub.com/icon/kir.png);
+    background-image: url(icon/kir.png);
     background-size: cover;
     border-image: linear-gradient(to bottom right, #b827fc 0%, #2c90fc 25%, #b8fd33 50%, #fec837 75%, #fd1892 100%);
     border-image-slice: 1;
@@ -47,7 +47,7 @@ header {
     background-size: 85%;
     background-repeat: no-repeat;
     background-position: center;
-    background-image: url(https://www.kirhub.com/icon/discord.svg);
+    background-image: url(icon/discord.svg);
     filter: brightness(0) invert(1)
 }
 
