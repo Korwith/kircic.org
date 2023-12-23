@@ -1,6 +1,6 @@
-var mobileDiscord = document.querySelector('#mobileDiscordButton');
+var mobileDiscord = document.querySelector('.mobileDiscordButton');
 var discordButton = document.querySelector('.discordButton');
-var homeButton = document.querySelector('#homeButton');
+var homeButton = document.querySelector('.homeButton');
 var updatesButton = document.querySelector('.updatesButton');
 var accountsButton = document.querySelector('.accountsButton');
 var peopleButton = document.querySelector('.peopleButton');
@@ -22,4 +22,4 @@ discordButton.setAttribute('title', 'Discord');
 discordButton.innerHTML = '<a href="https://discord.com/invite/p8ZZXZqnag" target="_blank">Discord</a>';
 
 mobileDiscord.setAttribute('title', 'Discord');
-mobileDiscord.innerHTML = '<a href="https://discord.com/invite/p8ZZXZqnag" target="_blank">Discord</a>';
+mobileDiscord.innerHTML = '<a href="https://discord.com/invite/p8ZZXZqnag" target="_blank"></a>';
