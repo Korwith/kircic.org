@@ -76,7 +76,8 @@ header {
 }
 
 .headerRight button {
-    width: 16%;
+    width: 20%;
+    max-width: 160px;
     height: calc(100% - 5px);
     border-radius: 8px;
     border: 0;
@@ -177,6 +178,7 @@ header {
     .headerRight button {
         width: calc(50% - 5px);
         height: calc(50% - 7px);
+        max-width: unset;
     }
 
     .discordButton {
