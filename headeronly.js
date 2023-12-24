@@ -5,6 +5,7 @@ var updatesButton = document.querySelector('.updatesButton');
 var accountsButton = document.querySelector('.accountsButton');
 var peopleButton = document.querySelector('.peopleButton');
 var musicButton = document.querySelector('.musicButton');
+var pageTitle = document.querySelector('.pageTitle');
 
 homeButton.setAttribute('title', 'Home');
 homeButton.innerHTML = '<a href="index.html" style="padding:0; margin:0; width: 110%; height: 110%; display:block;"></a>';
@@ -26,3 +27,6 @@ discordButton.innerHTML = '<a href="https://discord.com/invite/p8ZZXZqnag" targe
 
 mobileDiscord.setAttribute('title', 'Discord');
 mobileDiscord.innerHTML = '<a href="https://discord.com/invite/p8ZZXZqnag" target="_blank"></a>';
+
+var titleText = document.title.split('|')[0];
+pageTitle.innerHTML = titleText;
