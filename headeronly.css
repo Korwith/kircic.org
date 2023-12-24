@@ -21,7 +21,7 @@ header {
 }
 
 .pageTitle {
-    aspect-ratio: 4/1;
+    aspect-ratio: 3.5/1;
     height: 100%;
     display: flex;
     margin-left: 10px;
