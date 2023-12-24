@@ -16,8 +16,8 @@ updatesButton.innerHTML = '<a href="updates.html">Updates</a>';
 accountsButton.setAttribute('title', 'Services');
 accountsButton.innerHTML = '<a href="services.html">Services</a>';
 
-peopleButton.setAttribute('title', 'Contributors');
-peopleButton.innerHTML = '<a href="contributors.html">Contributors</a>';
+peopleButton.setAttribute('title', 'People');
+peopleButton.innerHTML = '<a href="contributors.html">People</a>';
 
 musicButton.setAttribute('title', 'Music');
 musicButton.innerHTML = '<a href="music.html">Music</a>';
