@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Chi-Square Test</title>
+    <link href='shared.css' rel='stylesheet'>
+
+    <style>
+        h3 {
+            margin: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Chi-Square Test</h1>
+
+    <h3 class='italic'>2-Way Table</h3>
+    <h2>Screen Time Restriction vs. Age</h2>
+    <table>
+        <tr>
+            <th></th>
+            <th>16</th>
+            <th>17</th>
+            <th>18</th>
+        </tr>
+
+        <tr>
+            <th>Yes</th>
+            <th>7</th>
+            <th>7</th>
+            <th>3</th>
+        </tr>
+
+        <tr>
+            <th>No</th>
+            <th>12</th>
+            <th>18</th>
+            <th>3</th>
+        </tr>
+
+        <tr>
+            <th>Total</th>
+            <th>19</th>
+            <th>25</th>
+            <th>6</th>
+        </tr>
+    </table>
+
+    <h2>Expected Values</h2>
+    <table>
+        <tr>
+            <th></th>
+            <th>16</th>
+            <th>17</th>
+            <th>18</th>
+        </tr>
+
+        <tr>
+            <th>Yes</th>
+            <th>6.46</th>
+            <th>8.5</th>
+            <th>2.04</th>
+        </tr>
+
+        <tr>
+            <th>No</th>
+            <th>12.54</th>
+            <th>16.5</th>
+            <th>3.96</th>
+        </tr>
+
+        <tr>
+            <th>Total</th>
+            <th>19</th>
+            <th>25</th>
+            <th>6</th>
+        </tr>
+    </table>
+
+    <br>
+
+    <h2>Values</h2>
+    <h3 class='italic'>Significance: 0.05</h3>
+    <h3 class="italic">Degrees of Freedom: 2</h3>
+
+    <h2>x² Formula:</h2>
+    <h3 class="italic">Σ (obs - exp)² / exp</h3>
+
+    <h3 class="italic">Calculated x² = 1.15</h3>
+    <h3 class="italic">Cutoff: 5.99</h3>
+    
+    <br>
+
+    <img src="img/chi.png"></img>
+
+    <br>
+
+    <h2 class="'italic">Not significant evidence to prove screen time and age are related.</h2>
+</body>
+
+</html>
