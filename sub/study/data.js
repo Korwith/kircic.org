@@ -1617,4 +1617,363 @@ var questionData = [
     Correct: "B",
     Explanation: "The technician should disable the user's access to the device's command shell. This will prevent the user from accessing sensitive data and will help to prevent further data leaks. The technician should then investigate the unapproved application to determine if it is the cause of the data leak. If the application is found to be the cause of the leak, the technician should uninstall the application and restore the device to factory settings. If the application is not the cause of the leak, the technician should investigate further to determine the cause of the leak. Disabling the ability to install applications from unknown sources can help to prevent future data leaks, but it is not the next step the technician should take in this scenario. Ensuring the device is connected to the corporate WiFi network is not relevant to this scenario."
   },
+  {
+    Question: "A technician is attempting to mitigate micro power outages, which occur frequently within the area of operation. The outages are usually short, with the longest occurrence lasting five minutes. Which of the following should the technician use to mitigate this issue?",
+    A: "Surge suppressor",
+    B: "Battery backup",
+    C: "CMOS battery",
+    D: "Generator backup",
+    Correct: "B",
+    Explanation: "A battery backup, also known as an uninterruptible power supply (UPS), is a device that provides backup power during a power outage. When the power goes out, the battery backup provides a short amount of time (usually a few minutes up to an hour, depending on the capacity of the device) to save any work and safely shut down the equipment."
+  },
+  {
+    Question: "A user has a license for an application that is in use on a personal home laptop. The user approaches a systems administrator about using the same license on multiple computers on the corporate network. Which of the following BEST describes what the systems administrator should tell the user?",
+    A: "Use the application only on the home laptop because it contains the initial license.",
+    B: "Use the application at home and contact the vendor regarding a corporate license.",
+    C: "Use the application on any computer since the user has a license.",
+    D: "Use the application only on corporate computers.",
+    Correct: "B",
+    Explanation: "Use the application at home and contact the vendor regarding a corporate license. The user should use the application only on the home laptop because it contains the initial license. The user should contact the vendor regarding a corporate license if they want to use the application on multiple computers on the corporate network."
+  },
+  {
+    Question: "A technician is setting up a new laptop. The company's security policy states that users cannot install virtual machines. Which of the following should the technician implement to prevent users from enabling virtual technology on their laptops?",
+    A: "UEFI password",
+    B: "Secure boot",
+    C: "Account lockout",
+    D: "Restricted user permissions",
+    Correct: "B",
+    Explanation: "A technician setting up a new laptop must ensure that users cannot install virtual machines as the company's security policy states. One way to prevent users from enabling virtual technology is by implementing Secure Boot. Secure Boot is a feature of UEFI firmware that ensures the system only boots using firmware that is trusted by the manufacturer. It verifies the signature of all bootloaders, operating systems, and drivers before running them, preventing any unauthorized modifications to the boot process. This will help prevent users from installing virtual machines on the laptop without authorization."
+  },
+  {
+    Question: "The web browsing speed on a customer's mobile phone slows down every few weeks and then returns to normal after three or four days. Restarting the device does not usually restore performance. Which of the following should a technician check FIRST to troubleshoot this issue?",
+    A: "Data usage limits",
+    B: "Wi-Fi connection speed",
+    C: "Status of airplane mode",
+    D: "System uptime",
+    Correct: "B",
+    Explanation: "The technician should check the Wi-Fi connection speed first to troubleshoot this issue. Slow web browsing speed on a mobile phone can be caused by a slow Wi-Fi connection. The technician should check the Wi-Fi connection speed to ensure that it is fast enough to support web browsing. If the WiFi connection speed is slow, the technician should troubleshoot the Wi-Fi network to identify and resolve the issue."
+  },
+  {
+    Question: "Following a recent power outage, several computers have been receiving errors when booting. The technician suspects file corruption has occurred. Which of the following steps should the technician try FIRST to correct the issue?",
+    A: "Rebuild the Windows profiles.",
+    B: "Restore the computers from backup.",
+    C: "Reimage the computers.",
+    D: "Run the System File Checker.",
+    Correct: "D",
+    Explanation: "The technician should run the System File Checker (SFC) first to correct file corruption errors on computers after a power outage. SFC is a command-line utility that scans for and repairs corrupted system files. It can be run from the command prompt or from the Windows Recovery Environment. Rebuilding the Windows profiles, restoring the computers from backup, and reimaging the computers are more drastic measures that should be taken only if SFC fails to correct the issue."
+  },
+  {
+    Question: "A user is unable to access a website, which is widely used across the organization, and receives the following error message: The security certificate presented by this website has expired or is not yet valid. The technician confirms the website works when accessing it from another computer but not from the user's computer. Which of the following should the technician perform NEXT to troubleshoot the issue?",
+    A: "Reboot the computer.",
+    B: "Reinstall the OS.",
+    C: "Configure a static IP.",
+    D: "Check the computer's date and time.",
+    Correct: "D",
+    Explanation: "The error message indicates that the security certificate presented by the website has either expired or is not yet valid. This can happen if the computer's clock has the wrong date or time, as SSL/TLS certificates have a specific validity period. If the clock is off by too much, it may cause the certificate to fail to validate. Therefore, the technician should check the computer's date and time and ensure that they are correct."
+  },
+  {
+    Question: "A company has just refreshed several desktop PCs. The hard drives contain PII. Which of the following is the BEST method to dispose of the drives?",
+    A: "Drilling",
+    B: "Degaussing",
+    C: "Low-level formatting",
+    D: "Erasing/wiping",
+    Correct: "D",
+    Explanation: "Erasing/wiping the hard drives is the best method to dispose of the drives containing PII."
+  },
+  {
+    Question: "After a company installed a new SOHO router customers were unable to access the company-hosted public website. Which of the following will MOST likely allow customers to access the website?",
+    A: "Port forwarding",
+    B: "Firmware updates",
+    C: "IP filtering",
+    D: "Content filtering",
+    Correct: "B",
+    Explanation: "If customers are unable to access the company-hosted public website after installing a new SOHO router, the company should check for firmware updates. Firmware updates can fix bugs and compatibility issues that may be preventing customers from accessing the website. The company should also ensure that the router is properly configured to allow traffic to the website. If the router is blocking traffic to the website, the company should configure the router to allow traffic to the website."
+  },
+  {
+    Question: "A new spam gateway was recently deployed at a small business. However, users still occasionally receive spam. The management team is concerned that users will open the messages and potentially infect the network systems. Which of the following is the MOST effective method for dealing with this issue?",
+    A: "Adjusting the spam gateway",
+    B: "Updating firmware for the spam appliance",
+    C: "Adjusting AV settings",
+    D: "Providing user training",
+    Correct: "D",
+    Explanation: "The most effective method for dealing with spam messages in a small business is to provide user training. Users should be trained to recognize spam messages and avoid opening them. They should also be trained to report spam messages to the IT department so that appropriate action can be taken. In addition, users should be trained to avoid clicking on links or downloading attachments from unknown sources. By providing user training, the management team can reduce the risk of users opening spam messages and potentially infecting the network systems."
+  },
+  {
+    Question: "A user reports a PC is running slowly. The technician suspects high disk I/O. Which of the following should the technician perform NEXT?",
+    A: "resmon.exe",
+    B: "dfrgui.exe",
+    C: "msinfo32.exe",
+    D: "msconfig.exe",
+    Correct: "A",
+    Explanation: "If a technician suspects high disk I/O, the technician should use the Resource Monitor (resmon.exe) to identify the process that is causing the high disk I/O. Resource Monitor provides detailed information about the system's resource usage, including disk I/O. The technician can use this information to identify the process that is causing the high disk I/O and take appropriate action."
+  },
+  {
+    Question: "A macOS user needs to create another virtual desktop space. Which of the following applications will allow the user to accomplish this task?",
+    A: "Dock",
+    B: "Spotlight",
+    C: "Mission Control",
+    D: "Launchpad",
+    Correct: "C",
+    Explanation: "The application that will allow a macOS user to create another virtual desktop space is Mission Control. Mission Control lets you create additional desktops, called spaces, to organize the windows of your apps. You can create a space by entering Mission Control and clicking the Add button in the Spaces bar. You can also assign apps to specific spaces and move between them easily."
+  },
+  {
+    Question: "A technician is troubleshooting a computer with a suspected short in the power supply. Which of the following is the FIRST step the technician should take?",
+    A: "Put on an ESD strap",
+    B: "Disconnect the power before servicing the PC.",
+    C: "Place the PC on a grounded workbench.",
+    D: "Place components on an ESD mat.",
+    Correct: "B",
+    Explanation: "The first step a technician should take when troubleshooting a computer with a suspected short in the power supply is to disconnect the power before servicing the PC. This is to prevent any electrical shock or damage to the components. A power supply can be dangerous even when unplugged, as capacitors can maintain a line voltage charge for a long time. Therefore, it is important to disconnect the power cord and press the power button to discharge any residual power before opening the case. The other steps are also important for safety and proper diagnosis, but they should be done after disconnecting the power."
+  },
+  {
+    Question: "A team of support agents will be using their workstations to store credit card data. Which of the following should the IT department enable on the workstations in order to remain compliant with common regulatory controls? (Select TWO).",
+    A: "Encryption",
+    B: "Antivirus",
+    C: "AutoRun",
+    D: "Guest accounts",
+    E: "Default passwords",
+    F: "Backups",
+    Correct: ["A", "F"],
+    Explanation: "Encryption is a way of protecting cardholder data by transforming it into an unreadable format that can only be decrypted with a secret key. Backups are a way of ensuring that cardholder data is not lost or corrupted in case of a disaster or system failure. Both encryption and backups are part of the PCI DSS requirements that apply to any entity that stores, processes, or transmits cardholder data. The other options are not directly related to credit card data security or compliance."
+  },
+  {
+    Question: "A user is unable to log in to the network. The network uses 802.1X with EAP-TLS to authenticate on the wired network. The user has been on an extended leave and has not logged in to the computer in several months. Which of the following is causing the login issue?",
+    A: "Expired certificate",
+    B: "OS update failure",
+    C: "Service not started",
+    D: "Application crash",
+    E: "Profile rebuild needed",
+    Correct: "A",
+    Explanation: "EAP-TLS is a method of authentication that uses certificates to establish a secure tunnel between the client and the server. The certificates have a validity period and must be renewed before they expire. If the user has been on an extended leave and has not logged in to the computer in several months, it is possible that the certificate on the client or the server has expired and needs to be renewed. The other options are not directly related to EAP-TLS authentication or 802.1X network access."
+  },
+  {
+    Question: "A company is deploying mobile phones on a one-to-one basis, but the IT manager is concerned that users will root/jailbreak their phones. Which of the following technologies can be implemented to prevent this issue?",
+    A: "Signed system images",
+    B: "Antivirus",
+    C: "SSO",
+    D: "MDM",
+    Correct: "D",
+    Explanation: "MDM stands for Mobile Device Management, and it is a way of remotely managing and securing mobile devices that are used for work purposes. MDM can enforce policies and restrictions on the devices, such as preventing users from installing unauthorized apps, modifying system settings, or accessing root privileges. MDM can also monitor device status, wipe data, lock devices, or locate lost or stolen devices."
+  },
+  {
+    Question: "A technician is troubleshooting an issue that requires a user profile to be rebuilt. The technician is unable to locate Local Users and Groups in the Mtv1C console. Which of the following is the NEXT step the technician should take to resolve the issue?",
+    A: "Run the antivirus scan.",
+    B: "Add the required snap-in.",
+    C: "Restore the system backup",
+    D: "Use the administrator console.",
+    Correct: "B",
+    Explanation: "Local Users and Groups is a Microsoft Management Console (MMC) snap-in that allows you to manage user accounts or groups on your computer. If you cannot find it in the MMC console, you can add it manually by following these steps: Press Windows key + R to open the Run dialog box, or open the Command Prompt. Type mmc and hit Enter. This will open a blank MMC console. Click File and then Add/Remove Snap-in. In the Add or Remove Snap-ins window, select Local Users and Groups from the Available snap-ins list, and click Add. In the Select Computer window, choose Local computer or Another computer, depending on which computer you want to manage, and click Finish. Click OK to close the Add or Remove Snap-ins window. You should now see Local Users and Groups in the MMC console."
+  },
+  {
+    Question: "A technician needs to manually set an IP address on a computer that is running macOS. Which of the following commands should the technician use?",
+    A: "ipconfig",
+    B: "ifconfig",
+    C: "arpa",
+    D: "ping",
+    Correct: "B",
+    Explanation: "ifconfig is a command-line utility that allows you to configure network interfaces on macOS and other Unix-like systems. To set an IP address using ifconfig, you need to know the name of the network interface you want to configure (such as en0 or en1), and the IP address you want to assign (such as 192.168.0.150). You also need to use sudo to run the command with administrative privileges. The syntax of the command is: sudo ifconfig interface address. For example, to set the IP address of en1 to 192.168.0.150, you would type: sudo ifconfig en1 192.168.0.150. You may also need to specify other parameters such as subnet mask, gateway, or DNS servers, depending on your network configuration. The other commands are not directly related to setting an IP address on macOS. ipconfig is a similar command for Windows systems, arpa is a domain name used for reverse DNS lookup, and ping is a command for testing network connectivity."
+  },
+  {
+    Question: "A mobile phone user has downloaded a new payment application that allows payments to be made with a mobile device. The user attempts to use the device at a payment terminal but is unable to do so successfully. The user contacts a help desk technician to report the issue. Which of the following should the technician confirm NEXT as part of the troubleshooting process?",
+    A: "If airplane mode is enabled",
+    B: "If Bluetooth is disabled",
+    C: "If NFC is enabled",
+    D: "If WiFi is enabled",
+    E: "If location services are disabled",
+    Correct: "C",
+    Explanation: "NFC stands for Near Field Communication, and it is a wireless technology that allows your phone to act as a contactless payment device, among other things. Payment applications that allow payments to be made with a mobile device usually rely on NFC to communicate with the payment terminal. Therefore, if NFC is disabled on the phone, the payment will not work. To enable NFC on an Android phone, you need to follow these steps: On your Android device, open the Settings app. Select Connected devices. Tap on Connection preferences. You should see the NFC option. Toggle it on. The other options are not directly related to using a payment application with a mobile device. Airplane mode is a setting that disables all wireless communication on the phone, including NFC, but it also affects calls, texts, and internet access. Bluetooth is a wireless technology that allows you to connect your phone with other devices such as headphones or speakers, but it is not used for contactless payments. Wi-Fi is a wireless technology that allows you to access the internet or a local network, but it is also not used for contactless payments. Location services are a feature that allows your phone to determine your geographic location using GPS or other methods, but they are not required for contactless payments."
+  },
+  {
+    Question: "Antivirus software indicates that a workstation is infected with ransomware that cannot be quarantined. Which of the following should be performed FIRST to prevent further damage to the host and other systems?",
+    A: "Power off the machine.",
+    B: "Run a full antivirus scan.",
+    C: "Remove the LAN card.",
+    D: "Install a different endpoint solution.",
+    Correct: "A",
+    Explanation: "Ransomware is a type of malware that encrypts the files on a system and demands a ransom for their decryption. Ransomware can also spread to other systems on the network or exfiltrate sensitive data to the attackers. Therefore, it is important to isolate the infected machine as soon as possible to contain the infection and prevent further damage. Powering off the machine is a quick and effective way of disconnecting it from the network and stopping any malicious processes running on it. The other options are not directly related to preventing ransomware damage or may not be effective. Running a full antivirus scan may not be able to detect or remove the ransomware, especially if it is a new or unknown variant. Removing the LAN card may disconnect the machine from the network, but it may not stop any malicious processes running on it or any data encryption or exfiltration that has already occurred. Installing a different endpoint solution may not be possible or helpful if the system is already infected and locked by ransomware."
+  },
+  {
+    Question: "A user updates a mobile device's OS. A frequently used application becomes consistently unresponsive immediately after the device is launched. Which of the following troubleshooting steps should the user perform FIRST?",
+    A: "Delete the application's cache.",
+    B: "Check for application updates.",
+    C: "Roll back the OS update.",
+    D: "Uninstall and reinstall the application.",
+    Correct: "B",
+    Explanation: "Sometimes, an OS update can cause compatibility issues with some applications that are not optimized for the new version of the OS. To fix this, the user should check if there are any updates available for the application that can resolve the issue. The user can check for application updates by following these steps: On an Android device, open the Google Play Store app and tap on the menu icon in the top left corner. Then tap on My apps & games and look for any updates available for the application. If there is an update, tap on Update to install it. On an iOS device, open the App Store app and tap on the Updates tab at the bottom. Then look for any updates available for the application. If there is an update, tap on Update to install it."
+  },
+  {
+    Question: "A technician needs to provide recommendations about how to upgrade backup solutions for a site in an area that has frequent hurricanes and an unstable power grid. Which of the following should the technician recommend implementing?",
+    A: "High availability",
+    B: "Regionally diverse backups",
+    C: "On-site backups",
+    D: "Incremental backups",
+    Correct: "B",
+    Explanation: "Regionally diverse backups are backups that are stored in different geographic locations, preferably far away from the primary site. This way, if a disaster such as a hurricane or a power outage affects one location, the backups in another location will still be available and accessible. Regionally diverse backups can help ensure business continuity and data recovery in case of a disaster. The other options are not the best backup solutions for a site in an area that has frequent hurricanes and an unstable power grid. High availability is a feature that allows a system to remain operational and accessible even if one or more components fail, but it does not protect against data loss or corruption. On-site backups are backups that are stored in the same location as the primary site, which means they are vulnerable to the same disasters that can affect the primary site. Incremental backups are backups that only store the changes made since the last backup, which means they require less storage space and bandwidth, but they also depend on previous backups to restore data and may not be sufficient for disaster recovery."
+  },
+  {
+    Question: "A technician is troubleshooting application crashes on a Windows workstation. Each time the workstation user tries to open a website in a browser, the following message is displayed: crypt32.dll is missing not found. Which of the following should the technician attempt FIRST?",
+    A: "Rebuild Windows profiles.",
+    B: "Reimage the workstation",
+    C: "Roll back updates",
+    D: "Perform a system file check",
+    Correct: "D",
+    Explanation: "If this file is missing or corrupted, it can cause application crashes or errors when trying to open websites in a browser. To fix this, the technician can perform a system file check, which is a utility that scans and repairs corrupted or missing system files. To perform a system file check, the technician can follow these steps: Open the Command Prompt as an administrator. To do this, type cmd in the search box on the taskbar, right-click on Command Prompt, and select Run as administrator. In the Command Prompt window, type sfc /scannow and hit Enter. This will start the scanning and repairing process, which may take some time. Wait for the process to complete. If any problems are found and fixed, you will see a message saying Windows Resource Protection found corrupt files and successfully repaired them. If no problems are found, you will see a message saying Windows Resource Protection did not find any integrity violations. Restart your computer and check if the issue is resolved."
+  },
+  {
+    Question: "A user needs assistance installing software on a Windows PC but will not be in the office. Which of the following solutions would a technician MOST likely use to assist the user without having to install additional software?",
+    A: "VPN",
+    B: "MSRA",
+    C: "SSH",
+    D: "RDP",
+    Correct: "B",
+    Explanation: "MSRA stands for Microsoft Remote Assistance, and it is a feature that allows a technician to remotely view and control another user’s Windows PC with their permission. MSRA is built-in to Windows and does not require any additional software installation. To use MSRA, the technician and the user need to follow these steps: On the user’s PC, type msra in the search box on the taskbar and select Invite someone to connect to your PC and help you, or offer to help someone else. Select Save this invitation as a file and choose a location to save the file. This file contains a password that the technician will need to connect to the user’s PC. Send the file and the password to the technician via email or another secure method. On the technician’s PC, type msra in the search box on the taskbar and select Help someone who has invited you. Select Use an invitation file and browse to the location where the file from the user is saved. Enter the password when prompted. The user will see a message asking if they want to allow the technician to connect to their PC. The user should select Yes. The technician will see the user’s desktop and can request control of their PC by clicking Request control on the top bar. The user should allow this request by clicking Yes. The technician can now view and control the user’s PC and assist them with installing software."
+  },
+  {
+    Question: "A technician is upgrading the backup system for documents at a high-volume law firm. The current backup system can retain no more than three versions of full backups before failing. The law firm is not concerned about restore times but asks the technician to retain more versions when possible. Which of the following backup methods should the technician MOST likely implement?",
+    A: "Full",
+    B: "Mirror",
+    C: "Incremental",
+    D: "Differential",
+    Correct: "C",
+    Explanation: "Incremental backup is a backup method that only backs up the files that have changed since the last backup, whether it was a full or an incremental backup. Incremental backup can save storage space and bandwidth, as it does not copy the same files over and over again. Incremental backup can also retain more versions of backups, as it only stores the changes made to the files. However, incremental backup can have longer restore times, as it requires restoring the last full backup and all the subsequent incremental backups in order to recover the data. The law firm is not concerned about restore times but asks the technician to retain more versions when possible, so incremental backup would be a suitable choice for them."
+  },
+  {
+    Question: "A technician receives a call from a user who is unable to open Outlook. The user states that Outlook worked fine yesterday, but the computer may have restarted sometime overnight. Which of the following is the MOST likely reason Outlook has stopped functioning?",
+    A: "Spam filter installation",
+    B: "Invalid registry settings",
+    C: "Malware infection",
+    D: "Operating system update",
+    Correct: "D",
+    Explanation: null,
+  },
+  {
+    Question: "Which of the following editions of Windows 10 requires reactivation every 180 days?",
+    A: "Enterprise",
+    B: "Pro for Workstation",
+    C: "Home",
+    D: "Pro",
+    Correct: "A",
+    Explanation: "Windows 10 Enterprise is an edition of Windows 10 that is designed for large organizations that need advanced security and management features. Windows 10 Enterprise can be activated using different methods, such as Multiple Activation Key (MAK), Active Directory-based Activation (ADBA), or Key Management Service (KMS). KMS is a method of activation that uses a local server to activate multiple devices on a network. KMS activations are valid for 180 days and need to be renewed periodically by connecting to the KMS server. If a device does not renew its activation within 180 days, it will enter a grace period of 30 days, after which it will display a warning message and lose some functionality until it is reactivated. The other editions of Windows 10 do not require reactivation every 180 days. Windows 10 Pro for Workstation is an edition of Windows 10 that is designed for high-performance devices that need advanced features such as ReFS file system, persistent memory, and faster file sharing. Windows 10 Pro for Workstation can be activated using a digital license or a product key. Windows 10 Home is an edition of Windows 10 that is designed for personal or home use. Windows 10 Home can be activated using a digital license or a product key. Windows 10 Pro is an edition of Windows 10 that is designed for business or professional use. Windows 10 Pro can be activated using a digital license or a product key. None of these editions require reactivation every 180 days unless there are significant hardware changes or other issues that affect the activation status."
+  },
+  {
+    Question: "A BSOD appears on a user's workstation monitor. The user immediately presses the power button to shut down the PC, hoping to repair the issue. The user then restarts the PC, and the BSOD reappears, so the user contacts the help desk. Which of the following should the technician use to determine the cause?",
+    A: "Stop code",
+    B: "Event Viewer",
+    C: "Services",
+    D: "System Configuration",
+    Correct: "A",
+    Explanation: "When a Blue Screen of Death (BSOD) appears on a Windows workstation, it indicates that there is a serious problem with the operating system. The stop code displayed on the BSOD can provide valuable information to help determine the cause of the issue. The stop code is a specific error code that is associated with the BSOD, and it can help identify the root cause of the problem. In this scenario, the user has encountered a BSOD and has restarted the PC, only to see the BSOD reappear. This suggests that the problem is persistent and requires further investigation. By analyzing the stop code displayed on the BSOD, a technician can begin to identify the underlying issue and take appropriate actions to resolve it."
+  },
+  {
+    Question: "A technician is troubleshooting boot times for a user. The technician attempts to use MSConfig to see which programs are starting with the OS but receives a message that it can no longer be used to view startup items. Which of the following programs can the technician use to view startup items?",
+    A: "msinfo32",
+    B: "perfmon",
+    C: "regedit",
+    D: "taskmgr",
+    Correct: "D",
+    Explanation: "When troubleshooting boot times for a user, a technician may want to check which programs are starting with the operating system to identify any that may be slowing down the boot process. MSConfig is a tool that can be used to view startup items on a Windows system, but it may not always be available or functional. In this scenario, the technician receives a message that MSConfig cannot be used to view startup items. As an alternative, the technician can use Task Manager (taskmgr), which can also display the programs that run at startup. To access the list of startup items in Task Manager, the technician can follow these steps: Open Task Manager by pressing Ctrl+Shift+Esc. Click the 'Startup' tab. The list of programs that run at startup will be displayed."
+  },
+  {
+    Question: "A desktop engineer is deploying a master image. Which of the following should the desktop engineer consider when building the master image? (Select TWO).",
+    A: "Device drivers",
+    B: "Keyboard backlight settings",
+    C: "Installed application license keys",
+    D: "Display orientation",
+    E: "Target device power supply",
+    F: "Disabling express charging",
+    Correct: ["A", "C"],
+    Explanation: "A. Device drivers23: Device drivers are software components that enable the operating system to communicate with hardware devices. Different devices may require different drivers, so the desktop engineer should include the appropriate drivers in the master image or configure the deployment process to install them automatically.\nC. Installed application license keys2: Installed application license keys are codes that activate or authenticate software applications. Some applications may require license keys to be entered during installation or after deployment. The desktop engineer should include the license keys in the master image or configure the deployment process to apply them automatically."
+  },
+  {
+    Question: "A technician is setting up a conference room computer with a script that boots the application on login. Which of the following would the technician use to accomplish this task? (Select TWO).",
+    A: "File Explorer",
+    B: "Startup Folder",
+    C: "System Information",
+    D: "Programs and Features",
+    E: "Task Scheduler",
+    F: "Device Manager",
+    Correct: ["B", "E"],
+    Explanation: "B. Startup Folder1: The Startup folder is a special folder that contains shortcuts to programs or scripts that will run automatically when a user logs on. The technician can create a shortcut to the script and place it in the Startup folder for the conference room computer or for all users.\nE. Task Scheduler23: The Task Scheduler is a tool that allows you to create tasks that run at specified times or events. The technician can create a task that runs the script at logon for the conference room computer or for all users."
+  },
+  {
+    Question: "A neighbor successfully connected to a user's Wi-Fi network. Which of the following should the user do after changing the network configuration to prevent the neighbor from being able to connect again?",
+    A: "Disable the SSID broadcast.",
+    B: "Disable encryption settings.",
+    C: "Disable DHCP reservations.",
+    D: "Disable logging.",
+    Correct: "A",
+    Explanation: "A. Disable the SSID broadcast1: The SSID broadcast is a feature that allows a Wi-Fi network to be visible to nearby devices. Disabling the SSID broadcast can make the network harder to find by unauthorized users, but it does not prevent them from accessing it if they know the network name and password."
+  },
+  {
+    Question: "A technician is troubleshooting a PC that has been performing poorly. Looking at the Task Manager, the technician sees that CPU and memory resources seem fine, but disk throughput is at 100%.\nWhich of the following types of malware is the system MOST likely infected with?",
+    A: "Keylogger",
+    B: "Rootkit",
+    C: "Ransomware",
+    D: "Trojan",
+    Correct: "C",
+    Explanation: "Ransomware is a type of malware that encrypts the files on the victim’s computer and demands a ransom for their decryption. Ransomware can cause high disk throughput by encrypting large amounts of data in a short time."
+  },
+  {
+    Question: "A homeowner recently moved and requires a new router for the new ISP to function correctly. The internet service has been installed and has been confirmed as functional. Which of the following is the FIRST step the homeowner should take after installation of all relevant cabling and hardware?",
+    A: "Convert the PC from a DHCP assignment to a static IP address.",
+    B: "Run a speed test to ensure the advertised speeds are met.",
+    C: "Test all network sharing and printing functionality the customer uses.",
+    D: "Change the default passwords on new network devices.",
+    Correct: "D",
+    Explanation: "When a homeowner moves and sets up a new router for the new ISP it is important to take appropriate security measures to protect their network from potential security threats. The FIRST step that the homeowner should take after installation of all relevant cabling and hardware is to change the default passwords on new network devices.\nMost modern routers come with default usernames and passwords that are widely known to potential attackers. If these defaults are not changed, it could make it easier for external attackers to gain unauthorized access to the network. Changing the passwords on new network devices is a simple but effective way to improve the security posture of the network."
+  },
+  {
+    Question: "A user rotates a cell phone horizontally to read emails, but the display remains vertical, even though the settings indicate autorotate is on. Which of the following will MOST likely resolve the issue?",
+    A: "Recalibrating the magnetometer",
+    B: "Recalibrating the compass",
+    C: "Recalibrating the digitizer",
+    D: "Recalibrating the accelerometer",
+    Correct: "D",
+    Explanation: "When a user rotates a cell phone horizontally to read emails and the display remains vertical, even though the settings indicate autorotate is on, this is typically due to a problem with the phone's accelerometer. The accelerometer is the sensor that detects changes in the phone's orientation and adjusts the display accordingly. If the accelerometer is not calibrated correctly, the display may not rotate as expected. Recalibrating the accelerometer is the most likely solution to this issue. The process for recalibrating the accelerometer can vary depending on the specific device and operating system, but it typically involves going to the device's settings and finding the option to calibrate or reset the sensor. Users may need to search their device's documentation or online resources to find specific instructions for their device."
+  },
+  {
+    Question: "Which of the following is the proper way for a technician to dispose of used printer consumables?",
+    A: "Proceed with the custom manufacturer's procedure.",
+    B: "Proceed with the disposal of consumables in standard trash receptacles.",
+    C: "Empty any residual ink or toner from consumables before disposing of them in a standard recycling bin.",
+    D: "Proceed with the disposal of consumables in standard recycling bins.",
+    Correct: "A",
+    Explanation: "When it comes to disposing of used printer consumables, it is important to follow the manufacturer's instructions or guidelines for proper disposal, as different types of consumables may require different disposal procedures. Some manufacturers provide specific instructions for proper disposal, such as sending the used consumables back to the manufacturer or using special recycling programs. Therefore, the proper way for a technician to dispose of used printer consumables is to proceed with the custom manufacturer's procedure, if provided. This option ensures that the disposal is handled in an environmentally friendly and safe manner."
+  },
+  {
+    Question: "A large company is selecting a new Windows operating system and needs to ensure it has built-in encryption and endpoint protection. Which of the following Windows versions will MOST likely be selected?",
+    A: "Home",
+    B: "Pro",
+    C: "Pro for Workstations",
+    D: "Enterprise",
+    Correct: "D",
+    Explanation: "When selecting a new Windows operating system for a large company that needs built-in encryption and endpoint protection, the Enterprise edition is the most likely choice. This edition provides advanced security features such as Windows Defender Advanced Threat Protection (ATP), AppLocker, and BitLocker Drive Encryption. These features can help to protect the company's data and endpoints against malware attacks, unauthorized access, and data theft. The Home and Pro editions of Windows do not include some of the advanced security features provided by the Enterprise edition, such as Windows Defender ATP and AppLocker. The Pro for Workstations edition is designed for high-performance and high-end hardware configurations, but it does not provide additional security features beyond those provided by the Pro edition."
+  },
+  {
+    Question: "A user tries to access commonly used web pages but is redirected to unexpected websites. Clearing the web browser cache does not resolve the issue. Which of the following should a technician investigate NEXT to resolve the issue?",
+    A: "Enable firewall ACLs.",
+    B: "Examine the localhost file entries.",
+    C: "Verify the routing tables.",
+    D: "Update the antivirus definitions.",
+    Correct: "B",
+    Explanation: "A possible cause of the user being redirected to unexpected websites is that the localhost file entries have been modified by malware or hackers to point to malicious or unwanted websites. The localhost file is a text file that maps hostnames to IP addresses and can override DNS settings. By examining the localhost file entries, a technician can identify and remove any suspicious or unauthorized entries that may cause the redirection issue. Enabling firewall ACLs may not resolve the issue if the firewall rules do not block the malicious or unwanted websites. Verifying the routing tables may not resolve the issue if the routing configuration is correct and does not affect the web traffic. Updating the antivirus definitions may help prevent future infections but may not remove the existing malware or changes to the localhost file. Reference: CompTIA A+ Core 2 (220-1002) Certification Exam Objectives Version 4.0, Domain 1.3"
+  },
+  {
+    Question: "A network technician installed a SOHO router for a home office user. The user has read reports about home routers being targeted by malicious actors and then used in DDoS attacks. Which of the following can the technician MOST likely do to defend against this threat?",
+    A: "Add network content filtering.",
+    B: "Disable the SSID broadcast.",
+    C: "Configure port forwarding.",
+    D: "Change the default credentials.",
+    Correct: "D",
+    Explanation: "One of the most effective ways to defend against malicious actors targeting home routers for DDoS attacks is to change the default credentials of the router. The default credentials are often well- known or easily guessed by attackers, who can then access and compromise the router settings and firmware. By changing the default credentials to strong and unique ones, a technician can prevent unauthorized access and configuration changes to the router. Adding network content filtering may help block some malicious or unwanted websites but may not prevent attackers from exploiting router vulnerabilities or backdoors. Disabling the SSID broadcast may help reduce the visibility of the wireless network but may not prevent attackers from scanning or detecting it. Configuring port forwarding may help direct incoming traffic to specific devices or services but may not prevent attackers from sending malicious packets or requests to the router. Reference: CompTIA A+ Core 2 (220-1002) Certification Exam Objectives Version 4.0, Domain 3.3"
+  },
+  {
+    Question: "A technician is preparing to remediate a Trojan virus that was found on a workstation. Which of the following steps should the technician complete BEFORE removing the virus?",
+    A: "Disable System Restore.",
+    B: "Schedule a malware scan.",
+    C: "Educate the end user.",
+    D: "Run Windows Update.",
+    Correct: "A",
+    Explanation: null
+  }
 ]
