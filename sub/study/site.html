@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>A+ Practice Test</title>
+    <title>A+ | Kirhub</title>
+    <link rel="icon" type="image/x-icon" href="sub/assets/kir.png">
+    <meta property="twitter:image" content="a+.png">
+    <meta name="title" content="A+ | Kirhub">
+    <meta name="description" content="a place where all your hopes and dreams come true">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="language" content="English">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="headeronly.css">
+
+    <style>
+        body {
+            background-color: #303030;
+        }
+
+        #placeholder {
+            display: none;
+        }
+
+        #questionPlaceholder {
+            display: none;
+        }
+
+        #qCount {
+            aspect-ratio: 5/1;
+            width: 30%;
+            border-radius: 8px;
+            display: block;
+            margin-left:auto;
+            margin-right:auto;
+            background-color: #151515;
+            color: white;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        .logo {
+            width: 160px;
+            height: 130px;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 16px;
+            background-image: url(a+.png);
+            background-size: cover;
+        }
+
+        .title {
+            text-shadow: 2px 2px 4px black;
+            font-size:30px;
+            padding: 5px;
+            text-align:center;
+        }
+
+        .questionList {
+            margin-left: auto;
+            margin-right: auto;
+            width: 60%;
+            height: fit-content;
+        }
+
+        .question, .intro {
+            padding: 10px;
+            height: fit-content;
+            width: 100%;
+            background-color: #202020;
+            border-radius: 16px;
+            box-shadow: 2px 2px 4px 0px black;
+            margin-bottom: 30px;
+        }
+
+        .shrink {
+            display: none;
+        }
+
+        .questionText {
+            width: 100%;
+            height: 60px;
+        }
+
+        .questionChoice {
+            display: block;
+            cursor: pointer;
+            padding: 5px;
+            height: 50px;
+            width: 100%;
+            background: none;
+            border: 0;
+            display: flex;
+            box-sizing: border-box;
+            transition: background-color 0.3s, border 0.3s;
+        }
+
+        .letter {
+            flex: 0 0 auto;
+            height: 100%;
+            aspect-ratio: 1/1;
+            background-color: #101010;
+            border-radius: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            font-weight: bolder;
+        }
+
+        .choiceText {
+            flex: 1;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            text-align: left;
+            margin-left: 10px;
+        }
+
+        .correct {
+            border: 5px solid green;
+            background-color: rgba(0, 255, 0, 0.2)
+        }
+
+        .incorrect {
+            border: 5px solid red;
+            background-color: rgba(255, 0, 0, 0.2)
+        }
+
+        .answerList {
+            margin-bottom: 5px;
+        }
+
+        #start {
+            aspect-ratio:5/1;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 5px;
+            cursor: pointer;
+            background-color: #EE2E24;
+            border: 3px solid black;
+            box-shadow: 2px 2px 4px 0px #bf251c;
+            width:30%;
+            border: 0;
+            border-radius: 8px;
+        }
+
+        * {
+            font-family: Arial;
+            font-weight: 900;
+            color: white;
+        }
+
+        @media screen and (max-width: 767px) {
+            .questionList {
+                width: calc(100% - 5px);
+            }
+
+            .question, .intro {
+                padding: 0;
+                padding-top: 5px;
+                padding-bottom: 5px;
+            }
+
+            #qCount {
+                width: 60%;
+            }
+
+            #start {
+                width: 60%;
+            }
+
+            .questionText {
+                padding: 10px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class='logo'></div>
+    <h1 class="title">CompTIA A+ Practice Test</h1>
+
+    <div class="questionList">
+        <div class="intro">
+            <select name="Question Count" id="qCount">
+                <option value="20">20 Questions</option>
+                <option value="40">40 Questions</option>
+                <option value="60">60 Questions</option>
+                <option value="80">80 Questions</option>
+                <option value="100">100 Questions</option>
+            </select>
+
+            <button id="start">Start Exam</button>
+        </div>
+    </div>
+
+    <div class="question" id="placeholder">
+        <span class="questionText">Test question</span>
+        <div class="answerList"></div>
+        <span class="questionText explain hide">Explanation here</span>
+    </div>
+
+    <button class="questionChoice" id="questionPlaceholder">
+        <div class="letter">A</div>
+        <span class="choiceText">Question text</span>
+    </button>
+
+    <script src="data.js"></script>
+    <script>
+        var questionList = document.querySelector('.questionList');
+        var questionChoice = document.querySelector('#questionPlaceholder');
+        var placeholder = document.querySelector('#placeholder');
+        var startbutton = document.querySelector('#start');
+        var questionCount = document.querySelector('#qCount');
+        var intro = document.querySelector('.intro');
+        var data = questionData;
+
+        var selectedQuestions = [];
+        var checkLetters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
+
+        function unpackAnswer(answer) {
+            if (Array.isArray(answer)) {
+                return answer.join(', ');
+            } else {
+                return answer;
+            }
+        }
+
+        function formatExplain(explain) {
+            if (!explain) {
+                return 'No explanation provided';
+            } else {
+                return explain;
+            }
+        }
+
+        function addQuestion(index) {
+            var thisQuestion = data[index];
+            var clone = placeholder.cloneNode(true);
+            var cloneText = clone.querySelector('.questionText');
+            var explainText = clone.querySelector('.explain');
+            var cloneAnswerList = clone.querySelector('.answerList');
+
+            var unpackedAnswers = unpackAnswer(thisQuestion.Correct);
+            var getExplain = formatExplain(thisQuestion.Explanation);
+
+            clone.removeAttribute('id');
+            clone.setAttribute('answertotal', thisQuestion.Correct.length || 1);
+            clone.setAttribute('answered', 0);
+            questionList.appendChild(clone);
+            cloneText.innerHTML = `${selectedQuestions.length}. ${thisQuestion.Question}`;
+            explainText.innerHTML = `${unpackedAnswers}: ${getExplain}`
+
+            for (var i = 0; i < checkLetters.length; i++) {
+                var thisLetter = checkLetters[i];
+                var thisAnswer = thisQuestion[thisLetter];
+
+                if (thisAnswer) {
+                    var answerClone = questionChoice.cloneNode(true);
+                    var answerLetter = answerClone.querySelector('.letter');
+                    var answerText = answerClone.querySelector('.choiceText');
+
+                    answerLetter.innerHTML = thisLetter;
+                    answerText.innerHTML = thisAnswer;
+
+                    answerClone.removeAttribute('id');
+                    cloneAnswerList.appendChild(answerClone);
+
+                    (function (questionClone, answerClone, thisQuestion, answerLetter) {
+                        answerClone.onclick = function () {
+                            console.log(answerLetter);
+                            checkQuestion(questionClone, answerClone, thisQuestion, answerLetter);
+                        }
+                    })(clone, answerClone, thisQuestion, answerLetter);
+                }
+            }
+        }
+
+        function checkQuestion(questionClone, answerClone, thisQuestion, answerLetter) {
+            var correct = thisQuestion.Correct;
+            var answerLetterText = answerLetter.innerHTML;
+            var explanation = questionClone.querySelector('.explain');
+            var success = false;
+
+            if (Array.isArray(correct)) {
+                if (correct.includes(answerLetterText)) {
+                    success = true;
+                }
+            }
+
+            else {
+                if (correct == answerLetterText) {
+                    success = true;
+                }
+            }
+
+            assignCorrect(questionClone, answerClone, success, thisQuestion);
+        }
+
+        function assignCorrect(questionClone, answerClone, success, thisQuestion) {
+            var answercount = parseInt(questionClone.getAttribute('answertotal'));
+            var answered = parseInt(questionClone.getAttribute('answered'));
+            var explanation = questionClone.querySelector('.explain');
+
+            if (answered < answercount) {
+                if (success) {
+                    answerClone.classList.add('correct');
+                } else {
+                    answerClone.classList.add('incorrect');
+                }
+
+                if (answered+1 == answercount) {
+                    explanation.classList.remove('hide');
+                }
+
+                questionClone.setAttribute('answered', answered+1);
+            }
+        }
+
+        function getQuestion() {
+            var randomIndex = Math.floor(Math.random() * data.length);
+
+            if (!selectedQuestions.includes(randomIndex)) {
+                selectedQuestions.push(randomIndex);
+                addQuestion(randomIndex);
+            } else {
+                getQuestion(randomIndex);
+            }
+        }
+
+        function load(count) {
+            for (var i = 0; i < count; i++) {
+                getQuestion();
+            }
+        }
+
+        function start() {
+            var count = questionCount.value;
+            load(count);
+            intro.classList.add('shrink');
+        }
+
+        startbutton.onclick = start;
+    </script>
+</body>
+
+</html>
