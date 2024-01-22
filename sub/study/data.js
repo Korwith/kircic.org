@@ -1975,5 +1975,1213 @@ var questionData = [
     D: "Run Windows Update.",
     Correct: "A",
     Explanation: null
-  }
+  },
+  {
+    Question: 'A new employee was hired recently. Which of the following documents will the new employee need to sign before being granted login access to the network?',
+    A: 'MSDS',
+    B: 'EULA',
+    C: 'UAC',
+    D: 'AUP',
+    Correct: 'D',
+    Explanation: 'A new employee will need to sign an AUP before being granted login access to the network. An AUP is an Acceptable Use Policy that defines the rules and guidelines for using network resources and services in an organization...'
+  },
+
+  {
+    Question: 'A user lost a company tablet that was used for customer intake at a doctor\'s office. Which of the following actions would BEST protect against unauthorized access of the data?',
+    A: 'Changing the office\'s Wi-Fi SSID and password',
+    B: 'Performing a remote wipe on the device',
+    C: 'Changing the user\'s password',
+    D: 'Enabling remote drive encryption',
+    Correct: 'B',
+    Explanation: 'The best action to protect against unauthorized access of the data on the lost company tablet is to perform a remote wipe on the device. A remote wipe is a feature that allows an administrator or a user to erase all the data and settings on a device remotely...'
+  },
+
+  {
+    Question: 'Which of the following is used to explain issues that may occur during a change implementation?',
+    A: 'Scope change',
+    B: 'End-user acceptance',
+    C: 'Risk analysis',
+    D: 'Rollback plan',
+    Correct: 'C',
+    Explanation: 'Risk analysis is used to explain issues that may occur during a change implementation. Risk analysis is a process of identifying, assessing and prioritizing potential risks that may affect a project or an activity...'
+  },
+
+  {
+    Question: 'Which of the following would MOST likely be deployed to enhance physical security for a building? (Select TWO).',
+    A: 'Multifactor authentication',
+    B: 'Badge reader',
+    C: 'Personal identification number',
+    D: 'Firewall',
+    E: 'Motion sensor',
+    F: 'Soft token',
+    Correct: ['B', 'E'],
+    Explanation: 'Badge reader and motion sensor are devices that can be deployed to enhance physical security for a building. A badge reader is a device that scans and verifies an identification card or tag that grants access to authorized personnel only...'
+  },
+
+  {
+    Question: 'A technician is troubleshooting an issue with a computer that contains sensitive information. The technician determines the computer needs to be taken off site for repair. Which of the following should the technician do NEXT?',
+    A: 'Remove the HDD and then send the computer for repair',
+    B: 'Check corporate policies for guidance',
+    C: 'Delete the sensitive information before the computer leaves the building',
+    D: 'Get authorization from the manager',
+    Correct: 'D',
+    Explanation: 'The next step that the technician should do before taking the computer off site for repair is to get authorization from the manager. Getting authorization from the manager is important because it ensures that the technician has permission and approval to remove the computer from the premises and perform the repair work off site...'
+  },
+
+  {
+    Question: 'A technician needs to remotely connect to a Linux desktop to assist a user with troubleshooting. Which of the following tools will the technician MOST likely use?',
+    A: 'VNC',
+    B: 'MFA',
+    C: 'MSRA',
+    D: 'RDP',
+    Correct: 'A',
+    Explanation: 'The tool that the technician will most likely use to remotely connect to a Linux desktop is VNC. VNC stands for Virtual Network Computing and is a protocol that allows remote access and control of a graphical desktop environment over a network...'
+  },
+
+  {
+    Question: 'A user receives a call from someone who claims to be from the user\'s bank and requests information to ensure the user\'s account is safe. Which of the following social-engineering attacks is the user experiencing?',
+    A: 'Phishing',
+    B: 'Smishing',
+    C: 'Whaling',
+    D: 'Vishing',
+    Correct: 'D',
+    Explanation: 'The user is experiencing a vishing attack. Vishing stands for voice phishing and is a type of social-engineering attack that uses phone calls or voice messages to trick users into revealing personal or financial information...'
+  },
+
+  {
+    Question: 'A user is trying to use a third-party USB adapter but is experiencing connection issues. Which of the following tools should the technician use to resolve this issue?',
+    A: 'taskschd.msc',
+    B: 'eventvwr.msc',
+    C: 'devmgmt.msc',
+    D: 'diskmgmt.msc',
+    Correct: 'C',
+    Explanation: 'The tool that the technician should use to resolve the connection issues with the third-party USB adapter is devmgmt.msc. Devmgmt.msc is a command that opens the Device Manager, which is a utility that allows users to view and manage the hardware devices and drivers installed on a computer...'
+  },
+
+  {
+    Question: 'A technician, who is working at a local office, has found multiple copies of home edition software installed on computers. Which of the following does this MOST likely violate?',
+    A: 'EULA',
+    B: 'PII',
+    C: 'DRM',
+    D: 'Open-source agreement',
+    Correct: 'A',
+    Explanation: 'The installation of home edition software on computers at a local office most likely violates the EULA. EULA stands for End User License Agreement and is a legal contract that specifies the terms and conditions for using a software product or service...'
+  },
+
+  {
+    Question: 'A user reports that the pages flash on the screen two or three times before finally staying open when attempting to access banking web pages. Which of the following troubleshooting steps should the technician perform NEXT to resolve the issue?',
+    A: 'Examine the antivirus logs',
+    B: 'Verify the address bar URL',
+    C: 'Test the internet connection speed',
+    D: 'Check the web service status',
+    Correct: 'B',
+    Explanation: 'The next troubleshooting step that the technician should perform to resolve the issue of pages flashing on the screen before staying open when accessing banking web pages is to verify the address bar URL. The address bar URL is the web address that appears in the browser’s address bar and indicates the location of the web page being accessed...'
+  },
+  {
+    Question: 'A Windows user recently replaced a computer. The user can access the public internet on the computer; however, an internal site at https://companyintranet.com:8888 is no longer loading. Which of the following should a technician adjust to resolve the issue?',
+    A: 'Default gateway settings',
+    B: 'DHCP settings',
+    C: 'IP address settings',
+    D: 'Firewall settings',
+    E: 'Antivirus settings',
+    Correct: 'D',
+    Explanation: 'The technician should adjust the firewall settings to resolve the issue of not being able to access an internal site at https://companyintranet.com:8888...'
+  },
+  {
+    Question: 'A technician is securing a new Windows 10 workstation and wants to enable a Screensaver lock. Which of the following options in the Windows settings should the technician use?',
+    A: 'Ease of Access',
+    B: 'Privacy',
+    C: 'Personalization',
+    D: 'Update and Security',
+    Correct: 'C',
+    Explanation: 'The technician should use the Personalization option in the Windows settings to enable a Screensaver lock...'
+  },
+  {
+    Question: 'A user calls the help desk to report that mapped drives are no longer accessible. The technician verifies that clicking on any of the drives on the user\'s machine results in an error message. Other users in the office are not having any issues. As a first step, the technician would like to remove and attempt to reconnect the drives. Which of the following command-line tools should the technician use?',
+    A: 'net use',
+    B: 'set',
+    C: 'mkdir',
+    D: 'rename',
+    Correct: 'A',
+    Explanation: 'The technician should use net use command-line tool to remove and reconnect mapped drives...'
+  },
+  {
+    Question: 'A user has been unable to receive emails or browse the internet from a smartphone while traveling. However, text messages and phone calls are working without issue. Which of the following should a support technician check FIRST?',
+    A: 'User account status',
+    B: 'Mobile OS version',
+    C: 'Data plan coverage',
+    D: 'Network traffic outages',
+    Correct: 'C',
+    Explanation: 'The first thing that a support technician should check to resolve the issue is the data plan coverage...'
+  },
+  {
+    Question: 'Which of the following script types is used with the Python language by default?',
+    A: '.ps1',
+    B: '.vbs',
+    C: '.bat',
+    D: '.py',
+    Correct: 'D',
+    Explanation: 'The script type that is used with the Python language by default is .py...'
+  },
+  {
+    Question: 'A user added a second monitor and wants to extend the display to it. In which of the following Windows settings will the user MOST likely be able to make this change?',
+    A: 'System',
+    B: 'Devices',
+    C: 'Personalization',
+    D: 'Accessibility',
+    Correct: 'A',
+    Explanation: 'The user can most likely make the change of extending the display to a second monitor in the System option in the Windows settings...'
+  },
+  {
+    Question: 'Which of the following only has a web browser interface?',
+    A: 'Linux',
+    B: 'Microsoft Windows',
+    C: 'iOS',
+    D: 'Chromium',
+    Correct: 'D',
+    Explanation: 'Chromium is an operating system that only has a web browser interface...'
+  },
+  {
+    Question: 'A kiosk, which is running Microsoft Windows 10, relies exclusively on a numeric keypad to allow customers to enter their ticket numbers but no other information. If the kiosk is idle for four hours, the login screen locks. Which of the following sign-on options would allow any employee the ability to unlock the kiosk?',
+    A: 'Requiring employees to enter their usernames and passwords',
+    B: 'Setting up facial recognition for each employee',
+    C: 'Using a PIN and providing it to employees',
+    D: 'Requiring employees to use their fingerprints',
+    Correct: 'C',
+    Explanation: 'The best sign-on option that would allow any employee the ability to unlock the kiosk that relies exclusively on a numeric keypad is to use a PIN and provide it to employees...'
+  },
+  {
+    Question: 'A user calls the help desk to report that Windows installed updates on a laptop and rebooted overnight. When the laptop started up again, the touchpad was no longer working. The technician thinks the software that controls the touchpad might be the issue. Which of the following tools should the technician use to make adjustments?',
+    A: 'eventvwr.msc',
+    B: 'perfmon.msc',
+    C: 'gpedic.msc',
+    D: 'devmgmt.msc',
+    Correct: 'D',
+    Explanation: 'The technician should use devmgmt.msc tool to make adjustments for the touchpad issue after Windows installed updates on a laptop...'
+  },
+  {
+    Question: 'A technician installed Windows 10 on a workstation. The workstation only has 3.5GB of usable RAM, even though the technician installed 8GB. Which of the following is the MOST likely reason this system is not utilizing all the available RAM?',
+    A: 'The system is missing updates.',
+    B: 'The system is utilizing a 32-bit OS.',
+    C: 'The system\'s memory is failing.',
+    D: 'The system requires BIOS updates',
+    Correct: 'B',
+    Explanation: 'The most likely reason that the system is not utilizing all the available RAM is that the system is utilizing a 32-bit OS...'
+  },
+  {
+    Question: 'A Windows workstation that was recently updated with approved system patches shut down instead of restarting...',
+    A: 'A system patch disabled the antivirus protection and host firewall.',
+    B: 'The system updates did not include the latest anti-malware definitions.',
+    C: 'The system restore process was compromised by the malware.',
+    D: 'The malware was installed before the system restore point was created.',
+    Correct: 'D',
+    Explanation: 'The best explanation for why the system still has malware after performing a System Restore is that the malware was installed before the system restore point was created...'
+  },
+  {
+    Question: 'Which of the following is the default GUI and file manager in macOS?',
+    A: 'Disk Utility',
+    B: 'Finder',
+    C: 'Dock',
+    D: 'FileVault',
+    Correct: 'B',
+    Explanation: 'Finder is the default GUI and file manager in macOS...'
+  },
+  {
+    Question: 'A technician needs to add an individual as a local administrator on a Windows home PC...',
+    A: 'Settings > Personalization',
+    B: 'Control Panel > Credential Manager',
+    C: 'Settings > Accounts > Family and Other Users',
+    D: 'Control Panel > Network and Sharing Center',
+    Correct: 'C',
+    Explanation: 'The technician would most likely use Settings > Accounts > Family and Other Users to add an individual as a local administrator on a Windows home PC...'
+  },
+  {
+    Question: 'Which of the following features allows a technician to configure policies in a Windows 10 Professional desktop?',
+    A: 'gpedit',
+    B: 'gpmc',
+    C: 'gpresult',
+    D: 'gpupdate',
+    Correct: 'A',
+    Explanation: 'The feature that allows a technician to configure policies in a Windows 10 Professional desktop is gpedit...'
+  },
+  {
+    Question: 'Which of the following defines the extent of a change?',
+    A: 'Scope',
+    B: 'Purpose',
+    C: 'Analysis',
+    D: 'Impact',
+    Correct: 'A',
+    Explanation: 'The term that defines the extent of a change is scope...'
+  },
+  {
+    Question: 'Which of the following filesystem formats would be the BEST choice to ensure read and write compatibility of USB flash drives across several generations of Microsoft operating systems?',
+    A: 'APFS',
+    B: 'ext4',
+    C: 'CDFS',
+    D: 'FAT32',
+    Correct: 'D',
+    Explanation: 'The best filesystem format to ensure read and write compatibility of USB flash drives across several generations of Microsoft operating systems is FAT32...'
+  },
+  {
+    Question: 'A technician is troubleshooting a mobile device that was dropped...',
+    A: 'LCD',
+    B: 'Battery',
+    C: 'Accelerometer',
+    D: 'Digitizer',
+    Correct: 'C',
+    Explanation: 'The piece of hardware that the technician should replace to resolve the issue of the screen failing to rotate on a mobile device that was dropped is the accelerometer...'
+  },
+  {
+    Question: 'A technician downloads a validated security tool and notes the vendor hash of a58e87a2...',
+    A: 'Private-browsing mode',
+    B: 'Invalid certificate',
+    C: 'Modified file',
+    D: 'Browser cache',
+    Correct: 'C',
+    Explanation: 'The most likely cause of the issue of having different hash values for a downloaded security tool is a modified file...'
+  },
+  {
+    Question: 'An implementation specialist is replacing a legacy system at a vendor site that has only one wireless network available...',
+    A: 'Manually configure an IP address, a subnet mask, and a default gateway.',
+    B: 'Connect to the vendor\'s network using a VPN.',
+    C: 'Change the network location to private.',
+    D: 'Configure MFA on the network.',
+    Correct: 'B',
+    Explanation: 'The first thing that the specialist should do to protect the company’s data on an insecure network with open authentication is to connect to the vendor’s network using a VPN...'
+  },
+  {
+    Question: 'A user contacts a technician about an issue with a laptop...',
+    A: 'Keylogger',
+    B: 'Cryptominers',
+    C: 'Virus',
+    D: 'Malware',
+    Correct: 'D',
+    Explanation: 'The most likely cause of the user’s issue of applications opening without being launched and browser redirects when trying to go to certain websites is malware...'
+  },
+  {
+    Question: 'A Windows workstation that was recently updated with approved system patches...',
+    A: 'A system patch disabled the antivirus protection and host firewall.',
+    B: 'The system updates did not include the latest anti-malware definitions.',
+    C: 'The system restore process was compromised by the malware.',
+    D: 'The malware was installed before the system restore point was created.',
+    Correct: 'D',
+    Explanation: 'The best explanation for why the system still has malware after performing a System Restore is that the malware was installed before the system restore point was created...'
+  },
+  {
+    Question: 'Which of the following is the default GUI and file manager in macOS?',
+    A: 'Disk Utility',
+    B: 'Finder',
+    C: 'Dock',
+    D: 'FileVault',
+    Correct: 'B',
+    Explanation: 'Finder is the default GUI and file manager in macOS. Finder is an application that allows users to access and manage files and folders on their Mac computers...'
+  },
+  {
+    Question: 'A technician needs to add an individual as a local administrator on a Windows home PC...',
+    A: 'Settings > Personalization',
+    B: 'Control Panel > Credential Manager',
+    C: 'Settings > Accounts > Family and Other Users',
+    D: 'Control Panel > Network and Sharing Center',
+    Correct: 'C',
+    Explanation: 'The technician would most likely use Settings > Accounts > Family and Other Users to add an individual as a local administrator on a Windows home PC...'
+  },
+  {
+    Question: 'Which of the following features allows a technician to configure policies in a Windows 10 Professional desktop?',
+    A: 'gpedit',
+    B: 'gpmc',
+    C: 'gpresult',
+    D: 'gpupdate',
+    Correct: 'A',
+    Explanation: 'The feature that allows a technician to configure policies in a Windows 10 Professional desktop is gpedit. Gpedit is a command that opens the Local Group Policy Editor...'
+  },
+  {
+    Question: 'Which of the following defines the extent of a change?',
+    A: 'Scope',
+    B: 'Purpose',
+    C: 'Analysis',
+    D: 'Impact',
+    Correct: 'A',
+    Explanation: 'The term that defines the extent of a change is scope. Scope is a measure of the size, scale, and boundaries of a project or an activity...'
+  },
+  {
+    Question: 'Which of the following filesystem formats would be the BEST choice to ensure read and write compatibility of USB flash drives across several generations of Microsoft operating systems?',
+    A: 'APFS',
+    B: 'ext4',
+    C: 'CDFS',
+    D: 'FAT32',
+    Correct: 'D',
+    Explanation: 'The best filesystem format to ensure read and write compatibility of USB flash drives across several generations of Microsoft operating systems is FAT32...'
+  },
+  {
+    Question: 'A technician is troubleshooting a mobile device that was dropped. The technician finds that the screen fails to rotate...',
+    A: 'LCD',
+    B: 'Battery',
+    C: 'Accelerometer',
+    D: 'Digitizer',
+    Correct: 'C',
+    Explanation: 'The piece of hardware that the technician should replace to resolve the issue of the screen failing to rotate on a mobile device that was dropped is the accelerometer...'
+  },
+  {
+    Question: 'A technician downloads a validated security tool and notes the vendor hash of a58e87a2...',
+    A: 'Private-browsing mode',
+    B: 'Invalid certificate',
+    C: 'Modified file',
+    D: 'Browser cache',
+    Correct: 'C',
+    Explanation: 'The most likely cause of the issue of having different hash values for a downloaded security tool is a modified file. A modified file may result from intentional or unintentional changes...'
+  },
+  {
+    Question: 'An implementation specialist is replacing a legacy system at a vendor site that has only one wireless network available...',
+    A: 'Manually configure an IP address, a subnet mask, and a default gateway.',
+    B: 'Connect to the vendor\'s network using a VPN.',
+    C: 'Change the network location to private.',
+    D: 'Configure MFA on the network.',
+    Correct: 'B',
+    Explanation: 'The first thing that the specialist should do to protect the company’s data on an insecure network with open authentication is to connect to the vendor’s network using a VPN...'
+  },
+  {
+    Question: 'A user contacts a technician about an issue with a laptop. The user states applications open without being launched...',
+    A: 'Keylogger',
+    B: 'Cryptominers',
+    C: 'Virus',
+    D: 'Malware',
+    Correct: 'D',
+    Explanation: 'The most likely cause of the user’s issue of applications opening without being launched and browser redirects when trying to go to certain websites is malware...'
+  },
+  {
+    Question: 'A technician is finalizing a new workstation for a user. The user\'s PC will be connected to the internet but will not require the same private address each time...',
+    A: 'DHCP',
+    B: 'SMTP',
+    C: 'DNS',
+    D: 'RDP',
+    Correct: 'A',
+    Explanation: 'DHCP stands for Dynamic Host Configuration Protocol and it is used to assign IP addresses and other network configuration parameters to devices on a network automatically...'
+  },
+  {
+    Question: 'A user is no longer able to start the OS on a computer and receives an error message indicating there is no OS found...',
+    A: 'Boot order',
+    B: 'Malware',
+    C: 'Drive failure',
+    D: 'Windows updates',
+    Correct: 'C',
+    Explanation: 'A S.M.A.R.T. error is a warning that a hard drive is about to fail or has failed. This means that the OS cannot be loaded from the drive and the user will see an error message indicating there is no OS found...'
+  },
+  {
+    Question: 'A manager called the help desk to ask for assistance with creating a more secure environment for the finance department...',
+    A: 'Implementing password expiration',
+    B: 'Restricting user permissions',
+    C: 'Using screen locks',
+    D: 'Disabling unnecessary services',
+    Correct: 'B',
+    Explanation: 'Restricting user permissions is a method of creating a more secure environment for the finance department in a non-domain environment...'
+  },
+  {
+    Question: 'Which of the following options should MOST likely be considered when preserving data from a hard drive for forensic analysis? (Select TWO)...',
+    A: 'Licensing agreements',
+    B: 'Chain of custody',
+    C: 'Incident management documentation',
+    D: 'Data integrity',
+    E: 'Material safety data sheet',
+    F: 'Retention requirements',
+    Correct: ['B', 'D'],
+    Explanation: 'Chain of custody and data integrity are two options that should most likely be considered when preserving data from a hard drive for forensic analysis...'
+  },
+  {
+    Question: 'A customer calls a service support center and begins yelling at a technician about a feature for a product that is not working to the customer\'s satisfaction...',
+    A: 'Inform the customer that the issue is not within the scope of this department.',
+    B: 'Apologize to the customer and escalate the issue to a manager.',
+    C: 'Ask the customer to explain the issue and then try to fix it independently.',
+    D: 'Respond that the issue is something the customer should be able to fix.',
+    Correct: 'B',
+    Explanation: 'Apologizing to the customer and escalating the issue to a manager is the best course of action for the support center representative to take...'
+  },
+  {
+    Question: 'All the desktop icons on a user\'s newly issued PC are very large. The user reports that the PC was working fine until a recent software patch was deployed...',
+    A: 'Rolling back video card drivers',
+    B: 'Restoring the PC to factory settings',
+    C: 'Repairing the Windows profile',
+    D: 'Reinstalling the Windows OS',
+    Correct: 'A',
+    Explanation: 'Rolling back video card drivers is the best way to resolve the issue of large desktop icons on a user’s newly issued PC...'
+  },
+  {
+    Question: 'A technician is installing a program from an ISO file...',
+    A: 'Mount the ISO and run the installation file.',
+    B: 'Copy the ISO and execute on the server.',
+    C: 'Copy the ISO file to a backup location and run the ISO file.',
+    D: 'Unzip the ISO and execute the setup.exe file.',
+    Correct: 'A',
+    Explanation: 'Mounting the ISO and running the installation file is the correct way to install a program from an ISO file...'
+  },
+  {
+    Question: 'Which of the following would MOST likely be used to change the security settings on a user\'s device in a domain environment?',
+    A: 'Security groups',
+    B: 'Access control list',
+    C: 'Group Policy',
+    D: 'Login script',
+    Correct: 'C',
+    Explanation: 'Group Policy is the most likely tool to be used to change the security settings on a user’s device in a domain environment...'
+  },
+  {
+    Question: 'While staying at a hotel, a user attempts to connect to the hotel Wi-Fi but notices that multiple SSIDs have very similar names...',
+    A: 'Evil twin',
+    B: 'Impersonation',
+    C: 'Insider threat',
+    D: 'Whaling',
+    Correct: 'A',
+    Explanation: 'An evil twin is a type of social-engineering attack that involves setting up a rogue wireless access point that mimics a legitimate one...'
+  },
+  {
+    Question: 'Which of the following is used to integrate Linux servers and desktops into Windows Active Directory environments?',
+    A: 'apt-get',
+    B: 'CIFS',
+    C: 'Samba',
+    D: 'grep',
+    Correct: 'C',
+    Explanation: 'Samba is a software suite that allows Linux servers and desktops to integrate with Windows Active Directory environments...'
+  },
+  {
+    Question: 'A technician installed a new application on a workstation. For the program to function properly, it needs to be listed in the Path Environment Variable...',
+    A: 'System',
+    B: 'Indexing Options',
+    C: 'Device Manager',
+    D: 'Programs and Features',
+    Correct: 'A',
+    Explanation: 'System is the Control Panel utility that should be used to change the Path Environment Variable...'
+  },
+  {
+    Question: 'An organization implemented a method of wireless security that requires both a user and the user\'s computer to be in specific managed groups on the server in order to connect to Wi-Fi...',
+    A: 'TKIP',
+    B: 'RADIUS',
+    C: 'WPA2',
+    D: 'AES',
+    Correct: 'B',
+    Explanation: 'RADIUS stands for Remote Authentication Dial-In User Service and it is a protocol that provides centralized authentication, authorization, and accounting for network access...'
+  },
+  {
+    Question: 'A company acquired a local office, and a technician is attempting to join the machines at the office to the local domain. The technician notes that the domain join option appears to be missing...',
+    A: 'Windows Professional',
+    B: 'Windows Education',
+    C: 'Windows Enterprise',
+    D: 'Windows Home',
+    Correct: 'D',
+    Explanation: 'Windows Home is the most likely edition of Windows installed on the machines that do not have the domain join option...'
+  },
+  {
+    Question: 'Which of the following macOS features provides the user with a high-level view of all open windows?',
+    A: 'Mission Control',
+    B: 'Finder',
+    C: 'Multiple Desktops',
+    D: 'Spotlight',
+    Correct: 'A',
+    Explanation: 'Mission Control is the macOS feature that provides the user with a high-level view of all open windows...'
+  },
+  {
+    Question: 'Which of the following should be used to secure a device from known exploits?',
+    A: 'Encryption',
+    B: 'Remote wipe',
+    C: 'Operating system updates',
+    D: 'Cross-site scripting',
+    Correct: 'C',
+    Explanation: 'Operating system updates are used to secure a device from known exploits. Operating system updates are patches or fixes that are released by the vendor to address security vulnerabilities, bugs, or performance issues...'
+  },
+  {
+    Question: 'The audio on a user\'s mobile device is inconsistent when the user uses wireless headphones and moves around...',
+    A: 'Verify the Wi-Fi connection status.',
+    B: 'Enable the NFC setting on the device.',
+    C: 'Bring the device within Bluetooth range.',
+    D: 'Turn on device tethering.',
+    Correct: 'C',
+    Explanation: 'Bringing the device within Bluetooth range is the best way to troubleshoot the issue of inconsistent audio when using wireless headphones and moving around...'
+  },
+  {
+    Question: 'A technician is editing the hosts file on a few PCs in order to block certain domains. Which of the following would the technician need to execute after editing the hosts file?',
+    A: 'Enable promiscuous mode.',
+    B: 'Clear the browser cache.',
+    C: 'Add a new network adapter.',
+    D: 'Reset the network adapter.',
+    Correct: 'D',
+    Explanation: 'Resetting the network adapter is the best way to apply the changes made to the hosts file on a few PCs. The hosts file is a text file that maps hostnames to IP addresses and can be used to block certain domains by redirecting them to invalid or local addresses. Resetting the network adapter will clear the DNS cache and force the PC to use the new entries in the hosts file.'
+  },
+
+  {
+    Question: 'A data center is required to destroy SSDs that contain sensitive information. Which of the following is the BEST method to use for the physical destruction of SSDs?',
+    A: 'Wiping',
+    B: 'Low-level formatting',
+    C: 'Shredding',
+    D: 'Erasing',
+    Correct: 'C',
+    Explanation: 'Shredding is the best method to use for the physical destruction of SSDs because it reduces them to small pieces that cannot be recovered or accessed. Wiping, low-level formatting, and erasing are not effective methods for destroying SSDs because they do not physically damage the flash memory chips that store data.'
+  },
+
+  {
+    Question: 'After a failed update, an application no longer launches and generates the following error message: Application needs to be repaired. Which of the following Windows 10 utilities should a technician use to address this concern?',
+    A: 'Device Manager',
+    B: 'Administrator Tools',
+    C: 'Programs and Features',
+    D: 'Recovery',
+    Correct: 'D',
+    Explanation: 'Recovery is a Windows 10 utility that can be used to address the concern of a failed update that prevents an application from launching. Recovery allows the user to reset the PC, go back to a previous version of Windows, or use advanced startup options to troubleshoot and repair the system. Device Manager, Administrator Tools, and Programs and Features are not Windows 10 utilities that can fix a failed update.'
+  },
+
+  {
+    Question: 'A technician receives a call from a user who is having issues with an application. To best understand the issue, the technician simultaneously views the user\'s screen with the user.Which of the following would BEST accomplish this task ? ',
+    A: 'SSH',
+    B: 'VPN',
+    C: 'VNC',
+    D: 'RDP',
+    Correct: 'C',
+    Explanation: 'VNC (Virtual Network Computing) is a protocol that allows a technician to simultaneously view and control a user’s screen remotely. VNC uses a server-client model, where the user’s computer runs a VNC server and the technician’s computer runs a VNC client. VNC can work across different platforms and operating systems. SSH (Secure Shell) is a protocol that allows a technician to access a user’s command-line interface remotely, but not their graphical user interface. VPN (Virtual Private Network) is a technology that creates a secure and encrypted connection over a public network, but does not allow screen sharing. RDP (Remote Desktop Protocol) is a protocol that allows a technician to access a user’s desktop remotely, but not simultaneously with the user.'
+  },
+
+  {
+    Question: 'A computer on a corporate network has a malware infection. Which of the following would be the BEST method for returning the computer to service?',
+    A: 'Scanning the system with a Linux live disc, flashing the BIOS, and then returning the computer to service',
+    B: 'Flashing the BIOS, reformatting the drive, and then reinstalling the OS',
+    C: 'Degaussing the hard drive, flashing the BIOS, and then reinstalling the OS',
+    D: 'Reinstalling the OS, flashing the BIOS, and then scanning with on-premises antivirus',
+    Correct: 'B',
+    Explanation: 'Flashing the BIOS, reformatting the drive, and then reinstalling the OS is the best method for returning a computer with a malware infection to service. Flashing the BIOS updates the firmware of the motherboard and can remove any malware that may have infected it. Reformatting the drive erases all data on it and can remove any malware that may have infected it. Reinstalling the OS restores the system files and settings to their original state and can remove any malware that may have modified them. Scanning the system with a Linux live disc may not detect or remove all malware infections. Degaussing the hard drive is an extreme method of destroying data that may damage the drive beyond repair. Reinstalling the OS before flashing the BIOS or scanning with antivirus may not remove malware infections that persist in the BIOS or other files.'
+  },
+
+  {
+    Question: 'A technician needs to access a Windows 10 desktop on the network in a SOHO using RDP. Although the connection is unsuccessful, the technician is able to ping the computer successfully. Which of the following is MOST likely preventing the connection?',
+    A: 'The Windows 10 desktop has Windows 10 Home installed.',
+    B: 'The Windows 10 desktop does not have DHCP configured.',
+    C: 'The Windows 10 desktop is connected via Wi-Fi.',
+    D: 'The Windows 10 desktop is hibernating.',
+    Correct: 'A',
+    Explanation: 'The Windows 10 desktop has Windows 10 Home installed, which does not support RDP (Remote Desktop Protocol) as a host. Only Windows 10 Pro, Enterprise, and Education editions can act as RDP hosts and allow remote access to their desktops. The Windows 10 desktop does not have DHCP configured, is connected via Wi-Fi, or is hibernating are not likely to prevent the RDP connection if the technician is able to ping the computer successfully.'
+  },
+
+  {
+    Question: 'Which of the following often uses an SMS or third-party application as a secondary method to access a system?',
+    A: 'MFA',
+    B: 'WPA2',
+    C: 'AES',
+    D: 'RADIUS',
+    Correct: 'A',
+    Explanation: 'MFA (Multi-Factor Authentication) is a security measure that often uses an SMS or third-party application as a secondary method to access a system. MFA requires the user to provide two or more pieces of evidence to prove their identity, such as something they know (e.g., password), something they have (e.g., phone), or something they are (e.g., fingerprint). WPA2 (Wi-Fi Protected Access 2) is a security protocol for wireless networks that does not use SMS or third-party applications. AES (Advanced Encryption Standard) is a symmetric encryption algorithm that does not use SMS or third-party applications. RADIUS (Remote Authentication Dial-In User Service) is a network protocol that provides centralized authentication and authorization for remote access clients, but does not use SMS or third-party applications.'
+  },
+
+  {
+    Question: 'A company needs employees who work remotely to have secure access to the corporate intranet. Which of the following should the company implement?',
+    A: 'Password-protected Wi-Fi',
+    B: 'Port forwarding',
+    C: 'Virtual private network',
+    D: 'Perimeter network',
+    Correct: 'C',
+    Explanation: 'A virtual private network (VPN) is the best solution for providing secure access to the corporate intranet for remote employees. A VPN creates a secure and encrypted connection over the internet, allowing remote users to access the corporate network as if they were directly connected to it. Password-protected Wi-Fi is a security measure for wireless networks but does not provide secure access to the corporate intranet. Port forwarding is a network configuration that redirects communication requests from one IP address and port number combination to another, but it does not provide the encryption needed for secure access. A perimeter network is a demilitarized zone (DMZ) that separates the internal network from external networks, but it is not designed for remote user access.'
+  },
+
+  {
+    Question: 'A company implemented a BYOD policy and would like to reduce data disclosure caused by malware that may infect these devices. Which of the following should the company deploy to address these concerns?',
+    A: 'UAC',
+    B: 'MDM',
+    C: 'LDAP',
+    D: 'SSO',
+    Correct: 'B',
+    Explanation: 'MDM stands for mobile device management, which is a type of software solution that allows remote management and security of mobile devices. MDM can help a company reduce data disclosure caused by malware that may infect these devices by enforcing security policies, such as encryption, password protection, antivirus software, and remote wipe.'
+  },
+  
+  {
+    Question: 'A technician is working on a way to register all employee badges and associated computer IDs. Which of the following options should the technician use in order to achieve this objective?',
+    A: 'Database system',
+    B: 'Software management',
+    C: 'Active Directory description',
+    D: 'Infrastructure as a Service',
+    Correct: 'A',
+    Explanation: 'A database system is a software application that allows storing, organizing, and managing data in a structured way. A database system can be used to register all employee badges and associated computer IDs by creating a table or a record for each employee that contains their badge number, computer ID, name, and other relevant information.'
+  },
+  
+  {
+    Question: 'An IT security team is implementing a new Group Policy that will return a computer to the login after three minutes. Which of the following BEST describes the change in policy?',
+    A: 'Login times',
+    B: 'Screen lock',
+    C: 'User permission',
+    D: 'Login lockout attempts',
+    Correct: 'B',
+    Explanation: 'Screen lock is a feature that returns a computer to the login screen after a period of inactivity, requiring the user to enter their credentials to resume their session. Screen lock can be configured using Group Policy settings, such as Screen saver timeout and Interactive logon: Machine inactivity limit.'
+  },
+  
+  {
+    Question: 'A technician needs to transfer a file to a user\'s workstation. Which of the following would BEST accomplish this task utilizing the workstation\'s built-in protocols?',
+    A: 'VPN',
+    B: 'SMB',
+    C: 'RMM',
+    D: 'MSRA',
+    Correct: 'B',
+    Explanation: 'SMB stands for Server Message Block, which is a network file sharing protocol that allows applications on a computer to read and write to files and to request services from server programs in a computer network. SMB is a built-in protocol in Windows operating systems and can be used to transfer files between computers over a network.'
+  },
+  
+  {
+    Question: 'A customer called the help desk to report that a machine that was recently updated is no longer working. The support technician checks the latest logs to see what updates were deployed, but nothing was deployed in more than three weeks. Which of the following should the support technician do to BEST resolve the situation?',
+    A: 'Offer to wipe and reset the device for the customer.',
+    B: 'Advise that the help desk will investigate and follow up at a later date.',
+    C: 'Put the customer on hold and escalate the call to a manager.',
+    D: 'Use open-ended questions to further diagnose the issue.',
+    Correct: 'D',
+    Explanation: 'Open-ended questions are questions that require more than a yes or no answer and encourage the customer to provide more details and information. Using open-ended questions can help the support technician to understand the problem better, identify the root cause, and find a suitable solution.'
+  },
+  
+  {
+    Question: 'Which of the following is MOST likely used to run .vbs files on Windows devices?',
+    A: 'winmgmt.exe',
+    B: 'powershell.exe',
+    C: 'cscript.exe',
+    D: 'explorer.exe',
+    Correct: 'C',
+    Explanation: 'A .vbs file is a Virtual Basic script written in the VBScript scripting language. It contains code that can be executed within Windows via the Windows-based script host (Wscript.exe), to perform certain admin and processing functions. Cscript.exe is a command-line version of the Windows Script Host that provides command-line options for setting script properties. Therefore, cscript.exe is most likely used to run .vbs files on Windows devices.'
+  },
+  
+  {
+    Question: 'A user requires local administrative access to a workstation. Which of the following Control Panel utilities allows the technician to grant access to the user?',
+    A: 'System',
+    B: 'Network and Sharing Center',
+    C: 'User Accounts',
+    D: 'Security and Maintenance',
+    Correct: 'C',
+    Explanation: 'User Accounts is a Control Panel utility that allows the technician to manage user accounts and groups on a local computer. The technician can use this utility to add a user to the local administrators group, which grants the user local administrative access to the workstation.'
+  },
+  
+  {
+    Question: 'A user notices a small USB drive is attached to the user\'s computer after a new vendor visited the office. The technician notices two files named grabber.exe and output.txt. Which of the following attacks is MOST likely occurring?',
+    A: 'Trojan',
+    B: 'Rootkit',
+    C: 'Cryptominer',
+    D: 'Keylogger',
+    Correct: 'D',
+    Explanation: 'A keylogger is a type of malware that records the keystrokes of a user and sends them to a remote attacker. A keylogger can be used to steal passwords, credit card numbers, personal information, and other sensitive data.'
+  },
+  
+  {
+    Question: 'A user updates a mobile device\'s OS. A frequently used application becomes consistently unresponsive immediately after the device is launched. Which of the following troubleshooting steps should the user perform FIRST?',
+    A: 'Delete the application\'s cache.',
+    B: 'Check for application updates.',
+    C: 'Roll back the OS update.',
+    D: 'Uninstall and reinstall the application.',
+    Correct: 'B',
+    Explanation: 'Checking for application updates is the first troubleshooting step that the user should perform, because the application may not be compatible with the new OS version and may need an update to fix the issue.'
+  },
+
+  {
+    Question: 'A company is retiring old workstations and needs a certificate of destruction for all hard drives. Which of the following would be BEST to perform on the hard drives to ensure the data is unrecoverable? (Select TWO).',
+    A: 'Standard formatting',
+    B: 'Drilling',
+    C: 'Erasing',
+    D: 'Recycling',
+    E: 'Incinerating',
+    F: 'Low-level formatting',
+    Correct: ['B', 'E'],
+    Explanation: 'Drilling and incinerating are physical destruction methods that make the data on hard drives unrecoverable. Standard formatting, erasing, and low-level formatting are logical methods that can be reversed with data recovery tools. Recycling is not a destruction method at all.'
+  },
+  
+  {
+    Question: 'A small-office customer needs three PCs to be configured in a network with no server. Which of the following network types is the customer\'s BEST choice for this environment?',
+    A: 'Workgroup network',
+    B: 'Public network',
+    C: 'Wide area network',
+    D: 'Domain network',
+    Correct: 'A',
+    Explanation: 'A workgroup network is a peer-to-peer network where each PC can share files and resources with other PCs without a central server.'
+  },
+  
+  {
+    Question: 'A technician is creating a tunnel that hides IP addresses and secures all network traffic. Which of the following protocols is capable of enduring enhanced security?',
+    A: 'DNS',
+    B: 'IPS',
+    C: 'VPN',
+    D: 'SSH',
+    Correct: 'C',
+    Explanation: 'A VPN (virtual private network) is a protocol that creates a secure tunnel between two devices over the internet, hiding their IP addresses and encrypting their traffic.'
+  },
+  
+  {
+    Question: 'A systems administrator is monitoring an unusual amount of network traffic from a kiosk machine and needs to investigate to determine the source of the traffic. Which of the following tools can the administrator use to view which processes on the kiosk machine are connecting to the internet?',
+    A: 'Resource Monitor',
+    B: 'Performance Monitor',
+    C: 'Command Prompt',
+    D: 'System Information',
+    Correct: 'A',
+    Explanation: 'Resource Monitor is a tool that shows the network activity of each process on a Windows machine, including the TCP connections and the sent and received bytes.'
+  },
+  
+  {
+    Question: 'A developer receives the following error while trying to install virtualization software on a workstation: VTx not supported by system Which of the following upgrades will MOST likely fix the issue?',
+    A: 'Processor',
+    B: 'Hard drive',
+    C: 'Memory',
+    D: 'Video card',
+    Correct: 'A',
+    Explanation: 'The processor is the component that determines if the system supports virtualization technology (VTx), which is required for running virtualization software.'
+  },
+  
+  {
+    Question: 'A user\'s iPhone was permanently locked after several tailed login attempts. Which of the following will restore access to the device?',
+    A: 'Fingerprint and pattern',
+    B: 'Facial recognition and PIN code',
+    C: 'Primary account and password',
+    D: 'Secondary account and recovery code',
+    Correct: 'D',
+    Explanation: 'A secondary account and recovery code are used to reset the primary account and password on an iPhone after it has been locked due to failed login attempts.'
+  },
+  
+  {
+    Question: 'An Internet cafe has several computers available for public use. Recently, users have reported the computers are much slower than they were the previous week. A technician finds the CPU is at 100% utilization, and antivirus scans report no current infection. Which of the following is MOST likely causing the issue?',
+    A: 'Spyware is redirecting browser searches.',
+    B: 'A cryptominer is verifying transactions.',
+    C: 'Files were damaged from a cleaned virus infection.',
+    D: 'A keylogger is capturing user passwords.',
+    Correct: 'B',
+    Explanation: 'A cryptominer is a malicious program that uses the CPU resources of a computer to generate cryptocurrency, causing the CPU to run at 100% utilization and slowing down the system.'
+  },
+  
+  {
+    Question: 'Which of the following physical security controls can prevent laptops from being stolen?',
+    A: 'Encryption',
+    B: 'LoJack',
+    C: 'Multifactor authentication',
+    D: 'Equipment lock',
+    E: 'Bollards',
+    Correct: 'D',
+    Explanation: 'An equipment lock is a physical security device that attaches a laptop to a fixed object, preventing theft.'
+  },
+  
+  {
+    Question: 'A user attempts to install additional software and receives a UAC prompt. Which of the following is the BEST way to resolve this issue?',
+    A: 'Add a user account to the local administrator\'s group.',
+    B: 'Configure Windows Defender Firewall to allow access to all networks.',
+    C: 'Create a Microsoft account.',
+    D: 'Disable the guest account.',
+    Correct: 'A',
+    Explanation: 'Adding the user account to the local administrator\'s group can resolve the UAC prompt issue by granting the necessary privileges.'
+  },
+  
+  {
+    Question: 'Which of the following wireless security features can be enabled to allow a user to use login credentials to attach to available corporate SSIDs?',
+    A: 'TACACS+',
+    B: 'Kerberos',
+    C: 'Preshared key',
+    D: 'WPA2/AES',
+    Correct: 'D',
+    Explanation: 'WPA2/AES (Wi-Fi Protected Access 2/Advanced Encryption Standard) supports enterprise mode, allowing a user to use login credentials to authenticate to available corporate SSIDs.'
+  },
+  
+  {
+    Question: 'Which of the following is a package management utility for PCs that are running the Linux operating system?',
+    A: 'chmod',
+    B: 'yum',
+    C: 'man',
+    D: 'grep',
+    Correct: 'B',
+    Explanation: 'yum (Yellowdog Updater Modified) is a package management utility for PCs running the Linux operating system.'
+  },
+  
+  {
+    Question: 'A malicious file was executed automatically when a flash drive was plugged in. Which of the following features would prevent this type of incident?',
+    A: 'Disabling UAC',
+    B: 'Restricting local administrators',
+    C: 'Enabling UPnP',
+    D: 'Turning off AutoPlay',
+    Correct: 'D',
+    Explanation: 'Turning off AutoPlay can prevent malicious files from being executed automatically when a flash drive is plugged in.'
+  },
+  
+  {
+    Question: 'Which of the following protects a mobile device against unwanted access when it is left unattended?',
+    A: 'PIN code',
+    B: 'OS updates',
+    C: 'Antivirus software',
+    D: 'BYOD policy',
+    Correct: 'A',
+    Explanation: 'A PIN code is a security measure that protects a mobile device against unwanted access when it is left unattended.'
+  },
+  
+  {
+    Question: 'A technician is trying to encrypt a single folder on a PC. Which of the following should the technician use to accomplish this task?',
+    A: 'FAT32',
+    B: 'exFAT',
+    C: 'BitLocker',
+    D: 'EFS',
+    Correct: 'D',
+    Explanation: 'EFS (Encrypting File System) is a feature that allows a user to encrypt a single folder or file on a Windows PC.'
+  },
+
+  {
+    Question: 'A technician removed a virus from a user\'s device. The user returned the device a week later with the same virus on it. Which of the following should the technician do to prevent future infections?',
+    A: 'Disable System Restore.',
+    B: 'Educate the end user.',
+    C: 'Install the latest OS patches.',
+    D: 'Clean the environment reinstallation.',
+    Correct: 'B',
+    Explanation: 'Educating the end user is the best way to prevent future infections by viruses or other malware. The technician should teach the user how to avoid risky behaviors, such as opening suspicious attachments, clicking on unknown links, downloading untrusted software, etc. Disabling System Restore, installing the latest OS patches, and performing a clean installation are possible ways to remove existing infections, but they do not prevent future ones.'
+  },
+  
+  {
+    Question: 'A customer calls the help desk asking for instructions on how to modify desktop wallpaper. Which of the following Windows 10 settings should the technician recommend?',
+    A: 'Personalization',
+    B: 'Apps',
+    C: 'Updates',
+    D: 'Display',
+    Correct: 'A',
+    Explanation: 'Personalization is a Windows 10 setting that allows a user to modify the desktop wallpaper, as well as other aspects of the appearance and behavior of the desktop, such as colors, themes, sounds, etc.'
+  },
+  
+  {
+    Question: 'A systems administrator installed the latest Windows security patch and received numerous tickets reporting slow performance the next day. Which of the following should the administrator do to resolve this issue?',
+    A: 'Rebuild user profiles.',
+    B: 'Roll back the updates.',
+    C: 'Restart the services.',
+    D: 'Perform a system file check.',
+    Correct: 'B',
+    Explanation: 'Rolling back the updates is the best way to resolve the issue of slow performance caused by installing the latest Windows security patch. Rebuilding user profiles, restarting the services, and performing a system file check are not likely to fix the issue, since they do not undo the changes made by the update.'
+  },
+  
+  {
+    Question: 'A corporation purchased new computers for a school. The computers are the same make and model and need to have the standard image loaded. Which of the following orchestration tools should a desktop administrator use for wide-scale deployment?',
+    A: 'USB drive',
+    B: 'DVD Installation media',
+    C: 'PXE boot',
+    D: 'Recovery partition',
+    Correct: 'C',
+    Explanation: 'PXE (Preboot eXecution Environment) boot is an orchestration tool that allows a desktop administrator to deploy a standard image to multiple computers over a network. It requires a PXE server that hosts the image and a PXE client that boots from the network interface card (NIC). USB drive and DVD installation media are not orchestration tools, but manual methods of installing an image on each computer individually. Recovery partition is not an orchestration tool, but a hidden partition on the hard drive that contains an image of the factory settings.'
+  },
+  
+  {
+    Question: 'Every time a user tries to open the organization\'s proprietary application on an Android tablet, the application immediately closes. Other applications are operating normally. Which of the following troubleshooting actions would MOST likely resolve the Issue? (Select TWO).',
+    A: 'Uninstalling the application',
+    B: 'Gaining root access to the tablet',
+    C: 'Resetting the web browser cache',
+    D: 'Deleting the application cache',
+    E: 'Clearing the application storage',
+    F: 'Disabling mobile device management',
+    Correct: ['A', 'E'],
+    Explanation: 'Uninstalling and reinstalling the application can resolve the issue of it crashing immediately on an Android tablet, as it can fix any corrupted or missing files or settings. Clearing the application storage can also resolve the issue, as it can free up space and remove any conflicting data. Gaining root access to the tablet, resetting the web browser cache, deleting the application cache, and disabling mobile device management are not likely to resolve the issue, as they do not affect how the application runs.'
+  },
+  
+  {
+    Question: 'A user\'s permissions are limited to read on a shared network folder using NTFS security settings. Which of the following describes this type of security control?',
+    A: 'SMS',
+    B: 'MFA',
+    C: 'ACL',
+    D: 'MDM',
+    Correct: 'C',
+    Explanation: 'ACL (access control list) is a security control that describes what permissions a user or group has on a shared network folder using NTFS (New Technology File System) security settings. It can be used to grant or deny read, write, modify, delete, or execute access to files and folders. SMS (short message service), MFA (multifactor authentication), MDM (mobile device management) are not security controls that apply to shared network folders.'
+  },
+  
+  {
+    Question: 'A company is looking for a solution that provides a backup for all data on the system while providing the lowest impact to the network. Which of the following backup types will the company MOST likely select?',
+    A: 'Off-site',
+    B: 'Synthetic',
+    C: 'Full',
+    D: 'Differential',
+    Correct: 'B',
+    Explanation: 'A synthetic backup is a backup type that provides a backup for all data on the system while providing the lowest impact to the network. It combines a full backup with one or more incremental backups to create a single backup set, without requiring access to the original data source. Off-site is a backup location, not a backup type. Full and differential are backup types, but they have a higher impact on the network than synthetic.'
+  },
+  
+  {
+    Question: 'A system drive is nearly full, and a technician needs to free up some space. Which of the following tools should the technician use?',
+    A: 'Disk Cleanup',
+    B: 'Resource Monitor',
+    C: 'Disk Defragment',
+    D: 'Disk Management',
+    Correct: 'A',
+    Explanation: 'Disk Cleanup is a tool that can free up some space on a system drive that is nearly full. It can delete temporary files, cached files, recycle bin files, old system files, and other unnecessary data. Resource Monitor is a tool that shows the network activity of each process on a Windows machine. Disk Defragment is a tool that optimizes the performance of a hard drive by rearranging the data into contiguous blocks. Disk Management is a tool that allows creating, formatting, resizing, and deleting partitions on a hard drive.'
+  },
+  
+  {
+    Question: 'A technician needs to establish a remote access session with a user who has a Windows workstation. The session must allow for simultaneous viewing of the workstation by both the user and technician. Which of the following remote access technologies should be used?',
+    A: 'RDP',
+    B: 'VPN',
+    C: 'SSH',
+    D: 'MSRA',
+    Correct: 'D',
+    Explanation: 'MSRA (Microsoft Remote Assistance) is a remote access technology that allows a technician to establish a session with a user who has a Windows workstation. The session allows for simultaneous viewing of the workstation by both the user and technician, as well as remote control and file transfer capabilities. RDP (remote desktop protocol) is another remote access technology, but it does not allow simultaneous viewing by default. VPN (virtual private network) and SSH (secure shell) are protocols that create secure tunnels between two devices over the internet, but they do not allow remote access sessions.'
+  },
+  
+  {
+    Question: 'A technician is setting up a newly built computer. Which of the following is the FASTEST way for the technician to install Windows 10?',
+    A: 'Factory reset',
+    B: 'System Restore',
+    C: 'In-place upgrade',
+    D: 'Unattended installation',
+    Correct: 'D',
+    Explanation: 'An unattended installation is the fastest way to install Windows 10 on a newly built computer. It uses an answer file that contains all the configuration settings and preferences for the installation, such as language, product key, partition size, etc. It does not require any user interaction or input during the installation process. Factory reset, System Restore, and in-place upgrade are not methods of installing Windows 10 on a new computer, but ways of restoring or updating an existing Windows installation.'
+  },
+  
+  {
+    Question: 'A systems administrator notices that a server on the company network has extremely high CPU utilization. Upon further inspection, the administrator sees that the server is consistently communicating with an IP address that is traced back to a company that awards digital currency for solving hash algorithms. Which of the following was MOST likely used to compromise the server?',
+    A: 'Keylogger',
+    B: 'Ransomware',
+    C: 'Boot sector virus',
+    D: 'Cryptomining malware',
+    Correct: 'D',
+    Explanation: 'Cryptomining malware is a type of malicious program that uses the CPU resources of a compromised server to generate cryptocurrency, such as Bitcoin or Ethereum. It can cause extremely high CPU utilization and network traffic to the IP address of the cryptocurrency service. Keylogger, ransomware, and boot sector virus are other types of malware, but they do not cause the same symptoms as cryptomining malware.'
+  },
+  
+  {
+    Question: 'A user opened a ticket regarding a corporate-managed mobile device. The assigned technician notices the OS is several versions out of date. The user is unaware the OS version is not current because auto-update is turned on. Which of the following is MOST likely the cause of the issue?',
+    A: 'The device does not have enough free space to download the OS updates.',
+    B: 'The device needs domain administrator confirmation to update to a major release.',
+    C: 'The device is not compatible with the newest version of the OS.',
+    D: 'The device is restricted from updating due to a corporate security policy.',
+    Correct: 'D',
+    Explanation: 'A corporate security policy can restrict a corporate-managed mobile device from updating its OS automatically, even if the auto-update feature is turned on. This can be done to prevent compatibility issues, security risks, or performance problems caused by untested or unwanted updates. The device not having enough free space, needing domain administrator confirmation, or being incompatible with the newest version of the OS are not likely causes of the issue, since the user would receive an error message or a notification in those cases.'
+  },
+  
+  {
+    Question: 'A user is receiving repeated pop-up advertising messages while browsing the internet. A malware scan is unable to locate the source of an infection. Which of the following should the technician check NEXT?',
+    A: 'Windows updates',
+    B: 'DNS settings',
+    C: 'Certificate store',
+    D: 'Browser plug-ins',
+    Correct: 'D',
+    Explanation: 'Browser plug-ins are software components that add functionality to a web browser, such as playing videos, displaying animations, etc. However, some browser plug-ins can also be malicious or compromised and cause unwanted pop-up advertising messages while browsing the internet. A malware scan may not be able to locate the source of the infection if it is hidden in a browser plug-in. Windows updates, DNS settings, and certificate store are not likely sources of pop-up advertising messages.'
+  },
+  
+  {
+    Question: 'Which of the following refers to the steps to be taken if an issue occurs during a change implementation?',
+    A: 'Testing',
+    B: 'Rollback',
+    C: 'Risk',
+    D: 'Acceptance',
+    Correct: 'B',
+    Explanation: 'Rollback refers to the steps to be taken if an issue occurs during a change implementation. It means restoring the system to its previous state before the change was applied, using backup data or configuration files. It can minimize the impact and downtime caused by a failed change. Testing refers to the steps to be taken before a change implementation, to verify that the change works as expected and does not cause any errors or conflicts. Risk refers to the potential negative consequences of a change implementation. Acceptance refers to the steps to be taken after a change implementation, to confirm that the change meets the requirements and expectations of the stakeholders.'
+  },
+  
+  {
+    Question: 'A user reported that a laptop\'s screen turns off very quickly after sitting for a few moments and is also very dim when not plugged in to an outlet. Everything else seems to be functioning normally. Which of the following Windows settings should be configured?',
+    A: 'Power Plans',
+    B: 'Hibernate',
+    C: 'Sleep/Suspend',
+    D: 'Screensaver',
+    Correct: 'A',
+    Explanation: 'Power Plans are Windows settings that allow a user to configure how a laptop\'s screen behaves when plugged in or running on battery power. They can adjust the screen brightness and the time before the screen turns off due to inactivity. Hibernate, Sleep/Suspend, and Screensaver are other Windows settings that affect how a laptop\'s screen behaves, but they do not allow changing the screen brightness or turning off time.'
+  },
+
+  {
+    Question: 'Which of the following security methods supports the majority of current Wi-Fi-capable devices without sacrificing security?',
+    A: 'WPA3',
+    B: 'MAC filtering',
+    C: 'RADIUS',
+    D: 'TACACS+',
+    Correct: 'A',
+    Explanation: 'WPA3 (Wi-Fi Protected Access 3) is a wireless security method that supports the majority of current Wi-Fi-capable devices without sacrificing security. It is backward compatible with WPA2 devices and offers enhanced encryption and authentication features. MAC filtering is another wireless security method, but it can be easily bypassed by spoofing MAC addresses. RADIUS (Remote Authentication Dial-In User Service) and TACACS+ (Terminal Access Controller Access-Control System Plus) are network authentication protocols, but they are not wireless security methods by themselves.'
+  },
+  
+  {
+    Question: 'Which of the following macOS utilities uses AES-128 to encrypt the startup disk?',
+    A: 'fdisk',
+    B: 'Diskpart',
+    C: 'Disk Utility',
+    D: 'FileVault',
+    Correct: 'D',
+    Explanation: 'FileVault is a macOS utility that uses AES-128 (Advanced Encryption Standard) to encrypt the startup disk of a Mac computer. It protects the data from unauthorized access if the computer is lost or stolen. fdisk and Diskpart are disk partitioning utilities for Linux and Windows, respectively. Disk Utility is another macOS utility that can perform disk management tasks, such as formatting, resizing, repairing, etc.'
+  },
+  
+  {
+    Question: 'Which of the following common security vulnerabilities can be mitigated by using input validation?',
+    A: 'Brute-force attack',
+    B: 'Cross-site scripting',
+    C: 'SQL injection',
+    D: 'Cross-site request forgery',
+    Correct: ['B', 'C'],
+    Explanation: 'Cross-site scripting (XSS) and SQL injection are common security vulnerabilities that can be mitigated by using input validation. Input validation is a technique that checks the user input for any malicious or unexpected characters or commands before processing it. XSS is an attack that injects malicious scripts into web pages to steal cookies, session tokens or other sensitive information from users or web servers. SQL injection is an attack that injects malicious SQL statements into web applications to manipulate databases, execute commands or access unauthorized data.'
+  },
+  
+  {
+    Question: 'A technician has been tasked with troubleshooting audiovisual issues in a conference room. The meeting presenters are unable to play a video with sound. The following error is received: The Audio Driver is not running. Which of the following will MOST likely resolve the issue?',
+    A: 'compmgmt.msc',
+    B: 'regedit.exe',
+    C: 'explorer.exe',
+    D: 'taskmgt.exe',
+    E: 'gpmc.msc',
+    F: 'services.msc',
+    Correct: 'F',
+    Explanation: 'services.msc is a tool that can be used to resolve the issue of "The Audio Driver is not running" on a Windows machine. It allows a technician to view, start, stop and configure the services that run on the system, such as the Windows Audio service. compmgmt.msc, regedit.exe, explorer.exe, taskmgt.exe, and gpmc.msc are other tools that can be used for different purposes on a Windows machine, but they are not related to audio drivers or services.'
+  },
+  
+  {
+    Question: 'A user\'s corporate laptop with proprietary work Information was stolen from a coffee shop. The user togged in to the laptop with a simple password. and no other security mechanisms were in place. Which of the following would MOST likely prevent the stored data from being recovered?',
+    A: 'Biometrics',
+    B: 'Full disk encryption',
+    C: 'Enforced strong system password',
+    D: 'Two-factor authentication',
+    Correct: 'B',
+    Explanation: 'Full disk encryption is a security mechanism that encrypts the entire data on a hard drive, making it unreadable without the correct decryption key or password. It can prevent the stored data from being recovered by unauthorized persons who steal or access the laptop. Biometrics, enforced strong system password, and two-factor authentication are other security mechanisms, but they only protect the login access to the laptop, not the data on the hard drive.'
+  },
+  
+  {
+    Question: 'A user reports an issue when connecting a mobile device to Bluetooth. The user states the mobile device\'s Bluetooth is turned on. Which of the following steps should the technician take NEXT to resolve the issue?',
+    A: 'Restart the mobile device.',
+    B: 'Turn on airplane mode.',
+    C: 'Check that the accessory is ready to pair.',
+    D: 'Clear all devices from the phone\'s Bluetooth settings.',
+    Correct: 'C',
+    Explanation: 'The first step in troubleshooting a Bluetooth connection issue is to check that the accessory is ready to pair with the mobile device. Some accessories may have a button or a switch that needs to be pressed or turned on to initiate pairing mode. If the accessory is not ready to pair, the mobile device will not be able to detect it.'
+  },
+  
+  {
+    Question: 'Which of the following would cause a corporate-owned iOS device to have an Activation Lock issue?',
+    A: 'A forgotten keychain password',
+    B: 'An employee\'s Apple ID used on the device',
+    C: 'An operating system that has been jailbroken',
+    D: 'An expired screen unlock code',
+    Correct: 'B',
+    Explanation: 'Activation Lock is a feature that prevents anyone from erasing or activating an iOS device without the owner\'s Apple ID and password. If a corporate-owned iOS device is linked to an employee\'s Apple ID, it will have an Activation Lock issue when the employee leaves the company or forgets their Apple ID credentials.'
+  },
+  
+  {
+    Question: 'A technician discovers user input has been captured by a malicious actor. Which of the following malware types is MOST likely being used?',
+    A: 'Cryptominers',
+    B: 'Rootkit',
+    C: 'Spear phishing',
+    D: 'Keylogger',
+    Correct: 'D',
+    Explanation: 'A keylogger is a type of malware that captures user input, such as keystrokes, mouse clicks, and clipboard data, and sends it to a malicious actor. Keyloggers can be used to steal passwords, credit card numbers, personal information, and other sensitive data.'
+  },
+  
+  {
+    Question: 'Windows updates need to be performed on a department\'s servers. Which of the following methods should be used to connect to the server?',
+    A: 'FIP',
+    B: 'MSRA',
+    C: 'RDP',
+    D: 'VPN',
+    Correct: 'C',
+    Explanation: 'RDP (Remote Desktop Protocol) is a protocol that allows a user to connect to and control a remote computer over a network. RDP can be used to perform Windows updates on a department\'s servers without physically accessing them.'
+  },
+  
+  {
+    Question: 'A salesperson\'s computer is unable to print any orders on a local printer that is connected to the computer. Which of the following tools should the salesperson use to restart the print spooler?',
+    A: 'Control Panel',
+    B: 'Processes',
+    C: 'Startup',
+    D: 'Services',
+    Correct: 'D',
+    Explanation: 'The correct answer is D. Services. The print spooler is a service that manages the print queue and sends print jobs to the printer. To restart the print spooler, the salesperson can use the Services app, which allows them to stop and start the service. Alternatively, they can also use the Task Manager or the Command Prompt to restart the print spooler.'
+  },
+  
+  {
+    Question: 'A change advisory board authorized a setting change so a technician is permitted to implement the change. The technician successfully implemented the change. Which of the following should be done next?',
+    A: 'Document the date and time of change',
+    B: 'Document the purpose of the change',
+    C: 'Document the risk level of this change',
+    D: 'Document the findings of the sandbox test',
+    Correct: 'A',
+    Explanation: 'After implementing a change, the technician should document the date and time of the change in the change log or record. This helps to track the change history, monitor the change performance, and identify any issues or incidents related to the change.'
+  },
+  
+  {
+    Question: 'Which of the following macOS features can help a user close an application that has stopped responding?',
+    A: 'Finder',
+    B: 'Mission Control',
+    C: 'System Preferences',
+    D: 'Force Quit',
+    Correct: 'D',
+    Explanation: 'Force Quit is a macOS feature that allows users to close an application that has stopped responding. To use Force Quit, users can press and hold Option (or Alt), Command, and Esc (Escape) keys together, or choose Force Quit from the Apple menu in the corner of the screen.'
+  },
+  
+  {
+    Question: 'A department manager submits a help desk ticket to request the migration of a printer\'s port utilization from USB to Ethernet so multiple users can access the printer. This will be a new network printer, thus a new IP address allocation is required. Which of the following should happen immediately before network use is authorized?',
+    A: 'Document the date and time of the change.',
+    B: 'Submit a change request form',
+    C: 'Determine the risk level of this change',
+    D: 'Request an unused IP address.',
+    Correct: 'B',
+    Explanation: 'A change request form is a document that describes the proposed change, the reason for the change, the expected benefits and impacts, the risks and mitigation strategies, the implementation plan, and the approval process. A change request form is an essential part of change management best practices, as it helps to ensure that the change is well-planned, communicated, and authorized before it is implemented.'
+  },
+  
+  {
+    Question: 'APC is taking a long time to boot. Which of the following operations would be best to do to resolve the issue at a minimal expense? (Select two).',
+    A: 'Installing additional RAM',
+    B: 'Removing the applications from startup',
+    C: 'Installing a faster SSD',
+    D: 'Running the Disk Cleanup utility',
+    E: 'Defragmenting the hard drive',
+    F: 'Ending the processes in the Task Manager',
+    Correct: ['B', 'D'],
+    Explanation: 'The best operations to resolve the issue of a long boot time at a minimal expense are B. Removing the applications from startup and D. Running the Disk Cleanup utility. These are two simple and effective ways to speed up your PC\'s boot time without spending any money on hardware upgrades.'
+  },
+
+  {
+    Question: 'A company is experiencing a DDoS attack. Several internal workstations are the source of the traffic. Which of the following types of infections are the workstations most likely experiencing? (Select two)',
+    A: 'Zombies',
+    B: 'Keylogger',
+    C: 'Adware',
+    D: 'Botnet',
+    E: 'Ransomware',
+    F: 'Spyware',
+    Correct: ['A', 'D'],
+    Explanation: 'Zombies and botnets are types of infections that allow malicious actors to remotely control infected computers and use them to launch distributed denial-of-service (DDoS) attacks against a target.'
+  },
+  
+  {
+    Question: 'A developer\'s Type 2 hypervisor is performing inadequately when compiling new source code. Which of the following components should the developer upgrade to improve the hypervisor\'s performance?',
+    A: 'Amount of system RAM',
+    B: 'NIC performance',
+    C: 'Storage IOPS',
+    D: 'Dedicated GPU',
+    Correct: 'A',
+    Explanation: 'Increasing the amount of system RAM can improve the performance of the hypervisor and the virtual machines running on it.'
+  },
+  
+  {
+    Question: 'A technician is setting up a newly built computer. Which of the following is the fastest way for the technician to install Windows 10?',
+    A: 'Factory reset',
+    B: 'System Restore',
+    C: 'In-place upgrade',
+    D: 'Unattended installation',
+    Correct: 'D',
+    Explanation: 'Unattended installation is the fastest way to install Windows 10 on a newly built computer, as it automates the whole process and saves time.'
+  },
+  
+  {
+    Question: 'A systems administrator is tasked with configuring desktop systems to use a new proxy server that the organization has added to provide content filtering. Which of the following Windows utilities is the best choice for accessing the necessary configuration to complete this goal?',
+    A: 'Security and Maintenance',
+    B: 'Network and Sharing Center',
+    C: 'Windows Defender Firewall',
+    D: 'Internet Options',
+    Correct: 'D',
+    Explanation: 'The Internet Options utility in Windows allows configuring various settings, including proxy server settings.'
+  },
+  
+  {
+    Question: 'A user connected an external hard drive but is unable to see it as a destination to save files. Which of the following tools will allow the drive to be formatted?',
+    A: 'Disk Management',
+    B: 'Device Manager',
+    C: 'Disk Cleanup',
+    D: 'Disk Defragmenter',
+    Correct: 'A',
+    Explanation: 'Disk Management is a tool that allows users to create, format, delete, shrink, extend, and manage partitions on hard drives.'
+  },
+  
+  {
+    Question: 'A technician is concerned about a large increase in the number of whaling attacks happening in the industry. The technician wants to limit the company\'s risk to avoid any issues. Which of the following items should the technician implement?',
+    A: 'Screened subnet',
+    B: 'Firewall',
+    C: 'Anti-phishing training',
+    D: 'Antivirus',
+    Correct: 'C',
+    Explanation: 'Anti-phishing training is a method of educating users on how to identify and avoid phishing attacks, including whaling attacks.'
+  },
+  
+  {
+    Question: 'While trying to repair a Windows 10 OS, a technician receives a prompt asking for a key. The technician tries the administrator password, but it is rejected. Which of the following does the technician need in order to continue the OS repair?',
+    A: 'SSL key',
+    B: 'Preshared key',
+    C: 'WPA2 key',
+    D: 'Recovery key',
+    Correct: 'D',
+    Explanation: 'A recovery key is needed to unlock a BitLocker-encrypted drive when the normal authentication methods are not available.'
+  },
+  
+  {
+    Question: 'A technician sees a file that is requesting payment to a cryptocurrency address. Which of the following should the technician do first?',
+    A: 'Quarantine the computer',
+    B: 'Disable System Restore',
+    C: 'Update the antivirus software definitions',
+    D: 'Boot to safe mode',
+    Correct: 'A',
+    Explanation: 'Quarantining the computer is the first step to contain the infection and prevent further damage in case of ransomware.'
+  },
 ]
