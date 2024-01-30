@@ -467,19 +467,20 @@
             updateStats();
         }
 
-        function calculateAge(birthday) {
-            var ageDifMs = Date.now() - birthday.getTime(); // Use getTime() to get the time value of the birthday
-            var ageDate = new Date(ageDifMs); // miliseconds from epoch
+function calculateAge(birthday) {
+    var ageDifMs = Date.now() - birthday.getTime();
+    var ageDate = new Date(ageDifMs);
 
-            var years = ageDate.getUTCFullYear() - 1970;
-            var months = ageDate.getUTCMonth();
-
-            // Calculate the age with decimal points for months
-            var age = years + months / 12;
-
-            return Math.abs(age.toFixed(2));
-        }
-
+    var years = ageDate.getUTCFullYear() - 1970;
+    var months = ageDate.getUTCMonth();
+    
+    // If the current month is before the birth month, reduce the age by 1
+    if (ageDate.getUTCMonth() < birthday.getUTCMonth()) {
+        years--;
+    }
+    
+    return years + months / 12;
+}
         start();
     </script>
 
