@@ -2,354 +2,541 @@
 <html>
 
 <head>
-    <title>A+ Practice Test</title>
-    <title>A+ | Kirhub</title>
-    <link rel="icon" type="image/x-icon" href="sub/assets/kir.png">
-    <meta property="twitter:image" content="a+.png">
-    <meta name="title" content="A+ | Kirhub">
-    <meta name="description" content="a place where all your hopes and dreams come true">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="language" content="English">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="headeronly.css">
+    <title>A+ Exam</title>
 
     <style>
+        :root {
+            --text-color: #fff;
+        }
+
         body {
-            background-color: #303030;
+            background-color: #101010;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 10px;
+        }
+
+        .hide {
+            display: none !important;
+        }
+
+        .correct {
+            background-color: rgba(0, 255, 0, 0.2);
+            border: 5px solid green;
+        }
+
+        .wrong {
+            background-color: rgba(255, 0, 0, 0.2);
+            border: 5px solid red;
         }
 
         #placeholder {
             display: none;
         }
 
-        #questionPlaceholder {
-            display: none;
+        #start,
+        #end,
+        .testselect,
+        .questionselect {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            display: block;
+            background-color: #EE2E24;
+            border-radius: 8px;
+            border: 0;
+            width: 30%;
+            height: 60px;
+            font-size: 20px;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: #050505 10px 10px 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
         }
 
-        #qCount {
-            aspect-ratio: 5/1;
-            width: 30%;
-            border-radius: 8px;
-            display: block;
-            margin-left:auto;
-            margin-right:auto;
-            background-color: #151515;
-            color: white;
-            margin-bottom: 25px;
+        .testselect,
+        .questionselect {
+            background-color: #505050;
             text-align: center;
         }
 
-        .hide {
-            display: none;
+        #start:hover,
+        #end:hover {
+            background-color: #b5221b;
         }
 
-        .logo {
-            width: 160px;
-            height: 130px;
-            margin-left: auto;
-            margin-right: auto;
-            border-radius: 16px;
-            background-image: url(a+.png);
-            background-size: cover;
-        }
-
-        .title {
-            text-shadow: 2px 2px 4px black;
-            font-size:30px;
-            padding: 5px;
-            text-align:center;
-        }
-
-        .questionList {
-            margin-left: auto;
-            margin-right: auto;
+        .holder {
             width: 60%;
             height: fit-content;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .question, .intro {
-            padding: 10px;
-            height: fit-content;
-            width: 100%;
+        .imgholder {
+            aspect-ratio: 1.2/1;
+            width: 120px;
+            background-size: cover;
+            background-image: url(icon/comptia.png);
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 10px;
+        }
+
+        .question,
+        .intro {
+            border: 3px solid #252525;
             background-color: #202020;
-            border-radius: 16px;
-            box-shadow: 2px 2px 4px 0px black;
+            width: 60%;
+            height: fit-content;
+            margin-left: auto;
+            margin-right: auto;
             margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: #050505 10px 10px 10px;
         }
 
-        .shrink {
-            display: none;
+        .intro {
+            position: relative;
         }
 
-        .questionText {
+        .question {
+            width: calc(100% - 10px);
+        }
+
+        .qtext,
+        .explain {
             width: 100%;
-            height: 60px;
+            margin: 5px;
+            font-size: 20px;
         }
 
-        .questionChoice {
-            display: block;
+        .explain {
+            font-size: 16px;
+        }
+
+        .qanswerholder {
+            width: 100%;
+            height: fit-content;
+            box-sizing: border-box;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .qanswer {
+            height: fit-content;
+            min-height: 40px;
+            width: 100%;
             cursor: pointer;
-            padding: 5px;
-            height: 50px;
-            width: 100%;
-            background: none;
-            border: 0;
             display: flex;
             box-sizing: border-box;
-            transition: background-color 0.3s, border 0.3s;
+            transition: background-color .2s, border .2s;
         }
 
-        .letter {
-            flex: 0 0 auto;
-            height: 100%;
+        .letterholder {
             aspect-ratio: 1/1;
+            height: 100%;
             background-color: #101010;
             border-radius: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 20px;
-            font-weight: bolder;
+            flex: 0 0 auto;
+            float: left;
+            font-size: 24px;
+            max-height: 40px;
+            min-height: 40px;
         }
 
-        .choiceText {
+        .answertext {
             flex: 1;
-            width: 100%;
-            height: 100%;
             display: flex;
             align-items: center;
-            text-align: left;
-            margin-left: 10px;
+            margin-left: 5px;
+            height: fit-content;
+            min-height: 40px;
         }
 
-        .correct {
-            border: 5px solid green;
-            background-color: rgba(0, 255, 0, 0.2)
+        .update {
+            width: 100%;
+            height: fit-content;
         }
 
-        .incorrect {
-            border: 5px solid red;
-            background-color: rgba(255, 0, 0, 0.2)
-        }
-
-        .answerList {
+        .utitle {
+            font-size: 22px;
+            height: 30px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin: 0;
             margin-bottom: 5px;
         }
 
-        #start {
-            aspect-ratio:5/1;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            margin-bottom: 5px;
-            cursor: pointer;
-            background-color: #EE2E24;
-            border: 3px solid black;
-            box-shadow: 2px 2px 4px 0px #bf251c;
-            width:30%;
-            border: 0;
-            border-radius: 8px;
+        .utext {
+            height: fit-content;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin: 0;
         }
 
         * {
+            color: white;
+            text-shadow: 2px 2px 4px black;
             font-family: Arial;
             font-weight: 900;
-            color: white;
         }
 
+        #timer {
+            aspect-ratio: 4/1;
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            margin: 10px;
+            height:20px;
+            text-align: right;
+            color: rgb(255, 255, 88);
+        }
+
+        #discord {
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            margin: 5px;
+            top: 0;
+            right: 0;
+            border-radius: 8px;
+            border: 3px solid rgba(0, 0, 0, 0.2);
+            box-sizing: border-box;
+            background-color: #7289da;
+            background-image: url(icon/discord.svg);
+            background-size: 90%;
+            background-repeat: no-repeat;
+            background-position: center;
+            cursor: pointer;
+        }
+
+        #discord a {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        
         @media screen and (max-width: 767px) {
-            .questionList {
-                width: calc(100% - 5px);
+
+            #start,
+            .testselect,
+            .questionselect {
+                width: 80%;
             }
 
-            .question, .intro {
-                padding: 0;
-                padding-top: 5px;
-                padding-bottom: 5px;
+            #end {
+                width:50%
             }
 
-            #qCount {
-                width: 60%;
+            .question,
+            .intro {
+                width: 95%;
             }
 
-            #start {
-                width: 60%;
-            }
-
-            .questionText {
-                padding: 10px;
-                margin-left: auto;
-                margin-right: auto;
+            .holder {
+                width: 100%;
             }
         }
     </style>
 </head>
 
 <body>
-    <div class='logo'></div>
-    <h1 class="title">CompTIA A+ Practice Test</h1>
+    <div class="imgholder"></div>
 
-    <div class="questionList">
-        <div class="intro">
-            <select name="Question Count" id="qCount">
-                <option value="20">20 Questions</option>
-                <option value="40">40 Questions</option>
-                <option value="60">60 Questions</option>
-                <option value="80">80 Questions</option>
-                <option value="100">100 Questions</option>
-            </select>
+    <div class="intro">
+        <h1>CompTIA A+ Practice Exam</h1>
+        <a href="https://discord.com/invite/p8ZZXZqnag" target="_blank">
+            <button id="discord"></button>
+        </a>
 
-            <button id="start">Start Exam</button>
+        <div class="update">
+            <span class="utitle"></span>
+            <p class="utext hide"></p>
         </div>
+
+        <select class="testselect">
+            <option value="1101">1101 Exam</option>
+            <option value="1102">1102 Exam</option>
+        </select>
+
+        <select class="questionselect">
+            <option value="15">15 Questions</option>
+            <option value="30">30 Questions</option>
+            <option value="45">45 Questions</option>
+            <option value="60">60 Questions</option>
+            <option value="75">75 Questions</option>
+            <option value="90">90 Questions</option>
+        </select>
+
+        <button id="start">Start Exam</button>
     </div>
 
+    <h1 class="reviewHeader hide">Review</h1>
+
+    <div class="holder">
+    </div>
+
+    <button id="end" class="hide">End Exam</button>
+
+    <!-- Placeholder -->
     <div class="question" id="placeholder">
-        <span class="questionText">Test question</span>
-        <div class="answerList"></div>
-        <span class="questionText explain hide">Explanation here</span>
+        <span class="qtext"></span>
+
+        <div class="qanswerholder">
+        </div>
+
+        <span class="explain hide"></span>
     </div>
 
-    <button class="questionChoice" id="questionPlaceholder">
-        <div class="letter">A</div>
-        <span class="choiceText">Question text</span>
-    </button>
+    <div class="qanswer hide">
+        <div class="letterholder">A</div>
+        <div class="answertext"></div>
+    </div>
 
-    <script src="data.js"></script>
+    <!-- Timer -->
+    <span id="timer" class="hide"></span>
+
+    <!-- Scripts -->
+    <script src="1101.js"></script>
+    <script src="1102.js"></script>
     <script>
-        var questionList = document.querySelector('.questionList');
-        var questionChoice = document.querySelector('#questionPlaceholder');
+        var data1101 = questions1101;
+        var data1102 = questions1102;
+
+        var holder = document.querySelector('.holder');
+        var introHolder = document.querySelector('.intro');
+        var start = document.querySelector('#start');
+        var end = document.querySelector('#end');
         var placeholder = document.querySelector('#placeholder');
-        var startbutton = document.querySelector('#start');
-        var questionCount = document.querySelector('#qCount');
-        var intro = document.querySelector('.intro');
-        var data = questionData;
+        var clock = document.querySelector('#timer');
+        var reviewHeader = document.querySelector('.reviewHeader');
 
+        var updateHolder = document.querySelector('.update');
+        var updateHeader = document.querySelector('.utitle');
+        var cloneUpdateText = document.querySelector('.utext.hide');
+
+        var testSelect = document.querySelector('.testselect');
+        var questionSelect = document.querySelector('.questionselect');
+
+        var checkLetter = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
         var selectedQuestions = [];
-        var checkLetters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
+        var inExam = false;
+        var timePassed = 0;
 
-        function unpackAnswer(answer) {
-            if (Array.isArray(answer)) {
-                return answer.join(', ');
-            } else {
-                return answer;
-            }
+        var update = {
+            name: 'Update: 1/31/24',
+            text: [
+                'Select between 1101 and 1102 exams',
+                'Added questions for 1102',
+                'Added end exam button',
+                'Added timer',
+            ]
         }
 
-        function formatExplain(explain) {
-            if (!explain) {
-                return 'No explanation provided';
-            } else {
-                return explain;
+        function getDataList() {
+            var lists = {
+                '1101': questions1101,
+                '1102': questions1102
             }
+
+            return lists[testSelect.value];
         }
 
-        function addQuestion(index) {
-            var thisQuestion = data[index];
-            var clone = placeholder.cloneNode(true);
-            var cloneText = clone.querySelector('.questionText');
-            var explainText = clone.querySelector('.explain');
-            var cloneAnswerList = clone.querySelector('.answerList');
-
-            var unpackedAnswers = unpackAnswer(thisQuestion.Correct);
-            var getExplain = formatExplain(thisQuestion.Explanation);
-
-            clone.removeAttribute('id');
-            clone.setAttribute('answertotal', thisQuestion.Correct.length || 1);
-            clone.setAttribute('answered', 0);
-            questionList.appendChild(clone);
-            cloneText.innerHTML = `${selectedQuestions.length}. ${thisQuestion.Question}`;
-            explainText.innerHTML = `${unpackedAnswers}: ${getExplain}`
-
-            for (var i = 0; i < checkLetters.length; i++) {
-                var thisLetter = checkLetters[i];
-                var thisAnswer = thisQuestion[thisLetter];
-
-                if (thisAnswer) {
-                    var answerClone = questionChoice.cloneNode(true);
-                    var answerLetter = answerClone.querySelector('.letter');
-                    var answerText = answerClone.querySelector('.choiceText');
-
-                    answerLetter.innerHTML = thisLetter;
-                    answerText.innerHTML = thisAnswer;
-
-                    answerClone.removeAttribute('id');
-                    cloneAnswerList.appendChild(answerClone);
-
-                    (function (questionClone, answerClone, thisQuestion, answerLetter) {
-                        answerClone.onclick = function () {
-                            console.log(answerLetter);
-                            checkQuestion(questionClone, answerClone, thisQuestion, answerLetter);
-                        }
-                    })(clone, answerClone, thisQuestion, answerLetter);
-                }
-            }
-        }
-
-        function checkQuestion(questionClone, answerClone, thisQuestion, answerLetter) {
-            var correct = thisQuestion.Correct;
-            var answerLetterText = answerLetter.innerHTML;
-            var explanation = questionClone.querySelector('.explain');
-            var success = false;
-
-            if (Array.isArray(correct)) {
-                if (correct.includes(answerLetterText)) {
-                    success = true;
-                }
-            }
-
-            else {
-                if (correct == answerLetterText) {
-                    success = true;
-                }
-            }
-
-            assignCorrect(questionClone, answerClone, success, thisQuestion);
-        }
-
-        function assignCorrect(questionClone, answerClone, success, thisQuestion) {
-            var answercount = parseInt(questionClone.getAttribute('answertotal'));
-            var answered = parseInt(questionClone.getAttribute('answered'));
-            var explanation = questionClone.querySelector('.explain');
-
-            if (answered < answercount) {
-                if (success) {
-                    answerClone.classList.add('correct');
-                } else {
-                    answerClone.classList.add('incorrect');
-                }
-
-                if (answered+1 == answercount) {
-                    explanation.classList.remove('hide');
-                }
-
-                questionClone.setAttribute('answered', answered+1);
-            }
-        }
-
-        function getQuestion() {
+        function getQuestionIndex() {
+            var data = getDataList();
             var randomIndex = Math.floor(Math.random() * data.length);
 
             if (!selectedQuestions.includes(randomIndex)) {
-                selectedQuestions.push(randomIndex);
-                addQuestion(randomIndex);
+                return randomIndex;
             } else {
-                getQuestion(randomIndex);
+                getQuestionIndex();
             }
         }
 
-        function load(count) {
+        function loadQuestions() {
+            var data = getDataList();
+            var count = questionSelect.value;
+            inExam = true;
+            clock.classList.remove('hide');
+            reviewHeader.classList.add('hide');
+            startTimer();
+            clearQuestions();
+            
             for (var i = 0; i < count; i++) {
-                getQuestion();
+                var randomIndex = getQuestionIndex();
+                var clone = placeholder.cloneNode(true);
+                var questionText = clone.querySelector('.qtext');
+                var questionExplain = clone.querySelector('.explain');
+                var questionData = data[randomIndex];
+
+                var thisAnswerHolder = clone.querySelector('.qanswerholder');
+                var answerToClone = document.querySelector('.qanswer.hide');
+
+                for (var letterIndex in checkLetter) {
+                    var thisLetter = checkLetter[letterIndex];
+
+                    if (questionData[thisLetter]) {
+                        // MAKE IT EXIST
+                        var thisAnswerClone = answerToClone.cloneNode(true);
+                        var answerLetter = thisAnswerClone.querySelector('.letterholder');
+                        var answerText = thisAnswerClone.querySelector('.answertext');
+                        var setExplain = formatExplain(questionData);
+
+                        answerLetter.innerHTML = thisLetter;
+                        answerText.innerHTML = questionData[thisLetter];
+                        thisAnswerClone.classList.remove('hide');
+                        thisAnswerHolder.appendChild(thisAnswerClone);
+
+                        // IS IT CORRECT OR NOT
+                        (function (thisAnswerClone, questionData, questionDiv) {
+                            var answerLetter = thisAnswerClone.querySelector('.letterholder').innerHTML;
+
+                            thisAnswerClone.onclick = function () {
+                                var totalAnswers = parseInt(questionDiv.getAttribute('answers'));
+                                var currentAnswerCount = parseInt(questionDiv.getAttribute('a'));
+
+                                if (inExam && currentAnswerCount < totalAnswers) {
+                                    var correct = false;
+
+                                    if (Array.isArray(questionData.Correct)) {
+                                        if (questionData.Correct.includes(answerLetter)) {
+                                            correct = true;
+                                        }
+                                    } else if (answerLetter == questionData.Correct) {
+                                        correct = true;
+                                    }
+
+                                    if (correct) {
+                                        thisAnswerClone.classList.add('correct');
+
+                                        var currentStatus = questionDiv.getAttribute('status');
+                                        if (currentStatus != "false") {
+                                            questionDiv.setAttribute('status', true);
+                                        }
+                                    } else {
+                                        thisAnswerClone.classList.add('wrong');
+                                        questionDiv.setAttribute('status', false);
+                                    }
+
+                                    if (currentAnswerCount + 1 == totalAnswers) {
+                                        var thisExplain = questionDiv.querySelector('.explain');
+                                        thisExplain.classList.remove('hide');
+                                    }
+
+                                    questionDiv.setAttribute('a', currentAnswerCount + 1);
+                                }
+                            }
+                        })(thisAnswerClone, questionData, clone);
+                    }
+                }
+
+                var explainPrefix;
+                if (Array.isArray(questionData.Correct)) {
+                    clone.setAttribute('answers', questionData.Correct.length);
+                    explainPrefix = questionData.Correct.join(',') + ':';
+                } else {
+                    clone.setAttribute('answers', 1);
+                    explainPrefix = questionData.Correct + ':';
+                }
+
+                questionText.innerHTML = (i + 1) + '. ' + questionData.Question;
+                questionExplain.innerHTML = explainPrefix + ' ' + setExplain;
+                end.classList.remove('hide');
+                introHolder.classList.add('hide');
+
+                clone.setAttribute('a', 0);
+                clone.removeAttribute('id');
+                holder.appendChild(clone);
             }
         }
 
-        function start() {
-            var count = questionCount.value;
-            load(count);
-            intro.classList.add('shrink');
+        function init() {
+            var loopText = update.text;
+            updateHeader.innerHTML = update.name;
+
+            for (var i = 0; i < loopText.length; i++) {
+                var thisClone = cloneUpdateText.cloneNode(true);
+                thisClone.innerHTML = loopText[i];
+                thisClone.classList.remove('hide');
+                updateHolder.appendChild(thisClone);
+            }
+
+            start.addEventListener('click', loadQuestions);
+            end.addEventListener('click', endQuiz);
         }
 
-        startbutton.onclick = start;
+        function endQuiz() {
+            end.classList.add('hide');
+            introHolder.classList.remove('hide');
+            clock.classList.add('hide');
+            reviewHeader.classList.remove('hide');
+            
+            window.scrollTo(0, 0);
+            inExam = false;
+            alert(formatScore());
+        }
+
+        function clearQuestions() {
+            var allQuestions = holder.querySelectorAll('.question');
+
+            for (var i = 0; i < allQuestions.length; i++) {
+                var thisQuestion = allQuestions[i];
+                thisQuestion.remove();
+            }
+            selectedQuestions = [];
+        }
+
+        function formatExplain(thisData) {
+            if (thisData.Explanation) {
+                return thisData.Explanation;
+            } else {
+                return 'No explanation provided.'
+            }
+        }
+
+        function formatScore() {
+            var total = holder.querySelectorAll('.question');
+            var nonAttempted = document.querySelectorAll('[a="0"]');
+            var correctQuestions = document.querySelectorAll('[status="true"]');
+            var incorrectQuestions = document.querySelectorAll('[status="false"]');
+
+            return `
+            Correct: ${correctQuestions.length}
+            Incorrect: ${incorrectQuestions.length}
+            Total: ${total.length}
+            Not Attempted: ${nonAttempted.length}
+
+            Time: ${formatTime(timePassed)}
+            Final Score: ${((correctQuestions.length / total.length)*100).toFixed(2)}%
+            `
+        }
+
+        function formatTime(seconds) {
+            var minutes = Math.floor(seconds / 60);
+            var remainingSeconds = seconds % 60;
+            var formattedTime = String(minutes).padStart(2, '0') + ":" + String(remainingSeconds).padStart(2, '0');
+
+            return formattedTime;
+        }
+
+        function startTimer() {
+            if (inExam) {
+                timePassed++;
+                clock.innerHTML = formatTime(timePassed);
+                setTimeout(startTimer, 1000);
+            } else {
+                timePassed = 0;
+            }
+        }
+
+        init();
     </script>
 </body>
 
