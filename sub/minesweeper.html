@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 
@@ -51,6 +52,7 @@
             aspect-ratio: 1;
             width: 100%;
             display: grid;
+            position: relative;
         }
 
         .normalGrid {
@@ -240,6 +242,14 @@
             background-color: rgb(255, 0, 0, 0.4);
         }
 
+        .blueoverlay {
+            background-image: url(minesweeper_assets/flag.png);
+            background-size: 10%;
+            background-position: center;
+            filter: brightness(50%);
+            border-radius: 16px;
+        }
+
         .hide {
             pointer-events: none;
             opacity: 0;
@@ -310,9 +320,88 @@
             font-size: 24px;
         }
 
+        #areyousure {
+            aspect-ratio: 4/2;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 60%;
+            transform: translate(-50%, -50%);
+            border-radius: 24px;
+            box-sizing: border-box;
+            border: 8px solid black;
+            background-position: center;
+            box-shadow: 0px 0px 8px 4px black;
+            transition: opacity 0.3s;
+        }
+
+        #areyousure .shadow {
+            display: flex;
+            align-items: flex-start;
+            align-content: flex-start;
+            flex-wrap: wrap;
+            position: absolute;
+        }
+
+        #areyousure span {
+            text-align: center;
+            display: block;
+            width: 100%;
+            position: sticky
+        }
+
+        .suretext {
+            font-size: 20px;
+        }
+
+        .restext {
+            font-size:40px;
+        }
+
+        .resbuttonholder {
+            flex: 1;
+            display: block;
+            position: absolute;
+            bottom: 0;
+            height: 25%;
+            width: calc(100% - 20px);
+            margin: 5px;
+
+        }
+
+        .resbuttonholder button {
+            width: 47.5%;
+            height: 100%;
+            box-sizing: border-box;
+            border-radius: 8px;   
+            transform: translateY(-4px);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .resbuttonholder button:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        .y {
+            float: left;
+            background-color:#2d9224;
+            box-shadow: 0px 4px 0px 0px #206b19;
+            border: 3px solid #206b19;
+        }
+
+        .n {
+            float:right;
+            background-color: #B82C2C;
+            border: 3px solid #8a2121;
+            box-shadow: 0px 4px 0px 0px #8a2121
+        }
+
         * {
             color: white;
-            font-family: "Arial Black", Gadget, sans-serif, monospace;
+            font-family: "Arial Black", Arial;
+            font-weight: 900;
+            text-shadow: 2px 2px 4px black;
         }
 
         @media screen and (max-width: 767px) {
@@ -358,9 +447,21 @@
 
 <body>
     <div id="holder">
-        <div id="game"></div>
+        <div id="game">
+            <div id="areyousure" class='hide'>
+                <div class="shadow blueoverlay"></div>
+                <span class="restext">Restart</span>
+                <span class="suretext">Are you sure?</span>
+
+                <div class="resbuttonholder">
+                    <button class="y" onclick="restartGame()">Yes</button>
+                    <button class="n" onclick="closeRestart()">No</button>
+                </div>
+            </div>    
+        </div>
+
         <div id="controls">
-            <button onclick="restartGame()" id="restart" class="gamebutton">Restart</button>
+            <button onclick="openRestart()" id="restart" class="gamebutton">Restart</button>
             <button onclick='toggleFlagging()' id="flagging" class="gamebutton">Flag</button>
             <div>
                 <div class="verticalimages">
@@ -404,6 +505,7 @@
         var timecount = document.querySelector('.timecount');
         var bombcounttext = document.querySelector('.minecount');
         var flagcount = document.querySelector('.flagcount');
+        var restartMenu = document.querySelector('#areyousure');
         var bombLocations = [];
         var flagLocations = [];
         var canclick = false;
@@ -721,6 +823,7 @@
                 if (!canclick) { //make sure the game hasnt restarted
                     cover.classList.remove('hide');
                 }
+                closeRestart();
             }, 1500);
         }
 
@@ -779,6 +882,15 @@
         function restartGame() {
             clearInterval(timer);
             start(gamemode);
+            closeRestart();
+        }
+
+        function openRestart() {
+            restartMenu.classList.remove('hide');
+        }
+
+        function closeRestart() {
+            restartMenu.classList.add('hide');
         }
 
         function moveHoverFlag(event) {
