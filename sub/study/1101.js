@@ -624,15 +624,6 @@ var questions1101 = [
       Explanation: "The incident handler should clone any impacted hard drives to preserve evidence for possible litigation."
     },
     {
-      Question: "After clicking on a link in an email a Chief Financial Officer (CFO) received the following error: The CFO then reported the incident to a technician. The link is purportedly to the organization's bank. Which of the following should the technician perform FIRST?",
-      A: "Update the browser's CRLs",
-      B: "File a trouble ticket with the bank.",
-      C: "Contact the ISP to report the CFO's concern",
-      D: "Instruct the CFO to exit the browser",
-      Correct: "A",
-      Explanation: "The technician should update the browser’s CRLs first. The error message indicates that the certificate revocation list (CRL) is not up to date. Updating the CRLs will ensure that the browser can verify the authenticity of the bank’s website."
-    },
-    {
       Question: "A technician has spent hours trying to resolve a computer issue for the company's Chief Executive Officer (CEO). The CEO needs the device returned as soon as possible. Which of the following steps should the technician take NEXT?",
       A: "Continue researching the issue",
       B: "Repeat the iterative processes",
@@ -722,15 +713,6 @@ var questions1101 = [
       D: "Confirm a strong internet connection is available using Wi-Fi or cellular data",
       Correct: "C",
       Explanation: "Since there are no error messages on the device, the technician should check if the battery is sufficiently charged1 If the battery is low, the device may not have enough power to complete the update2 In this scenario, the technician has already determined that there are no error messages on the device. The next best step would be to check if the battery is sufficiently charged. If the battery is low, it could be preventing the device from completing the update process.Verifying that third-party applications are disabled, determining if the device has adequate storage available, and confirming a strong internet connection are all important steps in troubleshooting issues with mobile devices. However, since the problem in this scenario is related to a failed OS update, it is important to first check the battery level before proceeding with further troubleshooting steps."
-    },
-    {
-      Question: "A user reports that text on the screen is too small. The user would like to make the text larger and easier to see. Which of the following is the BEST way for the user to increase the size of text, applications, and other items using the Windows 10 Settings tool?",
-      A: "Open Settings, select Devices, select, Your info, click Browse, and then locate and open the image the user wants to use as the wallpaper",
-      B: "Open Settings, select Personalization, click Browse, and then locate and open the image the user wants to use as the wallpaper",
-      C: "Open Settings, select System, select Display, click Browse, and then locate and open the image the user wants to use as the wallpaper",
-      D: "Open Settings, select Apps, select Apps & features, click Browse, and then locate and open the image the user wants to use as the wallpaper.",
-      Correct: "B",
-      Explanation: "Open Settings, select Personalization, click Browse, and then locate and open the image the user wants to use as the wallpaper123 Reference: 4. How to Increase the Text Size on Your Computer. Retrieved from https://www.laptopmag.com/articles/increase-text-size-computer 5. How to Change the Size of Text in Windows 10. Retrieved from https://www.howtogeek.com/370055/how-to-change-the-size-of-text-in-windows-10/ 6. Change the size of text in Windows. Retrieved from https://support.microsoft.com/en-us/windows/change-the-size-of-text-in-windows-1d5830c3-eee3-8eaa-836b-abcc37d99b9a"
     },
     {
       Question: "A technician is installing new network equipment in a SOHO and wants to ensure the equipment is secured against external threats on the Internet. Which of the following actions should the technician do FIRST?",
@@ -2241,15 +2223,6 @@ var questions1101 = [
       Explanation: 'The most likely cause of the issue of having different hash values for a downloaded security tool is a modified file...'
     },
     {
-      Question: 'An implementation specialist is replacing a legacy system at a vendor site that has only one wireless network available...',
-      A: 'Manually configure an IP address, a subnet mask, and a default gateway.',
-      B: 'Connect to the vendor\'s network using a VPN.',
-      C: 'Change the network location to private.',
-      D: 'Configure MFA on the network.',
-      Correct: 'B',
-      Explanation: 'The first thing that the specialist should do to protect the company’s data on an insecure network with open authentication is to connect to the vendor’s network using a VPN...'
-    },
-    {
       Question: 'A user contacts a technician about an issue with a laptop...',
       A: 'Keylogger',
       B: 'Cryptominers',
@@ -2257,15 +2230,6 @@ var questions1101 = [
       D: 'Malware',
       Correct: 'D',
       Explanation: 'The most likely cause of the user’s issue of applications opening without being launched and browser redirects when trying to go to certain websites is malware...'
-    },
-    {
-      Question: 'A Windows workstation that was recently updated with approved system patches...',
-      A: 'A system patch disabled the antivirus protection and host firewall.',
-      B: 'The system updates did not include the latest anti-malware definitions.',
-      C: 'The system restore process was compromised by the malware.',
-      D: 'The malware was installed before the system restore point was created.',
-      Correct: 'D',
-      Explanation: 'The best explanation for why the system still has malware after performing a System Restore is that the malware was installed before the system restore point was created...'
     },
     {
       Question: 'Which of the following is the default GUI and file manager in macOS?',
@@ -2329,15 +2293,6 @@ var questions1101 = [
       D: 'Browser cache',
       Correct: 'C',
       Explanation: 'The most likely cause of the issue of having different hash values for a downloaded security tool is a modified file. A modified file may result from intentional or unintentional changes...'
-    },
-    {
-      Question: 'An implementation specialist is replacing a legacy system at a vendor site that has only one wireless network available...',
-      A: 'Manually configure an IP address, a subnet mask, and a default gateway.',
-      B: 'Connect to the vendor\'s network using a VPN.',
-      C: 'Change the network location to private.',
-      D: 'Configure MFA on the network.',
-      Correct: 'B',
-      Explanation: 'The first thing that the specialist should do to protect the company’s data on an insecure network with open authentication is to connect to the vendor’s network using a VPN...'
     },
     {
       Question: 'A user contacts a technician about an issue with a laptop. The user states applications open without being launched...',
