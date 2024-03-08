@@ -2151,15 +2151,6 @@ var questions1101 = [
       Explanation: 'The most likely reason that the system is not utilizing all the available RAM is that the system is utilizing a 32-bit OS...'
     },
     {
-      Question: 'A Windows workstation that was recently updated with approved system patches shut down instead of restarting...',
-      A: 'A system patch disabled the antivirus protection and host firewall.',
-      B: 'The system updates did not include the latest anti-malware definitions.',
-      C: 'The system restore process was compromised by the malware.',
-      D: 'The malware was installed before the system restore point was created.',
-      Correct: 'D',
-      Explanation: 'The best explanation for why the system still has malware after performing a System Restore is that the malware was installed before the system restore point was created...'
-    },
-    {
       Question: 'Which of the following is the default GUI and file manager in macOS?',
       A: 'Disk Utility',
       B: 'Finder',
@@ -2167,15 +2158,6 @@ var questions1101 = [
       D: 'FileVault',
       Correct: 'B',
       Explanation: 'Finder is the default GUI and file manager in macOS...'
-    },
-    {
-      Question: 'A technician needs to add an individual as a local administrator on a Windows home PC...',
-      A: 'Settings > Personalization',
-      B: 'Control Panel > Credential Manager',
-      C: 'Settings > Accounts > Family and Other Users',
-      D: 'Control Panel > Network and Sharing Center',
-      Correct: 'C',
-      Explanation: 'The technician would most likely use Settings > Accounts > Family and Other Users to add an individual as a local administrator on a Windows home PC...'
     },
     {
       Question: 'Which of the following features allows a technician to configure policies in a Windows 10 Professional desktop?',
@@ -2214,24 +2196,6 @@ var questions1101 = [
       Explanation: 'The piece of hardware that the technician should replace to resolve the issue of the screen failing to rotate on a mobile device that was dropped is the accelerometer...'
     },
     {
-      Question: 'A technician downloads a validated security tool and notes the vendor hash of a58e87a2...',
-      A: 'Private-browsing mode',
-      B: 'Invalid certificate',
-      C: 'Modified file',
-      D: 'Browser cache',
-      Correct: 'C',
-      Explanation: 'The most likely cause of the issue of having different hash values for a downloaded security tool is a modified file...'
-    },
-    {
-      Question: 'A user contacts a technician about an issue with a laptop...',
-      A: 'Keylogger',
-      B: 'Cryptominers',
-      C: 'Virus',
-      D: 'Malware',
-      Correct: 'D',
-      Explanation: 'The most likely cause of the user’s issue of applications opening without being launched and browser redirects when trying to go to certain websites is malware...'
-    },
-    {
       Question: 'Which of the following is the default GUI and file manager in macOS?',
       A: 'Disk Utility',
       B: 'Finder',
@@ -2239,15 +2203,6 @@ var questions1101 = [
       D: 'FileVault',
       Correct: 'B',
       Explanation: 'Finder is the default GUI and file manager in macOS. Finder is an application that allows users to access and manage files and folders on their Mac computers...'
-    },
-    {
-      Question: 'A technician needs to add an individual as a local administrator on a Windows home PC...',
-      A: 'Settings > Personalization',
-      B: 'Control Panel > Credential Manager',
-      C: 'Settings > Accounts > Family and Other Users',
-      D: 'Control Panel > Network and Sharing Center',
-      Correct: 'C',
-      Explanation: 'The technician would most likely use Settings > Accounts > Family and Other Users to add an individual as a local administrator on a Windows home PC...'
     },
     {
       Question: 'Which of the following features allows a technician to configure policies in a Windows 10 Professional desktop?',
@@ -2277,15 +2232,6 @@ var questions1101 = [
       Explanation: 'The best filesystem format to ensure read and write compatibility of USB flash drives across several generations of Microsoft operating systems is FAT32...'
     },
     {
-      Question: 'A technician is troubleshooting a mobile device that was dropped. The technician finds that the screen fails to rotate...',
-      A: 'LCD',
-      B: 'Battery',
-      C: 'Accelerometer',
-      D: 'Digitizer',
-      Correct: 'C',
-      Explanation: 'The piece of hardware that the technician should replace to resolve the issue of the screen failing to rotate on a mobile device that was dropped is the accelerometer...'
-    },
-    {
       Question: 'A technician downloads a validated security tool and notes the vendor hash of a58e87a2...',
       A: 'Private-browsing mode',
       B: 'Invalid certificate',
@@ -2293,24 +2239,6 @@ var questions1101 = [
       D: 'Browser cache',
       Correct: 'C',
       Explanation: 'The most likely cause of the issue of having different hash values for a downloaded security tool is a modified file. A modified file may result from intentional or unintentional changes...'
-    },
-    {
-      Question: 'A user contacts a technician about an issue with a laptop. The user states applications open without being launched...',
-      A: 'Keylogger',
-      B: 'Cryptominers',
-      C: 'Virus',
-      D: 'Malware',
-      Correct: 'D',
-      Explanation: 'The most likely cause of the user’s issue of applications opening without being launched and browser redirects when trying to go to certain websites is malware...'
-    },
-    {
-      Question: 'A technician is finalizing a new workstation for a user. The user\'s PC will be connected to the internet but will not require the same private address each time...',
-      A: 'DHCP',
-      B: 'SMTP',
-      C: 'DNS',
-      D: 'RDP',
-      Correct: 'A',
-      Explanation: 'DHCP stands for Dynamic Host Configuration Protocol and it is used to assign IP addresses and other network configuration parameters to devices on a network automatically...'
     },
     {
       Question: 'A user is no longer able to start the OS on a computer and receives an error message indicating there is no OS found...',
@@ -2322,53 +2250,6 @@ var questions1101 = [
       Explanation: 'A S.M.A.R.T. error is a warning that a hard drive is about to fail or has failed. This means that the OS cannot be loaded from the drive and the user will see an error message indicating there is no OS found...'
     },
     {
-      Question: 'A manager called the help desk to ask for assistance with creating a more secure environment for the finance department...',
-      A: 'Implementing password expiration',
-      B: 'Restricting user permissions',
-      C: 'Using screen locks',
-      D: 'Disabling unnecessary services',
-      Correct: 'B',
-      Explanation: 'Restricting user permissions is a method of creating a more secure environment for the finance department in a non-domain environment...'
-    },
-    {
-      Question: 'Which of the following options should MOST likely be considered when preserving data from a hard drive for forensic analysis? (Select TWO)...',
-      A: 'Licensing agreements',
-      B: 'Chain of custody',
-      C: 'Incident management documentation',
-      D: 'Data integrity',
-      E: 'Material safety data sheet',
-      F: 'Retention requirements',
-      Correct: ['B', 'D'],
-      Explanation: 'Chain of custody and data integrity are two options that should most likely be considered when preserving data from a hard drive for forensic analysis...'
-    },
-    {
-      Question: 'A customer calls a service support center and begins yelling at a technician about a feature for a product that is not working to the customer\'s satisfaction...',
-      A: 'Inform the customer that the issue is not within the scope of this department.',
-      B: 'Apologize to the customer and escalate the issue to a manager.',
-      C: 'Ask the customer to explain the issue and then try to fix it independently.',
-      D: 'Respond that the issue is something the customer should be able to fix.',
-      Correct: 'B',
-      Explanation: 'Apologizing to the customer and escalating the issue to a manager is the best course of action for the support center representative to take...'
-    },
-    {
-      Question: 'All the desktop icons on a user\'s newly issued PC are very large. The user reports that the PC was working fine until a recent software patch was deployed...',
-      A: 'Rolling back video card drivers',
-      B: 'Restoring the PC to factory settings',
-      C: 'Repairing the Windows profile',
-      D: 'Reinstalling the Windows OS',
-      Correct: 'A',
-      Explanation: 'Rolling back video card drivers is the best way to resolve the issue of large desktop icons on a user’s newly issued PC...'
-    },
-    {
-      Question: 'A technician is installing a program from an ISO file...',
-      A: 'Mount the ISO and run the installation file.',
-      B: 'Copy the ISO and execute on the server.',
-      C: 'Copy the ISO file to a backup location and run the ISO file.',
-      D: 'Unzip the ISO and execute the setup.exe file.',
-      Correct: 'A',
-      Explanation: 'Mounting the ISO and running the installation file is the correct way to install a program from an ISO file...'
-    },
-    {
       Question: 'Which of the following would MOST likely be used to change the security settings on a user\'s device in a domain environment?',
       A: 'Security groups',
       B: 'Access control list',
@@ -2378,15 +2259,6 @@ var questions1101 = [
       Explanation: 'Group Policy is the most likely tool to be used to change the security settings on a user’s device in a domain environment...'
     },
     {
-      Question: 'While staying at a hotel, a user attempts to connect to the hotel Wi-Fi but notices that multiple SSIDs have very similar names...',
-      A: 'Evil twin',
-      B: 'Impersonation',
-      C: 'Insider threat',
-      D: 'Whaling',
-      Correct: 'A',
-      Explanation: 'An evil twin is a type of social-engineering attack that involves setting up a rogue wireless access point that mimics a legitimate one...'
-    },
-    {
       Question: 'Which of the following is used to integrate Linux servers and desktops into Windows Active Directory environments?',
       A: 'apt-get',
       B: 'CIFS',
@@ -2394,33 +2266,6 @@ var questions1101 = [
       D: 'grep',
       Correct: 'C',
       Explanation: 'Samba is a software suite that allows Linux servers and desktops to integrate with Windows Active Directory environments...'
-    },
-    {
-      Question: 'A technician installed a new application on a workstation. For the program to function properly, it needs to be listed in the Path Environment Variable...',
-      A: 'System',
-      B: 'Indexing Options',
-      C: 'Device Manager',
-      D: 'Programs and Features',
-      Correct: 'A',
-      Explanation: 'System is the Control Panel utility that should be used to change the Path Environment Variable...'
-    },
-    {
-      Question: 'An organization implemented a method of wireless security that requires both a user and the user\'s computer to be in specific managed groups on the server in order to connect to Wi-Fi...',
-      A: 'TKIP',
-      B: 'RADIUS',
-      C: 'WPA2',
-      D: 'AES',
-      Correct: 'B',
-      Explanation: 'RADIUS stands for Remote Authentication Dial-In User Service and it is a protocol that provides centralized authentication, authorization, and accounting for network access...'
-    },
-    {
-      Question: 'A company acquired a local office, and a technician is attempting to join the machines at the office to the local domain. The technician notes that the domain join option appears to be missing...',
-      A: 'Windows Professional',
-      B: 'Windows Education',
-      C: 'Windows Enterprise',
-      D: 'Windows Home',
-      Correct: 'D',
-      Explanation: 'Windows Home is the most likely edition of Windows installed on the machines that do not have the domain join option...'
     },
     {
       Question: 'Which of the following macOS features provides the user with a high-level view of all open windows?',
@@ -2439,15 +2284,6 @@ var questions1101 = [
       D: 'Cross-site scripting',
       Correct: 'C',
       Explanation: 'Operating system updates are used to secure a device from known exploits. Operating system updates are patches or fixes that are released by the vendor to address security vulnerabilities, bugs, or performance issues...'
-    },
-    {
-      Question: 'The audio on a user\'s mobile device is inconsistent when the user uses wireless headphones and moves around...',
-      A: 'Verify the Wi-Fi connection status.',
-      B: 'Enable the NFC setting on the device.',
-      C: 'Bring the device within Bluetooth range.',
-      D: 'Turn on device tethering.',
-      Correct: 'C',
-      Explanation: 'Bringing the device within Bluetooth range is the best way to troubleshoot the issue of inconsistent audio when using wireless headphones and moving around...'
     },
     {
       Question: 'A technician is editing the hosts file on a few PCs in order to block certain domains. Which of the following would the technician need to execute after editing the hosts file?',
