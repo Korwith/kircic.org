@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>6 Steps</title>
+    <link rel="stylesheet" href="headeronly.css">
+    <link rel="stylesheet" href="testcss/troubleshooting.css">
+</head>
+
+<body>
+    <header>
+        <div class="headerLeft">
+            <button class="homeButton" title="Home"><a href="index.html"
+                    style="padding:0; margin:0; width: 110%; height: 110%; display:block;"></a></button>
+            <button class="mobileDiscordButton" title="Discord"><a href="https://discord.com/invite/p8ZZXZqnag"
+                    target="_blank"></a></button>
+            <span class="pageTitle">Home </span>
+        </div>
+
+        <div class="headerRight">
+            <button class="updatesButton" title="Updates"><a href="updates.html">Updates</a></button>
+            <button class="accountsButton" title="Services"><a href="services.html">Services</a></button>
+            <button class="peopleButton" title="People"><a href="contributors.html">People</a></button>
+            <button class="musicButton" title="Music"><a href="music.html">Music</a></button>
+            <button class="discordButton" title="Discord"><a href="https://discord.com/invite/p8ZZXZqnag"
+                    target="_blank">Discord</a></button>
+        </div>
+    </header>
+
+    <div class="learn">
+        <h1>Learn</h1>
+        <p>Quick sorting utility to learn the six troubleshooting steps in order.</p>
+        <br>
+        <h2>1. Identify the Problem</h2>
+        <p>Begin by understanding the issue at hand, whether it's a malfunction, error, or unexpected behavior.</p>
+        <br>
+        <h2>2. Develop a Theory</h2>
+        <p>Formulate hypotheses about the potential causes of the problem based on available information and prior
+            experience.</p>
+        <br>
+        <h2>3. Test the Theory</h2>
+        <p>Conduct experiments or diagnostics to validate or refute each hypothesis and narrow down the possible causes.
+        </p>
+        <br>
+        <h2>4. Plan of Action & Implement the Solution</h2>
+        <p>Develop a systematic approach to addressing the problem and implement the chosen solution methodically.</p>
+        <br>
+        <h2>5. Verify System Functionality</h2>
+        <p>Ensure that the solution effectively resolves the issue without creating new problems and that the system
+            operates as intended.</p>
+        <br>
+        <h2>6. Document the Issue</h2>
+        <p>Record all steps taken, results obtained, and lessons learned for future reference, analysis, and improvement
+            of troubleshooting processes.</p>
+        <br><br>
+        <button id="start">Quiz</button>
+        <br><br><br>
+    </div>
+
+    <div class="quizMenu hide">
+        <h1>Quiz</h1>
+        <button id="score">Score</button>
+    </div>
+
+    <!-- Placeholder -->
+    <div class="question" id="placeholder">
+        <p class="questionText">What is the xth step of troubleshooting?</p>
+        <button class='questionAnswer a'>blah blah</button>
+        <button class='questionAnswer b'>blah blah</button>
+        <button class='questionAnswer c'>blah blah</button>
+    </div>
+
+    <script>
+        var inQuiz = false;
+        var quizStart = document.querySelector('#start');
+        var quizScore = document.querySelector('#score');
+        var learnMenu = document.querySelector('.learn');
+        var quizMenu = document.querySelector('.quizMenu');
+        var placeholder = document.querySelector('#placeholder');
+
+        var allSteps = [
+            'Identify the Problem',
+            'Develop a Theory',
+            'Test the Theory',
+            'Plan of Action & Implement the Solution',
+            'Verify System Functionality',
+            'Document the Issue',
+        ]
+
+        var questionQueue = {};
+        function makeQueue() {
+            for (var i = 0; i < allSteps.length; i++) {
+                var thisKey = { num: i + 1, step: allSteps[i] };
+
+                function tryAdd() {
+                    var randomNumber = Math.floor(Math.random() * allSteps.length);
+                    if (!questionQueue[randomNumber]) {
+                        questionQueue[randomNumber] = thisKey;
+                    } else {
+                        tryAdd();
+                    }
+                }
+
+                tryAdd();
+            }
+        }
+
+        function randomAnswerThatIsnt(num) {
+            function tryFind() {
+                var randomNumber = Math.floor(Math.random() * allSteps.length);
+                if (randomNumber != (num - 1)) {
+                    return allSteps[randomNumber];
+                } else {
+                    return tryFind();
+                }
+            }
+
+            return tryFind();
+        }
+
+        function begin() {
+            inQuiz = true;
+            learnMenu.classList.add('hide');
+            quizMenu.classList.remove('hide');
+            makeQueue();
+
+            for (var i in questionQueue) {
+                var thisKey = questionQueue[i];
+                var thisClone = placeholder.cloneNode(true);
+                var thisQuestionText = thisClone.querySelector('.questionText');
+                var thisQuestionA = thisClone.querySelector('.a');
+                var thisQuestionB = thisClone.querySelector('.b');
+                var thisQuestionC = thisClone.querySelector('.c');
+
+                var numberToLetter = {
+                    0: thisQuestionA,
+                    1: thisQuestionB,
+                    2: thisQuestionC
+                }
+
+                var numberToLetterString = {
+                    0: 'a',
+                    1: 'b',
+                    2: 'c'
+                }
+
+                var randomCorrectInt = Math.floor(Math.random() * 3);
+                var correctChoice = numberToLetter[randomCorrectInt];
+                thisClone.setAttribute('correct', numberToLetterString[randomCorrectInt]);
+
+                for (var answerChoiceIndex in numberToLetter) {
+                    var thisAnswerChoice = numberToLetter[answerChoiceIndex];
+
+                    if (thisAnswerChoice != correctChoice) {
+                        thisAnswerChoice.innerHTML = randomAnswerThatIsnt(thisKey.num);
+                    }
+                }
+
+                correctChoice.innerHTML = allSteps[thisKey.num - 1];
+                thisQuestionText.innerHTML = 'Step ' + thisKey.num + ' of troubleshooting?'
+                thisClone.removeAttribute('id');
+                quizMenu.appendChild(thisClone);
+
+                var choices = thisClone.querySelectorAll('.questionAnswer');
+                for (var buttonIndex = 0; buttonIndex < choices.length; buttonIndex++) {
+                    var thisButton = choices[buttonIndex];
+
+                    (function(thisClone, thisButton) {
+                        var correctQuestionAnswer = thisClone.getAttribute('correct');
+                        thisButton.onclick = function() {
+                            if (thisButton.classList.contains(correctQuestionAnswer)) {
+                                thisButton.classList.add('correct');
+                                thisClone.setAttribute('status', true);
+                            } else {
+                                thisButton.classList.add('incorrect');
+                                thisClone.setAttribute('status', false);
+                            }
+
+                            thisClone.classList.add('disabled');
+                        }
+                    })(thisClone, thisButton)
+                }
+            }
+        }
+
+        function score() {
+            var allQuestions = document.querySelectorAll('.question');
+            var correctQuestions = document.querySelectorAll('[status="true"]');
+            var wrongQuestions = document.querySelectorAll('[status="false"]');
+            var notAnswer = allQuestions.length - correctQuestions.length - wrongQuestions.length - 1;
+
+            alert(`
+            Total Questions: ${allQuestions.length-1}
+            Correct: ${correctQuestions.length}
+            Incorrect: ${wrongQuestions.length}
+            Not Answered: ${notAnswer}
+            `)
+
+            window.location.reload();
+        }
+
+        quizStart.addEventListener('mousedown', begin);
+        quizScore.addEventListener('mousedown', score);
+    </script>
+
+    <script src="headeronly.js"></script>
+</body>
+
+</html>
