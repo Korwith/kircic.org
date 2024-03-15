@@ -3,78 +3,72 @@ body {
     margin: 0;
 }
 
+h1 {
+    text-align: center;
+}
+
+h2 {
+    text-align: center;
+}
+
+h3 {
+    text-align: center;
+    color: #EE2E24
+}
+
+p {
+    text-align: center;
+}
+
 #placeholder {
     display: none;
 }
 
-.hide {
-    display: none;
-}
-
-.disabled {
-    pointer-events: none;
-}
-
-h1 {
-    margin: 10px;
-}
-
-h2 {
-    margin: 10px;
-    font-size: 20px;
-}
-
-p {
-    color: #e0e0e0;
-    margin: 0;
-    font-size: 14px;
-}
-
-.learn, .quizMenu {
-    height: fit-content;
-    width: 42.5%;
+.learn,
+.quiz {
     margin-left: auto;
     margin-right: auto;
-    text-align: center;
+    width: 50%;
 }
 
-.quizMenu {
+.quiz {
     display: flex;
     flex-direction: column;
 }
 
-.quizMenu.hide {
+.learn.hide {
     display: none;
 }
 
-#start, #score {
+.quiz.hide {
+    display: none;
+}
+
+.startQuiz, .scoreQuiz {
     aspect-ratio: 4/1;
-    width: 50%;
-    border-radius: 16px;
-    cursor: pointer;
-    border: 0;
+    display: block;
     background-color: #EE2E24;
-    font-size: 18px;
-    transition: opacity 0.3s;
+    border-radius: 10px;
+    border: 0;
+    width: 40%;
+    font-size: 26px;
+    cursor: pointer;
     box-shadow: black 10px 10px 10px;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 20px;
+    transition: opacity 0.2s;
 }
 
-#score {
+.scoreQuiz {
     order: 999;
 }
 
-#start:hover, #score:hover {
+.startQuiz:hover {
     opacity: 0.8;
 }
 
-* {
-    color: white;
-    text-shadow: 2px 2px 4px black;
-    font-family: Arial;
-    font-weight: 900;
+.question.disabled {
+    pointer-events: none;
 }
 
 .question {
@@ -117,8 +111,19 @@ p {
     border: 2px solid red;
 }
 
-@media screen and (max-width: 767px) {
-    .learn, .quizMenu {
+* {
+    color: white;
+    font-family: Arial;
+    font-weight: 900;
+    text-shadow: 2px 2px 4px black;
+}
+
+@media screen and (max-width < 767px) {
+    .quiz {
+        width: 90vw;
+    }
+
+    .learn {
         width: 90vw;
     }
 }
