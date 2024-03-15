@@ -118,7 +118,7 @@ p {
     text-shadow: 2px 2px 4px black;
 }
 
-@media screen and (max-width < 767px) {
+@media screen and (max-width: 767px) {
     .quiz {
         width: 90vw;
     }
