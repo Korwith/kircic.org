@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ports</title>
+    <link rel="stylesheet" href="testcss/ports.css">
+    <link rel="stylesheet" href="headeronly.css">
+</head>
+
+<body>
+    <header>
+        <div class="headerLeft">
+            <button class="homeButton"></button>
+            <button class="mobileDiscordButton"></button>
+            <span class="pageTitle"></span>
+        </div>
+
+        <div class="headerRight">
+            <button class="updatesButton">Updates</button>
+            <button class="accountsButton">Accounts</button>
+            <button class="peopleButton">Contributors</button>
+            <button class="musicButton">Music</button>
+            <button class="discordButton">Discord</button>
+        </div>
+    </header>
+
+    <h1>Study A+ Ports</h1>
+    <div class="learn">
+        <h2>Learn</h2>
+        <h3>20+21: FTP - File Transfer Protocol</h3>
+        <p>Provides file transfers with no encryption (insecure)</p>
+
+        <h3>22: SSH - Secure Shell</h3>
+        <p>Provides secure remote control of another machine using a text-based enviorment. (No GUI)</p>
+
+        <h3>23: Telnet</h3>
+        <p>Provides insecure remote control of another machine using a text-based enviorment.</p>
+
+        <h3>25: SMTP - Simple Mail Transfer Protocol</h3>
+        <p>Provides the ability to send emails over the network.</p>
+
+        <h3>53: DNS - Domain Name Service</h3>
+        <p>Converts domain names to IP addresses and vise versa.</p>
+
+        <h3>67+68: DHCP - Dynamic Host Configuration Protocol</h3>
+        <p>Automatically provides network parameters to clients, such as assigned IP addresses, subnet mask, default
+            gateway, and the DNS server they should be using.</p>
+
+        <h3>69: TFTP - Trivial File Transfer Protocol</h3>
+        <p>Insecure file transfer protocol which uses UDP (faster), no authentication or encryption.</p>
+
+        <h3>80: HTTP - HyperText Transfer Protocol</h3>
+        <p>Used for insecure web browsing.</p>
+
+        <h3>110: POP3 - Post Office Protocol V3</h3>
+        <p>Used for recieving incoming emails</p>
+
+        <h3>137-139: NetBIOS</h3>
+        <p>Used for file or printer sharing in a Windows network.</p>
+
+        <h3>143: IMAP - Internet Mail Application Protocol</h3>
+        <p>A newer method of retrieving incoming emails which improves on POP3.</p>
+
+        <h3>161+162: SNMP - Simple Network Management Protocol</h3>
+        <p>Used to collect data about network devices and moniter their status.</p>
+
+        <h3>389: LDAP - Lightweight Directory Access Protocol</h3>
+        <p>Provides directory services to the network.</p>
+
+        <h3>443: HTTPS - HyperText Transfer Protocol Secure</h3>
+        <p>Used as a secure and encrypted version of web browsing.</p>
+
+        <h3>445: SMB - Server Message Block</h3>
+        <p>Used for Windows file and printer sharing services.</p>
+
+        <h3>3389: Remote Desktop Protocol</h3>
+        <p>Provides a graphical remote control of another client or server.</p>
+
+        <br>
+        <button class="startQuiz">Quiz</button>
+        <br>
+    </div>
+
+    <div class="quiz hide">
+        <button class="scoreQuiz">Score</button>
+    </div>
+
+    <!-- Placeholder -->
+    <div class="question" id="placeholder">
+        <p class="questionText">Port number for: </p>
+        <button class='questionAnswer a'>blah blah</button>
+        <button class='questionAnswer b'>blah blah</button>
+        <button class='questionAnswer c'>blah blah</button>
+    </div>
+
+    <script src="https://www.kirhub.com/headeronly.css"></script>
+    <script>
+        var learnMenu = document.querySelector('.learn');
+        var quizMenu = document.querySelector('.quiz');
+        var startQuizButton = document.querySelector('.startQuiz')
+        var scoreQuizButton = document.querySelector('.scoreQuiz');
+        var placeholder = document.querySelector('#placeholder');
+
+        var ports = [
+            { num: '20 & 21', name: 'FTP' },
+            { num: '22', name: 'SSH' },
+            { num: '23', name: 'Telnet' },
+            { num: '25', name: 'SMTP' },
+            { num: '53', name: 'DNS' },
+            { num: '67 & 68', name: 'DHCP' },
+            { num: '69', name: 'TFTP' },
+            { num: '80', name: 'HTTP' },
+            { num: '110', name: 'POP3' },
+            { num: '137 & 138 & 139', name: 'NetBIOS' },
+            { num: '143', name: 'IMAP' },
+            { num: '161 & 162', name: 'SNMP' },
+            { num: '389', name: 'LDAP' },
+            { num: '443', name: 'HTTPS' },
+            { num: '445', name: 'SMB' },
+            { num: '3389', name: 'RDP' }
+        ]
+
+        var queue = [];
+        function makeQueue() {
+            for (var i = 0; i < ports.length; i++) {
+                function tryAdd() {
+                    var randomIndex = Math.floor(Math.random() * ports.length);
+                    var thisPort = ports[randomIndex];
+
+                    if (!queue.includes(thisPort)) {
+                        queue.push(thisPort);
+                    } else {
+                        tryAdd();
+                    }
+                }
+
+                tryAdd();
+            }
+        }
+
+        var numberToLetter = {
+            0: 'a',
+            1: 'b',
+            2: 'c'
+        }
+
+        function start() {
+            learnMenu.classList.add('hide');
+            quizMenu.classList.remove('hide');
+            makeQueue();
+
+            for (var i = 0; i < queue.length; i++) {
+                var thisInfo = queue[i];
+                var thisClone = placeholder.cloneNode(true);
+                var thisQuestionText = thisClone.querySelector('.questionText');
+
+                thisQuestionText.innerHTML = `What is the port number for ${thisInfo.name}?`
+
+                thisClone.removeAttribute('id');
+                quizMenu.appendChild(thisClone);
+
+                var randomAnswers = threeRandomAnswers();
+                var randomCorrectIndex = Math.floor(Math.random() * 3);
+                var randomCorrectLetter = numberToLetter[randomCorrectIndex];
+                var randomCorrectElement = thisClone.querySelector('.' + randomCorrectLetter);
+
+                for (var r = 0; r < randomAnswers.length; r++) {
+                    var thisLetter = numberToLetter[r];
+                    var thisLetterElement = thisClone.querySelector('.' + thisLetter);
+                    thisLetterElement.innerHTML = randomAnswers[r];
+                }
+
+                randomCorrectElement.innerHTML = thisInfo.num;
+                thisClone.setAttribute('correct', randomCorrectIndex);
+
+                var allElementButtons = thisClone.querySelectorAll('.questionAnswer');
+                for (var buttonIndex = 0; buttonIndex < allElementButtons.length; buttonIndex++) {
+                    var button = allElementButtons[buttonIndex];
+
+                    (function (button, thisClone) {
+                        var correctButtonNumber = thisClone.getAttribute('correct');
+                        var correctButtonLetter = numberToLetter[correctButtonNumber];
+                        var correctButton = thisClone.querySelector('.' + correctButtonLetter);
+
+                        button.onclick = function () {
+                            if (button == correctButton) {
+                                button.classList.add('correct');
+                                thisClone.setAttribute('status', true);
+                            } else {
+                                button.classList.add('incorrect');
+                                correctButton.classList.add('correct');
+                                thisClone.setAttribute('status', false);
+                            }
+
+                            thisClone.classList.add('disabled');
+                        }
+                    })(button, thisClone);
+                }
+            }
+        }
+
+        function threeRandomAnswers() {
+            var sendBack = [];
+
+            for (var i = 0; i < 3; i++) {
+                function tryAdd() {
+                    var randomIndex = Math.floor(Math.random() * ports.length);
+                    var thisInfo = ports[randomIndex]
+
+                    if (!sendBack.includes(thisInfo.num)) {
+                        sendBack.push(thisInfo.num);
+                    } else {
+                        tryAdd()
+                    }
+                }
+
+                tryAdd();
+            }
+
+            return sendBack;
+        }
+
+        function score() {
+            var correctCount = document.querySelectorAll('[status="true"]').length;
+            var wrongCount = document.querySelectorAll('[status="false"]').length;
+            var allCount = document.querySelectorAll('.question').length - 1;
+            var notAnswer = allCount - correctCount - wrongCount;
+
+            alert(`
+            Correct: ${correctCount}
+            Incorrect: ${wrongCount}
+            Total Questions: ${allCount}
+            Not Answered: ${notAnswer}
+            `)
+
+            window.location.reload();
+        }
+
+        startQuizButton.addEventListener('mousedown', start);
+        scoreQuizButton.addEventListener('mousedown', score);
+    </script>
+</body>
+
+</html>
