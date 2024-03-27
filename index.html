@@ -133,11 +133,58 @@
 
                     <div class="project_frame">
                         <div class="project_frame_top">
-                            
+                            <div class="project_header">
+                                <div class="project_icon aplus"></div>
+                                <span class="project_title">A+ Study Tool</span>
+                            </div>
+
+                            <div class="project_about">
+                                A simple study assistant with a general practice test, a study quiz for ports, and a study quiz for the six troubleshooting steps.
+                            </div>
                         </div>
 
                         <div class="project_frame_bottom">
-                            
+                            <a href="/sub/study/index.html" target="_blank">
+                                <button class="open_project">Launch</button>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="project_frame">
+                        <div class="project_frame_top">
+                            <div class="project_header">
+                                <div class="project_icon aplus"></div>
+                                <span class="project_title">A+ Study Tool</span>
+                            </div>
+
+                            <div class="project_about">
+                                A simple study assistant with a general practice test, a study quiz for ports, and a study quiz for the six troubleshooting steps.
+                            </div>
+                        </div>
+
+                        <div class="project_frame_bottom">
+                            <a href="/sub/study/index.html" target="_blank">
+                                <button class="open_project">Launch</button>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="project_frame">
+                        <div class="project_frame_top">
+                            <div class="project_header">
+                                <div class="project_icon aplus"></div>
+                                <span class="project_title">A+ Study Tool</span>
+                            </div>
+
+                            <div class="project_about">
+                                A simple study assistant with a general practice test, a study quiz for ports, and a study quiz for the six troubleshooting steps.
+                            </div>
+                        </div>
+
+                        <div class="project_frame_bottom">
+                            <a href="/sub/study/index.html" target="_blank">
+                                <button class="open_project">Launch</button>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -151,16 +198,28 @@
         var sidebar = document.querySelector('.sidebar');
         var sidebarToggle = document.querySelector('.hamburger');
 
+        var mobileNow = false;
+
         // Handle Sidebar
         function moveSidebar() {
+            if (sidebar.classList.contains('mobile_closed')) {
+                sidebar.classList.remove('mobile_closed');
+            }
+
             if (sidebar.classList.contains('closed')) {
                 sidebar.classList.remove('closed');
-                header.classList.remove('extend');
                 content.classList.remove('extend');
+
+                if (!mobileNow) {
+                    header.classList.remove('extend');
+                }
             } else {
                 sidebar.classList.add('closed');
-                header.classList.add('extend');
                 content.classList.add('extend');
+
+                if (!mobileNow) {
+                    header.classList.add('extend');
+                }
             }
         }
         sidebarToggle.addEventListener('mousedown', moveSidebar);
@@ -174,6 +233,18 @@
                 content.classList.add('scroll_padding');
             } else {
                 content.classList.remove('scroll_padding');
+            }
+
+            if (window.innerWidth < 767) {
+                content.classList.add('mobile');
+                sidebar.classList.add('closed');
+                content.classList.add('extend');
+                header.classList.add('extend');
+
+                mobileNow = true;
+            } else {
+                content.classList.remove('mobile');
+                mobileNow = false;
             }
         }
         window.onresize = wasResized;
