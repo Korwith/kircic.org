@@ -220,6 +220,8 @@ header .header_item_holder {
     display: flex;
     flex-direction: column;
     border-radius: 12px;
+    overflow-y: auto;
+    scrollbar-width: none;
 }
 
 .right_sidebar div {
@@ -468,12 +470,32 @@ header .header_item_holder {
     background-image: url(icon/instagram.svg);
 }
 
+.youtube {
+    background-image: url(icon/youtube.svg);
+}
+
+.spotify {
+    background-image: url(icon/spotify.svg);
+}
+
+.xbox {
+    background-image: url(icon/xbox.svg);
+}
+
 .expand_accounts {
     background-image: url(icon/down.svg);
 }
 
 .aplus {
     background-image: url(icon/aplus.png)
+}
+
+.disabled {
+    display: none;
+}
+
+.grayed {
+    opacity: 0.7;
 }
 
 * {

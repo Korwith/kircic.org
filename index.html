@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Kircic.org</title>
+    <title>kircic.org</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="kircic">
@@ -98,6 +98,30 @@
                 <div class="instagram"></div>
             </a>
 
+            <a href="https://www.xbox.com/en-US/play/user/YellowishTub88" target="_blank">
+                <div class="xbox grayed disabled"></div>
+            </a>
+
+            <a href="https://open.spotify.com/user/64w6zhl2osfs9ogt0jvutipxb" target="_blank">
+                <div class="spotify grayed disabled"></div>
+            </a>
+
+            <a href="https://www.youtube.com/channel/UCLcCNfyLG_jQev4MdkHtCZw" target="_blank">
+                <div class="youtube grayed disabled"></div>
+            </a>
+
+            <a href="https://www.youtube.com/channel/UCYSQKr4FxEgqtIWaZ_YAPdg" target="_blank">
+                <div class="youtube grayed disabled"></div>
+            </a>
+
+            <a href="https://www.youtube.com/channel/UCVIUo-rFoaQ9uF6UuE1z_0w" target="_blank">
+                <div class="youtube grayed disabled"></div>
+            </a>
+
+            <a href="https://www.youtube.com/channel/UCDzQs_97SElvILJl7-cPRxQ" target="_blank">
+                <div class="youtube grayed disabled"></div>
+            </a>
+
             <div class="expand_accounts"></div>
         </div>
 
@@ -148,6 +172,7 @@
         var content = document.querySelector('.content');
         var sidebar = document.querySelector('.sidebar');
         var sidebarToggle = document.querySelector('.hamburger');
+        var expandAccounts = document.querySelector('.expand_accounts');
 
         var mobileNow = false;
 
@@ -229,6 +254,20 @@
             setTimeout(updateClock, 1000);
         }
         updateClock();
+
+        // Expand Accounts Button
+        function expand() {
+            var allDisabled = document.querySelectorAll('.disabled');
+
+            for (var i = 0; i < allDisabled.length; i++) {
+                var thisElement = allDisabled[i];
+                thisElement.classList.remove('disabled');
+            }
+
+            expandAccounts.classList.add('disabled')
+        }
+        expandAccounts.addEventListener('mouseup', expand);
+
     </script>
 </body>
 
