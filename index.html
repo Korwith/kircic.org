@@ -72,7 +72,6 @@
         <header>
             <div class="hamburger"></div>
             <div class="header_item_holder">
-                <div class="date_widget">3/26/24</div>
                 <div class="clock_widget">11:50 AM</div>
             </div>
         </header>
@@ -131,62 +130,7 @@
                         </div>
                     </div>
 
-                    <div class="project_frame">
-                        <div class="project_frame_top">
-                            <div class="project_header">
-                                <div class="project_icon aplus"></div>
-                                <span class="project_title">A+ Study Tool</span>
-                            </div>
-
-                            <div class="project_about">
-                                A simple study assistant with a general practice test, a study quiz for ports, and a study quiz for the six troubleshooting steps.
-                            </div>
-                        </div>
-
-                        <div class="project_frame_bottom">
-                            <a href="/sub/study/index.html" target="_blank">
-                                <button class="open_project">Launch</button>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="project_frame">
-                        <div class="project_frame_top">
-                            <div class="project_header">
-                                <div class="project_icon aplus"></div>
-                                <span class="project_title">A+ Study Tool</span>
-                            </div>
-
-                            <div class="project_about">
-                                A simple study assistant with a general practice test, a study quiz for ports, and a study quiz for the six troubleshooting steps.
-                            </div>
-                        </div>
-
-                        <div class="project_frame_bottom">
-                            <a href="/sub/study/index.html" target="_blank">
-                                <button class="open_project">Launch</button>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="project_frame">
-                        <div class="project_frame_top">
-                            <div class="project_header">
-                                <div class="project_icon aplus"></div>
-                                <span class="project_title">A+ Study Tool</span>
-                            </div>
-
-                            <div class="project_about">
-                                A simple study assistant with a general practice test, a study quiz for ports, and a study quiz for the six troubleshooting steps.
-                            </div>
-                        </div>
-
-                        <div class="project_frame_bottom">
-                            <a href="/sub/study/index.html" target="_blank">
-                                <button class="open_project">Launch</button>
-                            </a>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -252,7 +196,6 @@
 
         // Time Widgets
         var clockWidget = document.querySelector('.clock_widget');
-        var dateWidget = document.querySelector('.date_widget');
         function updateClock() {
             var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
             var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -274,9 +217,7 @@
             }
 
             var timeString = hours + ':' + minutes + ':' + seconds + ' ' + amORpm;
-            clockWidget.innerHTML = timeString;
-
-            dateWidget.innerHTML = dayOfWeek + ', ' + month + ' ' + currentTime.getDate() + ', ' + year;
+            clockWidget.innerHTML = dayOfWeek + ', ' + month + ' ' + currentTime.getDate() + ', ' + year + '<br>' + timeString;
 
             setTimeout(updateClock, 1000);
         }

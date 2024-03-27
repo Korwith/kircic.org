@@ -72,8 +72,7 @@ header .header_item_holder {
     justify-content: flex-end;
 }
 
-.clock_widget,
-.date_widget {
+.clock_widget {
     height: 100%;
     width: fit-content;
     margin-right: 15px;
@@ -82,6 +81,7 @@ header .header_item_holder {
     align-items: center;
     color: rgba(255, 255, 255, 0.6);
     user-select: none;
+    text-align: right;
 }
 
 .sidebar {
@@ -496,6 +496,7 @@ header .header_item_holder {
 
     .content {
         right: 5px;
+        transition: transform 0.3s;
     }
 
     .content.extend {
@@ -503,11 +504,11 @@ header .header_item_holder {
     }
 
     .content.mobile {
-        opacity: 0;
+        transform: translateX(calc(100% + 10px));
     }
 
     .content.mobile.extend {
-        opacity: 1;
+        transform: translateX(0);
     }
 
     .language div {
@@ -518,4 +519,4 @@ header .header_item_holder {
     .content.scroll_padding {
         padding-right: 0px;
     }
-}   
+}
