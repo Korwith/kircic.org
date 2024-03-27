@@ -336,7 +336,7 @@ header .header_item_holder {
 
 .project_frame {
     max-width: 450px;
-    min-width: 400px;
+    min-width: 300px;
     width: 100%;
     height: 300px;
     border-radius: 12px;
@@ -497,6 +497,7 @@ header .header_item_holder {
     .content {
         right: 5px;
         transition: transform 0.3s;
+        height: calc(100% - 82px);
     }
 
     .content.extend {
@@ -518,5 +519,13 @@ header .header_item_holder {
 
     .content.scroll_padding {
         padding-right: 0px;
+    }
+
+    .project_frame {
+        width: 83vw;    
+    }
+
+    .project_about {
+        font-size: 18px;
     }
 }
