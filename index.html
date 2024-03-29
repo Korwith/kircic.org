@@ -173,6 +173,7 @@
         var sidebar = document.querySelector('.sidebar');
         var sidebarToggle = document.querySelector('.hamburger');
         var expandAccounts = document.querySelector('.expand_accounts');
+        var sbTopGreen = document.querySelector('.sidebar_dots_holder .dot3');
 
         var mobileNow = false;
 
@@ -199,6 +200,15 @@
             }
         }
         sidebarToggle.addEventListener('mousedown', moveSidebar);
+
+        function fullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                document.exitFullscreen();
+            }
+        }
+        sbTopGreen.addEventListener('mousedown', fullscreen);
 
         // Handle Window Resize
         function wasResized() {
