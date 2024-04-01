@@ -655,6 +655,10 @@ header .header_item_holder {
         background-size: 130%;
     }
 
+    .content.scroll_padding .page {
+        width: 100%;
+    }
+
     .sidebar {
         width: calc(100vw - 20px);
         height: calc(100% - 91px);
