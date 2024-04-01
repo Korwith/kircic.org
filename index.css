@@ -277,10 +277,6 @@ header .header_item_holder {
     top: 0;
 }
 
-.page.noshow {
-    opacity: 0;
-}
-
 .project_page {
     background-color: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.13);

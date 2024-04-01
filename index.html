@@ -208,7 +208,7 @@
                 </div>
             </div>
 
-            <div class="project_page page noshow">
+            <div class="project_page page disabled">
                 <h1>Projects</h1>
                 <div class="project_list_holder">
                     <div class="project_seperator">
@@ -353,10 +353,10 @@
                     buttonElement.addEventListener('mouseup', function() {
                         for (var i = 0; i < allPages.length; i++) {
                             var foundPage = allPages[i];
-                            foundPage.classList.add('noshow');
+                            foundPage.classList.add('disabled');
                         }
 
-                        buttonPage.classList.remove('noshow');
+                        buttonPage.classList.remove('disabled');
 
                         if (mobileNow) {
                             sidebar.classList.add('closed');
