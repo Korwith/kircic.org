@@ -206,7 +206,8 @@ header .header_item_holder {
     width: 100%;
     height: 15px;
     text-align: center;
-    color: rgba(255, 255, 255, 0.9)
+    color: rgba(255, 255, 255, 0.9);
+    user-select: none;
 }
 
 .right_sidebar {
@@ -219,7 +220,6 @@ header .header_item_holder {
     height: calc(100% - 90px);
     display: flex;
     flex-direction: column;
-    border-radius: 12px;
     overflow-y: auto;
     scrollbar-width: none;
 }
@@ -263,6 +263,145 @@ header .header_item_holder {
 
 .content.scroll_padding {
     padding-right: 10px;
+}
+
+.content.scroll_padding .page {
+    width: calc(100% - 10px)
+}
+
+.page {
+    width: 100%;
+    height: 100%;
+    transition: opacity 0.3s;
+    position: absolute;
+    top: 0;
+}
+
+.page.noshow {
+    opacity: 0;
+}
+
+.project_page {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    box-sizing: border-box;
+    border-radius: 12px;
+    height: fit-content;
+    min-height: 100%;
+    width: 100%;
+}
+
+.project_list_holder {
+    width: 100%;
+    height: 100%;
+    transform: translateY(-20px);
+}
+
+.project_list_holder a {
+    text-decoration: none;
+}
+
+.project_entry {
+    width: calc(100% - 20px);
+    height: 70px;
+    margin: 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    box-sizing: border-box;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: border 0.3s;
+    display: flex;
+}
+
+.project_entry:hover {
+    border: 1px solid white;
+}
+
+.project_entry .icon {
+    flex: 0 0 auto;
+    aspect-ratio: 1/1;
+    height: calc(100% - 10px);
+    margin: 5px;
+    background-color: rgba(0, 0, 0, 0.1);
+    border: 2px solid rgba(0, 0, 0, 0.13);
+    box-sizing: border-box;
+    border-radius: 12px;
+    margin-right: 16px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.project_entry span {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    font-size: 24px;
+}
+
+.project_seperator {
+    width: calc(100% - 20px);
+    height: 25px;
+    display: flex;
+    margin-left: 10px;
+    padding-top: 20px;
+}
+
+.project_seperator span {
+    display: flex;
+    height: 100%;
+    aspect-ratio: 1/1;
+    flex: 0 0 auto;
+    justify-content: center;
+    align-items: center;
+    transform: translateX(-3px);
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.project_seperator hr {
+    flex: 1;
+    border: 0;
+    margin: 0;
+    margin-top: 10px;
+    height: 2px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 12px;
+    box-shadow: black 2px 2px 4px
+}
+
+.project_entry.aplus_project .icon {
+    background-image: url(icon/aplus.png);
+    background-size: 100%;
+}
+
+.project_entry.connections_project .icon {
+    background-image: url(icon/connections.png);
+    background-size: 90%;
+}
+
+.project_entry.calculator_project .icon {
+    background-image: url(icon/calculator.svg);
+    background-size: 90%;
+}
+
+.project_entry.flappy_project .icon {
+    background-image: url(icon/flappy.png);
+    background-size: 90%;
+}
+
+.project_entry.minesweeper_project .icon {
+    background-image: url(icon/flag.png);
+    background-size: 80%;
+}
+
+.project_entry.snake_project .icon {
+    background-image: url(icon/snake.png);
+    background-size: 90%;
+}
+
+.project_entry.wordle_project .icon {
+    background-image: url(icon/wordle.png);
+    background-size: 90%;
 }
 
 .about_me {
@@ -395,7 +534,7 @@ header .header_item_holder {
     margin-left: auto;
     margin-right: auto;
     user-select: none;
-    font-size: 20px;
+    font-size: 17px;
     color: rgba(255, 255, 255, 0.7);
 }
 
@@ -490,6 +629,16 @@ header .header_item_holder {
     background-image: url(icon/aplus.png)
 }
 
+.minesweeper {
+    background-image: url(icon/flag.png);
+    background-size: 70%;
+}
+
+.wordle {
+    background-image: url(icon/wordle.png);
+    background-size: 70%;
+}
+
 .disabled {
     display: none;
 }
@@ -506,6 +655,10 @@ header .header_item_holder {
 }
 
 @media screen and (max-width: 767px) {
+    .blurred_img_bg {
+        background-size: 130%;
+    }
+
     .sidebar {
         width: calc(100vw - 20px);
         height: calc(100% - 91px);
@@ -548,6 +701,6 @@ header .header_item_holder {
     }
 
     .project_about {
-        font-size: 18px;
+        font-size: 16px;
     }
 }
