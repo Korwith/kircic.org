@@ -278,8 +278,6 @@ header .header_item_holder {
 }
 
 .project_page {
-    background-color: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.13);
     box-sizing: border-box;
     border-radius: 12px;
     height: fit-content;
