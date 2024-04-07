@@ -624,7 +624,7 @@
                                 }
                             }
 
-                            if (document.querySelectorAll('.number').length == numberCountToWin) {
+                            if (document.querySelectorAll('.number').length >= numberCountToWin) {
                                 clearInterval(timer);
                                 setTimeout(handleGameEnd(true), 1500);
                             }
