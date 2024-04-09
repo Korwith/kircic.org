@@ -19,8 +19,13 @@ body {
     box-sizing: border-box;
 }
 
-::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.13);
+video::-webkit-media-controls-panel {
+    display: none !important;
+    opacity: 1 !important;
+}
+
+video::-webkit-media-controls {
+    display: none;
 }
 
 h1 {
@@ -277,7 +282,8 @@ header .header_item_holder {
     top: 0;
 }
 
-.project_page, .socials_page {
+.project_page,
+.socials_page {
     box-sizing: border-box;
     border-radius: 12px;
     height: auto;
@@ -735,7 +741,7 @@ header .header_item_holder {
     }
 
     .project_frame {
-        width: 83vw;    
+        width: 83vw;
     }
 
     .project_about {
