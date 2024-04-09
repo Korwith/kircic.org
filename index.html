@@ -307,6 +307,7 @@
         var sidebarToggle = document.querySelector('.hamburger');
         var expandAccounts = document.querySelector('.expand_accounts');
         var sbTopGreen = document.querySelector('.sidebar_dots_holder .dot3');
+        var allVideo = document.querySelectorAll('video');
 
         var mobileNow = false;
 
@@ -378,6 +379,32 @@
         }
         loadSidebarLinks();
 
+        // Make videos not show playback controls on mobile safari
+        function setVideoFunction() {
+            for (var i = 0; i < allVideo.length; i++) {
+                var thisVideo = allVideo[i];
+
+                (function(thisVideo) {
+                    thisVideo.addEventListener('play', function() {
+                        thisVideo.controls = false; 
+                    });
+
+                    thisVideo.addEventListener('pause', function() {
+                        thisVideo.controls = false;
+                    });
+                })(thisVideo);
+            }
+        }
+        setVideoFunction();
+
+        // Play all videos, this is for mobile devices
+        function playAllVideo() {
+            for (var i = 0; i < allVideo.length; i++) {
+                var thisVideo = allVideo[i];
+                thisVideo.play();
+            }
+        }
+
         // Handle Window Resize
         function wasResized() {
             var contentScrollHeight = content.scrollHeight;
@@ -395,6 +422,7 @@
                 content.classList.add('extend');
                 header.classList.add('extend');
 
+                playAllVideo();
                 mobileNow = true;
             } else {
                 content.classList.remove('mobile');
