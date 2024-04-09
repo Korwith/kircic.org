@@ -147,7 +147,7 @@
                     <div class="project_grid">
 
                         <div class="project_frame g">
-                            <video src="icon/wordle_preview.mp4" type="video/mp4" autoplay loop muted></video>
+                            <video src="icon/wordle_preview.mp4" type="video/mp4" autoplay loop muted playsinline></video>
                             <div class="project_frame_top">
                                 <div class="project_header">
                                     <div class="project_icon wordle"></div>
@@ -167,7 +167,7 @@
                         </div>
 
                         <div class="project_frame g">
-                            <video src="icon/minesweeper_preview.mp4" type="video/mp4" autoplay loop muted></video>
+                            <video src="icon/minesweeper_preview.mp4" type="video/mp4" autoplay loop muted playsinline></video>
                             <div class="project_frame_top">
                                 <div class="project_header">
                                     <div class="project_icon minesweeper"></div>
@@ -379,32 +379,6 @@
         }
         loadSidebarLinks();
 
-        // Make videos not show playback controls on mobile safari
-        function setVideoFunction() {
-            for (var i = 0; i < allVideo.length; i++) {
-                var thisVideo = allVideo[i];
-
-                (function(thisVideo) {
-                    thisVideo.addEventListener('play', function() {
-                        thisVideo.controls = false; 
-                    });
-
-                    thisVideo.addEventListener('pause', function() {
-                        thisVideo.controls = false;
-                    });
-                })(thisVideo);
-            }
-        }
-        setVideoFunction();
-
-        // Play all videos, this is for mobile devices
-        function playAllVideo() {
-            for (var i = 0; i < allVideo.length; i++) {
-                var thisVideo = allVideo[i];
-                thisVideo.play();
-            }
-        }
-
         // Handle Window Resize
         function wasResized() {
             var contentScrollHeight = content.scrollHeight;
@@ -422,7 +396,6 @@
                 content.classList.add('extend');
                 header.classList.add('extend');
 
-                playAllVideo();
                 mobileNow = true;
             } else {
                 content.classList.remove('mobile');
