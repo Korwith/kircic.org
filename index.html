@@ -47,7 +47,7 @@
                 <span class="button_bar_text">Projects</span>
             </div>
 
-            <div class="button_bar">
+            <div class="button_bar socials_button">
                 <div class="icon social"></div>
                 <span class="button_bar_text">Socials</span>
             </div>
@@ -166,6 +166,7 @@
                         </div>
 
                         <div class="project_frame g">
+                            <video src="icon/minesweeper_preview.mp4" type="video/mp4" autoplay loop muted></video>
                             <div class="project_frame_top">
                                 <div class="project_header">
                                     <div class="project_icon minesweeper"></div>
@@ -291,6 +292,10 @@
                     </a>
                 </div>
             </div>
+
+            <div class="socials_page page disabled">
+
+            </div>
         </div>
     </div>
 
@@ -341,7 +346,8 @@
         var allPages = document.querySelectorAll('.page');
         var classToPage = {
             'home_button': 'home_page',
-            'project_button': 'project_page'
+            'project_button': 'project_page',
+            'socials_button': 'socials_page'
         }
 
         function loadSidebarLinks() {
