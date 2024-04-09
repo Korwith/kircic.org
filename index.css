@@ -537,6 +537,7 @@ header .header_item_holder {
     background-position: center;
     background-repeat: no-repeat;
     z-index: 500;
+    user-select: none;
 }
 
 .project_title {
