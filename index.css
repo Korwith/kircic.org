@@ -476,11 +476,11 @@ header .header_item_holder {
 }
 
 .search_holder .search_go {
-    aspect-ratio: 1/1;
     display: block;
     position: absolute;
     margin: 5px;
-    height: calc(100% - 10px);
+    height: 40px;
+    width: 40px;
     right: 0;
     border-radius: 12px;
     border: 1px solid rgba(0, 0, 0, 0.13);
