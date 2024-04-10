@@ -126,7 +126,7 @@
         </div>
 
         <div class="content">
-            <div class="home_page page">
+            <div class="home_page page disabled">
                 <div class="about_me">
                     <h1>About Me</h1>
 
@@ -412,6 +412,12 @@
 
                         buttonPage.classList.remove('disabled');
 
+                        if (window.location.href.includes('#')) {
+                            var beforeHashtag = window.location.href.split('#')[0];
+                            history.pushState(null, null, beforeHashtag);
+                        }
+                        history.pushState(null, null, '#' + pageName.split('_')[0]);
+                        
                         if (mobileNow) {
                             sidebar.classList.add('closed');
                             content.classList.add('extend');
@@ -425,6 +431,32 @@
             }
         }
         loadSidebarLinks();
+
+        // Handle what page loads automatically
+        var pageToFrame = {
+            'home': 'home_page',
+            'project': 'project_page',
+            'search': 'search_page'
+        }
+
+        function isPushState() {
+            if (document.location.href.includes('#')) {
+                var goToPage = document.location.href.split('#')[1];
+                var pageElement = document.querySelector('.' + pageToFrame[goToPage]);
+
+                for (var i in pageToFrame) {
+                    var foundPageClass = pageToFrame[i];
+                    var foundPage = document.querySelector('.' + foundPageClass);
+                    foundPage.classList.add('disabled');
+                }
+
+                pageElement.classList.remove('disabled');
+            } else {
+                var homePage = document.querySelector('.home_page');
+                homePage.classList.remove('disabled');
+            }
+        }
+        isPushState();
 
         // Handle Window Resize
         function wasResized() {
