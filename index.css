@@ -457,6 +457,11 @@ header .header_item_holder {
     background-size: 80%;
 }
 
+.search_holder.youtube .icon {
+    background-image: url(icon/youtube.svg);
+    background-size: 80%;
+}
+
 .search_holder .search_box {
     width: 100%;
     height: 50px;
