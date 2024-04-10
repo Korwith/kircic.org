@@ -47,9 +47,9 @@
                 <span class="button_bar_text">Projects</span>
             </div>
 
-            <div class="button_bar socials_button">
-                <div class="icon social"></div>
-                <span class="button_bar_text">Socials</span>
+            <div class="button_bar search_button">
+                <div class="icon search"></div>
+                <span class="button_bar_text">Search</span>
             </div>
 
             <hr>
@@ -147,7 +147,8 @@
                     <div class="project_grid">
 
                         <div class="project_frame g">
-                            <video src="icon/wordle_preview.mp4" type="video/mp4" autoplay loop muted playsinline></video>
+                            <video src="icon/wordle_preview.mp4" type="video/mp4" autoplay loop muted
+                                playsinline></video>
                             <div class="project_frame_top">
                                 <div class="project_header">
                                     <div class="project_icon wordle"></div>
@@ -167,7 +168,8 @@
                         </div>
 
                         <div class="project_frame g">
-                            <video src="icon/minesweeper_preview.mp4" type="video/mp4" autoplay loop muted playsinline></video>
+                            <video src="icon/minesweeper_preview.mp4" type="video/mp4" autoplay loop muted
+                                playsinline></video>
                             <div class="project_frame_top">
                                 <div class="project_header">
                                     <div class="project_icon minesweeper"></div>
@@ -294,8 +296,38 @@
                 </div>
             </div>
 
-            <div class="socials_page page disabled">
+            <div class="search_page page disabled">
+                <h1>Search</h1>
 
+                <div class="search_holder google">
+                    <div class="icon"></div>
+                    <input class="search_box" placeholder="Search Google..." search="0">
+                    <button class="search_go"></button>
+                </div>
+
+                <div class="search_holder duckduckgo">
+                    <div class="icon"></div>
+                    <input class="search_box" placeholder="Search DuckDuckGo..." search="1">
+                    <button class="search_go"></button>
+                </div>
+
+                <div class="search_holder brave">
+                    <div class="icon"></div>
+                    <input class="search_box" placeholder="Search Brave..." search="2">
+                    <button class="search_go"></button>
+                </div>
+
+                <div class="search_holder bing">
+                    <div class="icon"></div>
+                    <input class="search_box" placeholder="Search Bing..." search="3">
+                    <button class="search_go"></button>
+                </div>
+
+                <div class="search_holder yandex">
+                    <div class="icon"></div>
+                    <input class="search_box" placeholder="Search Yandex..." search="4">
+                    <button class="search_go"></button>
+                </div>
             </div>
         </div>
     </div>
@@ -310,6 +342,7 @@
         var allVideo = document.querySelectorAll('video');
 
         var mobileNow = false;
+        var selectedPage = 'home_page';
 
         // Handle Sidebar
         function moveSidebar() {
@@ -349,16 +382,17 @@
         var classToPage = {
             'home_button': 'home_page',
             'project_button': 'project_page',
-            'socials_button': 'socials_page'
+            'search_button': 'search_page'
         }
 
         function loadSidebarLinks() {
             for (var className in classToPage) {
                 var buttonElement = document.querySelector('.' + className);
-                var buttonPage = document.querySelector('.' + classToPage[className]);
+                var pageName = classToPage[className];
+                var buttonPage = document.querySelector('.' + pageName);
 
-                (function(buttonElement, buttonPage) {
-                    buttonElement.addEventListener('mouseup', function() {
+                (function (buttonElement, buttonPage, pageName) {
+                    buttonElement.addEventListener('mouseup', function () {
                         for (var i = 0; i < allPages.length; i++) {
                             var foundPage = allPages[i];
                             foundPage.classList.add('disabled');
@@ -373,8 +407,9 @@
                         }
 
                         content.scrollTop = 0;
+                        selectedPage = pageName;
                     })
-                })(buttonElement, buttonPage);
+                })(buttonElement, buttonPage, pageName);
             }
         }
         loadSidebarLinks();
@@ -447,6 +482,73 @@
         }
         expandAccounts.addEventListener('mouseup', expand);
 
+        // Key Listener (for search page)
+        var searchIndexToURL = [
+            'google.com/search?q=',
+            'duckduckgo.com/?q=',
+            'brave.com/search?q=',
+            'bing.com/search?q=',
+            'yandex.com/search/?text='
+        ]
+
+        var selectedSearchIndex = 0;
+        var allSearch = document.querySelectorAll('[search]');
+        var lastSearch = allSearch[allSearch.length - 1];
+        var lastSearchIndex = parseInt(lastSearch.getAttribute('search'));
+        var selectedSearchMode = 'all';
+
+        function keyListener(event) {
+            if (event.which == 9) {
+                if (selectedPage == 'search_page') {
+                    event.preventDefault();
+                    var boxToFocus = document.querySelector(`[search="${selectedSearchIndex}"]`);
+                    boxToFocus.focus();
+                    if (selectedSearchIndex < lastSearchIndex) {
+                        selectedSearchIndex++;
+                    } else {
+                        selectedSearchIndex = 0;
+                    }
+                }
+            }
+
+            else if (event.which == 13) {
+                if (document.activeElement) {
+                    var searchIndex = document.activeElement.getAttribute('search');
+
+                    if (searchIndex) {
+                        searchTerm(searchIndex);
+                    }
+                }
+            }
+        }
+        document.addEventListener('keydown', keyListener);
+
+        // Load search button elements
+        var allSearchButtons = document.querySelectorAll('.search_go');
+
+        function loadSearchButtons() {
+            for (var i = 0; i < allSearchButtons.length; i++) {
+                var thisSearchButton = allSearchButtons[i];
+
+                (function (thisSearchButton) {
+                    thisSearchButton.onclick = function () {
+                        var findSearchBox = thisSearchButton.parentElement.querySelector('.search_box');
+                        var searchIndex = findSearchBox.getAttribute('search');
+                        searchTerm(searchIndex);
+                    }
+                })(thisSearchButton);
+            }
+        }
+        loadSearchButtons();
+
+        // Open link with search index
+        function searchTerm(searchIndex) {
+            var searchBox = document.querySelector(`[search="${searchIndex}"]`);
+            if (searchBox.value.length > 0) {
+                window.open(`https://${searchIndexToURL[searchIndex]}${searchBox.value.replaceAll(' ', '+')}`);
+                searchBox.value = '';
+            }
+        }
     </script>
 </body>
 
