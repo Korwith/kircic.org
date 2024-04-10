@@ -447,8 +447,8 @@ header .header_item_holder {
     background-size: 80%;
 }
 
-.search_holder.yahoo .icon {
-    background-image: url(icon/yahoo.svg);
+.search_holder.ecosia .icon {
+    background-image: url(icon/ecosia.svg);
     background-size: 80%;
 }
 
