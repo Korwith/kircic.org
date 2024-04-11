@@ -340,6 +340,12 @@
                     <input class="search_box" placeholder="Search YouTube..." search="6">
                     <button class="search_go"></button>
                 </div>
+
+                <div class="search_holder gh">
+                    <div class="icon"></div>
+                    <input class="search_box" placeholder="Search GitHub..." search="7">
+                    <button class="search_go"></button>
+                </div>
             </div>
         </div>
     </div>
@@ -531,11 +537,12 @@
         var searchIndexToURL = [
             'google.com/search?q=',
             'duckduckgo.com/?q=',
-            'brave.com/search?q=',
+            'search.brave.com/search?q=',
             'bing.com/search?q=',
             'ecosia.org/search?q=',
             'yandex.com/search/?text=',
             'youtube.com/results?search_query=',
+            'github.com/search?q='
         ]
 
         var selectedSearchIndex = 0;

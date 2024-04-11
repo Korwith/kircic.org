@@ -462,6 +462,11 @@ header .header_item_holder {
     background-size: 80%;
 }
 
+.search_holder.gh .icon {
+    background-image: url(icon/github.svg);
+    background-size: 80%;
+}
+
 .search_holder .search_box {
     width: 100%;
     height: 50px;
