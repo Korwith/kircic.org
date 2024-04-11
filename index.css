@@ -452,6 +452,10 @@ header .header_item_holder {
     background-size: 80%;
 }
 
+.search_holder.wiki .icon {
+    background-image: url(icon/wikipedia.svg);
+    background-size: 80%;
+}
 .search_holder.yandex .icon {
     background-image: url(icon/yandex.svg);
     background-size: 80%;
@@ -469,6 +473,26 @@ header .header_item_holder {
 
 .search_holder.reddit .icon {
     background-image: url(icon/reddit.svg);
+    background-size: 80%;
+}
+
+.search_holder.twitter .icon {
+    background-image: url(icon/twitter.png);
+    background-size: 85%;
+}
+
+.search_holder.archive .icon {
+    background-image: url(icon/archive.svg);
+    background-size: 69%;
+}
+
+.search_holder.webster .icon {
+    background-image: url(icon/webster.svg);
+    background-size: 91%;
+}
+
+.search_holder.urban .icon {
+    background-image: url(icon/urban.svg);
     background-size: 80%;
 }
 
