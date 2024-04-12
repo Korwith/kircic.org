@@ -37,20 +37,26 @@
 
             <span class="link_header">Navigation</span>
 
+            <a href="#home" class="navigation"></a>
             <div class="button_bar home_button">
                 <div class="icon home"></div>
                 <span class="button_bar_text">Home</span>
             </div>
+            </a>
 
-            <div class="button_bar project_button">
-                <div class="icon project"></div>
-                <span class="button_bar_text">Projects</span>
-            </div>
+            <a href="#project" class="navigation">
+                <div class="button_bar project_button">
+                    <div class="icon project"></div>
+                    <span class="button_bar_text">Projects</span>
+                </div>
+            </a>
 
-            <div class="button_bar search_button">
-                <div class="icon search"></div>
-                <span class="button_bar_text">Search</span>
-            </div>
+            <a href="#search" class="navigation">
+                <div class="button_bar search_button">
+                    <div class="icon search"></div>
+                    <span class="button_bar_text">Search</span>
+                </div>
+            </a>
 
             <hr>
 
@@ -207,7 +213,6 @@
                                 </a>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -358,7 +363,7 @@
                     <input class="search_box" placeholder="Search Reddit..." search="9">
                     <button class="search_go"></button>
                 </div>
-                
+
                 <div class="search_holder twitter">
                     <div class="icon"></div>
                     <input class="search_box" placeholder="Search Twitter (X)..." search="10">
@@ -459,7 +464,7 @@
                             history.pushState(null, null, beforeHashtag);
                         }
                         history.pushState(null, null, '#' + pageName.split('_')[0]);
-                        
+
                         if (mobileNow) {
                             sidebar.classList.add('closed');
                             content.classList.add('extend');

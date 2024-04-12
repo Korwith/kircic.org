@@ -144,6 +144,10 @@ header .header_item_holder {
     background-color: rgba(0, 0, 0, 0.13);
 }
 
+.navigation {
+    text-decoration: none;
+}
+
 .button_bar .icon {
     aspect-ratio: 1/1;
     height: calc(100% - 10px);
@@ -243,7 +247,7 @@ header .header_item_holder {
     right: 65px;
     top: 77px;
     width: calc(100% - 365px);
-    height: calc(100% - 95px);
+    height: calc(100% - 92px);
     min-height: 50%;
     position: fixed;
     transition: width 0.3s;
@@ -524,6 +528,11 @@ header .header_item_holder {
     background-position: center;
     background-repeat: no-repeat;
     background-size: 80%;
+    transition: border 0.2s;
+}
+
+.search_holder .search_go:hover {
+    border: 1px solid white;
 }
 
 .about_me {
@@ -828,7 +837,7 @@ header .header_item_holder {
     .content {
         right: 5px;
         transition: transform 0.3s;
-        height: calc(100% - 82px);
+        height: calc(100% - 81px);
     }
 
     .content.extend {
