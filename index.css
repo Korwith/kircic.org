@@ -19,7 +19,7 @@ body {
     box-sizing: border-box;
 }
 
-h1 {
+h1, h3 {
     text-align: center;
     color: rgba(255, 255, 255, 0.9);
 }
