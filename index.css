@@ -470,6 +470,11 @@ header .header_item_holder {
     background-size: 80%;
 }
 
+.search_holder.stackoverflow .icon {
+    background-image: url(icon/stackoverflow.svg);
+    background-size: 80%;
+}
+
 .search_holder.gh .icon {
     background-image: url(icon/github.svg);
     background-size: 80%;
