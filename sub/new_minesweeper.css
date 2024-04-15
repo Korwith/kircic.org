@@ -1,0 +1,79 @@
+html, body {
+    background-color: #424242;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+#game_holder {
+    width: 100vh;
+    height: 100vh;
+    left: 50%;
+    transform: translateX(-50%);
+    position: absolute;
+}
+
+#game {
+    width: fit-content;
+    height: fit-content;
+    min-width: 100vh;
+    min-height: 100vh;
+    position: absolute;
+}
+
+#info_overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    pointer-events: none;
+    user-select: none;
+}
+
+#info_overlay.left_data_list {
+    width: fit-content;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.left_data_list span {
+    display: block;
+    width: fit-content;
+    color: white;
+    font-family: Arial;
+    font-weight: 400;
+    margin: 5px;
+    text-shadow: 2px 2px 4px black;
+}
+
+.left_data_list span.bold {
+    font-weight: 700;
+}
+
+#placeholder {
+    display: none;
+}
+
+#ghost_tile {
+    width: 5%;
+    height: 5%;
+    background-color: rgba(255, 255, 255, 0.1);
+    pointer-events: none;
+    position: absolute;
+    z-index: 999;
+}
+
+canvas {
+    height: 512px;
+    width: 512px;
+    position: absolute;
+    background-color: #424242;
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: 'minesweeper';
+    src: url('minesweeper_assets/minesweeper_font.otf') format('otf');
+}

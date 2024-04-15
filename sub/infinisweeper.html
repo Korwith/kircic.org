@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+
+<body>
+
+    <head>
+        <title>Infinisweeper</title>
+        <link href="new_minesweeper.css" rel="stylesheet">
+    </head>
+
+    <body>
+        <div id="game_holder">
+            <div id="game" style="left: 0px; top: 0px">
+            </div>
+        </div>
+        <div id="info_overlay">
+            <div class="left_data_list">
+                <span class="bold">Infinisweeper v1.0.0</span>
+                <span class="tile_count">Tiles Discovered: 0</span>
+                <span class="bomb_count">Bombs: 0</span>
+                <span class="flag_count">Flags: 0</span>
+                <br>
+                <span class="point_count">Points: 0</span>
+            </div>
+        </div>
+
+        <canvas id="placeholder" width="512" height="512"></canvas>
+
+        <script>
+            const game_holder = document.querySelector('#game_holder');
+            const game = document.querySelector('#game');
+            const placeholder = document.querySelector('#placeholder');
+
+            const tile_count = document.querySelector('.tile_count');
+            const flag_count = document.querySelector('.flag_count');
+            const bomb_count = document.querySelector('.bomb_count');
+            const point_count = document.querySelector('.point_count');
+
+            const searchArray = [
+                { x: -1, y: -1 }, { x: 0, y: -1 }, { x: 1, y: -1 },
+                { x: -1, y: 0 }, { x: 1, y: 0 },
+                { x: -1, y: 1 }, { x: 0, y: 1 }, { x: 1, y: 1 }
+            ]
+            const numberToImage = {
+                0: 'minesweeper_assets/0.png',
+                1: 'minesweeper_assets/1.png',
+                2: 'minesweeper_assets/2.png',
+                3: 'minesweeper_assets/3.png',
+                4: 'minesweeper_assets/4.png',
+                5: 'minesweeper_assets/5.png',
+                6: 'minesweeper_assets/6.png',
+                7: 'minesweeper_assets/7.png',
+                8: 'minesweeper_assets/8.png',
+                'bomb': 'minesweeper_assets/mine_red.png',
+                'flag': 'minesweeper_assets/flag.png',
+                'outset': 'minesweeper_assets/outset.png'
+            }
+
+            let currentKeysDown = [];
+            let bombLocations = {};
+            let flagLocations = {};
+            let foundLocations = {};
+            let numberDatabase = {};
+
+            let gameStats = {
+                tileCount: 0,
+                flagCount: 0,
+                bombCount: 0,
+                pointCount: 0,
+            }
+
+            var dragging = false;
+            var currentCanvas;
+
+            function arrayToString(array) {
+                return array.x + ':' + array.y
+            }
+
+            function stringToArray(string) {
+                var splitString = string.split(':');
+
+                return {
+                    x: parseInt(splitString[0]),
+                    y: parseInt(splitString[1])
+                }
+            }
+
+            function assignCanvasFunctions(canvasClone) {
+                canvasClone.addEventListener('mouseenter', function () {
+                    currentCanvas = canvasClone;
+                });
+
+                canvasClone.addEventListener('mouseleave', function () {
+                    currentCanvas = null;
+                });
+
+                canvasClone.addEventListener('mousedown', function (event) {
+                    makeTile(canvasClone, event);
+                });
+            }
+
+            function getTileNumber(canvasClone, tilePosition) {
+                var canvasPosition = {
+                    x: parseInt(canvasClone.getAttribute('x')),
+                    y: parseInt(canvasClone.getAttribute('y'))
+                }
+
+                var newTilePosition = {
+                    x: Math.ceil(tilePosition.x / 512 * 20),
+                    y: Math.ceil(tilePosition.y / 512 * 20)
+                }
+
+                var canvasPositionString = arrayToString(canvasPosition);
+                var newTilePositionString = arrayToString(newTilePosition);
+                var thisBombArray = bombLocations[canvasPositionString];
+
+                if (!thisBombArray.includes(newTilePositionString)) {
+                    var bombCount = 0;
+                    for (var i = 0; i < searchArray.length; i++) {
+                        var thisOffset = searchArray[i];
+                        var searchTilePosition = {
+                            x: newTilePosition.x + thisOffset.x,
+                            y: newTilePosition.y + thisOffset.y
+                        };
+
+                        var canvasPositionOffset = {
+                            x: 0,
+                            y: 0
+                        }
+
+                        if (searchTilePosition.x > 19) {
+                            searchTilePosition.x = 0;
+                            canvasPositionOffset.x = 1;
+                        } else if (searchTilePosition.x < 0) {
+                            searchTilePosition.x = 19;
+                            canvasPositionOffset.x = -1;
+                        }
+
+                        if (searchTilePosition.y > 19) {
+                            searchTilePosition.y = 0;
+                            canvasPositionOffset.y = 1;
+                        } else if (searchTilePosition.y < 0) {
+                            searchTilePosition.y = 19;
+                            canvasPositionOffset.y = -1;
+                        }
+
+                        var newCanvasArray = {
+                            x: canvasPosition.x + canvasPositionOffset.x,
+                            y: canvasPosition.y + canvasPositionOffset.y
+                        }
+                        var newCanvasString = arrayToString(newCanvasArray);
+                        if (!bombLocations[newCanvasString]) {
+                            generateCanvas(newCanvasArray);
+                        }
+
+                        var newBombArray = bombLocations[newCanvasString];
+                        var searchTileString = arrayToString(searchTilePosition);
+                        if (newBombArray.includes(searchTileString)) {
+                            bombCount++;
+                        }
+                    }
+                    return bombCount;
+                } else {
+                    return 'bomb';
+                }
+            }
+
+            function makeTile(canvasClone, event, convertedPos, bypass, flag) {
+                if (!flag && event && (event.which != 1)) { return }
+
+                if (!dragging) {
+                    var ctx = canvasClone.getContext('2d');
+                    var tileWidth = (1 / 20) * 512;
+                    var canvasRect = canvasClone.getBoundingClientRect();
+                    var offsetMouse;
+
+                    if (event) {
+                        offsetMouse = {
+                            x: Math.floor(Math.floor((event.x - canvasRect.x) / tileWidth) * tileWidth),
+                            y: Math.floor(Math.floor((event.y - canvasRect.y) / tileWidth) * tileWidth)
+                        }
+                    } else {
+                        offsetMouse = convertedPos;
+                    }
+
+                    var nonConverted = {
+                        x: Math.ceil(offsetMouse.x / tileWidth),
+                        y: Math.ceil(offsetMouse.y / tileWidth)
+                    }
+
+                    var canvasPosition = {
+                        x: parseInt(canvasClone.getAttribute('x')),
+                        y: parseInt(canvasClone.getAttribute('y'))
+                    }
+                    var canvasString = arrayToString(canvasPosition);
+                    var offsetMouseString = arrayToString(offsetMouse);
+                    var nonConvertedString = arrayToString(nonConverted);
+
+                    function applyTileBackground() {
+                        // tile background (border)
+                        ctx.fillStyle = '#545454';
+                        ctx.fillRect(offsetMouse.x, offsetMouse.y, tileWidth, tileWidth);
+
+                        // tile background
+                        ctx.fillStyle = '#6e6e6e';
+                        ctx.fillRect(offsetMouse.x + 1, offsetMouse.y + 1, tileWidth - 2, tileWidth - 2);
+                    }
+
+                    function removeFlag() {
+                        var flagIndex = flagLocations[canvasString].indexOf(nonConvertedString);
+                        flagLocations[canvasString].splice(flagIndex, 1);
+                        gameStats.flagCount--;
+
+                        ctx.clearRect(offsetMouse.x, offsetMouse.y, tileWidth, tileWidth)
+                    }
+
+                    if (!flag && !foundLocations[canvasString].includes(nonConvertedString)) {
+                        if (flagLocations[canvasString].includes(nonConvertedString)) {
+                            removeFlag();
+                        } else {
+                            foundLocations[canvasString].push(nonConvertedString);
+                            applyTileBackground();
+
+                            // tile image
+                            var tileNumber = getTileNumber(canvasClone, offsetMouse);
+                            numberDatabase[canvasString][nonConvertedString] = tileNumber;
+
+                            if (tileNumber == 'bomb') {
+                                gameStats.bombCount++;
+                            }
+
+                            var tileImage = new Image();
+
+                            if (bypass || (event && tileNumber == 0)) {
+                                startSearch(canvasClone, offsetMouse, event);
+                            }
+
+                            tileImage.src = numberToImage[tileNumber];
+
+                            tileImage.onload = function () {
+                                ctx.drawImage(tileImage, offsetMouse.x, offsetMouse.y, tileWidth, tileWidth);
+                            }
+
+                            gameStats.tileCount++;
+                        }
+                    }
+
+                    else if (flag) {
+                        if (!flagLocations[canvasString].includes(nonConvertedString)) {
+                            if (!foundLocations[canvasString].includes(nonConvertedString)) {
+                                flagLocations[canvasString].push(nonConvertedString);
+
+                                applyTileBackground();
+
+                                var flagImage = new Image();
+                                flagImage.src = numberToImage['flag'];
+
+                                flagImage.onload = function () {
+                                    ctx.drawImage(flagImage, offsetMouse.x, offsetMouse.y, tileWidth, tileWidth);
+                                }
+                                gameStats.flagCount++;
+                            }
+                        } else {
+                            removeFlag();
+                        }
+                    }
+
+                    else {
+                        if (event) {
+                            runFlagCheck(canvasClone, nonConverted);
+                        }
+                    }
+                }
+
+                updateStats();
+            }
+
+            function updateStats() {
+                calculatePoints();
+
+                tile_count.innerHTML = 'Tiles Discovered: ' + gameStats.tileCount;
+                flag_count.innerHTML = 'Flags: ' + gameStats.flagCount;
+                bomb_count.innerHTML = 'Bombs: ' + gameStats.bombCount;
+                point_count.innerHTML = 'Points: ' + gameStats.pointCount;
+            }
+
+            function calculatePoints() {
+                gameStats.pointCount =  (gameStats.tileCount * 2) + (gameStats.bombCount * -20);
+            }
+
+            function runFlagCheck(canvasClone, tilePosition) {
+                var canvasPosition = {
+                    x: parseInt(canvasClone.getAttribute('x')),
+                    y: parseInt(canvasClone.getAttribute('y'))
+                }
+                var canvasString = arrayToString(canvasPosition);
+                var tilePositionString = arrayToString(tilePosition);
+
+                var tileNumber = numberDatabase[canvasString][tilePositionString];
+                var foundFlags = 0;
+
+                let surroundingTiles = [];
+
+                for (var i = 0; i < searchArray.length; i++) {
+                    var thisOffset = searchArray[i];
+                    var checkPosition = {
+                        x: tilePosition.x + thisOffset.x,
+                        y: tilePosition.y + thisOffset.y
+                    }
+
+                    var canvasOffset = {
+                        x: 0,
+                        y: 0
+                    }
+
+                    if (checkPosition.x >= 20) {
+                        checkPosition.x = 0;
+                        canvasOffset.x = 1
+                    } else if (checkPosition.x < 0) {
+                        checkPosition.x = 19;
+                        canvasOffset.x = -1
+                    }
+
+                    if (checkPosition.y >= 20) {
+                        checkPosition.y = 0;
+                        canvasOffset.y = 1;
+                    } else if (checkPosition.y < 0) {
+                        checkPosition.y = 19;
+                        canvasOffset.y = -1;
+                    }
+
+                    var newCanvasPosition = {
+                        x: canvasPosition.x + canvasOffset.x,
+                        y: canvasPosition.y + canvasOffset.y
+                    }
+                    var newCanvasString = arrayToString(newCanvasPosition);
+                    var newTileString = arrayToString(checkPosition);
+
+
+                    if (!flagLocations[newCanvasString]) {
+                        flagLocations[newCanvasString] = [];
+                    }
+                    if (flagLocations[newCanvasString].includes(newTileString)) {
+                        foundFlags++;
+                    } else {
+                        surroundingTiles.push({canvas: newCanvasString, tilePos: newTileString});
+                    }
+                }
+
+                if (foundFlags == tileNumber) {
+                    for (var i = 0; i < surroundingTiles.length; i++) {
+                        var thisTileData = surroundingTiles[i];
+                        var thisCanvasArray = stringToArray(thisTileData.canvas);
+                        var thisPositionArray = stringToArray(thisTileData.tilePos);
+                        var thisCanvasElement = document.querySelector(`canvas[x="${thisCanvasArray.x}"][y="${thisCanvasArray.y}"]`);
+
+                        var thisConvertedPos = {
+                            x: thisPositionArray.x/20*512,
+                            y: thisPositionArray.y/20*512
+                        }
+
+                        makeTile(thisCanvasElement, null, thisConvertedPos, true);
+                    }
+                }
+            }
+
+            function startSearch(canvasClone, tilePosition) {
+                var canvasPosition = {
+                    x: parseInt(canvasClone.getAttribute('x')),
+                    y: parseInt(canvasClone.getAttribute('y'))
+                };
+                var thisCanvasString = arrayToString(canvasPosition);
+
+                var newTilePosition = {
+                    x: Math.ceil(tilePosition.x / 512 * 20),
+                    y: Math.ceil(tilePosition.y / 512 * 20)
+                };
+
+                var checked = {};
+                var zeros = [];
+                var borderingSquares = []; // Array to store bordering squares
+
+                findConnectedZeros(newTilePosition);
+
+                function findConnectedZeros(tilePosition) {
+                    var key = `${tilePosition.x},${tilePosition.y}`;
+
+                    // Check if the tile is already checked or outside the bounds
+                    if (
+                        checked[key] ||
+                        tilePosition.x < 0 || tilePosition.x >= 20 ||
+                        tilePosition.y < 0 || tilePosition.y >= 20
+                    ) {
+                        var newCanvasOffset = {
+                            x: 0,
+                            y: 0
+                        };
+
+                        var newTilePosition = {
+                            x: tilePosition.x / 20 * 512,
+                            y: tilePosition.y / 20 * 512
+                        }
+
+                        if (tilePosition.x >= 20) {
+                            newCanvasOffset.x = 1;
+                            newTilePosition.x = 0;
+                        } else if (tilePosition.x < 0) {
+                            newCanvasOffset.x = -1;
+                            newTilePosition.x = 19 / 20 * 512;
+                        }
+
+                        if (tilePosition.y >= 20) {
+                            newCanvasOffset.y = 1;
+                            newTilePosition.y = 0;
+                        } else if (tilePosition.y < 0) {
+                            newCanvasOffset.y = -1;
+                            newTilePosition.y = 19 / 20 * 512;
+                        }
+
+                        var newCanvasPosition = {
+                            x: canvasPosition.x + newCanvasOffset.x,
+                            y: canvasPosition.y + newCanvasOffset.y
+                        }
+
+                        var newCanvas = document.querySelector(`canvas[x="${newCanvasPosition.x}"][y="${newCanvasPosition.y}"]`);
+                        makeTile(newCanvas, null, newTilePosition, true);
+                        
+                        return;
+                    }
+
+                    checked[key] = true; // Mark the tile as checked
+
+                    var convertedPos = {
+                        x: tilePosition.x / 20 * 512,
+                        y: tilePosition.y / 20 * 512
+                    };
+
+                    var thisTileNumber = getTileNumber(canvasClone, convertedPos);
+
+                    if (thisTileNumber === 0) {
+                        zeros.push(tilePosition);
+
+                        makeTile(canvasClone, null, convertedPos); // Fill the tile if it's a zero
+                        // Recursively find connected zeros in all directions using searchArray
+                        for (var i = 0; i < searchArray.length; i++) {
+                            var offset = searchArray[i];
+                            findConnectedZeros({ x: tilePosition.x + offset.x, y: tilePosition.y + offset.y });
+                        }
+                    } else {
+                        makeTile(canvasClone, null, convertedPos); // Fill the tile if it's a border corner
+                    }
+                }
+            }
+
+            function generateBombs(positionTable) {
+                var positionString = arrayToString(positionTable);
+
+                if (!bombLocations[positionString]) {
+                    var thisBombArray = [];
+
+                    for (var i = 0; i < 65; i++) {
+                        var randomPos = {
+                            x: Math.floor(Math.random() * 20),
+                            y: Math.floor(Math.random() * 20)
+                        }
+
+                        var bombPositionString = arrayToString(randomPos);
+                        if (!thisBombArray.includes(bombPositionString)) {
+                            thisBombArray.push(bombPositionString);
+                        }
+                    }
+
+                    bombLocations[positionString] = thisBombArray;
+                }
+            }
+
+            function generateCanvas(positionTable) {
+                var canvasClone = placeholder.cloneNode(true);
+                canvasClone.removeAttribute('id');
+                canvasClone.setAttribute('x', positionTable.x);
+                canvasClone.setAttribute('y', positionTable.y);
+                canvasClone.style.left = positionTable.x * 512 + 'px';
+                canvasClone.style.top = positionTable.y * 512 + 'px';
+
+                var canvasString = arrayToString(positionTable);
+                foundLocations[canvasString] = [];
+                flagLocations[canvasString] = [];
+                numberDatabase[canvasString] = [];
+
+                generateBombs(positionTable);
+                assignCanvasFunctions(canvasClone);
+                game.appendChild(canvasClone);
+
+                return canvasClone;
+            };
+
+            function handleBoardGen() {
+                // fix
+            }
+
+            var startPosition;
+            function handleMouseDrag(event) {
+                var gameRect = game.getBoundingClientRect();
+
+                if (dragging) {
+                    if (!startPosition) {
+                        startPosition = {
+                            x: event.x - (parseInt(game.style.left) / 100) * gameRect.width,
+                            y: event.y - (parseInt(game.style.top) / 100) * gameRect.width
+                        }
+                    }
+
+                    var offsetPosition = {
+                        x: event.x - startPosition.x,
+                        y: event.y - startPosition.y
+                    }
+
+                    game.style.left = ((offsetPosition.x / gameRect.width) * 100).toFixed(2) + '%';
+                    game.style.top = ((offsetPosition.y / gameRect.width) * 100).toFixed(2) + '%';
+
+                    handleBoardGen();
+                }
+            }
+
+            function handleMouseDown(event) {
+                var gameRect = game.getBoundingClientRect();
+                var gameOffsetPixels = {
+                    x: event.x - gameRect.left,
+                    y: event.y - gameRect.top
+                }
+                var offsetCanvas = {
+                    x: Math.ceil((gameOffsetPixels.x) / 512) - 1,
+                    y: Math.ceil((gameOffsetPixels.y) / 512) - 1
+                }
+
+                if (!currentCanvas && !dragging) {
+                    var newCanvas = generateCanvas(offsetCanvas);
+                    makeTile(newCanvas, event);
+                }
+
+                document.addEventListener('mousemove', handleMouseDrag);
+            }
+
+            function handleMouseUp(event) {
+                document.removeEventListener('mousemove', handleMouseDrag);
+                startPosition = null;
+            }
+
+            function handleKeyDown(event) {
+                if (!currentKeysDown.includes(event.which)) {
+                    currentKeysDown.push(event.which);
+                }
+
+                if (event.which == 16) {
+                    dragging = true;
+                }
+            }
+
+            function handleKeyUp(event) {
+                if (currentKeysDown.includes(event.which)) {
+                    var keyIndex = currentKeysDown.indexOf(event.which);
+                    currentKeysDown.splice(keyIndex, 1);
+                }
+
+                if (event.which == 16) {
+                    dragging = false;
+                }
+            }
+
+            function handleContextMenu(event) {
+                event.preventDefault();
+                makeTile(currentCanvas, event, null, null, true);
+            }
+
+            function start() {
+                generateCanvas({ x: 0, y: 0 });
+                document.addEventListener('mousedown', handleMouseDown);
+                document.addEventListener('mouseup', handleMouseUp);
+                document.addEventListener('keydown', handleKeyDown);
+                document.addEventListener('keyup', handleKeyUp);
+                document.addEventListener('contextmenu', handleContextMenu);
+            }
+            start();
+        </script>
+    </body>
+</body>
