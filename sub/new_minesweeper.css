@@ -26,9 +26,12 @@ html, body {
     position: fixed;
     width: 100%;
     height: 100%;
-    pointer-events: none;
-    pointer-events: none;
     user-select: none;
+    pointer-events: none;
+}
+
+#info_overlay input {
+    pointer-events: all !important;
 }
 
 #info_overlay.left_data_list {
@@ -50,6 +53,14 @@ html, body {
 
 .left_data_list span.bold {
     font-weight: 900;
+}
+
+.left_data_list span.chunk_bounds {
+    display: inline-block;
+}
+
+.left_data_list span.invert {
+    display: inline-block;
 }
 
 #button_holder {
@@ -97,21 +108,20 @@ html, body {
     display: none;
 }
 
-#ghost_tile {
-    width: calc(512px / 20);
-    height: calc(512px / 20);
-    background-color: rgba(255, 255, 255, 0.1);
-    pointer-events: none;
-    position: absolute;
-    z-index: 999;
-}
-
 canvas {
     height: 512px;
     width: 512px;
     position: absolute;
     box-sizing: border-box;
-    transition: filter 1s;
+    transition: filter 1s
+}
+
+canvas.borders {
+    border: 1px solid red;
+}
+
+canvas.invert {
+    filter: invert(1);
 }
 
 @font-face {

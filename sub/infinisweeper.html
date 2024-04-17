@@ -36,6 +36,12 @@
                 <br>
                 <span class="chunk_id">Chunk ID: [0, 0]</span>
                 <span class="tile_id">Tile ID: [0, 0]</span>
+                <br>
+                <span class="chunk_bounds">Display Chunk Bounds:</span>
+                <input type="checkbox" class="chunk_bounds_check">
+                <br>
+                <span class="invert">Invert Colors:</span>
+                <input type="checkbox" class="invert_colors_check">
             </div>
         </div>
 
@@ -59,6 +65,9 @@
             const point_count = document.querySelector('.point_count');
             const chunk_id = document.querySelector('.chunk_id');
             const tile_id = document.querySelector('.tile_id');
+
+            const chunk_bounds_check = document.querySelector('.chunk_bounds_check');
+            const invert_colors_check = document.querySelector('.invert_colors_check');
 
             const searchArray = [
                 { x: -1, y: -1 }, { x: 0, y: -1 }, { x: 1, y: -1 },
@@ -198,6 +207,7 @@
             }
 
             function makeTile(canvasClone, event, convertedPos, bypass, flag) {
+                if (event && event.target && event.target.tagName.toLowerCase() == 'input') { return }
                 if (!flag && event && (event.which != 1)) { return }
 
                 if (!dragging) {
@@ -503,7 +513,7 @@
                 if (!bombLocations[positionString]) {
                     var thisBombArray = [];
 
-                    for (var i = 0; i < 65; i++) {
+                    for (var i = 0; i < 60; i++) {
                         var randomPos = {
                             x: Math.floor(Math.random() * 20),
                             y: Math.floor(Math.random() * 20)
@@ -585,7 +595,7 @@
 
             function findChunkID(event) {
                 var gameRect = game.getBoundingClientRect();
-                var tileWidth = (1/20)*512;
+                var tileWidth = (1 / 20) * 512;
 
                 var gameOffsetPixels = {
                     x: event.x - gameRect.left,
@@ -596,11 +606,11 @@
                     y: Math.ceil((gameOffsetPixels.y) / 512) - 1
                 }
                 var offsetTile = {
-                    x: Math.floor((gameOffsetPixels.x - (offsetCanvas.x*512))/tileWidth),
-                    y: Math.floor((gameOffsetPixels.x - (offsetCanvas.x*512))/tileWidth)
+                    x: Math.floor((gameOffsetPixels.x - (offsetCanvas.x * 512)) / tileWidth),
+                    y: Math.floor((gameOffsetPixels.y - (offsetCanvas.y * 512)) / tileWidth)
                 }
 
-                return {canvasPos: offsetCanvas, tilePos: offsetTile};
+                return { canvasPos: offsetCanvas, tilePos: offsetTile };
             }
 
             function handleMouseUp(event) {
@@ -670,6 +680,28 @@
                 }
             }
 
+            function handleCanvasClasses(value, className) {
+                var allCanvas = document.querySelectorAll('canvas');
+
+                for (var i = 0; i < allCanvas.length; i++) {
+                    var thisCanvas = allCanvas[i];
+
+                    if (value) {
+                        thisCanvas.classList.add(className);
+                    } else {
+                        thisCanvas.classList.remove(className);
+                    }
+                }
+            }
+
+            function handleChunkBounds() {
+                handleCanvasClasses(chunk_bounds_check.checked, 'borders');
+            }
+
+            function handleInvertColors() {
+                handleCanvasClasses(invert_colors_check.checked, 'invert');
+            }
+
             function start() {
                 generateCanvas({ x: 0, y: 0 });
                 createStartingStreak();
@@ -680,6 +712,8 @@
                 document.addEventListener('contextmenu', handleContextMenu);
                 document.addEventListener('mousemove', handleMouseDrag);
                 flag_button.addEventListener('mouseup', handleFlagMode);
+                chunk_bounds_check.addEventListener('change', handleChunkBounds);
+                invert_colors_check.addEventListener('change', handleInvertColors);
             }
             start();
         </script>
