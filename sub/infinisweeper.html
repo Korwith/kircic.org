@@ -5,6 +5,18 @@
     <head>
         <title>Infinisweeper</title>
         <link href="new_minesweeper.css" rel="stylesheet">
+        <meta charset="UTF-8">
+        <meta name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Infinisweeper">
+        <meta property="og:description" content="An infinite minesweeper sandbox.">
+        <meta property="og:image" content="https://www.kircic.org/sub/minesweeper_assets/flag.png" />
+        <meta property="og:url" content="https://www.kircic.org/sub/infinisweeper.html">
+        <meta name="description" content="An infinite minesweeper sandbox.">
+        <meta name="keywords" content="minesweeper, infinite, infinisweeper">
+        <meta name="author" content="kircic.org">
+        <meta name="robots" content="index, follow">
     </head>
 
     <body>
@@ -12,15 +24,24 @@
             <div id="game" style="left: 0px; top: 0px">
             </div>
         </div>
+
         <div id="info_overlay">
             <div class="left_data_list">
-                <span class="bold">Infinisweeper v1.0.0</span>
+                <span class="bold">Infinisweeper v1.0.1</span>
+                <span class="point_count">Points: 0</span>
+                <br>
                 <span class="tile_count">Tiles Discovered: 0</span>
                 <span class="bomb_count">Bombs: 0</span>
                 <span class="flag_count">Flags: 0</span>
                 <br>
-                <span class="point_count">Points: 0</span>
+                <span class="chunk_id">Chunk ID: [0, 0]</span>
+                <span class="tile_id">Tile ID: [0, 0]</span>
             </div>
+        </div>
+
+        <div id="button_holder">
+            <button class="flagging"></button>
+            <button class="movement"></button>
         </div>
 
         <canvas id="placeholder" width="512" height="512"></canvas>
@@ -29,11 +50,15 @@
             const game_holder = document.querySelector('#game_holder');
             const game = document.querySelector('#game');
             const placeholder = document.querySelector('#placeholder');
+            const flag_button = document.querySelector('button.flagging');
+            const move_button = document.querySelector('button.movement');
 
             const tile_count = document.querySelector('.tile_count');
             const flag_count = document.querySelector('.flag_count');
             const bomb_count = document.querySelector('.bomb_count');
             const point_count = document.querySelector('.point_count');
+            const chunk_id = document.querySelector('.chunk_id');
+            const tile_id = document.querySelector('.tile_id');
 
             const searchArray = [
                 { x: -1, y: -1 }, { x: 0, y: -1 }, { x: 1, y: -1 },
@@ -68,7 +93,10 @@
                 pointCount: 0,
             }
 
+            var isMouseDown = false;
             var dragging = false;
+            var dragLock = false;
+            var flagging = false;
             var currentCanvas;
 
             function arrayToString(array) {
@@ -98,15 +126,20 @@
                 });
             }
 
-            function getTileNumber(canvasClone, tilePosition) {
+            function getTileNumber(canvasClone, tilePosition, normalTilePosition) {
                 var canvasPosition = {
                     x: parseInt(canvasClone.getAttribute('x')),
                     y: parseInt(canvasClone.getAttribute('y'))
                 }
 
-                var newTilePosition = {
-                    x: Math.ceil(tilePosition.x / 512 * 20),
-                    y: Math.ceil(tilePosition.y / 512 * 20)
+                var newTilePosition;
+                if (!normalTilePosition) {
+                    newTilePosition = {
+                        x: Math.ceil(tilePosition.x / 512 * 20),
+                        y: Math.ceil(tilePosition.y / 512 * 20)
+                    }
+                } else {
+                    newTilePosition = normalTilePosition;
                 }
 
                 var canvasPositionString = arrayToString(canvasPosition);
@@ -194,6 +227,7 @@
                     var canvasString = arrayToString(canvasPosition);
                     var offsetMouseString = arrayToString(offsetMouse);
                     var nonConvertedString = arrayToString(nonConverted);
+                    var madeFlag = false;
 
                     function applyTileBackground() {
                         // tile background (border)
@@ -205,6 +239,26 @@
                         ctx.fillRect(offsetMouse.x + 1, offsetMouse.y + 1, tileWidth - 2, tileWidth - 2);
                     }
 
+                    function makeFlag() {
+                        if (!flagLocations[canvasString].includes(nonConvertedString)) {
+                            if (!foundLocations[canvasString].includes(nonConvertedString)) {
+                                flagLocations[canvasString].push(nonConvertedString);
+
+                                applyTileBackground();
+
+                                var flagImage = new Image();
+                                flagImage.src = numberToImage['flag'];
+
+                                flagImage.onload = function () {
+                                    ctx.drawImage(flagImage, offsetMouse.x, offsetMouse.y, tileWidth, tileWidth);
+                                }
+                                gameStats.flagCount++;
+                            }
+                        } else {
+                            removeFlag();
+                        }
+                    }
+
                     function removeFlag() {
                         var flagIndex = flagLocations[canvasString].indexOf(nonConvertedString);
                         flagLocations[canvasString].splice(flagIndex, 1);
@@ -213,7 +267,7 @@
                         ctx.clearRect(offsetMouse.x, offsetMouse.y, tileWidth, tileWidth)
                     }
 
-                    if (!flag && !foundLocations[canvasString].includes(nonConvertedString)) {
+                    function makeNumber() {
                         if (flagLocations[canvasString].includes(nonConvertedString)) {
                             removeFlag();
                         } else {
@@ -244,34 +298,26 @@
                         }
                     }
 
-                    else if (flag) {
-                        if (!flagLocations[canvasString].includes(nonConvertedString)) {
-                            if (!foundLocations[canvasString].includes(nonConvertedString)) {
-                                flagLocations[canvasString].push(nonConvertedString);
-
-                                applyTileBackground();
-
-                                var flagImage = new Image();
-                                flagImage.src = numberToImage['flag'];
-
-                                flagImage.onload = function () {
-                                    ctx.drawImage(flagImage, offsetMouse.x, offsetMouse.y, tileWidth, tileWidth);
-                                }
-                                gameStats.flagCount++;
-                            }
-                        } else {
-                            removeFlag();
+                    if (event) {
+                        if (foundLocations[canvasString].includes(nonConvertedString)) {
+                            runFlagCheck(currentCanvas, nonConverted);
+                        } else if (flagging) {
+                            makeFlag();
+                            madeFlag = true;
                         }
                     }
 
-                    else {
-                        if (event) {
-                            runFlagCheck(canvasClone, nonConverted);
-                        }
+                    if (flag) {
+                        makeFlag();
+                        madeFlag = true;
                     }
+
+                    if (!flag && !madeFlag && !foundLocations[canvasString].includes(nonConvertedString)) {
+                        makeNumber();
+                    }
+
+                    updateStats();
                 }
-
-                updateStats();
             }
 
             function updateStats() {
@@ -284,7 +330,7 @@
             }
 
             function calculatePoints() {
-                gameStats.pointCount =  (gameStats.tileCount * 2) + (gameStats.bombCount * -20);
+                gameStats.pointCount = (gameStats.tileCount * 2) + (gameStats.bombCount * -20);
             }
 
             function runFlagCheck(canvasClone, tilePosition) {
@@ -342,7 +388,7 @@
                     if (flagLocations[newCanvasString].includes(newTileString)) {
                         foundFlags++;
                     } else {
-                        surroundingTiles.push({canvas: newCanvasString, tilePos: newTileString});
+                        surroundingTiles.push({ canvas: newCanvasString, tilePos: newTileString });
                     }
                 }
 
@@ -354,8 +400,8 @@
                         var thisCanvasElement = document.querySelector(`canvas[x="${thisCanvasArray.x}"][y="${thisCanvasArray.y}"]`);
 
                         var thisConvertedPos = {
-                            x: thisPositionArray.x/20*512,
-                            y: thisPositionArray.y/20*512
+                            x: thisPositionArray.x / 20 * 512,
+                            y: thisPositionArray.y / 20 * 512
                         }
 
                         makeTile(thisCanvasElement, null, thisConvertedPos, true);
@@ -423,7 +469,7 @@
 
                         var newCanvas = document.querySelector(`canvas[x="${newCanvasPosition.x}"][y="${newCanvasPosition.y}"]`);
                         makeTile(newCanvas, null, newTilePosition, true);
-                        
+
                         return;
                     }
 
@@ -493,15 +539,12 @@
                 return canvasClone;
             };
 
-            function handleBoardGen() {
-                // fix
-            }
-
             var startPosition;
+            var ghostTilePosition;
             function handleMouseDrag(event) {
                 var gameRect = game.getBoundingClientRect();
 
-                if (dragging) {
+                if (dragging && isMouseDown) {
                     if (!startPosition) {
                         startPosition = {
                             x: event.x - (parseInt(game.style.left) / 100) * gameRect.width,
@@ -516,13 +559,34 @@
 
                     game.style.left = ((offsetPosition.x / gameRect.width) * 100).toFixed(2) + '%';
                     game.style.top = ((offsetPosition.y / gameRect.width) * 100).toFixed(2) + '%';
-
-                    handleBoardGen();
                 }
+
+                updateDisplayPosition(event);
+            }
+
+            function updateDisplayPosition(event) {
+                var positionData = findChunkID(event);
+                var canvasPos = positionData.canvasPos;
+                var tilePos = positionData.tilePos;
+
+                chunk_id.innerHTML = `Chunk ID: [${canvasPos.x}, ${canvasPos.y}]`;
+                tile_id.innerHTML = `Tile ID: [${tilePos.x}, ${tilePos.y}]`
             }
 
             function handleMouseDown(event) {
+                if (!currentCanvas && !dragging) {
+                    var offsetCanvas = findChunkID(event).canvasPos;
+                    var newCanvas = generateCanvas(offsetCanvas);
+                    makeTile(newCanvas, event);
+                }
+
+                isMouseDown = true;
+            }
+
+            function findChunkID(event) {
                 var gameRect = game.getBoundingClientRect();
+                var tileWidth = (1/20)*512;
+
                 var gameOffsetPixels = {
                     x: event.x - gameRect.left,
                     y: event.y - gameRect.top
@@ -531,17 +595,16 @@
                     x: Math.ceil((gameOffsetPixels.x) / 512) - 1,
                     y: Math.ceil((gameOffsetPixels.y) / 512) - 1
                 }
-
-                if (!currentCanvas && !dragging) {
-                    var newCanvas = generateCanvas(offsetCanvas);
-                    makeTile(newCanvas, event);
+                var offsetTile = {
+                    x: Math.floor((gameOffsetPixels.x - (offsetCanvas.x*512))/tileWidth),
+                    y: Math.floor((gameOffsetPixels.x - (offsetCanvas.x*512))/tileWidth)
                 }
 
-                document.addEventListener('mousemove', handleMouseDrag);
+                return {canvasPos: offsetCanvas, tilePos: offsetTile};
             }
 
             function handleMouseUp(event) {
-                document.removeEventListener('mousemove', handleMouseDrag);
+                isMouseDown = false;
                 startPosition = null;
             }
 
@@ -552,6 +615,8 @@
 
                 if (event.which == 16) {
                     dragging = true;
+                } else if (event.which == 70) {
+                    handleFlagMode();
                 }
             }
 
@@ -571,13 +636,50 @@
                 makeTile(currentCanvas, event, null, null, true);
             }
 
+            function createStartingStreak() {
+                function tryStreak() {
+                    var randomTilePosition = {
+                        x: Math.floor(Math.random() * 20),
+                        y: Math.floor(Math.random() * 20)
+                    }
+                    var convertedTilePosition = {
+                        x: randomTilePosition.x / 20 * 512,
+                        y: randomTilePosition.y / 20 * 512
+                    }
+
+                    var zeroCanvas = document.querySelector('canvas[x="0"][y="0"]');
+                    var thisTileNumber = getTileNumber(zeroCanvas, null, randomTilePosition);
+
+                    if (thisTileNumber == 0) {
+                        makeTile(zeroCanvas, null, convertedTilePosition, true)
+                    } else {
+                        tryStreak();
+                    }
+                }
+
+                tryStreak();
+            }
+
+            function handleFlagMode() {
+                flagging = !flagging;
+
+                if (flagging) {
+                    flag_button.classList.add('active');
+                } else {
+                    flag_button.classList.remove('active');
+                }
+            }
+
             function start() {
                 generateCanvas({ x: 0, y: 0 });
+                createStartingStreak();
                 document.addEventListener('mousedown', handleMouseDown);
                 document.addEventListener('mouseup', handleMouseUp);
                 document.addEventListener('keydown', handleKeyDown);
                 document.addEventListener('keyup', handleKeyUp);
                 document.addEventListener('contextmenu', handleContextMenu);
+                document.addEventListener('mousemove', handleMouseDrag);
+                flag_button.addEventListener('mouseup', handleFlagMode);
             }
             start();
         </script>

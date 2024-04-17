@@ -1,5 +1,5 @@
 html, body {
-    background-color: #424242;
+    background-color: #101010;
     margin: 0;
     width: 100%;
     height: 100%;
@@ -42,14 +42,55 @@ html, body {
     display: block;
     width: fit-content;
     color: white;
-    font-family: Arial;
-    font-weight: 400;
+    font-family: "Khula", Arial;
+    font-weight: 700;
     margin: 5px;
-    text-shadow: 2px 2px 4px black;
+    text-shadow: 2px 2px 4px black
 }
 
 .left_data_list span.bold {
-    font-weight: 700;
+    font-weight: 900;
+}
+
+#button_holder {
+    height: 75px;
+    width: fit-content;
+    position: fixed;
+    bottom: 5px;
+    left: 5px;
+    display: flex;
+    flex-direction: row;
+}
+
+#button_holder button {
+    aspect-ratio: 1/1;
+    height: calc(100% - 10px);
+    box-sizing: border-box;
+    display: block;
+    position: relative;
+    cursor: pointer;
+    border: 0;
+    border-radius: 12px;
+    margin: 5px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-width: 5px;
+    border-style: solid;
+    transition: filter 0.7s;
+}
+
+#button_holder button.flagging {
+    background-image: url(minesweeper_assets/flag.png);
+    border-color: #a30f0f;
+}
+
+#button_holder button.flagging.active {
+    filter: hue-rotate(130deg);
+}
+
+#button_holder button.movement {
+    display: none;
 }
 
 #placeholder {
@@ -57,8 +98,8 @@ html, body {
 }
 
 #ghost_tile {
-    width: 5%;
-    height: 5%;
+    width: calc(512px / 20);
+    height: calc(512px / 20);
     background-color: rgba(255, 255, 255, 0.1);
     pointer-events: none;
     position: absolute;
@@ -69,8 +110,8 @@ canvas {
     height: 512px;
     width: 512px;
     position: absolute;
-    background-color: #424242;
     box-sizing: border-box;
+    transition: filter 1s;
 }
 
 @font-face {
