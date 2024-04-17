@@ -27,7 +27,7 @@
 
         <div id="info_overlay">
             <div class="left_data_list">
-                <span class="bold">Infinisweeper v1.0.2</span>
+                <span class="bold">Infinisweeper v1.1.0</span>
                 <span class="point_count">Points: 0</span>
                 <br>
                 <span class="tile_count">Tiles Discovered: 0</span>
@@ -538,9 +538,11 @@
                 canvasClone.style.top = positionTable.y * 512 + 'px';
 
                 var canvasString = arrayToString(positionTable);
-                foundLocations[canvasString] = [];
-                flagLocations[canvasString] = [];
-                numberDatabase[canvasString] = [];
+                if (!foundLocations[canvasString]) {
+                    foundLocations[canvasString] = [];
+                    flagLocations[canvasString] = [];
+                    numberDatabase[canvasString] = [];
+                }
 
                 generateBombs(positionTable);
                 assignCanvasFunctions(canvasClone);
@@ -702,15 +704,124 @@
                 handleCanvasClasses(invert_colors_check.checked, 'invert');
             }
 
+            function JSONify(table) {
+                var jsonData = JSON.stringify(table);
+                return jsonData;
+            }
+
+            function Tableify(json) {
+                var tableData = JSON.parse(json);
+                return tableData;
+            }
+
+            function convertToNestedObject(obj) {
+                const result = {};
+                for (const key in obj) {
+                    result[key] = {};
+                    for (const nestedKey in obj[key]) {
+                        result[key][nestedKey] = obj[key][nestedKey];
+                    }
+                }
+                return result;
+            }
+
+            function saveData() {
+                var data = {
+                    saveFoundLocations: (foundLocations),
+                    saveBombLocations: (bombLocations),
+                    saveFlagLocations: (flagLocations),
+                    saveNumberDatabase: convertToNestedObject(numberDatabase),
+                    saveGameStats: (gameStats)
+                }
+
+                localStorage.setItem('saveData', JSONify(data));
+            }
+
+            function loadData() {
+                var tileWidth = (1 / 20) * 512;
+                var data = Tableify(localStorage.getItem('saveData'));
+                var saveNumberDatabase = data.saveNumberDatabase;
+                var saveFlags = data.saveFlagLocations;
+
+                for (var i in saveNumberDatabase) {
+                    var thisCanvasArray = stringToArray(i);
+                    var thisCanvas = generateCanvas(thisCanvasArray);
+                    var ctx = thisCanvas.getContext('2d');
+
+                    for (var j in saveNumberDatabase[i]) {
+                        var thisPositionArray = stringToArray(j);
+                        var thisTileNumber = saveNumberDatabase[i][j];
+
+                        ctx.fillStyle = 'gray';
+                        ctx.fillRect(
+                            thisPositionArray.x * tileWidth,
+                            thisPositionArray.y * tileWidth,
+                            tileWidth,
+                            tileWidth
+                        );
+
+                        (function (ctx, thisPositionArray, thisTileNumber) {
+                            var newImage = new Image();
+                            newImage.src = numberToImage[thisTileNumber];
+
+                            newImage.onload = function () {
+                                ctx.drawImage(
+                                    newImage,
+                                    thisPositionArray.x * tileWidth,
+                                    thisPositionArray.y * tileWidth,
+                                    tileWidth,
+                                    tileWidth
+                                );
+                            };
+                        })(ctx, thisPositionArray, thisTileNumber);
+                    }
+                }
+
+                for (var i in saveFlags) {
+                    var thisChunkData = saveFlags[i];
+                    var thisChunkArray = stringToArray(i);
+                    var thisCanvas = document.querySelector(`canvas[x="${thisChunkArray.x}"][y="${thisChunkArray.y}"]`);
+                    
+                    for (var j = 0; j < thisChunkData.length; j++) {
+                        var thisFlagPosition = thisChunkData[j];
+                        var thisFlagArray = stringToArray(thisFlagPosition);
+
+                        var convertedPos = {
+                            x: thisFlagArray.x * tileWidth,
+                            y: thisFlagArray.y * tileWidth
+                        }
+
+                        makeTile(thisCanvas, null, convertedPos, false, true)
+                    }
+                }
+
+                bombLocations = data.saveBombLocations;
+                foundLocations = data.saveFoundLocations;
+                flagLocations = data.saveFlagLocations;
+                gameStats = data.saveGameStats;
+                numberDatabase = data.saveNumberDatabase;
+                updateStats();
+            }
+
+            function windowClosed() {
+                saveData();
+            }
+
             function start() {
-                generateCanvas({ x: 0, y: 0 });
-                createStartingStreak();
+                if (!localStorage.getItem('saveData')) {
+                    generateCanvas({ x: 0, y: 0 });
+                    createStartingStreak();
+                } else {
+                    loadData();
+                }
+
                 document.addEventListener('mousedown', handleMouseDown);
                 document.addEventListener('mouseup', handleMouseUp);
                 document.addEventListener('keydown', handleKeyDown);
                 document.addEventListener('keyup', handleKeyUp);
                 document.addEventListener('contextmenu', handleContextMenu);
                 document.addEventListener('mousemove', handleMouseDrag);
+                window.addEventListener('beforeunload', windowClosed);
                 flag_button.addEventListener('mouseup', handleFlagMode);
                 chunk_bounds_check.addEventListener('change', handleChunkBounds);
                 invert_colors_check.addEventListener('change', handleInvertColors);
