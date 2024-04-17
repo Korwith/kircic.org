@@ -764,6 +764,11 @@ header .header_item_holder {
     background-image: url(icon/css.svg);
 }
 
+.cert1 {
+    background-size: 115% !important;
+    background-image: url(icon/certification1.svg);
+}
+
 .discord {
     background-image: url(icon/discord.svg);
 }
