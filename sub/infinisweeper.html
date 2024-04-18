@@ -23,12 +23,13 @@
     <body>
         <div id="game_holder">
             <div id="game" style="left: 0px; top: 0px">
+                <div id="ghost_tile" style="left: 999%; top: 999%"></div>
             </div>
         </div>
 
         <div id="info_overlay">
             <div class="left_data_list">
-                <span class="bold">Infinisweeper v1.1.2</span>
+                <span class="bold">Infinisweeper v1.1.3</span>
                 <span class="point_count">Points: 0</span>
                 <br>
                 <span class="tile_count">Tiles Discovered: 0</span>
@@ -67,6 +68,8 @@
             const game_holder = document.querySelector('#game_holder');
             const game = document.querySelector('#game');
             const placeholder = document.querySelector('#placeholder');
+            const ghost_tile = document.querySelector('#ghost_tile');
+
             const flag_button = document.querySelector('button.flagging');
             const move_button = document.querySelector('button.movement');
             const center_button = document.querySelector('button.center');
@@ -594,9 +597,13 @@
                 var positionData = findChunkID(event);
                 var canvasPos = positionData.canvasPos;
                 var tilePos = positionData.tilePos;
+                var tileWidth = (1/20) * 512;
 
                 chunk_id.innerHTML = `Chunk ID: [${canvasPos.x}, ${canvasPos.y}]`;
                 tile_id.innerHTML = `Tile ID: [${tilePos.x}, ${tilePos.y}]`
+
+                ghost_tile.style.left = canvasPos.x*512 + (tileWidth * tilePos.x) + 'px';
+                ghost_tile.style.top = canvasPos.y*512 + (tileWidth * tilePos.y) + 'px';
             }
 
             function handleMouseDown(event) {

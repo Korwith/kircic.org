@@ -214,6 +214,15 @@ canvas.invert {
     filter: invert(1);
 }
 
+#ghost_tile {
+    position: absolute;
+    width: calc(512px / 20);
+    height: calc(512px / 20);
+    background-color: rgba(255, 255, 255, 0.1);
+    pointer-events: none;
+    z-index: 999;
+}
+
 @font-face {
     font-family: 'minesweeper';
     src: url('minesweeper_assets/minesweeper_font.otf') format('otf');
