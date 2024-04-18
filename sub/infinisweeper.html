@@ -11,7 +11,7 @@
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Infinisweeper">
         <meta property="og:description" content="An infinite minesweeper sandbox.">
-        <meta property="og:image" content="https://www.kircic.org/sub/minesweeper_assets/flag.png" />
+        <meta property="og:image" content="https://www.kircic.org/sub/minesweeper_assets/mine_red.png" />
         <meta property="og:url" content="https://www.kircic.org/sub/infinisweeper.html">
         <meta name="description" content="An infinite minesweeper sandbox.">
         <meta name="keywords" content="minesweeper, infinite, infinisweeper">
@@ -27,7 +27,7 @@
 
         <div id="info_overlay">
             <div class="left_data_list">
-                <span class="bold">Infinisweeper v1.1.0</span>
+                <span class="bold">Infinisweeper v1.1.1</span>
                 <span class="point_count">Points: 0</span>
                 <br>
                 <span class="tile_count">Tiles Discovered: 0</span>
@@ -48,6 +48,8 @@
         <div id="button_holder">
             <button class="flagging"></button>
             <button class="movement"></button>
+            <button class="center"></button>
+            <button class="reset"></button>
         </div>
 
         <canvas id="placeholder" width="512" height="512"></canvas>
@@ -58,6 +60,8 @@
             const placeholder = document.querySelector('#placeholder');
             const flag_button = document.querySelector('button.flagging');
             const move_button = document.querySelector('button.movement');
+            const center_button = document.querySelector('button.center');
+            const reset_button = document.querySelector('button.reset');
 
             const tile_count = document.querySelector('.tile_count');
             const flag_count = document.querySelector('.flag_count');
@@ -207,10 +211,11 @@
             }
 
             function makeTile(canvasClone, event, convertedPos, bypass, flag) {
-                if (event && event.target && event.target.tagName.toLowerCase() == 'input') { return }
+                const classBlacklist = ['input', 'button']
+                if (event && event.target && classBlacklist.includes(event.target.tagName.toLowerCase())) { return }
                 if (!flag && event && (event.which != 1)) { return }
 
-                if (!dragging) {
+                if (!dragging && !dragLock) {
                     var ctx = canvasClone.getContext('2d');
                     var tileWidth = (1 / 20) * 512;
                     var canvasRect = canvasClone.getBoundingClientRect();
@@ -552,11 +557,10 @@
             };
 
             var startPosition;
-            var ghostTilePosition;
             function handleMouseDrag(event) {
                 var gameRect = game.getBoundingClientRect();
 
-                if (dragging && isMouseDown) {
+                if (!game.classList.contains('tween') && (dragLock || (dragging && isMouseDown))) {
                     if (!startPosition) {
                         startPosition = {
                             x: event.x - (parseInt(game.style.left) / 100) * gameRect.width,
@@ -629,6 +633,8 @@
                     dragging = true;
                 } else if (event.which == 70) {
                     handleFlagMode();
+                } else if (event.which == 81) {
+                    handleMoveMode();
                 }
             }
 
@@ -682,6 +688,59 @@
                 }
             }
 
+            function handleMoveMode() {
+                startPosition = null;
+                dragLock = !dragLock;
+
+                if (dragLock) {
+                    move_button.classList.add('active');
+                } else {
+                    move_button.classList.remove('active');
+                }
+            }
+
+            function shiftToCenter() {
+                game.classList.add('tween');
+                game.style.left = '0%';
+                game.style.top = '0%';
+
+                setTimeout(function () {
+                    game.classList.remove('tween');
+                }, 1000)
+            }
+
+            function handleGameReset() {
+                var choiceResult = confirm('Reset game? All data will be lost.', 'Yes')
+                if (choiceResult == true) {
+                    currentKeysDown = [];
+                    bombLocations = {};
+                    flagLocations = {};
+                    foundLocations = {};
+                    numberDatabase = {};
+
+                    gameStats = {
+                        tileCount: 0,
+                        flagCount: 0,
+                        bombCount: 0,
+                        pointCount: 0
+                    }
+
+                    currentCanvas = null;
+
+                    var allCanvas = document.querySelectorAll('canvas');
+                    for (var i = 0; i < allCanvas.length; i++) {
+                        var thisCanvas = allCanvas[i];
+                        if (!thisCanvas.id) {
+                            thisCanvas.remove();
+                        }
+                    }
+
+                    localStorage.clear();
+                    generateCanvas({ x: 0, y: 0 });
+                    createStartingStreak();
+                }
+            }
+
             function handleCanvasClasses(value, className) {
                 var allCanvas = document.querySelectorAll('canvas');
 
@@ -725,13 +784,23 @@
                 return result;
             }
 
+            function getCurrentPosition() {
+                var gamePosition = {
+                    x: parseInt(game.style.left),
+                    y: parseInt(game.style.top)
+                }
+
+                return gamePosition;
+            }
+
             function saveData() {
                 var data = {
-                    saveFoundLocations: (foundLocations),
-                    saveBombLocations: (bombLocations),
-                    saveFlagLocations: (flagLocations),
+                    saveFoundLocations: foundLocations,
+                    saveBombLocations: bombLocations,
+                    saveFlagLocations: flagLocations,
                     saveNumberDatabase: convertToNestedObject(numberDatabase),
-                    saveGameStats: (gameStats)
+                    saveGameStats: gameStats,
+                    saveGamePosition: getCurrentPosition()
                 }
 
                 localStorage.setItem('saveData', JSONify(data));
@@ -742,6 +811,11 @@
                 var data = Tableify(localStorage.getItem('saveData'));
                 var saveNumberDatabase = data.saveNumberDatabase;
                 var saveFlags = data.saveFlagLocations;
+
+                if (data.saveGamePosition) {
+                    game.style.left = data.saveGamePosition.x + '%';
+                    game.style.top = data.saveGamePosition.y + '%';
+                }
 
                 for (var i in saveNumberDatabase) {
                     var thisCanvasArray = stringToArray(i);
@@ -781,7 +855,8 @@
                     var thisChunkData = saveFlags[i];
                     var thisChunkArray = stringToArray(i);
                     var thisCanvas = document.querySelector(`canvas[x="${thisChunkArray.x}"][y="${thisChunkArray.y}"]`);
-                    
+                    var ctx = thisCanvas.getContext('2d');
+
                     for (var j = 0; j < thisChunkData.length; j++) {
                         var thisFlagPosition = thisChunkData[j];
                         var thisFlagArray = stringToArray(thisFlagPosition);
@@ -791,7 +866,17 @@
                             y: thisFlagArray.y * tileWidth
                         }
 
-                        makeTile(thisCanvas, null, convertedPos, false, true)
+                        ctx.fillStyle = 'pink';
+                        ctx.fillRect(convertedPos.x, convertedPos.y, tileWidth, tileWidth);
+
+                        (function (ctx, convertedPos) {
+                            var flagImage = new Image();
+                            flagImage.src = numberToImage['flag'];
+
+                            flagImage.onload = function () {
+                                ctx.drawImage(flagImage, convertedPos.x, convertedPos.y, tileWidth, tileWidth);
+                            }
+                        })(ctx, convertedPos);
                     }
                 }
 
@@ -808,7 +893,8 @@
             }
 
             function start() {
-                if (!localStorage.getItem('saveData')) {
+                var storage = localStorage.getItem('saveData');
+                if (!storage) {
                     generateCanvas({ x: 0, y: 0 });
                     createStartingStreak();
                 } else {
@@ -823,6 +909,9 @@
                 document.addEventListener('mousemove', handleMouseDrag);
                 window.addEventListener('beforeunload', windowClosed);
                 flag_button.addEventListener('mouseup', handleFlagMode);
+                move_button.addEventListener('mouseup', handleMoveMode);
+                center_button.addEventListener('mouseup', shiftToCenter);
+                reset_button.addEventListener('mouseup', handleGameReset);
                 chunk_bounds_check.addEventListener('change', handleChunkBounds);
                 invert_colors_check.addEventListener('change', handleInvertColors);
             }

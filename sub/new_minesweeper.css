@@ -22,6 +22,10 @@ html, body {
     position: absolute;
 }
 
+#game.tween {
+    transition: left 1s, top 1s;
+}
+
 #info_overlay {
     position: fixed;
     width: 100%;
@@ -65,7 +69,7 @@ html, body {
 
 #button_holder {
     height: 75px;
-    width: fit-content;
+    width: 100%;
     position: fixed;
     bottom: 5px;
     left: 5px;
@@ -88,7 +92,7 @@ html, body {
     background-repeat: no-repeat;
     border-width: 5px;
     border-style: solid;
-    transition: filter 0.7s;
+    transition: filter 0.7s, border-color 0.7s;
 }
 
 #button_holder button.flagging {
@@ -101,7 +105,66 @@ html, body {
 }
 
 #button_holder button.movement {
-    display: none;
+    background-image: url(minesweeper_assets/outset.png);
+    border-color: #0b6272;
+}
+
+#button_holder button.movement::after {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 75%;
+    background-image: url(minesweeper_assets/movement.svg);
+}
+
+#button_holder button.movement.active {
+    border-color: #062e36;
+}
+
+#button_holder button.center {
+    background-image: url(minesweeper_assets/outset.png);
+    border-color: #c45a14;
+}
+
+#button_holder button.center::after {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 75%;
+    background-image: url(minesweeper_assets/center.svg);
+}
+
+#button_holder button.reset {
+    background-image: url(minesweeper_assets/outset.png);
+    position: absolute;
+    right: 10px;
+}
+
+#button_holder button.reset::after {
+    content: '';
+    width: calc(100% + 10px);
+    height: calc(100% + 10px);
+    left: 0;
+    top: 0;
+    transform: translate(-5px, -5px);
+    position: absolute;
+    pointer-events: none;
+    border-radius: 12px;
+    background-color: rgba(255, 0, 0, 0.6);
+    background-image: url(minesweeper_assets/reset.svg);
+    background-size: 65%;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 #placeholder {
