@@ -38,14 +38,30 @@ html, body {
     pointer-events: all !important;
 }
 
-#info_overlay.left_data_list {
+#info_overlay .left_data_list {
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    float: left;
+    box-sizing: border-box;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    padding-right: 10px;
+    padding-bottom: 10px;
+    border-bottom-right-radius: 12px;
+}
+
+#info_overlay .right_data_list {
     width: fit-content;
     height: 100%;
     display: flex;
     flex-direction: column;
+    float: right;
 }
 
-.left_data_list span {
+.left_data_list span, .right_data_list span {
     display: block;
     width: fit-content;
     color: white;
@@ -53,6 +69,24 @@ html, body {
     font-weight: 700;
     margin: 5px;
     text-shadow: 2px 2px 4px black
+}
+
+.right_data_list span.autosave_text {
+    color: lightgray;
+    box-sizing: border-box;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-left: 1px solid rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    margin: 0;
+    border-bottom-left-radius: 12px;
+    opacity: 0;
+    transition: opacity 0.4s;
+}
+
+.right_data_list span.autosave_text.show {
+    display: block;
+    opacity: 1;
 }
 
 .left_data_list span.bold {
@@ -95,6 +129,17 @@ html, body {
     transition: filter 0.7s, border-color 0.7s;
 }
 
+#button_holder button::after {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
 #button_holder button.flagging {
     background-image: url(minesweeper_assets/flag.png);
     border-color: #a30f0f;
@@ -110,14 +155,6 @@ html, body {
 }
 
 #button_holder button.movement::after {
-    content: '';
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    left: 0;
-    top: 0;
-    background-position: center;
-    background-repeat: no-repeat;
     background-size: 75%;
     background-image: url(minesweeper_assets/movement.svg);
 }
@@ -132,22 +169,12 @@ html, body {
 }
 
 #button_holder button.center::after {
-    content: '';
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    left: 0;
-    top: 0;
-    background-position: center;
-    background-repeat: no-repeat;
     background-size: 75%;
     background-image: url(minesweeper_assets/center.svg);
 }
 
 #button_holder button.reset {
     background-image: url(minesweeper_assets/outset.png);
-    position: absolute;
-    right: 10px;
 }
 
 #button_holder button.reset::after {

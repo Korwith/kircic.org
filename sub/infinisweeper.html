@@ -5,6 +5,7 @@
     <head>
         <title>Infinisweeper</title>
         <link href="new_minesweeper.css" rel="stylesheet">
+        <link rel="icon" type="image/png" href="https://www.kircic.org/sub/minesweeper_assets/mine_red.png">
         <meta charset="UTF-8">
         <meta name="viewport"
             content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
@@ -27,7 +28,7 @@
 
         <div id="info_overlay">
             <div class="left_data_list">
-                <span class="bold">Infinisweeper v1.1.1</span>
+                <span class="bold">Infinisweeper v1.1.2</span>
                 <span class="point_count">Points: 0</span>
                 <br>
                 <span class="tile_count">Tiles Discovered: 0</span>
@@ -37,11 +38,19 @@
                 <span class="chunk_id">Chunk ID: [0, 0]</span>
                 <span class="tile_id">Tile ID: [0, 0]</span>
                 <br>
-                <span class="chunk_bounds">Display Chunk Bounds:</span>
-                <input type="checkbox" class="chunk_bounds_check">
+                <div>
+                    <span class="chunk_bounds">Display Chunk Bounds:</span>
+                    <input type="checkbox" class="chunk_bounds_check">    
+                </div>
                 <br>
-                <span class="invert">Invert Colors:</span>
-                <input type="checkbox" class="invert_colors_check">
+                <div>
+                    <span class="invert">Invert Colors:</span>
+                    <input type="checkbox" class="invert_colors_check">    
+                </div>
+            </div>
+
+            <div class="right_data_list">
+                <span class="autosave_text">Autosaving...</span>
             </div>
         </div>
 
@@ -63,6 +72,7 @@
             const center_button = document.querySelector('button.center');
             const reset_button = document.querySelector('button.reset');
 
+            const autosave_text = document.querySelector('.autosave_text');
             const tile_count = document.querySelector('.tile_count');
             const flag_count = document.querySelector('.flag_count');
             const bomb_count = document.querySelector('.bomb_count');
@@ -892,6 +902,17 @@
                 saveData();
             }
 
+            function startAutosave() {
+                saveData();
+
+                autosave_text.classList.add('show');
+                setTimeout(function() {
+                    autosave_text.classList.remove('show');
+                }, 1000);
+
+                setTimeout(startAutosave, 30000);
+            }
+
             function start() {
                 var storage = localStorage.getItem('saveData');
                 if (!storage) {
@@ -901,6 +922,7 @@
                     loadData();
                 }
 
+                startAutosave();
                 document.addEventListener('mousedown', handleMouseDown);
                 document.addEventListener('mouseup', handleMouseUp);
                 document.addEventListener('keydown', handleKeyDown);
