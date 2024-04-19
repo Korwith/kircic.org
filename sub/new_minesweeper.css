@@ -173,6 +173,26 @@ html, body {
     background-image: url(minesweeper_assets/center.svg);
 }
 
+#button_holder button.import {
+    background-image: url(minesweeper_assets/outset.png);
+    border-color: #e74c3c;
+}
+
+#button_holder button.import::after {
+    background-image: url(minesweeper_assets/import.svg);
+    background-size: 80%;
+}
+
+#button_holder button.export {
+    background-image: url(minesweeper_assets/outset.png);
+    border-color: #2ecc71;
+}
+
+#button_holder button.export::after {
+    background-image: url(minesweeper_assets/export.svg);
+    background-size: 80%;
+}
+
 #button_holder button.reset {
     background-image: url(minesweeper_assets/outset.png);
 }
@@ -216,8 +236,8 @@ canvas.invert {
 
 #ghost_tile {
     position: absolute;
-    width: calc(512px / 20);
-    height: calc(512px / 20);
+    width: calc(512px * 0.05);
+    height: calc(512px * 0.05);
     background-color: rgba(255, 255, 255, 0.1);
     pointer-events: none;
     z-index: 999;

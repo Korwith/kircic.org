@@ -29,7 +29,7 @@
 
         <div id="info_overlay">
             <div class="left_data_list">
-                <span class="bold">Infinisweeper v1.1.3</span>
+                <span class="bold">Infinisweeper v1.2.0</span>
                 <span class="point_count">Points: 0</span>
                 <br>
                 <span class="tile_count">Tiles Discovered: 0</span>
@@ -41,12 +41,12 @@
                 <br>
                 <div>
                     <span class="chunk_bounds">Display Chunk Bounds:</span>
-                    <input type="checkbox" class="chunk_bounds_check">    
+                    <input type="checkbox" class="chunk_bounds_check">
                 </div>
                 <br>
                 <div>
                     <span class="invert">Invert Colors:</span>
-                    <input type="checkbox" class="invert_colors_check">    
+                    <input type="checkbox" class="invert_colors_check">
                 </div>
             </div>
 
@@ -59,6 +59,8 @@
             <button class="flagging"></button>
             <button class="movement"></button>
             <button class="center"></button>
+            <button class="import"></button>
+            <button class="export"></button>
             <button class="reset"></button>
         </div>
 
@@ -73,6 +75,8 @@
             const flag_button = document.querySelector('button.flagging');
             const move_button = document.querySelector('button.movement');
             const center_button = document.querySelector('button.center');
+            const import_button = document.querySelector('button.import');
+            const export_button = document.querySelector('button.export');
             const reset_button = document.querySelector('button.reset');
 
             const autosave_text = document.querySelector('.autosave_text');
@@ -597,13 +601,13 @@
                 var positionData = findChunkID(event);
                 var canvasPos = positionData.canvasPos;
                 var tilePos = positionData.tilePos;
-                var tileWidth = (1/20) * 512;
+                var tileWidth = (1 / 20) * 512;
 
                 chunk_id.innerHTML = `Chunk ID: [${canvasPos.x}, ${canvasPos.y}]`;
                 tile_id.innerHTML = `Tile ID: [${tilePos.x}, ${tilePos.y}]`
 
-                ghost_tile.style.left = canvasPos.x*512 + (tileWidth * tilePos.x) + 'px';
-                ghost_tile.style.top = canvasPos.y*512 + (tileWidth * tilePos.y) + 'px';
+                ghost_tile.style.left = canvasPos.x * 512 + (tileWidth * tilePos.x) + 'px';
+                ghost_tile.style.top = canvasPos.y * 512 + (tileWidth * tilePos.y) + 'px';
             }
 
             function handleMouseDown(event) {
@@ -716,19 +720,29 @@
                 }
             }
 
-            function shiftToCenter() {
+            function shiftToPosition(event, Position) {
                 game.classList.add('tween');
-                game.style.left = '0%';
-                game.style.top = '0%';
+
+                if (!Position) {
+                    game.style.left = '0%';
+                    game.style.top = '0%';
+                } else {
+                    game.style.left = Position.x + '%';
+                    game.style.top = Position.y + '%';
+                }
 
                 setTimeout(function () {
                     game.classList.remove('tween');
                 }, 1000)
             }
 
-            function handleGameReset() {
-                var choiceResult = confirm('Reset game? All data will be lost.', 'Yes')
-                if (choiceResult == true) {
+            function handleGameReset(event, fromImport) {
+                var choiceResult;
+                if (!fromImport) {
+                    choiceResult = confirm('Reset game? All data will be lost.', 'Yes')
+                }
+
+                if (fromImport || (choiceResult == true)) {
                     currentKeysDown = [];
                     bombLocations = {};
                     flagLocations = {};
@@ -753,8 +767,10 @@
                     }
 
                     localStorage.clear();
-                    generateCanvas({ x: 0, y: 0 });
-                    createStartingStreak();
+                    if (!fromImport) {
+                        generateCanvas({ x: 0, y: 0 });
+                        createStartingStreak();
+                    }
                 }
             }
 
@@ -820,12 +836,14 @@
                     saveGamePosition: getCurrentPosition()
                 }
 
-                localStorage.setItem('saveData', JSONify(data));
+                var saveText = JSONify(data);
+                localStorage.setItem('saveData', saveText);
+                return saveText;
             }
 
-            function loadData() {
+            function loadData(imported) {
                 var tileWidth = (1 / 20) * 512;
-                var data = Tableify(localStorage.getItem('saveData'));
+                var data = imported || Tableify(localStorage.getItem('saveData'));
                 var saveNumberDatabase = data.saveNumberDatabase;
                 var saveFlags = data.saveFlagLocations;
 
@@ -913,11 +931,61 @@
                 saveData();
 
                 autosave_text.classList.add('show');
-                setTimeout(function() {
+                setTimeout(function () {
                     autosave_text.classList.remove('show');
                 }, 1000);
 
                 setTimeout(startAutosave, 30000);
+            }
+
+            function handleExport() {
+                var exportResponse = confirm('Export your current game data?');
+
+                if (exportResponse == true) {
+                    var dataText = saveData();
+                    var blob = new Blob([dataText], { type: 'text/plain' });
+
+                    var a = document.createElement('a');
+                    a.download = 'infinisweeper_export.txt';
+                    a.href = window.URL.createObjectURL(blob);
+                    a.style.display = 'none';
+
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                }
+            }
+
+            function handleImport() {
+                var importResponse = confirm('Import data from file? This will overwrite your current data.');
+
+                if (importResponse == true) {
+                    var input = document.createElement('input');
+                    input.type = 'file';
+                    input.style.display = 'none';
+
+                    document.body.appendChild(input);
+
+                    input.addEventListener('change', function (event) {
+                        var file = event.target.files[0];
+                        var reader = new FileReader();
+
+                        reader.onload = function (event) {
+                            var text = event.target.result;
+                            var textUnpacked = Tableify(text);
+
+                            if (text) {
+                                handleGameReset(null, true);
+                                loadData(textUnpacked);
+                                //document.removeChild(input);
+                            }
+                        }
+
+                        reader.readAsText(file);
+                    });
+
+                    input.click();
+                }
             }
 
             function start() {
@@ -939,7 +1007,9 @@
                 window.addEventListener('beforeunload', windowClosed);
                 flag_button.addEventListener('mouseup', handleFlagMode);
                 move_button.addEventListener('mouseup', handleMoveMode);
-                center_button.addEventListener('mouseup', shiftToCenter);
+                center_button.addEventListener('mouseup', shiftToPosition);
+                import_button.addEventListener('mouseup', handleImport);
+                export_button.addEventListener('mouseup', handleExport);
                 reset_button.addEventListener('mouseup', handleGameReset);
                 chunk_bounds_check.addEventListener('change', handleChunkBounds);
                 invert_colors_check.addEventListener('change', handleInvertColors);
