@@ -29,7 +29,7 @@
 
         <div id="info_overlay">
             <div class="left_data_list">
-                <span class="bold">Infinisweeper v1.2.0</span>
+                <span class="bold">Infinisweeper v1.2.1</span>
                 <span class="point_count">Points: 0</span>
                 <br>
                 <span class="tile_count">Tiles Discovered: 0</span>
@@ -56,12 +56,12 @@
         </div>
 
         <div id="button_holder">
-            <button class="flagging"></button>
-            <button class="movement"></button>
-            <button class="center"></button>
-            <button class="import"></button>
-            <button class="export"></button>
-            <button class="reset"></button>
+            <button class="flagging" title="Flagging Mode"></button>
+            <button class="movement" title="Drag Lock"></button>
+            <button class="center" title="Center"></button>
+            <button class="import" title="Import"></button>
+            <button class="export" title="Export"></button>
+            <button class="reset" title="Reset"></button>
         </div>
 
         <canvas id="placeholder" width="512" height="512"></canvas>
@@ -577,7 +577,7 @@
             function handleMouseDrag(event) {
                 var gameRect = game.getBoundingClientRect();
 
-                if (!game.classList.contains('tween') && (dragLock || (dragging && isMouseDown))) {
+                if (!game.classList.contains('tween') && (dragging || dragLock) && isMouseDown) {
                     if (!startPosition) {
                         startPosition = {
                             x: event.x - (parseInt(game.style.left) / 100) * gameRect.width,
