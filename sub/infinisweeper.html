@@ -29,7 +29,7 @@
 
         <div id="info_overlay">
             <div class="left_data_list">
-                <span class="bold">Infinisweeper v1.2.2</span>
+                <span class="bold">Infinisweeper v1.2.3</span>
                 <span class="point_count">Points: 0</span>
                 <br>
                 <span class="tile_count">Tiles Discovered: 0</span>
@@ -693,7 +693,40 @@
                 makeTile(currentCanvas, event, null, null, true);
             }
 
+            function handleMoveRender() {
+                var moveOffset = {
+                    87: {x: 0, y: -1},
+                    65: {x: -1, y: 0},
+                    83: {x: 0, y: 1},
+                    68: {x: 1, y: 0},
+                }
+
+                var currentGamePos = {
+                    x: parseInt(game.style.left),
+                    y: parseInt(game.style.top)
+                }
+
+                var posOffset = {
+                    x: 0,
+                    y: 0
+                }
+
+                for (var which in moveOffset) {
+                    var thisOffset = moveOffset[which];
+
+                    if (currentKeysDown.includes(parseInt(which))) {     
+                        posOffset.x = posOffset.x - thisOffset.x;
+                        posOffset.y = posOffset.y - thisOffset.y
+                    }
+                }
+
+                game.style.left = parseInt(game.style.left) + posOffset.x + '%';
+                game.style.top = parseInt(game.style.top) + posOffset.y + '%';
+                setTimeout(handleMoveRender, 1000/60);
+            }
+
             function createStartingStreak() {
+                var tileWidth = (1/20)*512;
                 function tryStreak() {
                     var randomTilePosition = {
                         x: Math.floor(Math.random() * 20),
@@ -708,7 +741,8 @@
                     var thisTileNumber = getTileNumber(zeroCanvas, null, randomTilePosition);
 
                     if (thisTileNumber == 0) {
-                        makeTile(zeroCanvas, null, convertedTilePosition, true)
+                        makeTile(zeroCanvas, null, convertedTilePosition, true);
+                        shiftToPosition(null, {x: (randomTilePosition.x*tileWidth)/512, y: (randomTilePosition.y*tileWidth)/512})
                     } else {
                         tryStreak();
                     }
@@ -1014,8 +1048,8 @@
                 } else {
                     loadData();
                 }
-
                 startAutosave();
+                handleMoveRender();
                 document.addEventListener('mousedown', handleMouseDown);
                 document.addEventListener('mouseup', handleMouseUp);
                 document.addEventListener('keydown', handleKeyDown);
