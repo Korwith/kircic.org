@@ -29,7 +29,7 @@
 
         <div id="info_overlay">
             <div class="left_data_list">
-                <span class="bold">Infinisweeper v1.2.1</span>
+                <span class="bold">Infinisweeper v1.2.2</span>
                 <span class="point_count">Points: 0</span>
                 <br>
                 <span class="tile_count">Tiles Discovered: 0</span>
@@ -56,12 +56,30 @@
         </div>
 
         <div id="button_holder">
-            <button class="flagging" title="Flagging Mode"></button>
-            <button class="movement" title="Drag Lock"></button>
-            <button class="center" title="Center"></button>
-            <button class="import" title="Import"></button>
-            <button class="export" title="Export"></button>
-            <button class="reset" title="Reset"></button>
+            <div class='left_button'>
+                <button class="flagging" title="Flagging Mode"></button>
+                <button class="movement" title="Drag Lock">
+                    <div class="icon"></div>
+                </button>
+                <button class="center" title="Center">
+                    <div class="icon"></div>
+                </button>   
+                <button class="reset" title="Reset">
+                    <div class="icon"></div>
+                </button>
+                <button class="settings" title="Settings">
+                    <div class="icon"></div>
+                </button>
+            </div>
+
+            <div class="right_button">
+                <button class="import" title="Import">
+                    <div class="icon"></div>
+                </button>
+                <button class="export" title="Export">
+                    <div class="icon"></div>
+                </button> 
+            </div>
         </div>
 
         <canvas id="placeholder" width="512" height="512"></canvas>
