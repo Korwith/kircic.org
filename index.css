@@ -766,8 +766,8 @@ header .header_item_holder {
 }
 
 .cert1 {
-    background-size: 115% !important;
-    background-image: url(icon/certification1.svg);
+    background-size: 88% !important;
+    background-image: url(icon/acert.png);
 }
 
 .discord {
