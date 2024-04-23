@@ -21,7 +21,7 @@
     </head>
 
     <body>
-        <div id="game_holder">
+        <div id="game_holder" style='zoom: 80%'>
             <div id="game" style="left: 0px; top: 0px">
                 <div id="ghost_tile" style="left: 999%; top: 999%"></div>
             </div>
@@ -29,7 +29,7 @@
 
         <div id="info_overlay">
             <div class="left_data_list">
-                <span class="bold">Infinisweeper v1.2.3</span>
+                <span class="bold">Infinisweeper v1.2.4</span>
                 <span class="point_count">Points: 0</span>
                 <br>
                 <span class="tile_count">Tiles Discovered: 0</span>
@@ -43,10 +43,13 @@
                     <span class="chunk_bounds">Display Chunk Bounds:</span>
                     <input type="checkbox" class="chunk_bounds_check">
                 </div>
-                <br>
                 <div>
                     <span class="invert">Invert Colors:</span>
                     <input type="checkbox" class="invert_colors_check">
+                </div>
+                <div class="zoom_div">
+                    <span class="zooming">Zoom:</span>
+                    <input type="range" class="zoom_drag" step="10" min="10" max="150" value="100">
                 </div>
             </div>
 
@@ -107,6 +110,7 @@
 
             const chunk_bounds_check = document.querySelector('.chunk_bounds_check');
             const invert_colors_check = document.querySelector('.invert_colors_check');
+            const zoom_drag = document.querySelector('.zoom_drag');
 
             const searchArray = [
                 { x: -1, y: -1 }, { x: 0, y: -1 }, { x: 1, y: -1 },
@@ -250,6 +254,8 @@
                 if (event && event.target && classBlacklist.includes(event.target.tagName.toLowerCase())) { return }
                 if (!flag && event && (event.which != 1)) { return }
 
+                var gameZoom = parseInt(game_holder.style.zoom) / 100;
+                
                 if (!dragging && !dragLock) {
                     var ctx = canvasClone.getContext('2d');
                     var tileWidth = (1 / 20) * 512;
@@ -258,8 +264,8 @@
 
                     if (event) {
                         offsetMouse = {
-                            x: Math.floor(Math.floor((event.x - canvasRect.x) / tileWidth) * tileWidth),
-                            y: Math.floor(Math.floor((event.y - canvasRect.y) / tileWidth) * tileWidth)
+                            x: Math.floor(Math.floor(((event.x / gameZoom) - canvasRect.x) / tileWidth) * tileWidth),
+                            y: Math.floor(Math.floor(((event.y / gameZoom) - canvasRect.y) / tileWidth) * tileWidth)
                         }
                     } else {
                         offsetMouse = convertedPos;
@@ -593,13 +599,14 @@
 
             var startPosition;
             function handleMouseDrag(event) {
+                var gameZoom = parseInt(game_holder.style.zoom)/100;
                 var gameRect = game.getBoundingClientRect();
 
                 if (!game.classList.contains('tween') && (dragging || dragLock) && isMouseDown) {
                     if (!startPosition) {
                         startPosition = {
-                            x: event.x - (parseInt(game.style.left) / 100) * gameRect.width,
-                            y: event.y - (parseInt(game.style.top) / 100) * gameRect.width
+                            x: event.x - (parseInt(game.style.left) / (100/gameZoom)) * gameRect.width,
+                            y: event.y - (parseInt(game.style.top) / (100/gameZoom)) * gameRect.width
                         }
                     }
 
@@ -608,8 +615,8 @@
                         y: event.y - startPosition.y
                     }
 
-                    game.style.left = ((offsetPosition.x / gameRect.width) * 100).toFixed(2) + '%';
-                    game.style.top = ((offsetPosition.y / gameRect.width) * 100).toFixed(2) + '%';
+                    game.style.left = ((offsetPosition.x / gameRect.width) * (100/gameZoom)).toFixed(2) + '%';
+                    game.style.top = ((offsetPosition.y / gameRect.width) * (100/gameZoom)).toFixed(2) + '%';
                 }
 
                 updateDisplayPosition(event);
@@ -639,12 +646,14 @@
             }
 
             function findChunkID(event) {
+                var gameZoom = parseInt(game_holder.style.zoom) / 100;
+
                 var gameRect = game.getBoundingClientRect();
                 var tileWidth = (1 / 20) * 512;
-
+                
                 var gameOffsetPixels = {
-                    x: event.x - gameRect.left,
-                    y: event.y - gameRect.top
+                    x: (event.x/gameZoom) - gameRect.left,
+                    y: (event.y/gameZoom) - gameRect.top
                 }
                 var offsetCanvas = {
                     x: Math.ceil((gameOffsetPixels.x) / 512) - 1,
@@ -846,6 +855,10 @@
 
             function handleInvertColors() {
                 handleCanvasClasses(invert_colors_check.checked, 'invert');
+            }
+
+            function handleGameZoom() {
+                game_holder.style.zoom = zoom_drag.value + '%';
             }
 
             function JSONify(table) {
@@ -1065,6 +1078,7 @@
                 reset_button.addEventListener('mouseup', handleGameReset);
                 chunk_bounds_check.addEventListener('change', handleChunkBounds);
                 invert_colors_check.addEventListener('change', handleInvertColors);
+                zoom_drag.addEventListener('input', handleGameZoom);
             }
             start();
         </script>

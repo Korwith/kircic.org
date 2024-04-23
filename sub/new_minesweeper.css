@@ -101,6 +101,25 @@ html, body {
     display: inline-block;
 }
 
+.zoom_div {
+    display: flex;
+}
+
+.zoom_div .zooming {
+    display: block;
+    flex: 0 0 auto;
+    height: 100%;
+    width: fit-content;
+}
+
+.zoom_div .zoom_drag {
+    display: block;
+    transform: translateY(4px);
+    flex: 1;
+    height: 100%;
+    user-select: none;
+}
+
 #button_holder {
     height: 75px;
     width: 100%;
