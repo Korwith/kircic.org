@@ -429,6 +429,11 @@ header .header_item_holder {
     border: 1px solid rgba(255, 255, 255, 0.13);
     box-sizing: border-box;
     border-radius: 12px;
+    transition: border 0.2s;
+}
+
+.search_holder .icon:hover {
+    border: 1px solid white;
 }
 
 .search_holder.google .icon {
