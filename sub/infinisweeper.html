@@ -29,7 +29,7 @@
 
         <div id="info_overlay">
             <div class="left_data_list">
-                <span class="bold">Infinisweeper v1.2.4</span>
+                <span class="bold">Infinisweeper v1.2.5</span>
                 <span class="point_count">Points: 0</span>
                 <br>
                 <span class="tile_count">Tiles Discovered: 0</span>
@@ -441,7 +441,7 @@
                     if (!flagLocations[newCanvasString]) {
                         flagLocations[newCanvasString] = [];
                     }
-                    if (flagLocations[newCanvasString].includes(newTileString)) {
+                    if (flagLocations[newCanvasString].includes(newTileString) || numberDatabase[newCanvasString][newTileString] == 'bomb') {
                         foundFlags++;
                     } else {
                         surroundingTiles.push({ canvas: newCanvasString, tilePos: newTileString });
