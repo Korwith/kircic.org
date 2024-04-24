@@ -29,7 +29,7 @@
 
         <div id="info_overlay">
             <div class="left_data_list">
-                <span class="bold">Infinisweeper v1.2.5</span>
+                <span class="bold">Infinisweeper v1.2.6</span>
                 <span class="point_count">Points: 0</span>
                 <br>
                 <span class="tile_count">Tiles Discovered: 0</span>
@@ -49,7 +49,7 @@
                 </div>
                 <div class="zoom_div">
                     <span class="zooming">Zoom:</span>
-                    <input type="range" class="zoom_drag" step="10" min="10" max="150" value="100">
+                    <input type="range" class="zoom_drag" step="10" min="10" max="150" value="80">
                 </div>
             </div>
 
@@ -66,7 +66,7 @@
                 </button>
                 <button class="center" title="Center">
                     <div class="icon"></div>
-                </button>   
+                </button>
                 <button class="reset" title="Reset">
                     <div class="icon"></div>
                 </button>
@@ -81,7 +81,7 @@
                 </button>
                 <button class="export" title="Export">
                     <div class="icon"></div>
-                </button> 
+                </button>
             </div>
         </div>
 
@@ -255,7 +255,7 @@
                 if (!flag && event && (event.which != 1)) { return }
 
                 var gameZoom = parseInt(game_holder.style.zoom) / 100;
-                
+
                 if (!dragging && !dragLock) {
                     var ctx = canvasClone.getContext('2d');
                     var tileWidth = (1 / 20) * 512;
@@ -599,14 +599,14 @@
 
             var startPosition;
             function handleMouseDrag(event) {
-                var gameZoom = parseInt(game_holder.style.zoom)/100;
+                var gameZoom = parseInt(game_holder.style.zoom) / 100;
                 var gameRect = game.getBoundingClientRect();
 
                 if (!game.classList.contains('tween') && (dragging || dragLock) && isMouseDown) {
                     if (!startPosition) {
                         startPosition = {
-                            x: event.x - (parseInt(game.style.left) / (100/gameZoom)) * gameRect.width,
-                            y: event.y - (parseInt(game.style.top) / (100/gameZoom)) * gameRect.width
+                            x: event.x - (parseInt(game.style.left) / (100 / gameZoom)) * gameRect.width,
+                            y: event.y - (parseInt(game.style.top) / (100 / gameZoom)) * gameRect.width
                         }
                     }
 
@@ -615,8 +615,8 @@
                         y: event.y - startPosition.y
                     }
 
-                    game.style.left = ((offsetPosition.x / gameRect.width) * (100/gameZoom)).toFixed(2) + '%';
-                    game.style.top = ((offsetPosition.y / gameRect.width) * (100/gameZoom)).toFixed(2) + '%';
+                    game.style.left = ((offsetPosition.x / gameRect.width) * (100 / gameZoom)).toFixed(2) + '%';
+                    game.style.top = ((offsetPosition.y / gameRect.width) * (100 / gameZoom)).toFixed(2) + '%';
                 }
 
                 updateDisplayPosition(event);
@@ -650,10 +650,10 @@
 
                 var gameRect = game.getBoundingClientRect();
                 var tileWidth = (1 / 20) * 512;
-                
+
                 var gameOffsetPixels = {
-                    x: (event.x/gameZoom) - gameRect.left,
-                    y: (event.y/gameZoom) - gameRect.top
+                    x: (event.x / gameZoom) - gameRect.left,
+                    y: (event.y / gameZoom) - gameRect.top
                 }
                 var offsetCanvas = {
                     x: Math.ceil((gameOffsetPixels.x) / 512) - 1,
@@ -704,10 +704,10 @@
 
             function handleMoveRender() {
                 var moveOffset = {
-                    87: {x: 0, y: -1},
-                    65: {x: -1, y: 0},
-                    83: {x: 0, y: 1},
-                    68: {x: 1, y: 0},
+                    87: { x: 0, y: -1 },
+                    65: { x: -1, y: 0 },
+                    83: { x: 0, y: 1 },
+                    68: { x: 1, y: 0 },
                 }
 
                 var currentGamePos = {
@@ -720,22 +720,27 @@
                     y: 0
                 }
 
+                var moveGame;
                 for (var which in moveOffset) {
                     var thisOffset = moveOffset[which];
 
-                    if (currentKeysDown.includes(parseInt(which))) {     
+                    if (currentKeysDown.includes(parseInt(which))) {
+                        moveGame = true;
                         posOffset.x = posOffset.x - thisOffset.x;
                         posOffset.y = posOffset.y - thisOffset.y
                     }
                 }
 
-                game.style.left = parseInt(game.style.left) + posOffset.x + '%';
-                game.style.top = parseInt(game.style.top) + posOffset.y + '%';
-                setTimeout(handleMoveRender, 1000/60);
+                if (moveGame) {
+                    game.style.left = parseInt(game.style.left) + posOffset.x + '%';
+                    game.style.top = parseInt(game.style.top) + posOffset.y + '%';
+                }
+
+                setTimeout(handleMoveRender, 1000 / 60);
             }
 
             function createStartingStreak() {
-                var tileWidth = (1/20)*512;
+                var tileWidth = (1 / 20) * 512;
                 function tryStreak() {
                     var randomTilePosition = {
                         x: Math.floor(Math.random() * 20),
@@ -751,7 +756,7 @@
 
                     if (thisTileNumber == 0) {
                         makeTile(zeroCanvas, null, convertedTilePosition, true);
-                        shiftToPosition(null, {x: (randomTilePosition.x*tileWidth)/512, y: (randomTilePosition.y*tileWidth)/512})
+                        shiftToPosition(null, { x: (randomTilePosition.x * tileWidth) / 512, y: (randomTilePosition.y * tileWidth) / 512 })
                     } else {
                         tryStreak();
                     }
