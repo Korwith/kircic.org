@@ -647,7 +647,6 @@
 
             function startMobileMoveLoop(event) {
                 if (isMouseDown) {
-                    alert('ran mouse drag')
                     handleMouseDrag(event);
                     setTimeout(startMobileMoveLoop, 1000/60);
                 }
