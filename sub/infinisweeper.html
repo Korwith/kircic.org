@@ -645,6 +645,16 @@
                 isMouseDown = true;
             }
 
+            function handleTouchStart(event) {
+                dragLock = true;
+                isMouseDown = true;
+            }
+
+            function handleTouchEnd(event) {
+                dragLock = false;
+                isMouseDown = false;
+            }
+
             function findChunkID(event) {
                 var gameZoom = parseInt(game_holder.style.zoom) / 100;
 
@@ -1070,12 +1080,12 @@
                 handleMoveRender();
                 document.addEventListener('mousedown', handleMouseDown);
                 document.addEventListener('mouseup', handleMouseUp);
-                document.addEventListener('touchstart', handleMouseDown);
-                document.addEventListener('touchend', handleMouseUp);
                 document.addEventListener('keydown', handleKeyDown);
                 document.addEventListener('keyup', handleKeyUp);
                 document.addEventListener('contextmenu', handleContextMenu);
                 document.addEventListener('mousemove', handleMouseDrag);
+                document.addEventListener('touchstart', handleTouchStart);
+                document.addEventListener('touchend', handleTouchEnd);
                 window.addEventListener('beforeunload', windowClosed);
                 flag_button.addEventListener('mouseup', handleFlagMode);
                 move_button.addEventListener('mouseup', handleMoveMode);
@@ -1086,8 +1096,6 @@
                 chunk_bounds_check.addEventListener('change', handleChunkBounds);
                 invert_colors_check.addEventListener('change', handleInvertColors);
                 zoom_drag.addEventListener('input', handleGameZoom);
-                
-                document.addEventListener('touchstart', function() {alert('touch start?')});
             }
             start();
         </script>
