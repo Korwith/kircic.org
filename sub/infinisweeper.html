@@ -645,9 +645,17 @@
                 isMouseDown = true;
             }
 
+            function startMobileMoveLoop(event) {
+                if (isMouseDown) {
+                    handleMouseDrag(event);
+                    setTimeout(startMobileMoveLoop, 1000/60);
+                }
+            }
+
             function handleTouchStart(event) {
                 dragLock = true;
                 isMouseDown = true;
+                startMobileMoveLoop(event);
             }
 
             function handleTouchEnd(event) {
