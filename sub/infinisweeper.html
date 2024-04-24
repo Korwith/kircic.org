@@ -1086,6 +1086,8 @@
                 chunk_bounds_check.addEventListener('change', handleChunkBounds);
                 invert_colors_check.addEventListener('change', handleInvertColors);
                 zoom_drag.addEventListener('input', handleGameZoom);
+                
+                document.addEventListener('touchstart', function() {alert('touch start?')});
             }
             start();
         </script>

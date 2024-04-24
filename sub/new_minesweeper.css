@@ -265,7 +265,8 @@ canvas {
     width: 512px;
     position: absolute;
     box-sizing: border-box;
-    transition: filter 1s
+    user-select: none;
+    transition: filter 1;
 }
 
 canvas.borders {
