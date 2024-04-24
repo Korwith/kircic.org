@@ -603,8 +603,6 @@
                 var gameRect = game.getBoundingClientRect();
 
                 if (!game.classList.contains('tween') && (dragging || dragLock) && isMouseDown) {
-                    alert(dragLock);
-                    alert(isMouseDown)
                     if (!startPosition) {
                         startPosition = {
                             x: event.x - (parseInt(game.style.left) / (100 / gameZoom)) * gameRect.width,
