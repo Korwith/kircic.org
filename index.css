@@ -423,6 +423,7 @@ header .header_item_holder {
     flex: 0 0 auto;
     height: 100%;
     aspect-ratio: 1/1;
+    border-radius: 12px;
 }
 
 .search_holder .icon {
