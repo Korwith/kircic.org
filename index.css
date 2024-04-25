@@ -418,10 +418,16 @@ header .header_item_holder {
     position: relative;
 }
 
-.search_holder .icon {
+.search_holder a {
+    display: block;
     flex: 0 0 auto;
     height: 100%;
     aspect-ratio: 1/1;
+}
+
+.search_holder .icon {
+    width: 100%;
+    height: 100%;
     background-position: center;
     background-repeat: no-repeat;
     opacity: 0.8;
