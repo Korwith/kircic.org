@@ -1,0 +1,193 @@
+body {
+    background-color: #fc6f6a;
+    overflow: hidden;
+    margin: 0;
+}
+
+#word_holder {
+    position: absolute;
+    height: 100%;
+    width: 50%;
+    left: 0;
+}
+
+.text_holder {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+    height: 55px;
+}
+
+.text_holder span {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+.text_holder .input {
+    text-transform: uppercase;
+    font-size: 34px;
+    border-bottom: 5px solid black;
+    font-weight: 800;
+}
+
+.text_holder .word_count {
+    position: absolute;
+    bottom: 0;
+    transform: translateY(100%);
+    font-weight: 700;
+    height: 75%;
+}
+
+.text_holder .previous {
+    position: absolute;
+    bottom: 0;
+    transform: translateY(200%);
+    font-weight: 400;
+    height: 75%;
+}
+
+#box_holder {
+    position: absolute;
+    height: 100%;
+    width: 50%;
+    right: 0;
+}
+
+.box {
+    width: 250px;
+    height: 250px;
+    border: 3px solid black;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.box .row {
+    position: absolute;
+    display: grid;
+}
+
+.box .row button {
+    position: relative;
+}
+
+.box .row button::after {
+    content: attr(set-letter);
+    aspect-ratio: 1/1;
+    position: absolute;
+    height: 100%;
+    padding: 15px;
+    font-size: 30px;
+    color: white;
+    text-transform: uppercase;
+}
+.box .row button.active::after {
+    color: black;
+}
+
+.row.hor {
+    width: 100%;
+    height: fit-content;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.row.ver {
+    height: 100%;
+    width: fit-content;
+    grid-template-rows: repeat(3, 1fr);
+}
+
+.top {
+    top: 0;
+    transform: translateY(-50%);
+}
+
+.top button::after {
+    left: 0;
+    top: 0;
+    transform: translate(-35%, -120%);
+}
+
+.bottom {
+    bottom: 0;
+    transform: translateY(50%);
+}
+
+.bottom button::after {
+    left: 0;
+    bottom: 0;
+    transform: translate(-30%, 85%);
+}
+
+.left {
+    left: 0;
+    transform: translateX(-50%);
+}
+
+.left button::after {
+    left: 0;
+    transform: translate(-100%, -75%);
+}
+
+.right {
+    right: 0;
+    transform: translateX(50%);
+}
+
+.right button::after {
+    right: 0;
+    transform: translate(100%, -75%)
+}
+
+.row button {
+    aspect-ratio: 1/1;
+    display: block;
+    width: 20px;
+    margin: auto;
+    border-radius: 100%;
+    border: 3px solid black;
+    box-sizing: border-box;
+}
+
+.row button.used {
+    background-color: #fc6f6a;
+}
+
+.row button.active {
+    background-color: black;
+}
+
+canvas {
+    width: 100%;
+    height: 100%;
+    background-color: white;
+}
+
+* {
+    font-family: Arial;
+    font-weight: 700;
+}
+
+@media screen and (max-width: 767px) {
+    #box_holder {
+        position: fixed;
+        top: 0;
+        width: 100vw;
+        height: 80vh;
+    }
+
+    #word_holder {
+        position: fixed;
+        bottom: 10vh;
+        width: 100vw;
+        height: 20vh;
+    }
+}

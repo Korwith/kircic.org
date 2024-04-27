@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Letter Boxed</title>
+    <link rel='stylesheet' href="letter-boxed/letter-boxed.css">
+</head>
+
+<body>
+    <div id="word_holder">
+        <div class="text_holder">
+            <span class="input"></span>
+            <span class="word_count">0 words</span>
+            <span class="previous"></span>
+        </div>
+    </div>
+
+    <div id="box_holder">
+        <div class="box">
+            <div class="row hor top" row="0">
+                <button set-letter="a"></button>
+                <button></button>
+                <button></button>
+            </div>
+            <div class="row hor bottom" row="1">
+                <button></button>
+                <button></button>
+                <button></button>
+            </div>
+            <div class="row ver left" row="2">
+                <button></button>
+                <button></button>
+                <button></button>
+            </div>
+            <div class="row ver right" row="3">
+                <button></button>
+                <button></button>
+                <button></button>
+            </div>
+            <canvas width="512" height="512"></canvas>
+        </div>
+    </div>
+
+    <script src="letter-boxed/words.js"></script>
+    <script>
+        const word_data = all_words.split('\n');
+        const box_holder = document.querySelector('#box_holder');
+        const input = document.querySelector('.input');
+        const previous_text = document.querySelector('.previous');
+        const word_count = document.querySelector('.word_count');
+        const allRow = document.querySelectorAll('.row');
+        const allButton = document.querySelectorAll('.row button');
+        const canvas = document.querySelector('canvas');
+        const letters = 'bcdfghjklmnpqrstvwxyz';
+        const vowel = 'aeiou';
+
+        let letterData = {
+            0: [],
+            1: [],
+            2: [],
+            3: [],
+        };
+
+        let userWords = [];
+        let usedLetters = [];
+
+        var currentWord = '';
+        var lastSelectedRow;
+        var activeButton;
+
+        function loadButtonEvents() {
+            for (var i = 0; i < allButton.length; i++) {
+                var thisButton = allButton[i];
+
+                (function (thisButton) {
+                    thisButton.addEventListener('mousedown', function () {
+                        if (thisButton.parentElement != lastSelectedRow) {
+                            if (activeButton) {
+                                activeButton.classList.remove('active');
+                            }
+
+                            addLetter(thisButton.getAttribute('set-letter'));
+                            activeButton = thisButton;
+                            lastSelectedRow = thisButton.parentElement;
+                        }
+                    })
+                })(thisButton)
+            }
+        }
+
+        function generateLetterString() {
+            var letterString = '';
+
+            function gen() {
+                var randomIndex = Math.floor(Math.random() * letters.length);
+                var randomLetter = letters[randomIndex];
+
+                if (!letterString.includes(randomLetter)) {
+                    letterString += randomLetter;
+                } else {
+                    gen();
+                }
+            }
+
+            for (var i = 0; i < 12; i++) {
+                gen();
+            }
+
+            return letterString;
+        }
+
+        function generateVowels() {
+            var used = '';
+
+            function gen() {
+                var randomIndex = Math.floor(Math.random() * vowel.length);
+                var randomVowel = vowel[randomIndex];
+
+                if (!used.includes(randomVowel)) {
+                    used += randomVowel;
+                } else {
+                    gen();
+                }
+            }
+
+            for (var i = 0; i < 4; i++) {
+                gen();
+            }
+
+            return used;
+        }
+
+        function generateLetters() {
+            var letterString = generateLetterString();
+            var vowelString = generateVowels();
+
+            for (var i = 0; i < letterString.length; i++) {
+                var thisButton = allButton[i];
+                var thisLetter = letterString[i];
+                letterData[Math.floor(i / 3)].push(thisLetter);
+                thisButton.setAttribute('set-letter', thisLetter);
+            }
+
+            for (var i = 0; i < allRow.length; i++) {
+                var thisRow = allRow[i];
+                var thisRowIndex = parseInt(thisRow.getAttribute('row'));
+                var thisRowButton = thisRow.querySelectorAll('button');
+                var randomIndex = Math.floor(Math.random() * 3);
+                var foundButton = thisRowButton[randomIndex];
+                var thisVowel = vowelString[i];
+
+                foundButton.setAttribute('set-letter', thisVowel);
+                letterData[thisRowIndex][randomIndex] = thisVowel;
+            }
+        }
+
+        function findRowFromLetter(letter) {
+            var fixedLetter = letter.toLowerCase();
+
+            for (var i = 0; i < 4; i++) {
+                var thisRowData = letterData[i];
+                for (var j = 0; j < thisRowData.length; j++) {
+                    var thisLetter = thisRowData[j];
+                    if (fixedLetter == thisLetter) {
+                        return { data: thisRowData, id: i };
+                    }
+                }
+            }
+        }
+
+        function addLetter(letter) {
+            function isValid() {
+                var valid;
+                var letterRowData = findRowFromLetter(letter.toLowerCase());
+
+                if (letterRowData) {
+                    var letterRowElement = document.querySelector(`[row="${letterRowData.id}"]`);
+
+                    if (!lastSelectedRow || (letterRowElement != lastSelectedRow)) {
+                        valid = true;
+                        lastSelectedRow = letterRowElement;
+                    }
+                }
+
+                return valid;
+            }
+
+            if (isValid()) {
+                if (input.innerHTML.length < 10) {
+                    input.innerHTML += letter;
+                    updateLines(letter);
+
+                    var activeButton = document.querySelector('button.active');
+                    if (activeButton) {
+                        activeButton.classList.remove('active');
+                    }
+                    var letterElement = box_holder.querySelector(`[set-letter="${letter}"]`);
+                    letterElement.classList.add('active');
+                }
+            }
+
+            updateWordCount();
+        }
+
+
+
+        let lineData = [];
+        let lastLinePoint;
+        function updateLines(letter) {
+            var pos = findLetterPosition(letter);
+
+            if (!lastLinePoint) {
+                lastLinePoint = pos;
+            } else {
+                lineData.push({ start: lastLinePoint, end: pos, which: letter, type: 'dash' })
+                lastLinePoint = pos;
+            }
+
+            var letterElement = box_holder.querySelector(`[set-letter="${letter}"]`);
+            letterElement.classList.add('used');
+            usedLetters.push(letterElement);
+
+            redraw();
+        }
+
+        function redraw() {
+            var ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, 512, 512);
+
+            for (var i = 0; i < lineData.length; i++) {
+                var thisLine = lineData[i];
+                ctx.beginPath();
+                ctx.moveTo(thisLine.start.x, thisLine.start.y);
+                ctx.lineTo(thisLine.end.x, thisLine.end.y);
+                ctx.lineWidth = 10;
+                if (thisLine.type == 'dash') {
+                    ctx.setLineDash([30, 15]);
+                    ctx.strokeStyle = '#fc6f6a';
+                } else if (thisLine.type == 'solid') {
+                    ctx.setLineDash([0, 0]);
+                    ctx.strokeStyle = 'black';
+                }
+                ctx.stroke();
+            }
+        }
+
+        function findLetterPosition(letter) {
+            var fixedLetter = letter.toLowerCase();
+
+            var letterRowData = findRowFromLetter(fixedLetter);
+            var linePoint = { x: 0, y: 0 };
+
+            var rowElement = document.querySelector(`[row="${letterRowData.id}"]`);
+            var rowButtons = Array.from(rowElement.querySelectorAll('button'));
+            var rowElementRect = rowElement.getBoundingClientRect();
+
+            var letterElement = rowElement.querySelector(`[set-letter="${fixedLetter}"]`);
+            var letterIndex = rowButtons.indexOf(letterElement);
+
+            var calculatedPosition;
+
+            if (rowElementRect.width > rowElementRect.height) {
+                calculatedPosition = 512 * ((((rowElementRect.width / 3) / 2) + (letterIndex * (rowElementRect.width / 3))) / rowElementRect.width);
+                linePoint.x = calculatedPosition;
+            } else if (rowElementRect.height > rowElementRect.width) {
+                calculatedPosition = 512 * ((((rowElementRect.height / 3) / 2) + (letterIndex * (rowElementRect.height / 3))) / rowElementRect.height);
+                linePoint.y = calculatedPosition;
+            }
+
+            if (letterRowData.id == 1) {
+                linePoint.y = 512;
+            } else if (letterRowData.id == 3) {
+                linePoint.x = 512;
+            }
+
+            return linePoint;
+        }
+
+        function removeLetter() {
+            if (input.innerHTML.length > 0) {
+                // checks if active button exist, then removes it
+                var activeButton = document.querySelector('button.active');
+                if (activeButton) {
+                    activeButton.classList.remove('active');
+
+                    // remove used class if it wont go back to a previous word
+                    var activeLetter = activeButton.getAttribute('set-letter');
+                    if (canRemoveUsedClass(activeLetter)) {
+                        activeButton.classList.remove('used');
+                    }
+                }
+
+                // removes the last letter
+                input.innerHTML = input.innerHTML.slice(0, -1)
+
+                // removes the most recently drawn line
+                if (input.innerHTML.length != 0) {
+                    lineData.splice(lineData.length - 1, 1);
+                }
+
+                // after removing a letter, check if input length is 0 0
+                if (input.innerHTML.length == 0) {
+                    // if there aren't any previous words, reset
+                    if (userWords.length == 0) {
+                        lastSelectedRow = null;
+                        lastLinePoint = null;
+                    }
+                    // if there is a previous word
+                    else {
+                        // switch to last word, changes all lines to dashed
+                        var lastWord = userWords[userWords.length - 1];
+                        for (var i = 0; i < lineData.length; i++) {
+                            if (i >= lineData.length - lastWord.length) {
+                                lineData[i].type = 'dash';
+                            }
+                        }
+                        
+                        // change the input text to the last word
+                        // removes the last submitted word
+                        input.innerHTML = userWords[userWords.length - 1];
+                        userWords.splice(userWords.length - 1, 1);
+                    }
+                } else {
+                    // if the input length isn't 0, switch variables to previous letter data 
+                    var lastLetter = input.innerHTML[input.innerHTML.length - 1];
+                    var lastLetterPos = findLetterPosition(lastLetter);
+
+                    lastSelectedRow = document.querySelector(`[row="${findRowFromLetter(lastLetter).id}"]`)
+                    lastLinePoint = lastLetterPos;
+                }
+
+                if (input.innerHTML.length > 0) {
+                    var lastLetter = (input.innerHTML[input.innerHTML.length - 1]).toLowerCase();
+                    var lastLetterElement = box_holder.querySelector(`[set-letter="${lastLetter}"]`);
+                    lastLetterElement.classList.add('active');
+                }
+            }
+
+            updateWordCount();
+            redraw();
+        }
+
+        function canRemoveUsedClass(letter) {
+            var fixedLetter = letter.toLowerCase();
+            var canRemove = true;
+
+            var wordWithoutLastLetter = (input.innerHTML.slice(0, -1)).toLowerCase();
+            if (wordWithoutLastLetter.includes(fixedLetter)) {
+                canRemove = false;
+            }
+
+            for (var i = 0; i < userWords.length; i++) {
+                var thisWord = (userWords[i]).toLowerCase();
+                if (thisWord.includes(fixedLetter)) {
+                    canRemove = false;
+                }
+            }
+
+            return canRemove;
+        }
+
+        function updateWordCount() {
+            word_count.innerHTML = `${userWords.length} word`;
+            if (userWords.length != 1) {
+                word_count.innerHTML += 's';
+            }
+
+            previous_text.innerHTML = userWords.join(', ');
+        }
+
+        function handleKeyDown(event) {
+            if (letters.includes(event.key) || vowel.includes(event.key)) {
+                addLetter(event.key);
+            }
+
+            else if (event.which == 8) {
+                removeLetter();
+            } else if (event.which == 13) {
+                checkWord();
+            }
+        }
+
+
+        function checkWord() {
+            var toCheck = input.innerHTML.toUpperCase();
+            if (word_data.indexOf(toCheck) != -1) {
+                correctWord(toCheck);
+            }
+        }
+
+        function correctWord(word) {
+            userWords.push(word);
+
+            for (var i = 0; i < lineData.length; i++) {
+                var thisLine = lineData[i];
+                if (thisLine.type == 'dash') {
+                    thisLine.type = 'solid';
+                }
+            }
+
+            var lastLetter = word[word.length - 1];
+            input.innerHTML = lastLetter;
+
+            updateWordCount();
+            redraw();
+        }
+
+        function start() {
+            loadButtonEvents();
+            generateLetters();
+            document.addEventListener('keydown', handleKeyDown);
+        }
+
+        start();
+    </script>
+</body>
+
+</html>
