@@ -1,7 +1,9 @@
-body {
+html, body {
     background-color: #fc6f6a;
     overflow: hidden;
     margin: 0;
+    touch-action: manipulation;
+    -ms-content-zooming: none;
 }
 
 #word_holder {
