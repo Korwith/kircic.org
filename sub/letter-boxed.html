@@ -5,7 +5,7 @@
     <title>Letter Boxed</title>
     <link rel='stylesheet' href="letter-boxed/letter-boxed.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta property="twitter:image" content="https://www.kircic.org/icon/letter-boxed.svg">
+    <meta property="twitter:image" content="https://www.kircic.org/icon/letter-boxed.png">
     <meta name="title" content="Letter Boxed">
     <meta name="description" content="a place where all your hopes and dreams come true">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -250,33 +250,42 @@
             }
         }
 
+        const idToSide = {
+            0: 'top',
+            1: 'bottom',
+            2: 'left',
+            3: 'right'
+        }
+
+        const givenSidePosition = {
+            0: { x: 0, y: 0 },
+            1: { x: 0, y: parseInt(canvas.height) },
+            2: { x: 0, y: 0 },
+            3: { x: parseInt(canvas.width), y: 0}
+        }
+
         function findLetterPosition(letter) {
+            let linePoint = { x: 0, y: 0 };
             var fixedLetter = letter.toLowerCase();
-
             var letterRowData = findRowFromLetter(fixedLetter);
-            var linePoint = { x: 0, y: 0 };
+            var rowElement = box_holder.querySelector(`[row="${letterRowData.id}"]`);
+            var letterElement = box_holder.querySelector(`[set-letter="${letter}"]`);
+            var letterIndex = Array.from(rowElement.querySelectorAll('button')).indexOf(letterElement);
+            var canvasWidth = parseInt(canvas.width);
+            var sideID = idToSide[letterRowData.id];
+            var thisGivenSidePosition = givenSidePosition[letterRowData.id];
 
-            var rowElement = document.querySelector(`[row="${letterRowData.id}"]`);
-            var rowButtons = Array.from(rowElement.querySelectorAll('button'));
-            var rowElementRect = rowElement.getBoundingClientRect();
+            var segmentedWidth = canvasWidth / 3;
+            var thisPositionCenterOffset = 0.5 * segmentedWidth;
+            var thisPosition = (letterIndex * segmentedWidth + thisPositionCenterOffset);
 
-            var letterElement = rowElement.querySelector(`[set-letter="${fixedLetter}"]`);
-            var letterIndex = rowButtons.indexOf(letterElement);
+            linePoint.x = thisGivenSidePosition.x;
+            linePoint.y = thisGivenSidePosition.y;
+            if (sideID == 'top' || sideID == 'bottom') {
+                linePoint.x = thisPosition;
 
-            var calculatedPosition;
-
-            if (rowElementRect.width > rowElementRect.height) {
-                calculatedPosition = 512 * ((((rowElementRect.width / 3) / 2) + (letterIndex * (rowElementRect.width / 3))) / rowElementRect.width);
-                linePoint.x = calculatedPosition;
-            } else if (rowElementRect.height > rowElementRect.width) {
-                calculatedPosition = 512 * ((((rowElementRect.height / 3) / 2) + (letterIndex * (rowElementRect.height / 3))) / rowElementRect.height);
-                linePoint.y = calculatedPosition;
-            }
-
-            if (letterRowData.id == 1) {
-                linePoint.y = 512;
-            } else if (letterRowData.id == 3) {
-                linePoint.x = 512;
+            } else if (sideID == 'left' || sideID == 'right') {
+                linePoint.y = thisPosition;
             }
 
             return linePoint;
@@ -320,7 +329,7 @@
                                 lineData[i].type = 'dash';
                             }
                         }
-                        
+
                         // change the input text to the last word
                         // removes the last submitted word
                         input.innerHTML = userWords[userWords.length - 1];
