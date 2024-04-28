@@ -218,7 +218,7 @@ canvas {
 
     #word_holder {
         position: fixed;
-        bottom: 10vh;
+        bottom: 20vh;
         width: 100vw;
         height: 20vh;
     }
@@ -227,9 +227,15 @@ canvas {
         width: 45%;
     }
 
+    .box {
+        width: 80vw;
+        height: 80vw;
+    }
+
     .button_holder {
-        bottom: 4vh;
-        height: 12vh;   
+        position: fixed;
+        bottom: 0;
+        height: 12vh;
     }
 
     .button_holder button {
