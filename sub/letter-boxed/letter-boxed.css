@@ -228,6 +228,7 @@ canvas {
     }
 
     .box {
+        top: 25vh;
         height: 60vw;
         width: 60vw;
         min-width: 100px;
