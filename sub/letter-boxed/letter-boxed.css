@@ -250,6 +250,6 @@ canvas {
     }
 
     .right button::after {
-        transform: translate(5%, -50%)
+        transform: translate(0%, -50%)
     }
 }
