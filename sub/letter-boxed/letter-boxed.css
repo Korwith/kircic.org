@@ -224,7 +224,7 @@ canvas {
     }
 
     .text_holder {
-        width: 45%;
+        width: 60vw;
     }
 
     .box {
@@ -242,5 +242,14 @@ canvas {
 
     .button_holder button {
         width: 30%;
+        color: black;
+    }
+    
+    .left button::after {
+        transform: translate(-100%, -50%);
+    }
+
+    .right button::after {
+        transform: translate(5%, -50%)
     }
 }
