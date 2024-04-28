@@ -45,6 +45,12 @@
             </div>
             <canvas width="512" height="512"></canvas>
         </div>
+
+        <div class="button_holder">
+            <button class="res">Restart</button>
+            <button class="del">Delete</button>
+            <button class="ent">Enter</button>
+        </div>
     </div>
 
     <script src="letter-boxed/words.js"></script>
@@ -59,6 +65,10 @@
         const canvas = document.querySelector('canvas');
         const letters = 'bcdfghjklmnpqrstvwxyz';
         const vowel = 'aeiou';
+
+        const restart_button = document.querySelector('.res');
+        const delete_button = document.querySelector('.del');
+        const enter_button = document.querySelector('.ent');
 
         let letterData = {
             0: [],
@@ -420,10 +430,51 @@
             redraw();
         }
 
+        function handleRestart() {
+            var allUsed = document.querySelectorAll('button.used');
+            var activeButton = document.querySelector('button.active');
+
+            for (var i = 0; i < allUsed.length; i++) {
+                var thisUsed = allUsed[i];
+                thisUsed.classList.remove('used');
+            }
+
+            if (activeButton) {
+                activeButton.classList.remove('active');
+            }
+
+            letterData = {
+                0: [],
+                1: [],
+                2: [],
+                3: [],
+            }
+            userWords = [];
+            lineData = [];
+            input.innerHTML = '';
+            word_count.innerHTML = '0 words';
+            previous_text.innerHTML = '';
+            lastSelectedRow = null;
+            lastLinePoint = null;
+            generateLetters();
+            redraw();
+        }
+
+        function handleDelete() {
+            removeLetter();
+        }
+        
+        function handleEnter() {
+            checkWord();
+        }
+
         function start() {
             loadButtonEvents();
             generateLetters();
             document.addEventListener('keydown', handleKeyDown);
+            restart_button.addEventListener('mouseup', handleRestart);
+            delete_button.addEventListener('mouseup', handleDelete);
+            enter_button.addEventListener('mouseup', handleEnter);
         }
 
         start();
