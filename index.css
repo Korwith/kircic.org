@@ -19,7 +19,8 @@ body {
     box-sizing: border-box;
 }
 
-h1, h3 {
+h1,
+h3 {
     text-align: center;
     color: rgba(255, 255, 255, 0.9);
 }
@@ -290,114 +291,51 @@ header .header_item_holder {
 .project_list_holder {
     width: 100%;
     height: 100%;
-    transform: translateY(-20px);
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.project_list_holder .project_frame {
+    margin-bottom: 20px;
 }
 
 .project_list_holder a {
     text-decoration: none;
 }
 
-.project_entry {
-    width: calc(100% - 20px);
-    height: 70px;
-    margin: 10px;
-    background-color: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.13);
-    box-sizing: border-box;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: border 0.3s;
-    display: flex;
-}
-
-.project_entry:hover {
-    border: 1px solid white;
-}
-
-.project_entry .icon {
-    flex: 0 0 auto;
-    aspect-ratio: 1/1;
-    height: calc(100% - 10px);
-    margin: 5px;
-    background-color: rgba(0, 0, 0, 0.1);
-    border: 2px solid rgba(0, 0, 0, 0.13);
-    box-sizing: border-box;
-    border-radius: 12px;
-    margin-right: 16px;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-.project_entry span {
-    display: flex;
-    flex: 1;
-    align-items: center;
-    font-size: 24px;
-}
-
-.project_seperator {
-    width: calc(100% - 20px);
-    height: 25px;
-    display: flex;
-    margin-left: 10px;
-    padding-top: 20px;
-}
-
-.project_seperator span {
-    display: flex;
-    height: 100%;
-    aspect-ratio: 1/1;
-    flex: 0 0 auto;
-    justify-content: center;
-    align-items: center;
-    transform: translateX(-3px);
-    color: rgba(255, 255, 255, 0.7);
-}
-
-.project_seperator hr {
-    flex: 1;
-    border: 0;
-    margin: 0;
-    margin-top: 10px;
-    height: 2px;
-    background-color: rgba(255, 255, 255, 0.7);
-    border-radius: 12px;
-    box-shadow: black 2px 2px 4px
-}
-
-.project_entry.aplus_project .icon {
-    background-image: url(icon/aplus.png);
-    background-size: 100%;
-}
-
-.project_entry.connections_project .icon {
+.project_icon.connections {
     background-image: url(icon/connections.png);
     background-size: 90%;
 }
 
-.project_entry.calculator_project .icon {
+.project_icon.calculator {
     background-image: url(icon/calculator.svg);
     background-size: 90%;
 }
 
-.project_entry.flappy_project .icon {
+.project_icon.flappy {
     background-image: url(icon/flappy.png);
-    background-size: 90%;
-}
-
-.project_entry.minesweeper_project .icon {
-    background-image: url(icon/flag.png);
     background-size: 80%;
 }
 
-.project_entry.snake_project .icon {
-    background-image: url(icon/snake.png);
-    background-size: 90%;
+.project_icon.lb {
+    background-image: url(icon/letter-boxed.svg);
+    background-size: 97%;
 }
 
-.project_entry.wordle_project .icon {
+.project_icon.ms {
+    background-image: url(icon/flag.png);
+    background-size: 70%;
+}
+
+.project_icon.snake {
+    background-image: url(icon/snake.png);
+    background-size: 75%;
+}
+
+.project_icon.wordle {
     background-image: url(icon/wordle.png);
-    background-size: 90%;
+    background-size: 75%;
 }
 
 .search_page {
@@ -472,6 +410,7 @@ header .header_item_holder {
     background-image: url(icon/wikipedia.svg);
     background-size: 80%;
 }
+
 .search_holder.yandex .icon {
     background-image: url(icon/yandex.svg);
     background-size: 80%;
@@ -628,7 +567,8 @@ header .header_item_holder {
     padding-bottom: 10px;
 }
 
-.project_frame {
+.project_frame,
+.project_entry {
     max-width: 400px;
     min-width: 300px;
     width: 100%;
@@ -718,6 +658,7 @@ header .header_item_holder {
     color: white;
     z-index: 500;
     pointer-events: none;
+    justify-content: center;
 }
 
 .project_frame_bottom {
