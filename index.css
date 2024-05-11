@@ -348,6 +348,25 @@ header .header_item_holder {
     border-radius: 12px;
 }
 
+.search_holder.bookmarks {
+    height: 35px
+}
+
+.search_holder.bookmarks a {
+    margin-bottom: 0;
+    margin-right: 10px;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.search_holder.bookmarks a .icon {
+    background-size: 80%;
+}
+
+.search_holder.bookmarks a.placeholder_bookmark {
+    display: none;
+}
+
 .search_holder {
     margin: 10px;
     width: calc(100% - 20px);
@@ -379,6 +398,45 @@ header .header_item_holder {
 
 .search_holder .icon:hover {
     border: 1px solid white;
+}
+
+a.plus {
+    order: 100;
+}
+
+a.plus.hide {
+    display: none;
+}
+
+a.plus .icon {
+    background-image: url(icon/plus.svg);
+    background-size: 100% !important;
+    cursor: pointer;
+}
+
+a.trash {
+    position: absolute;
+    right: 0;
+    margin-right: 0 !important;
+}
+
+a.trash .icon {
+    background-color: rgba(255, 50, 50, 0.1);
+    border: 1px solid rgba(255, 50, 50, 0.13);
+    background-image: url(icon/trash.svg);
+}
+
+a.trash .icon.enabled {
+    border: 1px solid #ff2222;
+}
+
+a.red .icon {
+    background-color: rgba(255, 50, 50, 0.3);
+    border: 1px solid rgba(255, 50, 50, 0.33);
+}
+
+a.red .icon:hover {
+    border: 1px solid #ff2222;
 }
 
 .search_holder.google .icon {
@@ -520,8 +578,8 @@ header .header_item_holder {
 
 .copyright {
     width: 100%;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 15px;
+    padding-bottom: 15px;
     background-color: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.13);
     box-sizing: border-box;
@@ -536,6 +594,7 @@ header .header_item_holder {
     display: flex;
     justify-content: center;
     align-items: center;
+    color: rgba(255, 255, 255, 0.9)
 }
 
 .language {
@@ -748,7 +807,7 @@ header .header_item_holder {
     background-image: url(icon/acert.png);
 }
 
-.cashapp {  
+.cashapp {
     background-image: url(icon/cashapp.svg);
 }
 

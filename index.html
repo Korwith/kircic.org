@@ -435,6 +435,20 @@
             <div class="search_page page disabled">
                 <h1>Search</h1>
                 <h3>Search Engines</h3>
+                <div class="search_holder bookmarks">
+                    <a class="placeholder_bookmark">
+                        <div class="icon"></div>
+                    </a>
+
+                    <a class="plus" title="Add Bookmark">
+                        <div class="icon"></div>
+                    </a>
+
+                    <a class="trash" title="Remove Bookmark">
+                        <div class="icon"></div>
+                    </a>
+                </div>
+
                 <div class="search_holder google">
                     <a href="https://www.google.com" target="_blank">
                         <div class="icon"></div>
@@ -569,6 +583,7 @@
         </div>
     </div>
 
+    <script src="bookmarks.js"></script>
     <script>
         var header = document.querySelector('header');
         var content = document.querySelector('.content');
