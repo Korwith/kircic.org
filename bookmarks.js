@@ -1,20 +1,22 @@
-const bookmark_holder = document.querySelector('.search_holder.bookmarks');
-const plus = document.querySelector('.plus');
-const placeholder_bookmark = document.querySelector('.placeholder_bookmark');
+const bookmark_holder = document.querySelector('.bookmark_holder');
+const plus = bookmark_holder.querySelector('.plus');
+const placeholder_bookmark = bookmark_holder.querySelector('.placeholder_bookmark');
 const trash_button = document.querySelector('.trash');
 
 let bookmarkArray = [];
 var trashing = false;
 
 function bookmark(url, load) {
+    var imageURL = `url(https://www.google.com/s2/favicons?domain=${url}&sz=128)`;
     let clone = placeholder_bookmark.cloneNode(true);
     let cloneIcon = clone.querySelector('.icon');
     clone.classList.remove('placeholder_bookmark');
     clone.classList.add('real');
     clone.setAttribute('index', bookmark_holder.querySelectorAll('.real').length);
+    clone.setAttribute('title', url);
     clone.setAttribute('href', url);
     clone.setAttribute('target', '_blank');
-    cloneIcon.style.backgroundImage = `url(https://www.google.com/s2/favicons?domain=${url}&sz=128)`
+    cloneIcon.style.backgroundImage = imageURL;
     bookmark_holder.appendChild(clone);
 
     (function (clone) {

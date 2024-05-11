@@ -349,7 +349,14 @@ header .header_item_holder {
 }
 
 .search_holder.bookmarks {
-    height: 35px
+    height: 35px;
+}
+
+.bookmark_holder {
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+    width: calc(100% - 45px);
 }
 
 .search_holder.bookmarks a {
