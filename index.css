@@ -13,8 +13,8 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-    border: 1px solid rgba(255, 255, 255, 0.13);
-    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.12);
     border-radius: 12px;
     box-sizing: border-box;
 }
@@ -30,9 +30,10 @@ h3 {
     width: 100%;
     height: 100%;
     background-image: url(https://37509b00898c4b81b49b04f3efbc6d3d.cdn.bubble.io/f1686127434693x506295944989022500/nlkm.svg);
-    background-size: 85%;
+    background-size: 100%;
     background-position: center;
     background-repeat: no-repeat;
+    filter: hue-rotate(60deg);
 }
 
 .content_holder {
@@ -52,8 +53,8 @@ header {
     right: 0;
     margin: 10px;
     height: 60px;
-    background-color: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.13);
+    background-color: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 12px;
     display: flex;
     transition: width 0.3s;
@@ -82,8 +83,8 @@ header .header_item_holder {
 }
 
 .sidebar {
-    background-color: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.13);
+    background-color: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     box-sizing: border-box;
     height: calc(100% - 20px);
     width: 275px;
@@ -106,27 +107,65 @@ header .header_item_holder {
     display: flex;
     flex-direction: row;
     margin: 15px;
-    margin-bottom: 0px;
+    margin-top: 9px;
+    margin-bottom: 2px;
 }
 
 .sidebar_dots_holder div {
     aspect-ratio: 1/1;
-    height: calc(100% - 12px);
+    height: calc(100% - 10px);
     border-radius: 100%;
     margin: 6px;
     cursor: pointer;
+    box-sizing: border-box;
+    position: relative
+}
+
+.sidebar_dots_holder div::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.sidebar_dots_holder div:hover::after {
+    opacity: 1;
 }
 
 .dot1 {
     background-color: #fc6156;
+    border: 1px solid #DF4744;
+}
+
+.dot1::after {
+    background-image: url(icon/close.svg);
+    background-size: 90%;
+    transform: translateX(-0.5px);
 }
 
 .dot2 {
     background-color: #fcbe2b;
+    border: 1px solid #DE9F34;
+}
+
+.dot2::after {
+    background-image: url(icon/min.svg);
+    background-size: 90%;
+    transform: translateX(-1px);
 }
 
 .dot3 {
     background-color: #2cc93f;
+    border: 1px solid #27AA35;
+}
+
+.dot3::after {
+    background-image: url(icon/expand.svg);
+    background-size: 120%;
 }
 
 .button_bar {
@@ -140,9 +179,12 @@ header .header_item_holder {
     display: flex;
 }
 
-.button_bar:hover,
+.button_bar:hover {
+    background-color: rgba(0, 0, 0, 0.07);
+}
+
 .constant_hover {
-    background-color: rgba(0, 0, 0, 0.13);
+    background-color: rgba(0, 0, 0, 0.16) !important;
 }
 
 .navigation {
@@ -232,8 +274,8 @@ header .header_item_holder {
     margin-bottom: 10px;
     cursor: pointer;
     box-sizing: border-box;
-    background-color: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.13);
+    background-color: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     background-size: 70%;
     background-repeat: no-repeat;
     background-position: center;
@@ -284,8 +326,8 @@ header .header_item_holder {
     height: auto;
     min-height: 100%;
     width: 100%;
-    background-color: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.13);
+    background-color: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .project_list_holder {
@@ -301,6 +343,11 @@ header .header_item_holder {
 
 .project_list_holder a {
     text-decoration: none;
+    display: block;
+    height: 80%;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .project_icon.connections {
@@ -339,8 +386,8 @@ header .header_item_holder {
 }
 
 .search_page {
-    background-color: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.13);
+    background-color: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     box-sizing: border-box;
     height: auto;
     width: 100%;
@@ -486,6 +533,11 @@ a.red .icon:hover {
     background-size: 80%;
 }
 
+.search_holder.twitch .icon {
+    background-image: url(icon/twitch.svg);
+    background-size: 80%;
+}
+
 .search_holder.mdn .icon {
     background-image: url(icon/mdn.svg);
     background-size: 90%;
@@ -565,8 +617,8 @@ a.red .icon:hover {
     width: 100%;
     height: fit-content;
     min-height: 100px;
-    background-color: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.13);
+    background-color: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     box-sizing: border-box;
     border-radius: 12px;
     margin-bottom: 10px;
@@ -587,8 +639,8 @@ a.red .icon:hover {
     width: 100%;
     padding-top: 15px;
     padding-bottom: 15px;
-    background-color: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.13);
+    background-color: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     box-sizing: border-box;
     border-radius: 12px;
     margin-top: 10px;
@@ -622,7 +674,7 @@ a.red .icon:hover {
     background-size: 80%;
     background-position: center;
     background-repeat: no-repeat;
-    border: 2px solid rgba(255, 255, 255, 0.13);
+    border: 2px solid rgba(255, 255, 255, 0.15);
     box-sizing: border-box;
     border-radius: 12px;
     transition: border 0.2s;
@@ -636,8 +688,8 @@ a.red .icon:hover {
     width: 100%;
     height: fit-content;
     min-height: 100px;
-    background-color: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.13);
+    background-color: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     box-sizing: border-box;
     border-radius: 12px;
     padding-bottom: 20px;
@@ -764,8 +816,8 @@ a.red .icon:hover {
     margin-left: auto;
     margin-right: auto;
     display: block;
-    height: 80%;
-    width: 60%;
+    height: 100%;
+    width: 100%;
     box-sizing: border-box;
     border: 1px solid rgba(0, 0, 0, 0.23);
     background-color: #262626;
@@ -932,5 +984,9 @@ a.red .icon:hover {
 
     .project_about {
         font-size: 16px;
+    }
+
+    .copyright {
+        margin-bottom: 10px;
     }
 }

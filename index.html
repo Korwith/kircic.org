@@ -28,7 +28,7 @@
                 <div class="dot3"></div>
             </div>
 
-            <div class="button_bar constant_hover">
+            <div class="button_bar constant_hover keep">
                 <div class="icon stack"></div>
                 <span class="button_bar_text">kircic.org</span>
             </div>
@@ -196,7 +196,7 @@
                                 </div>
 
                                 <div class="project_about">
-                                    An infinite minesweeper sandbox, in HTML, CSS, and JS. Currently in development.
+                                    An infinite minesweeper sandbox. Just like the original minesweeper, but with procedurally generating terrain.
                                 </div>
                             </div>
 
@@ -286,7 +286,7 @@
                             </div>
 
                             <div class="project_about">
-                                A simple recreation of connections, match the groups of 4 like terms.
+                                Recreation of connections. Match all groups of four like terms to solve the puzzle.
                             </div>
                         </div>
 
@@ -324,7 +324,7 @@
                             </div>
 
                             <div class="project_about">
-                                A recreation of the classic game, Flappy Bird.
+                                A recreation of Flappy Bird, this is my first project. Works best on mobile devices.
                             </div>
                         </div>
 
@@ -343,7 +343,7 @@
                             </div>
 
                             <div class="project_about">
-                                An infinite minesweeper sandbox, in HTML, CSS, and JS. Currently in development.
+                                An infinite minesweeper sandbox. Just like the original minesweeper, but with procedurally generating terrain.
                             </div>
                         </div>
 
@@ -362,7 +362,7 @@
                             </div>
 
                             <div class="project_about">
-                                A recreation of the classic game, Letter Boxed.
+                                Recreation of Letter Boxed. Solve the puzzle by using all letters on different sides to make words.
                             </div>
                         </div>
 
@@ -381,7 +381,7 @@
                             </div>
 
                             <div class="project_about">
-                                A recreation of the classic Windows game, Minesweeper.
+                                Recreation of the Windows game minesweeper. Has normal and expert modes, 10x10 and 20x20.
                             </div>
                         </div>
 
@@ -400,7 +400,7 @@
                             </div>
 
                             <div class="project_about">
-                                A recreation of the classic game, Snake.
+                                Recreation of snake, collect apples without running into the edge or yourself.
                             </div>
                         </div>
 
@@ -419,7 +419,7 @@
                             </div>
 
                             <div class="project_about">
-                                A recreation of the classic game, Wordle.
+                                Recreation of Wordle. Use the clues to figure out the selected word and solve the puzzle.
                             </div>
                         </div>
 
@@ -440,10 +440,10 @@
                         <a class="placeholder_bookmark">
                             <div class="icon"></div>
                         </a>
-    
+
                         <a class="plus" title="Add Bookmark">
                             <div class="icon"></div>
-                        </a>    
+                        </a>
                     </div>
 
                     <a class="trash" title="Remove Bookmark">
@@ -542,11 +542,19 @@
                     <button class="search_go"></button>
                 </div>
 
+                <div class="search_holder twitch">
+                    <a href="https://twitch.tv" target="_blank">
+                        <div class="icon"></div>
+                    </a>
+                    <input class="search_box" placeholder="Search Twitch..." search="11">
+                    <button class="search_go"></button>
+                </div>
+
                 <div class="search_holder reddit">
                     <a href="https://www.reddit.com" target="_blank">
                         <div class="icon"></div>
                     </a>
-                    <input class="search_box" placeholder="Search Reddit..." search="11">
+                    <input class="search_box" placeholder="Search Reddit..." search="12">
                     <button class="search_go"></button>
                 </div>
 
@@ -554,7 +562,7 @@
                     <a href="https://www.twitter.com" target="_blank">
                         <div class="icon"></div>
                     </a>
-                    <input class="search_box" placeholder="Search Twitter (X)..." search="12">
+                    <input class="search_box" placeholder="Search Twitter (X)..." search="13">
                     <button class="search_go"></button>
                 </div>
 
@@ -562,7 +570,7 @@
                     <a href="https://www.archive.org" target="_blank">
                         <div class="icon"></div>
                     </a>
-                    <input class="search_box" placeholder="Search Internet Archive..." search="13">
+                    <input class="search_box" placeholder="Search Internet Archive..." search="14">
                     <button class="search_go"></button>
                 </div>
 
@@ -570,7 +578,7 @@
                     <a href="https://www.merriam-webster.com" target="_blank">
                         <div class="icon"></div>
                     </a>
-                    <input class="search_box" placeholder="Search Merriam Webster's Dictionary..." search="14">
+                    <input class="search_box" placeholder="Search Merriam Webster's Dictionary..." search="15">
                     <button class="search_go"></button>
                 </div>
 
@@ -578,7 +586,7 @@
                     <a href="https://www.urbandictionary.com" traget="_blank">
                         <div class="icon"></div>
                     </a>
-                    <input class="search_box" placeholder="Search Urban Dictionary..." search="15">
+                    <input class="search_box" placeholder="Search Urban Dictionary..." search="16">
                     <button class="search_go"></button>
                 </div>
             </div>
@@ -587,13 +595,16 @@
 
     <script src="bookmarks.js"></script>
     <script>
-        var header = document.querySelector('header');
-        var content = document.querySelector('.content');
-        var sidebar = document.querySelector('.sidebar');
-        var sidebarToggle = document.querySelector('.hamburger');
-        var expandAccounts = document.querySelector('.expand_accounts');
-        var sbTopGreen = document.querySelector('.sidebar_dots_holder .dot3');
-        var allVideo = document.querySelectorAll('video');
+        const header = document.querySelector('header');
+        const content = document.querySelector('.content');
+        const sidebar = document.querySelector('.sidebar');
+        const sidebarToggle = document.querySelector('.hamburger');
+        const expandAccounts = document.querySelector('.expand_accounts');
+        const allVideo = document.querySelectorAll('video');
+
+        const sbTopRed = document.querySelector('.sidebar_dots_holder .dot1');
+        const sbTopYellow = document.querySelector('.sidebar_dots_holder .dot2');
+        const sbTopGreen = document.querySelector('.sidebar_dots_holder .dot3');
 
         var mobileNow = false;
         var selectedPage = 'home_page';
@@ -629,9 +640,17 @@
                 document.exitFullscreen();
             }
         }
-        sbTopGreen.addEventListener('mousedown', fullscreen);
+
+        function closePage() {
+            window.location.href = 'https://www.google.com';
+        }
+
+        sbTopGreen.addEventListener('mouseup', fullscreen);
+        sbTopYellow.addEventListener('mouseup', moveSidebar);
+        sbTopRed.addEventListener('mouseup', closePage);
 
         // Sidebar Links
+        const allButtons = document.querySelectorAll('.button_bar');
         var allPages = document.querySelectorAll('.page');
         var classToPage = {
             'home_button': 'home_page',
@@ -652,7 +671,15 @@
                             foundPage.classList.add('disabled');
                         }
 
+                        for (var i = 0; i < allButtons.length; i++) {
+                            var foundButton = allButtons[i];
+                            if (!foundButton.classList.contains('keep')) {
+                                foundButton.classList.remove('constant_hover');
+                            }
+                        }
+
                         buttonPage.classList.remove('disabled');
+                        buttonElement.classList.add('constant_hover');
 
                         if (window.location.href.includes('#')) {
                             var beforeHashtag = window.location.href.split('#')[0];
@@ -783,6 +810,7 @@
             'developer.mozilla.org/en-US/search?q=',
             'stackoverflow.com/search?q=',
             'youtube.com/results?search_query=',
+            'twitch.tv/search?term=',
             'reddit.com/search/?q=',
             'twitter.com/search?q=',
             'archive.org/search?query=',
