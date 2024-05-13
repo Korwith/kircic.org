@@ -709,10 +709,17 @@
             'search': 'search_page'
         }
 
+        var pageToButton = {
+            'home': 'home_button',
+            'project': 'project_button',
+            'search': 'search_button'
+        }
+
         function isPushState() {
             if (document.location.href.includes('#')) {
                 var goToPage = document.location.href.split('#')[1];
                 var pageElement = document.querySelector('.' + pageToFrame[goToPage]);
+                var pageButton = document.querySelector('.' + pageToButton[goToPage]);
 
                 for (var i in pageToFrame) {
                     var foundPageClass = pageToFrame[i];
@@ -720,6 +727,7 @@
                     foundPage.classList.add('disabled');
                 }
 
+                pageButton.classList.add('constant_hover');
                 pageElement.classList.remove('disabled');
                 selectedPage = pageToFrame[goToPage];
             } else {
