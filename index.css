@@ -118,7 +118,8 @@ header .header_item_holder {
     margin: 6px;
     cursor: pointer;
     box-sizing: border-box;
-    position: relative
+    position: relative;
+    transition: opacity 0.2s;
 }
 
 .sidebar_dots_holder div::after {
@@ -126,13 +127,19 @@ header .header_item_holder {
     position: absolute;
     width: 100%;
     height: 100%;
+    left: 0;
+    top: 0;
     background-position: center;
     background-repeat: no-repeat;
     opacity: 0;
     transition: opacity 0.2s;
 }
 
-.sidebar_dots_holder div:hover::after {
+.sidebar_dots_holder div:hover {
+    opacity: 0.8;
+}
+
+.sidebar_dots_holder:hover div::after {
     opacity: 1;
 }
 
@@ -144,7 +151,6 @@ header .header_item_holder {
 .dot1::after {
     background-image: url(icon/close.svg);
     background-size: 90%;
-    transform: translateX(-0.5px);
 }
 
 .dot2 {
@@ -155,7 +161,6 @@ header .header_item_holder {
 .dot2::after {
     background-image: url(icon/min.svg);
     background-size: 90%;
-    transform: translateX(-1px);
 }
 
 .dot3 {
@@ -624,8 +629,16 @@ a.red .icon:hover {
     margin-bottom: 10px;
     padding-top: 10px;
     padding-bottom: 10px;
+    background:
+        repeating-linear-gradient(45deg,
+            transparent,
+            transparent 10px,
+            rgba(255, 255, 255, 0.07) 10px,
+            rgba(255, 255, 255, 0.07) 20px),
+        linear-gradient(to bottom,
+            rgba(255, 255, 255, 0.12),
+            rgba(255, 255, 255, 0.12));
 }
-
 
 .about_me span {
     display: block;
