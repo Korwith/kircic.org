@@ -960,7 +960,8 @@ a.red .icon:hover {
 
 @media screen and (max-width: 767px) {
     .blurred_img_bg {
-        background-size: 130%;
+        background-size: 200%;
+        transform: translate(90deg);
     }
 
     .content.scroll_padding .page {
