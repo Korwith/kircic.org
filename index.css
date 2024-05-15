@@ -109,6 +109,7 @@ header .header_item_holder {
     margin: 15px;
     margin-top: 9px;
     margin-bottom: 2px;
+    position: relative;
 }
 
 .sidebar_dots_holder div {
@@ -139,7 +140,7 @@ header .header_item_holder {
     opacity: 0.8;
 }
 
-.sidebar_dots_holder:hover div::after {
+.sidebar_dots_holder div:hover::after {
     opacity: 1;
 }
 
