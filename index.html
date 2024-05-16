@@ -666,6 +666,8 @@
 
                 (function (buttonElement, buttonPage, pageName) {
                     buttonElement.addEventListener('mouseup', function () {
+                        document.activeElement = content;
+                        
                         for (var i = 0; i < allPages.length; i++) {
                             var foundPage = allPages[i];
                             foundPage.classList.add('disabled');
@@ -754,7 +756,7 @@
                 content.classList.add('extend');
                 header.classList.add('extend');
                 document.activeElement = content;
-                
+
                 mobileNow = true;
             } else {
                 content.classList.remove('mobile');
