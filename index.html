@@ -753,7 +753,8 @@
                 sidebar.classList.add('closed');
                 content.classList.add('extend');
                 header.classList.add('extend');
-
+                document.activeElement = content;
+                
                 mobileNow = true;
             } else {
                 content.classList.remove('mobile');

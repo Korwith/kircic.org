@@ -983,6 +983,10 @@ a.red .icon:hover {
         transform: translate(90deg);
     }
 
+    .about_me {
+        animation-duration: 20s;
+    }
+
     .content.scroll_padding .page {
         width: 100%;
     }
