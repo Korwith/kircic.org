@@ -18,7 +18,7 @@
 </head>
 
 <body>
-    <div class="blurred_img_bg"></div>
+    <div class="blurred_img_bg purple_bg"></div>
 
     <div class="content_holder">
         <div class="sidebar">
@@ -26,6 +26,16 @@
                 <div class="dot1"></div>
                 <div class="dot2"></div>
                 <div class="dot3"></div>
+                <div class="theme_select">
+                    <div class="red"></div>
+                    <div class="orange"></div>
+                    <div class="green"></div>
+                    <div class="blue"></div>
+                    <div class="purple"></div>
+                    <div class="pink"></div>
+                    <div class="black"></div>
+                </div>
+                <div class="custom"></div>
             </div>
 
             <div class="button_bar constant_hover keep">
@@ -593,6 +603,7 @@
         </div>
     </div>
 
+    <script src="themes.js"></script>
     <script src="bookmarks.js"></script>
     <script>
         const header = document.querySelector('header');
@@ -667,7 +678,7 @@
                 (function (buttonElement, buttonPage, pageName) {
                     buttonElement.addEventListener('mouseup', function () {
                         document.activeElement = content;
-                        
+
                         for (var i = 0; i < allPages.length; i++) {
                             var foundPage = allPages[i];
                             foundPage.classList.add('disabled');

@@ -33,7 +33,34 @@ h3 {
     background-size: 100%;
     background-position: center;
     background-repeat: no-repeat;
+}
+
+.blurred_img_bg.red_bg {
+    filter: hue-rotate(-225deg) saturate(5);
+}
+
+.blurred_img_bg.orange_bg {
+    filter: hue-rotate(-190deg) saturate(2.5);
+}
+
+.blurred_img_bg.green_bg {
+    filter: hue-rotate(-90deg);
+}
+
+.blurred_img_bg.blue_bg {
+    filter: hue-rotate(0);
+}
+
+.blurred_img_bg.purple_bg {
     filter: hue-rotate(60deg);
+}
+
+.blurred_img_bg.pink_bg {
+    filter: hue-rotate(100deg);
+}
+
+.blurred_img_bg.black_bg {
+    filter: brightness(0);
 }
 
 .content_holder {
@@ -123,6 +150,92 @@ header .header_item_holder {
     transition: opacity 0.2s;
 }
 
+.sidebar_dots_holder.hide_traffic .dot1, .sidebar_dots_holder.hide_traffic .dot2, .sidebar_dots_holder.hide_traffic .dot3 {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.sidebar_dots_holder div.custom {
+    position: absolute;
+    right: 0;
+    background-color: rgba(255, 255, 255, 0);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    background-image: url(icon/custom.svg);
+    opacity: 0.23;
+    transform: translate(7px, -5px);
+    height: calc(100% - 5px);
+}
+
+.sidebar_dots_holder div.custom:hover {
+    opacity: 0.3;
+}
+
+.sidebar_dots_holder div.theme_select {
+    aspect-ratio: unset;
+    height: 100%;
+    border-radius: unset;
+    margin: 0;
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0);
+    width: 100%;
+    pointer-events: none;
+    display: flex;
+    flex-direction: row;
+    opacity: 0;
+    cursor: unset;
+}
+
+.sidebar_dots_holder div.theme_select::after {
+    content: unset;
+}
+
+.sidebar_dots_holder div.theme_select div::after {
+    content: unset;
+}
+
+.sidebar_dots_holder div.theme_select.show {
+    pointer-events: all;
+    opacity: 1;
+}
+
+.sidebar_dots_holder div.theme_select.show div {
+    opacity: 1;
+    cursor: pointer;
+    pointer-events: all;
+    box-sizing: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.33);
+}
+
+.red {
+    background-color: #e62222;
+}
+
+.orange {
+    background-color: #e66a22
+}
+
+.green {
+    background-color: #22e646;
+}
+
+.blue {
+    background-color: #222fe6;
+}
+
+.purple {
+    background-color: #7a22e6;
+}
+
+.pink {
+    background-color: #e622b2;
+}
+
+.black {
+    background-color: black;
+}
+
 .sidebar_dots_holder div::after {
     content: '';
     position: absolute;
@@ -134,6 +247,7 @@ header .header_item_holder {
     background-repeat: no-repeat;
     opacity: 0;
     transition: opacity 0.2s;
+    pointer-events: none;
 }
 
 .sidebar_dots_holder div:hover {
