@@ -201,11 +201,14 @@ header .header_item_holder {
 }
 
 .sidebar_dots_holder div.theme_select.show div {
-    opacity: 1;
     cursor: pointer;
     pointer-events: all;
     box-sizing: border-box;
     border: 1px solid rgba(0, 0, 0, 0.33);
+}
+
+.sidebar_dots_holder div.theme_select.show div:hover {
+    opacity: 0.6 !important;
 }
 
 .red {
