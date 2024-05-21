@@ -36,11 +36,11 @@ h3 {
 }
 
 .blurred_img_bg.red_bg {
-    filter: hue-rotate(-225deg) saturate(5);
+    filter: hue-rotate(-225deg);
 }
 
 .blurred_img_bg.orange_bg {
-    filter: hue-rotate(-190deg) saturate(2.5);
+    filter: hue-rotate(-190deg);
 }
 
 .blurred_img_bg.green_bg {
