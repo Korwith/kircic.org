@@ -256,7 +256,7 @@ button {
     }
 
     .object_sidebar.hidden {
-        transform: translateX(calc(-100% - 20px));
+        transform: translateY(calc(100% + 20px));
     }
     
     .render_header.hide {
@@ -266,5 +266,10 @@ button {
     .main_view.hide {
         opacity: 0;
         pointer-events: none;
+    }
+    
+    .main_view {
+        width: calc(100vw - 20px);
+        height: calc(100vh - 20px);
     }
 }
