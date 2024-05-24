@@ -243,6 +243,7 @@ function enableTransitions() {
 // Default
 handleResize();
 loadObject(false, 'obj.mtl', 'tinker.obj', false, 'QR Code', false);
+loadObject(false, 'discord_qr.mtl', 'discord_qr.obj', false, 'Discord', false);
 unpackInstance();
 setTimeout(enableTransitions, 200);
 
