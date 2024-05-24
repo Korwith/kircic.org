@@ -2,8 +2,8 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader';
-import { saveInstance } from '/import.js';
-import { unpackInstance } from '/import.js';
+import { saveInstance } from './import.js';
+import { unpackInstance } from './import.js';
 import { startFile } from './import';
 
 const object_sidebar = document.querySelector('.object_sidebar');
