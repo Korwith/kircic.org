@@ -1,4 +1,4 @@
-import { loadObject } from 'https://www.kircic.org/3d/main.js';
+import { loadObject } from './main.js';
 
 const list_holder = document.querySelector('.list_holder');
 
@@ -54,7 +54,6 @@ function getAllSaves() {
         let mtlURL = thisButton.getAttribute('mtl');
         let objURL = thisButton.getAttribute('obj');
         let renderName = thisButton.getAttribute('name');
-        console.log(renderName);
         let info = { mtl: mtlURL, obj: objURL, name: renderName };
 
         if (mtlURL.includes('http') && objURL.includes('http')) {

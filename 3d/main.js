@@ -2,9 +2,9 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader';
-import { saveInstance } from 'https://www.kircic.org/3d/import.js';
-import { unpackInstance } from 'https://www.kircic.org/3d/import.js';
-import { startFile } from 'https://www.kircic.org/3d/import.js';
+import { saveInstance } from './import.js';
+import { unpackInstance } from './import.js';
+import { startFile } from './import.js';
 
 const object_sidebar = document.querySelector('.object_sidebar');
 const render_header = document.querySelector('.render_header');
@@ -73,7 +73,7 @@ function loadObject(parentElement, mtlName, objName, reload, saveName, fromLoad)
 
     // Object
     if (!fromLoad) {
-        makeObject(mtlName, objName, scene, camera, render);
+        makeObject(mtlName, objName, scene, camera, render, setMain);
         if (saveName) {
             name_input.value = saveName;
         } else {
@@ -110,7 +110,7 @@ function loadObject(parentElement, mtlName, objName, reload, saveName, fromLoad)
     }
 }
 
-function makeObject(mtlName, objName, scene, camera, render) {
+function makeObject(mtlName, objName, scene, camera, render, main) {
     const mtlLoad = new MTLLoader();
     mtlLoad.load(mtlName, function (materials) {
         materials.preload();
@@ -124,12 +124,12 @@ function makeObject(mtlName, objName, scene, camera, render) {
             let boundingBox = new THREE.Box3().setFromObject(object);
             let center = boundingBox.getCenter(new THREE.Vector3());
             let size = boundingBox.getSize(new THREE.Vector3());
-
+            
             let maxDim = Math.max(size.x, size.y, size.z);
             let fov = camera.fov * (Math.PI / 180);
             let cameraDistance = Math.abs(maxDim / (2 * Math.tan(fov / 2)));
-
-            if (document.innerWidth < 767) {
+            
+            if ((window.innerWidth < 767) && main) {
                 cameraDistance += 3;
             }
 
@@ -158,7 +158,6 @@ function makeClone(mtlName, objName, saveName) {
         let thisOBJ = clone.getAttribute('obj');
 
         clone.onclick = function () {
-            console.log('tried load')
             loadObject(null, thisMTL, thisOBJ, true);
             handleMobileUI();
         };
@@ -192,16 +191,6 @@ function renameRender() {
 }
 
 function handleResize() {
-    if (window.innerWidth < 767) {
-        render_header.classList.add('expand');
-        object_sidebar.classList.add('hidden');
-        frame.classList.add('expand');
-    } else {
-        object_sidebar.classList.remove('hidden');
-        render_header.classList.remove('expand');
-        frame.classList.remove('expand');
-    }
-
     if (mainScene) {
         loadObject(null, selectedMTL, selectedOBJ, true);
     }
@@ -234,23 +223,28 @@ function keyListener(event) {
 }
 
 function handleMobileUI() {
-    let hidden = object_sidebar.classList.contains('hidden');
+    let shown = object_sidebar.classList.contains('show');
     
-    if (hidden) {
-        object_sidebar.classList.remove('hidden');
-        render_header.classList.add('hide');
-        frame.classList.add('hide');
-    } else {
-        object_sidebar.classList.add('hidden');
+    if (shown) {
+        object_sidebar.classList.remove('show');
         render_header.classList.remove('hide');
         frame.classList.remove('hide');
+    } else {
+        object_sidebar.classList.add('show');
+        render_header.classList.add('hide');
+        frame.classList.add('hide');
     }
+}
+
+function enableTransitions() {
+    document.body.classList.remove('no-transition');
 }
 
 // Default
 handleResize();
 loadObject(false, 'obj.mtl', 'tinker.obj', false, 'QR Code', false);
 unpackInstance();
+setTimeout(enableTransitions, 200);
 
 window.onresize = handleResize;
 document.addEventListener('keydown', keyListener);

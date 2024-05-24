@@ -9,6 +9,10 @@ body {
     linear-gradient(to bottom, #555a64 1px, transparent 1px);
 }
 
+body.no-transition * {
+    transition: none !important;
+}
+
 button {
     user-select: none;
 }
@@ -41,12 +45,7 @@ button {
     left: 310px;
     top: 0;
     display: flex;
-    transition: width 0.2s, left 0.2s, opacity 0.2s;
-}
-
-.render_header.expand {
-    width: calc(100% - 20px);
-    left: 0;
+    transition: width 0.2s, left 0.2s, opacity 0.2s, transform 0.2s;
 }
 
 .render_name {
@@ -230,7 +229,7 @@ button {
     position: fixed;
     right: 0;
     top: 0;
-    margin: 10px;
+    margin: 10px
 }
 
 .tiny_render {
@@ -245,11 +244,17 @@ button {
     .object_sidebar {
         width: calc(100vw - 20px);
         height: calc(100vh - 20px);
+        transform: translateY(calc(100% + 20px));
     }
 
     .name_text {
         flex: unset;
         width: 50%;
+    }
+
+    .render_header {
+        width: calc(100% - 20px);
+        left: 0;
     }
 
     .right_header button {
@@ -261,12 +266,12 @@ button {
         display: block;
     }
 
-    .object_sidebar.hidden {
-        transform: translateY(calc(100% + 20px));
+    .object_sidebar.show {
+        transform: none;
     }
     
     .render_header.hide {
-        display: none;
+        transform: translateY(calc(-100% - 20px));
     }
 
     .main_view.hide {

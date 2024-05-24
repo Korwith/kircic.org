@@ -16,7 +16,7 @@
     <meta property="og:description" content="3D File Viewer which supports OBJ and MTL files.">
 </head>
 
-<body>
+<body class="no-transition">
     <div class="object_sidebar">
         <div class="list_holder">
             <div id='placeholder'></div>
@@ -44,14 +44,14 @@
 <script type="importmap">
         {
             "imports": {
-                "three": "https://www.kircic.org/3d/node_modules/three/build/three.module.js",
-                "three/examples/jsm/controls/OrbitControls": "https://www.kircic.org/3d/node_modules/three/examples/jsm/controls/OrbitControls.js",
-                "three/examples/jsm/loaders/OBJLoader": "https://www.kircic.org/3d/node_modules/three/examples/jsm/loaders/OBJLoader.js",
-                "three/examples/jsm/loaders/MTLLoader": "https://www.kircic.org/3d/node_modules/three/examples/jsm/loaders/MTLLoader.js"
+                "three": "./node_modules/three/build/three.module.js",
+                "three/examples/jsm/controls/OrbitControls": "./node_modules/three/examples/jsm/controls/OrbitControls.js",
+                "three/examples/jsm/loaders/OBJLoader": "./node_modules/three/examples/jsm/loaders/OBJLoader.js",
+                "three/examples/jsm/loaders/MTLLoader": "./node_modules/three/examples/jsm/loaders/MTLLoader.js"
             }
         }
     </script>
 
-<script type="module" src="https://www.kircic.org/3d/import.js"></script>
+<script type="module" src="./import.js"></script>
 
 </html>
