@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>3D File Viewer</title>
+    <link rel="stylesheet" href="styles.css">
+    <title>3D Viewer</title>
+    <meta name="title" content="3D Viewer" />
+    <meta name="description" content="3D File Viewer which supports OBJ and MTL files." />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#1111ff">
+    <meta name="author" content="kircic">
+    <meta property="og:title" content="3D Viewer">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.kircic.org/3d/view.html">
+    <meta property="og:description" content="3D File Viewer which supports OBJ and MTL files.">
+</head>
+
+<body>
+    <div class="object_sidebar">
+        <div class="list_holder">
+            <div id='placeholder'></div>
+        </div>
+
+        <div class="button_holder">
+            <button id="import">Import</button>
+        </div>
+    </div>
+
+    <div class="main_view"></div>
+    <div class="render_header">
+        <div class="render_name">
+            <input class="name_text" placeholder="None Selected...">
+            <button class="name_edit"></button>
+        </div>
+
+        <div class="right_header">
+            <button class="plus"></button>
+            <button class="delete"></button>
+        </div>
+    </div>
+</body>
+
+<script type="importmap">
+        {
+            "imports": {
+                "three": "https://www.kircic.org/3d/node_modules/three/build/three.module.js",
+                "three/examples/jsm/controls/OrbitControls": "https://www.kircic.org/3d/node_modules/three/examples/jsm/controls/OrbitControls.js",
+                "three/examples/jsm/loaders/OBJLoader": "https://www.kircic.org/3d/node_modules/three/examples/jsm/loaders/OBJLoader.js",
+                "three/examples/jsm/loaders/MTLLoader": "https://www.kircic.org/3d/node_modules/three/examples/jsm/loaders/MTLLoader.js"
+            }
+        }
+    </script>
+
+<script type="module" src="https://www.kircic.org/3d/import.js"></script>
+
+</html>
