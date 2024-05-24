@@ -242,12 +242,13 @@ button {
 
 @media screen and (max-width: 767px) {
     .object_sidebar {
-        width: calc(100% - 20px);
+        width: calc(100vw - 20px);
+        height: calc(100vh - 20px);
     }
 
     .name_text {
         flex: unset;
-        width: 45%;
+        width: 50%;
     }
 
     .right_header button.plus {
