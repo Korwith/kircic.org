@@ -252,6 +252,11 @@ button {
         width: 50%;
     }
 
+    .right_header button {
+        height: 50px;
+        width: 50px;
+    }
+
     .right_header button.plus {
         display: block;
     }
