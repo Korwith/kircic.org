@@ -4,6 +4,7 @@ body {
     background-size: 50px 50px;
     background-position: center;
     overflow: hidden;
+    user-select: none;
     background-image:
     linear-gradient(to right, #555a64 1px, transparent 1px),
     linear-gradient(to bottom, #555a64 1px, transparent 1px);
