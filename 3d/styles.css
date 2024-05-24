@@ -214,6 +214,7 @@ button {
     right: 0;
     top: 0;
     margin: 10px;
+    user-select: none;
     transition: width 0.2s, opacity 0.2s;
 }
 

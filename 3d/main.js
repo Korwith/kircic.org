@@ -129,6 +129,10 @@ function makeObject(mtlName, objName, scene, camera, render) {
             let fov = camera.fov * (Math.PI / 180);
             let cameraDistance = Math.abs(maxDim / (2 * Math.tan(fov / 2)));
 
+            if (document.innerWidth < 767) {
+                cameraDistance += 3;
+            }
+
             camera.position.copy(center);
             camera.position.z += (cameraDistance + 2);
             camera.lookAt(center);
