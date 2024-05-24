@@ -1,4 +1,4 @@
-import { loadObject } from './main.js';
+import { loadObject } from '../main.js';
 
 const list_holder = document.querySelector('.list_holder');
 
