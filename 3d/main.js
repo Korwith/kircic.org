@@ -271,7 +271,7 @@ function keyListener(event) {
 
 // Default
 handleResize();
-loadObject(false, { mtl: 'discord_qr.mtl', obj: 'discord_qr.obj', glb: null }, false, 'QR Code', false);
+loadObject(false, { mtl: 'preset/discord_qr.mtl', obj: 'preset/discord_qr.obj', glb: null }, false, 'QR Code', false);
 setTimeout(enableTransitions, 200);
 
 window.onresize = handleResize;
