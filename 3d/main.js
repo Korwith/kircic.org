@@ -113,6 +113,12 @@ function makeObject(fileTable, scene, camera, render, setMain) {
     if (fileTable.glb) {
         const glbLoad = new GLTFLoader();
         glbLoad.load(glbName, function (gltf) {
+            gltf.scene.traverse(function (child) {
+                if (child.isMesh) { //also tried without this if statement
+                    child.material.depthWrite = true;
+                }
+            });
+
             defaultView(gltf.scene, camera);
             scene.add(gltf.scene);
             render.render(scene, camera);
@@ -156,11 +162,11 @@ function defaultView(object, camera) {
     let cameraDistance = Math.abs(maxDim / (2 * Math.tan(fov / 2)));
 
     if ((window.innerWidth < 767) && current.scene) {
-        cameraDistance += 3;
+        cameraDistance += 4;
     }
 
     camera.position.copy(center);
-    camera.position.z += (cameraDistance + 2);
+    camera.position.z += (cameraDistance + 1);
     camera.lookAt(center);
 }
 
