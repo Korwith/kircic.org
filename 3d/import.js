@@ -6,7 +6,7 @@ const extensions = ['mtl', 'obj', 'glb'];
 function startImport() {
     let newInput = document.createElement('input');
     newInput.type = 'file';
-    newInput.accept = '.obj,.mtl,.glb';
+    newInput.accept = 'model/obj, model/mtl, model/gltf-binary';
     newInput.multiple = true;
     newInput.style.display = 'none';
     document.body.appendChild(newInput);
