@@ -418,11 +418,14 @@ function loadPresets() {
 }
 function findState() {
     let pageName = window.location.href;
+    let firstPreset = presetDB[1];
 
     if (pageName.includes('#')) {
         let presetID = pageName.split('#id=')[1];
         let thisData = presetDB[presetID];
         loadObject(null, thisData.fileTable, true, thisData.name, false);
+    } else {
+        loadObject(null, firstPreset.fileTable, true, firstPreset.name, false)
     }
 }
 
