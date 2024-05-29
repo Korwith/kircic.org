@@ -283,7 +283,8 @@ button {
     
     .main_view {
         width: calc(100vw);
-        height: calc(100dvh - 20px);
+        height: calc(100dvh);
         margin: 0;
+        bottom: 0;
     }
 }
