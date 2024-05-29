@@ -347,4 +347,8 @@ button {
         margin: 0;
         bottom: 0;
     }
+    
+    .user_credit {
+        left: 0;
+    }
 }
