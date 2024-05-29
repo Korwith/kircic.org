@@ -11,6 +11,7 @@ const name_input = document.querySelector('.name_text');
 const name_button = document.querySelector('.name_edit');
 const placeholder = document.querySelector('#placeholder');
 const frame = document.querySelector('.main_view');
+const render_info = document.querySelector('.render_info');
 const user_credit = document.querySelector('.user_credit');
 const credit_icon = document.querySelector('.user_credit .icon');
 const credit_user = document.querySelector('.user_credit .username');
@@ -260,12 +261,12 @@ function handleMobileUI() {
 
     if (shown) {
         object_sidebar.classList.remove('show');
-        render_header.classList.remove('hide');
         frame.classList.remove('hide');
+        render_info.classList.add('hide');
     } else {
         object_sidebar.classList.add('show');
-        render_header.classList.add('hide');
         frame.classList.add('hide');
+        render_info.classList.add('hide');
     }
 }
 

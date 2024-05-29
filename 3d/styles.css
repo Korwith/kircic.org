@@ -65,6 +65,12 @@ button {
     background-color: rgba(0, 0, 0, 0);
     display: flex;
     flex-direction: column;
+    transition: opacity 0.2s;
+}
+
+.render_info.hide {
+    pointer-events: none;
+    opacity: 0;
 }
 
 .user_credit {
@@ -72,12 +78,6 @@ button {
     width: 100%;
     display: flex;
     flex-direction: row;
-    transition: opacity 0.2s;
-}
-
-.user_credit.hide {
-    pointer-events: none;
-    opacity: 0;
 }
 
 .user_credit .icon {
@@ -155,6 +155,7 @@ button {
     background-color: #fc6156;
     border: 3px solid #DF4744;
     background-image: url(assets/close.svg);
+    display: none;
 }
 
 .right_header button.plus {
@@ -222,9 +223,9 @@ button {
 }
 
 .list_holder div {
+    aspect-ratio: 1/1;
     margin: 5px;
-    width: 85px;
-    height: 85px;
+    width: calc((100% / 3) - 10px);
     border-radius: 8px;
     background-color: rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
@@ -309,9 +310,10 @@ button {
 
 @media screen and (max-width: 767px) {
     .object_sidebar {
+        position: fixed;
         width: calc(100vw - 20px);
-        height: calc(100dvh - 20px);
-        transform: translateY(calc(100% + 20px));
+        height: calc(100dvh - 80px);
+        transform: translateY(calc(100% + 90px));
     }
 
     .name_text {
@@ -334,6 +336,7 @@ button {
     }
 
     .object_sidebar.show {
+        top: 60px;
         transform: none;
     }
     
