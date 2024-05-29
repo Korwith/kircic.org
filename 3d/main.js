@@ -243,29 +243,34 @@ function makeClone(fileTable, saveName, img, preset, creditTable) {
         clone.onclick = function () {
             loadObject(null, { mtl: thisMTL, obj: thisOBJ, glb: thisGLB }, true);
             handleMobileUI();
-
-            name_input.classList = 'name_text';
-            name_button.classList = 'name_edit';
-            if (preset) {
-                name_input.value = saveName;
-                name_input.classList.add('no_edit');
-                name_button.classList.add('no_edit');
-
-                let presetID = clone.getAttribute('preset');
-                setState(presetID);
-            }
-
-            if (creditTable) {
-                render_info.classList.remove('hide');
-                credit_icon.style.backgroundImage = `url(usericon/${creditTable.icon})`;
-                credit_user.innerHTML = `@${creditTable.user}`;
-            } else {
-                render_info.classList.add('hide');
-            }
+            updateObjectName(clone, creditTable, preset, saveName);
         };
     })(clone);
 
     return clone;
+}
+
+function updateObjectName(clone, creditTable, preset, saveName, noSet) {
+    name_input.classList = 'name_text';
+    name_button.classList = 'name_edit';
+    if (preset) {
+        name_input.value = saveName;
+        name_input.classList.add('no_edit');
+        name_button.classList.add('no_edit');
+
+        if (!noSet) {
+            let presetID = clone.getAttribute('preset');
+            setState(presetID);
+        }
+    }
+
+    if (creditTable) {
+        render_info.classList.remove('hide');
+        credit_icon.style.backgroundImage = `url(usericon/${creditTable.icon})`;
+        credit_user.innerHTML = `@${creditTable.user}`;
+    } else {
+        render_info.classList.add('hide');
+    }
 }
 
 function setState(presetID) {
@@ -419,13 +424,17 @@ function loadPresets() {
 function findState() {
     let pageName = window.location.href;
     let firstPreset = presetDB[1];
+    let firstClone = list_holder.querySelector(`[preset="1"]`);
 
     if (pageName.includes('#')) {
         let presetID = pageName.split('#id=')[1];
         let thisData = presetDB[presetID];
+        let thisClone = list_holder.querySelector(`[preset="${presetID}"]`);
         loadObject(null, thisData.fileTable, true, thisData.name, false);
+        updateObjectName(thisClone, thisData.credit, presetID, thisData.name);
     } else {
-        loadObject(null, firstPreset.fileTable, true, firstPreset.name, false)
+        loadObject(null, firstPreset.fileTable, true, firstPreset.name, false);
+        updateObjectName(firstClone, firstPreset.credit, 1, firstPreset.name, true);
     }
 }
 
