@@ -8,10 +8,15 @@ body {
     background-image:
     linear-gradient(to right, #555a64 1px, transparent 1px),
     linear-gradient(to bottom, #555a64 1px, transparent 1px);
+    transition: background-color 0.2s;
 }
 
 body.no-transition * {
     transition: none !important;
+}
+
+body.dark {
+    background-color: black;
 }
 
 button {
