@@ -147,10 +147,10 @@ function makeObject(fileTable, scene, camera, render, setMain) {
 
 function displayLoadingText(xhr) {
     const percentComplete = ((xhr.loaded / xhr.total) * 100).toFixed(2);
-    percent_text.classList.add('show');
 
     if (percentComplete < 100) {
         percent_text.innerHTML = `${percentComplete}% Loaded`;
+        percent_text.classList.add('show');
     } else {
         percent_text.innerHTML = '100% Loaded';
         setTimeout(function () { percent_text.classList.remove('show') }, 100);
