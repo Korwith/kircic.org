@@ -119,7 +119,7 @@ function makeObject(fileTable, scene, camera, render, setMain) {
                 }
             });
 
-            defaultView(gltf.scene, camera);
+            defaultView(gltf.scene, camera, setMain);
             scene.add(gltf.scene);
             render.render(scene, camera);
         });
@@ -132,7 +132,7 @@ function makeObject(fileTable, scene, camera, render, setMain) {
             const objLoad = new OBJLoader();
             objLoad.setMaterials(materials);
             objLoad.load(objName, function (object) {
-                defaultView(object, camera);
+                defaultView(object, camera, setMain);
 
                 scene.add(object);
                 render.render(current.scene, current.camera);
@@ -149,7 +149,7 @@ function addLighting(scene) {
     scene.add(directionalLight);
 }
 
-function defaultView(object, camera) {
+function defaultView(object, camera, setMain) {
     object.scale.set(0.1, 0.1, 0.1);
     object.position.set(0, 0, 0);
 
@@ -161,8 +161,10 @@ function defaultView(object, camera) {
     let fov = camera.fov * (Math.PI / 180);
     let cameraDistance = Math.abs(maxDim / (2 * Math.tan(fov / 2)));
 
-    if ((window.innerWidth < 767) && current.scene) {
-        cameraDistance += 4;
+    if (setMain) {
+        if ((window.innerWidth < 767) && current.scene) {
+            cameraDistance += 4;
+        }
     }
 
     camera.position.copy(center);
@@ -277,7 +279,9 @@ function keyListener(event) {
 
 // Default
 handleResize();
-loadObject(false, { mtl: 'preset/discord_qr.mtl', obj: 'preset/discord_qr.obj', glb: null }, false, 'QR Code', false);
+loadObject(false, {glb: 'preset/ship.glb'});
+loadObject(false, {glb: 'preset/dark_church.glb'});
+loadObject(false, { mtl: 'preset/discord_qr.mtl', obj: 'preset/discord_qr.obj'}, false, 'QR Code', false);
 setTimeout(enableTransitions, 200);
 
 window.onresize = handleResize;
