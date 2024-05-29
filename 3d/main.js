@@ -15,6 +15,7 @@ const render_info = document.querySelector('.render_info');
 const user_credit = document.querySelector('.user_credit');
 const credit_icon = document.querySelector('.user_credit .icon');
 const credit_user = document.querySelector('.user_credit .username');
+const percent_text = document.querySelector('.percent_text');
 
 const delete_button = document.querySelector('.delete');
 const display_button = document.querySelector('.plus');
@@ -125,7 +126,7 @@ function makeObject(fileTable, scene, camera, render, setMain) {
             defaultView(gltf.scene, camera, setMain);
             scene.add(gltf.scene);
             render.render(scene, camera);
-        });
+        }, displayLoadingText)
     } else if (fileTable.mtl && fileTable.obj) {
         const mtlLoad = new MTLLoader();
 
@@ -140,7 +141,19 @@ function makeObject(fileTable, scene, camera, render, setMain) {
                 scene.add(object);
                 render.render(current.scene, current.camera);
             });
-        });
+        }, displayLoadingText)
+    }
+}
+
+function displayLoadingText(xhr) {
+    const percentComplete = ((xhr.loaded / xhr.total) * 100).toFixed(2);
+    percent_text.classList.add('show');
+
+    if (percentComplete < 100) {
+        percent_text.innerHTML = `${percentComplete}% Loaded`;
+    } else {
+        percent_text.innerHTML = '100% Loaded';
+        setTimeout(function() { percent_text.classList.remove('show') }, 100);
     }
 }
 
