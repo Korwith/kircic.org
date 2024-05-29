@@ -11,10 +11,12 @@ const name_input = document.querySelector('.name_text');
 const name_button = document.querySelector('.name_edit');
 const placeholder = document.querySelector('#placeholder');
 const frame = document.querySelector('.main_view');
+const user_credit = document.querySelector('.user_credit');
+const credit_icon = document.querySelector('.user_credit .icon');
+const credit_user = document.querySelector('.user_credit .username');
 
 const delete_button = document.querySelector('.delete');
 const display_button = document.querySelector('.plus');
-const import_button = document.querySelector('#import');
 
 let current = {
     scene: null,
@@ -191,7 +193,7 @@ function findButtonSelect(fileTable) {
     return query;
 }
 
-function makeClone(fileTable, saveName, img) {
+function makeClone(fileTable, saveName, img, preset, creditTable) {
     let clone = placeholder.cloneNode(true);
     if (fileTable.glb) {
         clone.setAttribute('glb', fileTable.glb)
@@ -221,6 +223,22 @@ function makeClone(fileTable, saveName, img) {
         clone.onclick = function () {
             loadObject(null, { mtl: thisMTL, obj: thisOBJ, glb: thisGLB }, true);
             handleMobileUI();
+
+            name_input.classList = 'name_text';
+            name_button.classList = 'name_edit';
+            if (preset) {
+                name_input.value = saveName;
+                name_input.classList.add('no_edit');
+                name_button.classList.add('no_edit');
+            }
+
+            if (creditTable) {
+                user_credit.classList = 'user_credit';
+                credit_icon.style.backgroundImage = `url(usericon/${creditTable.icon})`;
+                credit_user.innerHTML = `@${creditTable.user}`;
+            } else {
+                user_credit.classList.add('hide');
+            }
         };
     })(clone);
 
@@ -253,7 +271,7 @@ function handleMobileUI() {
 
 function handleResize() {
     if (current.scene) {
-        loadObject(null, { mtl: current.mtl, obj: current.obj, glb: current.glb }, true);
+        loadObject(null, { mtl: current.mtl, obj: current.obj, glb: current.glb });
     }
 }
 
@@ -283,11 +301,11 @@ function keyListener(event) {
 
 // Default
 handleResize();
-makeClone({glb: 'preset/ship.glb'}, 'Spaceship', 'ship_preview.png')
-makeClone({glb: 'preset/dark_church.glb'}, 'Dark Church', 'darkchurch_preview.png');
-makeClone({glb: 'preset/castle_1.glb'}, 'Castle', 'castle_preview.png');
-makeClone({glb: 'preset/statue.glb'}, 'Statue', 'statue.png');
-makeClone({mtl: 'preset/discord_qr.mtl', obj: 'preset/discord_qr.obj'}, 'Discord', 'qr_preview.png');
+makeClone({glb: 'preset/ship.glb'}, 'Spaceship', 'ship_preview.png', true, {user: 'phamian', icon: 'phamian.webp'});
+makeClone({glb: 'preset/dark_church.glb'}, 'Dark Church', 'darkchurch_preview.png', true, {user: 'kircic', icon: 'kircic.webp'});
+makeClone({glb: 'preset/castle_1.glb'}, 'Castle', 'castle_preview.png', true, {user: 'variberry', icon: 'variberry.webp'});
+makeClone({glb: 'preset/statue.glb'}, 'Statue', 'statue.png', true);
+makeClone({mtl: 'preset/discord_qr.mtl', obj: 'preset/discord_qr.obj'}, 'Discord', 'qr_preview.png', true, {user: 'kircic', icon: 'kircic.webp'});
 setTimeout(enableTransitions, 200);
 
 window.onresize = handleResize;

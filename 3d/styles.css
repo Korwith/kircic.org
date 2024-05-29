@@ -49,6 +49,56 @@ button {
     transition: width 0.2s, left 0.2s, opacity 0.2s, transform 0.2s;
 }
 
+.render_info {
+    height: fit-content;
+    min-height: 50px;
+    width: 250px;
+    position: fixed;
+    top: 60px;
+    left: 310px;
+    margin: 10px;
+    background-color: rgba(0, 0, 0, 0);
+    display: flex;
+    flex-direction: column;
+}
+
+.user_credit {
+    height: 50px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    transition: opacity 0.2s;
+}
+
+.user_credit.hide {
+    pointer-events: none;
+    opacity: 0;
+}
+
+.user_credit .icon {
+    flex: 0 0 auto;
+    height: 100%;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(0, 0, 0, 0.33);
+    box-shadow: black 2px 2px 4px;
+    box-sizing: border-box;
+    background-size: cover;
+}
+
+.user_credit .username {
+    flex: 1;
+    margin-left: 10px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px black;
+    color: white;
+    font-size: 1.2rem;
+}
+
 .render_name {
     height: 100%;
     width: fit-content;
@@ -125,6 +175,10 @@ button {
     margin-right: 10px;
 }
 
+.name_text.no_edit {
+    pointer-events: none;
+}
+
 .name_edit {
     aspect-ratio: 1/1;
     flex: 0 0 auto;
@@ -142,6 +196,12 @@ button {
     background-size: 50%;
     background-position: center;
     background-image: url(assets/edit.svg);
+    transition: opacity 0.2s;
+}
+
+.name_edit.no_edit {
+    pointer-events: none;
+    opacity: 0;
 }
 
 .name_edit:hover {
