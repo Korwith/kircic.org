@@ -191,7 +191,7 @@ function findButtonSelect(fileTable) {
     return query;
 }
 
-function makeClone(fileTable, saveName) {
+function makeClone(fileTable, saveName, img) {
     let clone = placeholder.cloneNode(true);
     if (fileTable.glb) {
         clone.setAttribute('glb', fileTable.glb)
@@ -204,6 +204,10 @@ function makeClone(fileTable, saveName) {
         clone.setAttribute('name', saveName);
     } else {
         clone.setAttribute('name', 'none yet');
+    }
+
+    if (img) {
+        clone.style.backgroundImage = `url(preview_img/${img})`;
     }
 
     clone.removeAttribute('id');
@@ -279,9 +283,9 @@ function keyListener(event) {
 
 // Default
 handleResize();
-loadObject(false, {glb: 'preset/ship.glb'});
-loadObject(false, {glb: 'preset/dark_church.glb'});
-loadObject(false, { mtl: 'preset/discord_qr.mtl', obj: 'preset/discord_qr.obj'}, false, 'QR Code', false);
+makeClone({glb: 'preset/ship.glb'}, 'Spaceship', 'ship_preview.png')
+makeClone({glb: 'preset/dark_church.glb'}, 'Dark Church', 'darkchurch_preview.png');
+makeClone({mtl: 'preset/discord_qr.mtl', obj: 'preset/discord_qr.obj'}, 'Discord', 'qr_preview.png');
 setTimeout(enableTransitions, 200);
 
 window.onresize = handleResize;

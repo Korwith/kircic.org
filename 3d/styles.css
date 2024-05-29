@@ -167,6 +167,7 @@ button {
     cursor: pointer;
     transition: border 0.2s;
     position: relative;
+    background-size: cover;
 }
 
 
