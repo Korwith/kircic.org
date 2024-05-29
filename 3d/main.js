@@ -285,6 +285,8 @@ function keyListener(event) {
 handleResize();
 makeClone({glb: 'preset/ship.glb'}, 'Spaceship', 'ship_preview.png')
 makeClone({glb: 'preset/dark_church.glb'}, 'Dark Church', 'darkchurch_preview.png');
+makeClone({glb: 'preset/castle_1.glb'}, 'Castle', 'castle_preview.png');
+makeClone({glb: 'preset/statue.glb'}, 'Statue', 'statue.png');
 makeClone({mtl: 'preset/discord_qr.mtl', obj: 'preset/discord_qr.obj'}, 'Discord', 'qr_preview.png');
 setTimeout(enableTransitions, 200);
 
