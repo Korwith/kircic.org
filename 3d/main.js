@@ -426,15 +426,25 @@ function findState() {
     let firstPreset = presetDB[1];
     let firstClone = list_holder.querySelector(`[preset="1"]`);
 
+    function defaultLoad() {
+        loadObject(null, firstPreset.fileTable, true, firstPreset.name, false);
+        updateObjectName(firstClone, firstPreset.credit, 1, firstPreset.name, true);
+    }
     if (pageName.includes('#')) {
         let presetID = pageName.split('#id=')[1];
         let thisData = presetDB[presetID];
-        let thisClone = list_holder.querySelector(`[preset="${presetID}"]`);
-        loadObject(null, thisData.fileTable, true, thisData.name, false);
-        updateObjectName(thisClone, thisData.credit, presetID, thisData.name);
+        if (thisData) {
+            let thisClone = list_holder.querySelector(`[preset="${presetID}"]`);
+            loadObject(null, thisData.fileTable, true, thisData.name, false);
+            updateObjectName(thisClone, thisData.credit, presetID, thisData.name);
+        } else {
+            // invalid state
+            setState(null);
+            defaultLoad();
+        }
     } else {
-        loadObject(null, firstPreset.fileTable, true, firstPreset.name, false);
-        updateObjectName(firstClone, firstPreset.credit, 1, firstPreset.name, true);
+        // no state
+        defaultLoad()
     }
 }
 
