@@ -175,9 +175,11 @@ function defaultView(object, camera, setMain) {
     camera.lookAt(center);
 }
 
-function clearBoard(scene) {
-    current.controls.dispose();
-    current.render.dispose();
+function clearBoard(scene, noDispose) {
+    if (!noDispose) {
+        current.controls.dispose();
+        current.render.dispose();
+    }
     scene.remove.apply(scene, scene.children);
     THREE.Cache.clear();
 }
@@ -270,12 +272,6 @@ function handleMobileUI() {
     }
 }
 
-function handleResize() {
-    if (current.scene) {
-        loadObject(null, { mtl: current.mtl, obj: current.obj, glb: current.glb });
-    }
-}
-
 function renameRender() {
     let new_name = name_input.value;
     let button_select = findButtonSelect({ obj: current.obj, mtl: current.mtl, glb: current.glb });
@@ -300,16 +296,30 @@ function keyListener(event) {
     }
 }
 
+function handleResizeComplete() {
+    if (current.scene) {
+        // not finished
+    }
+}
+
+let resizeTimeout;
+window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+
+    resizeTimeout = setTimeout(() => {
+        console.log('Resize event finished.');
+        handleResizeComplete();
+    }, 300);
+});
+
 // Default
-handleResize();
-makeClone({glb: 'preset/ship.glb'}, 'Spaceship', 'ship_preview.png', true, {user: 'phamian', icon: 'phamian.webp'});
-makeClone({glb: 'preset/dark_church.glb'}, 'Dark Church', 'darkchurch_preview.png', true, {user: 'kircic', icon: 'kircic.webp'});
-makeClone({glb: 'preset/castle_1.glb'}, 'Castle', 'castle_preview.png', true, {user: 'variberry', icon: 'variberry.webp'});
-makeClone({glb: 'preset/statue.glb'}, 'Statue', 'statue.png', true);
-makeClone({mtl: 'preset/discord_qr.mtl', obj: 'preset/discord_qr.obj'}, 'Discord', 'qr_preview.png', true, {user: 'kircic', icon: 'kircic.webp'});
+makeClone({ glb: 'preset/ship.glb' }, 'Spaceship', 'ship_preview.png', true, { user: 'phamian', icon: 'phamian.webp' });
+makeClone({ glb: 'preset/dark_church.glb' }, 'Dark Church', 'darkchurch_preview.png', true, { user: 'kircic', icon: 'kircic.webp' });
+makeClone({ glb: 'preset/castle_1.glb' }, 'Castle', 'castle_preview.png', true, { user: 'variberry', icon: 'variberry.webp' });
+makeClone({ glb: 'preset/statue.glb' }, 'Statue', 'statue.png', true);
+makeClone({ mtl: 'preset/discord_qr.mtl', obj: 'preset/discord_qr.obj' }, 'Discord', 'qr_preview.png', true, { user: 'kircic', icon: 'kircic.webp' });
 setTimeout(enableTransitions, 200);
 
-window.onresize = handleResize;
 document.addEventListener('keydown', keyListener);
 name_button.addEventListener('mouseup', nameFieldFocus);
 delete_button.addEventListener('mouseup', deleteObject);
