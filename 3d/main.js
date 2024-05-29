@@ -379,8 +379,8 @@ let presetDB = {
         image: 'ship_preview.png',
         presetID: 2,
         credit: {
-            user: 'phamian',
-            icon: 'phamian.webp'
+            user: 'vite',
+            icon: 'vite.webp'
         }
     },
     3: {
