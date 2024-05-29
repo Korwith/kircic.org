@@ -407,6 +407,18 @@ let presetDB = {
             icon: 'variberry.webp'
         }
     },
+    5: {
+        fileTable: {
+            glb: 'preset/82skull.glb',
+        },
+        name: 'Skull',
+        image: 'skull.png',
+        presetID: 5,
+        credit: {
+            user: 'pinksock82',
+            icon: 'pinksock.webp'
+        }
+    }
 }
 
 function loadPresets() {
