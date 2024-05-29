@@ -256,11 +256,11 @@ function makeClone(fileTable, saveName, img, preset, creditTable) {
             }
 
             if (creditTable) {
-                user_credit.classList = 'user_credit';
+                render_info.classList.remove('hide');
                 credit_icon.style.backgroundImage = `url(usericon/${creditTable.icon})`;
                 credit_user.innerHTML = `@${creditTable.user}`;
             } else {
-                user_credit.classList.add('hide');
+                render_info.classList.add('hide');
             }
         };
     })(clone);
@@ -413,7 +413,7 @@ function loadPresets() {
             thisData.image,
             thisData.presetID,
             thisData.credit
-        )
+        );
     }
 }
 function findState() {
