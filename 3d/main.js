@@ -153,7 +153,7 @@ function displayLoadingText(xhr) {
         percent_text.innerHTML = `${percentComplete}% Loaded`;
     } else {
         percent_text.innerHTML = '100% Loaded';
-        setTimeout(function() { percent_text.classList.remove('show') }, 100);
+        setTimeout(function () { percent_text.classList.remove('show') }, 100);
     }
 }
 
@@ -228,6 +228,10 @@ function makeClone(fileTable, saveName, img, preset, creditTable) {
         clone.style.backgroundImage = `url(preview_img/${img})`;
     }
 
+    if (preset) {
+        clone.setAttribute('preset', preset);
+    }
+
     clone.removeAttribute('id');
     list_holder.appendChild(clone);
 
@@ -246,6 +250,9 @@ function makeClone(fileTable, saveName, img, preset, creditTable) {
                 name_input.value = saveName;
                 name_input.classList.add('no_edit');
                 name_button.classList.add('no_edit');
+
+                let presetID = clone.getAttribute('preset');
+                setState(presetID);
             }
 
             if (creditTable) {
@@ -259,6 +266,24 @@ function makeClone(fileTable, saveName, img, preset, creditTable) {
     })(clone);
 
     return clone;
+}
+
+function setState(presetID) {
+    let pageName = window.location.href;
+    let editURL;
+
+    if (!pageName.includes('#')) {
+        editURL = pageName;
+    } else {
+        editURL = pageName.split('#')[0];
+    }
+
+    if (presetID) {
+        let newURL = editURL + `#id=${presetID}`
+        history.pushState(null, null, newURL);
+    } else {
+        history.pushState(null, null, editURL);
+    }
 }
 
 function deleteObject() {
@@ -326,13 +351,85 @@ window.addEventListener('resize', () => {
 });
 
 // Default
-makeClone({ glb: 'preset/ship.glb' }, 'Spaceship', 'ship_preview.png', true, { user: 'phamian', icon: 'phamian.webp' });
-makeClone({ glb: 'preset/dark_church.glb' }, 'Dark Church', 'darkchurch_preview.png', true, { user: 'kircic', icon: 'kircic.webp' });
-makeClone({ glb: 'preset/castle_1.glb' }, 'Castle', 'castle_preview.png', true, { user: 'variberry', icon: 'variberry.webp' });
-makeClone({ glb: 'preset/statue.glb' }, 'Statue', 'statue.png', true);
-makeClone({ mtl: 'preset/discord_qr.mtl', obj: 'preset/discord_qr.obj' }, 'Discord', 'qr_preview.png', true, { user: 'kircic', icon: 'kircic.webp' });
+
+let presetDB = {
+    1: {
+        fileTable: { 
+            obj: 'preset/discord_qr.obj', 
+            mtl: 'preset/discord_qr.mtl' 
+        },
+        name: 'Discord',
+        image: 'qr_preview.png',
+        presetID: 1,
+        credit: {
+            user: 'kircic',
+            icon: 'kircic.webp'
+        }
+    },
+    2: {
+        fileTable: { 
+            glb: 'preset/ship.glb',
+        },
+        name: 'Spaceship',
+        image: 'ship_preview.png',
+        presetID: 2,
+        credit: {
+            user: 'phamian',
+            icon: 'phamian.webp'
+        }
+    },
+    3: {
+        fileTable: { 
+            glb: 'preset/dark_church.glb',
+        },
+        name: 'Dark Church',
+        image: 'darkchurch_preview.png',
+        presetID: 3,
+        credit: {
+            user: 'kircic',
+            icon: 'kircic.webp'
+        }
+    },
+    4: {
+        fileTable: { 
+            glb: 'preset/castle_1.glb', 
+        },
+        name: 'Castle',
+        image: 'castle_preview.png',
+        presetID: 4,
+        credit: {
+            user: 'variberry',
+            icon: 'variberry.webp'
+        }
+    },
+}
+
+function loadPresets() {
+    for (var i in presetDB) {
+        let thisData = presetDB[i];
+        makeClone(
+            thisData.fileTable,
+            thisData.name,
+            thisData.image,
+            thisData.presetID,
+            thisData.credit
+        )
+    }
+}
+function findState() {
+    let pageName = window.location.href;
+
+    if (pageName.includes('#')) {
+        let presetID = pageName.split('#id=')[1];
+        let thisData = presetDB[presetID];
+        loadObject(null, thisData.fileTable, true, thisData.name, false);
+    }
+}
+
+loadPresets();
 setTimeout(enableTransitions, 200);
 
+window.onload = findState;
 document.addEventListener('keydown', keyListener);
 name_button.addEventListener('mouseup', nameFieldFocus);
 delete_button.addEventListener('mouseup', deleteObject);
