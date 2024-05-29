@@ -281,7 +281,7 @@ button {
     }
     
     .main_view {
-        width: calc(100vw - 20px);
-        height: calc(100vh - 20px);
+        width: calc(100vw);
+        height: calc(100dvh - 20px);
     }
 }
