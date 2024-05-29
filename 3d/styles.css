@@ -353,7 +353,8 @@ button {
         bottom: 0;
     }
     
-    .user_credit {
+    .render_info {
         left: 0;
+        bottom: 0;
     }
 }
