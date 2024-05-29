@@ -284,5 +284,6 @@ button {
     .main_view {
         width: calc(100vw);
         height: calc(100dvh - 20px);
+        left: 0;
     }
 }
