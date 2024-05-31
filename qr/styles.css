@@ -5,8 +5,8 @@ body {
 }
 
 .main {
-    aspect-ratio: 487/364;
-    width: 50%;
+    aspect-ratio: 480/360;
+    height: 90%;
     background-color: #202020;
     border: 2px solid #303030;
     box-sizing: border-box;
@@ -81,6 +81,7 @@ body {
 .input_holder span {
     height: 20px;
     padding: 5px;
+    user-select: none;
 }
 
 .input_holder input {
