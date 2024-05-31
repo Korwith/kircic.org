@@ -56,11 +56,12 @@ body {
     background-repeat: no-repeat;
     background-position: center;
     background-image: url(assets/go_arrow.svg);
-    transition: filter 0.2s;
+    transition: filter 0.2s, border 0.2s;
 }
 
 .submit:hover {
     filter: brightness(80%);
+    border: 2px solid white;
 }
 
 .submit:hover {
