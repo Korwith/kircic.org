@@ -56,11 +56,10 @@ body {
     background-repeat: no-repeat;
     background-position: center;
     background-image: url(assets/go_arrow.svg);
-    transition: filter 0.2s, border 0.2s;
+    transition: border 0.2s;
 }
 
 .submit:hover {
-    filter: brightness(80%);
     border: 2px solid white;
 }
 
@@ -134,15 +133,15 @@ body {
 }
 
 .save_button_holder button:hover {
-    filter: brightness(80%);
+    filter: brightness(85%);
 }
 
 .clipboard {
-    background-color: rgb(65, 65, 215);
+    background-color: #218BE6;
 }
 
 .file {
-    background-color: rgb(65, 215, 65);
+    background-color: #1FB141;
 }
 
 * {
@@ -186,10 +185,6 @@ body {
         flex: 1;
         margin-top: 10px;
         margin-left: 0;
-    }
-
-    .save_button_holder button {
-
     }
 
     .main {
