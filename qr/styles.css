@@ -76,6 +76,7 @@ body {
     display: flex;
     flex-direction: column;
     font-weight: 700;
+    position: relative;
 }
 
 .input_holder span {
@@ -84,7 +85,7 @@ body {
     user-select: none;
 }
 
-.input_holder input {
+.input_holder textarea {
     height: 60px;
     outline: none;
     border-radius: 8px;
@@ -94,6 +95,49 @@ body {
     border: 2px solid #303030;
     padding: 10px;
     font-size: 18px;
+    resize: none;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.settings {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+}
+
+.settings .input_holder {
+    width: calc(50% - 10px);
+}
+
+.settings .input_holder .color {
+    aspect-ratio: 1/1;
+    position: absolute;
+    display: block;
+    border-radius: 50%;
+    height: 40px;
+    margin: 6px;
+    bottom: 0;
+    right: 0;
+    box-sizing: border-box;
+    border: 2px solid #303030;
+}
+
+.color input {
+    display: block;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.url.error {
+    border: 2px solid rgb(200, 0, 0);
+}
+
+.url_text.error {
+    color: rgb(200, 0, 0);
 }
 
 .result {

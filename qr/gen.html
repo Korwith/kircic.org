@@ -1,46 +1,66 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>QR Generator</title>
-        <link rel='stylesheet' href="styles.css">
-        <link rel="icon" type="image/x-icon" href="https://www.kircic.org/qr/assets/favicon.png">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="author" content="kircic">
-        <meta name="description" content="A simple QR Code Generator.">
-        <meta property="og:title" content="QR Generator">
-        <meta property="og:type" content="website">
-        <meta property="og:url" content="https://www.kircic.org/qr/gen.html">
-        <meta property="og:image" content="https://www.kircic.org/qr/assets/discord_qr.png">
-        <meta property="og:description" content="A simple QR Code Generator">
-        <meta name="theme-color" content="#151515">
-    </head>
 
-    <body>
-        <div class="main">
-            <div class="config">
-                <div class="submit_holder">
-                    <div class="input_holder">
-                        <span>Website URL</span>
-                        <input class="url" placeholder="https://example.com">
+<head>
+    <title>QR Generator</title>
+    <link rel='stylesheet' href="styles.css">
+    <link rel="icon" type="image/x-icon" href="https://www.kircic.org/qr/assets/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="kircic">
+    <meta name="description" content="A simple QR Code Generator.">
+    <meta property="og:title" content="QR Generator">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.kircic.org/qr/gen.html">
+    <meta property="og:image" content="https://www.kircic.org/qr/assets/discord_qr.png">
+    <meta property="og:description" content="A simple QR Code Generator">
+    <meta name="theme-color" content="#151515">
+</head>
+
+<body>
+    <div class="main">
+        <div class="config">
+            <div class="submit_holder">
+                <div class="input_holder">
+                    <span class="url_text">Website URL</span>
+                    <textarea class="url" placeholder="https://example.com"></textarea>
+                </div>
+                <button class="submit"></button>
+            </div>
+
+            <div class="settings">
+                <div class="input_holder">
+                    <span>Background Color</span>
+                    <textarea placeholder="#ffffff" maxlength="7" class="color_text background"></textarea>
+                    <div id='background' class="color" style="background-color: white">
+                        <input type='color'>
                     </div>
-                    <button class="submit"></button>
                 </div>
-            </div>
 
-            <div class="result">
-                <canvas class="qr_canvas"></canvas>
-                <div class="save_button_holder">
-                    <button class="clipboard">Copy</button>
-                    <button class="file">Save As</button>
+                <div class="input_holder">
+                    <span>Foreground Color</span>
+                    <textarea placeholder="#000000" maxlength="7" class="color_text foreground"></textarea>
+                    <div id='foreground' class="color" style="background-color: black">
+                        <input type='color'>
+                    </div>
                 </div>
-            </div>
-
-            <div class="type_select">
-                
             </div>
         </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
-        <script src="main.js"></script>
-    </body>
+        <div class="result">
+            <canvas class="qr_canvas"></canvas>
+            <div class="save_button_holder">
+                <button class="clipboard">Copy</button>
+                <button class="file">Save As</button>
+            </div>
+        </div>
+
+        <div class="type_select">
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+    <script src="main.js"></script>
+</body>
+
 </html>
