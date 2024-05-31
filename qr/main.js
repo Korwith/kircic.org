@@ -51,7 +51,7 @@ function handleResize() {
     qr_canvas.style.height = result_rect.width - 20 + 'px';
 }
 
-makeQR(null, 'https://example.com');
+makeQR(null, 'https://www.kircic.org/discord.html');
 handleResize();
 submit.addEventListener('mouseup', makeQR);
 clipboard.addEventListener('mouseup', writeClipboard);
