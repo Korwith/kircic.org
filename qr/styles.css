@@ -5,8 +5,8 @@ body {
 }
 
 .main {
+    aspect-ratio: 487/364;
     width: 50%;
-    height: 50%;
     background-color: #202020;
     border: 2px solid #303030;
     box-sizing: border-box;
@@ -165,19 +165,33 @@ body {
         height: unset;
         width: 100%;
         position: relative;
+        display: flex;
+        flex-direction: row;
+    }
+
+    .qr_canvas {
+        flex: 0 0 auto;
+        width: 90px !important;
+        height: 90px !important;
+        max-width: unset;
+        max-height: unset;
+        min-width: unset;
+        min-height: unset;
+        aspect-ratio: 1/1;
+    }
+
+    .save_button_holder {
+        flex: 1;
+        margin-top: 10px;
+        margin-left: 0;
+    }
+
+    .save_button_holder button {
+
     }
 
     .main {
         width: calc(100vw - 20px);
         height: calc(100dvh - 20px);
-    }
-
-    .qr_canvas {
-        min-width: 50vw;
-        max-width: 50vw;
-        min-height: 50vw;
-        max-height: 50vw;
-        transform: translateX(-50%);
-        margin-left: 50%;
     }
 }
