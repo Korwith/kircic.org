@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>QR Code Generator</title>
+        <link rel='stylesheet' href="styles.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+
+    <body>
+        <div class="main">
+            <div class="config">
+                <div class="submit_holder">
+                    <div class="input_holder">
+                        <span>Website URL</span>
+                        <input class="url" placeholder="https://example.com">
+                    </div>
+                    <button class="submit"></button>
+                </div>
+            </div>
+
+            <div class="result">
+                <canvas class="qr_canvas"></canvas>
+                <div class="save_button_holder">
+                    <button class="clipboard">Copy</button>
+                    <button class="file">Save As</button>
+                </div>
+            </div>
+
+            <div class="type_select">
+                
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+        <script src="main.js"></script>
+    </body>
+</html>
