@@ -513,6 +513,11 @@ header .header_item_holder {
     background-size: 80%;
 }
 
+.project_icon.qrcode {
+    background-image: url(qr/assets/discord_qr.png);
+    background-size: 75%;
+}
+
 .search_page {
     background-color: rgba(255, 255, 255, 0.12);
     border: 1px solid rgba(255, 255, 255, 0.15);
