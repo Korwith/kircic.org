@@ -106,6 +106,12 @@ body {
     display: flex;
 }
 
+.settings textarea {
+    pointer-events: none;
+    user-select: none;
+    color: rgba(255, 255, 255, 0.6);
+}
+
 .settings .input_holder {
     width: calc(50% - 10px);
 }
@@ -239,4 +245,5 @@ body {
     
     .settings {
         width: calc(100% - 20px);
+    }
 }
