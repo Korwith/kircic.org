@@ -232,6 +232,7 @@ body {
     }
 
     .main {
+        aspect-ratio: unset;
         width: calc(100vw - 20px);
         height: calc(100dvh - 20px);
     }
