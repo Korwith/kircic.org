@@ -235,4 +235,8 @@ body {
         width: calc(100vw - 20px);
         height: calc(100dvh - 20px);
     }
+    
+    .settings .input_holder {
+        width: calc(100% - 30px)
+    }
 }
