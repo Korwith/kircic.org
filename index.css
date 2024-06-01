@@ -514,7 +514,7 @@ header .header_item_holder {
 }
 
 .project_icon.qrcode {
-    background-image: url(qr/assets/discord_qr.png);
+    background-image: url(icon/discord_qr.png);
     background-size: 75%;
 }
 
