@@ -236,7 +236,6 @@ body {
         height: calc(100dvh - 20px);
     }
     
-    .settings .input_holder {
-        width: calc(100% - 30px)
-    }
+    .settings {
+        width: calc(100% - 20px);
 }
