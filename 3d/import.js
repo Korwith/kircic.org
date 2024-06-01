@@ -1,7 +1,7 @@
 import { loadObject } from './main.js';
 
 const import_button = document.querySelector('#import');
-const extensions = ['mtl', 'obj', 'glb'];
+const extensions = ['mtl', 'obj', 'glb', 'fbx'];
 
 function startImport() {
     let newInput = document.createElement('input');
@@ -28,7 +28,7 @@ function startImport() {
         loadObject(false, foundFiles);
     });
 
-    let check = confirm('Select the 3D files to import. Accepts OBJ, MTL, and GLB.');
+    let check = confirm('Select the 3D files to import. Accepts OBJ, MTL, FBX, and GLB.');
     if (check) {
         newInput.click();
     }

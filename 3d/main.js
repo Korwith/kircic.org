@@ -3,6 +3,7 @@ import { OrbitControls } from 'OrbitControls';
 import { OBJLoader } from 'OBJLoader';
 import { MTLLoader } from 'MTLLoader';
 import { GLTFLoader } from 'GLTFLoader';
+import { FBXLoader } from 'FBXLoader';
 
 const object_sidebar = document.querySelector('.object_sidebar');
 const render_header = document.querySelector('.render_header');
@@ -27,7 +28,8 @@ let current = {
     controls: null,
     obj: null,
     mtl: null,
-    glb: null
+    glb: null,
+    fbx: null,
 }
 let autoRotate = false;
 
@@ -90,6 +92,7 @@ function loadObject(element, fileTable, reload, saveName, fromLoad) {
         current.mtl = fileTable.mtl;
         current.obj = fileTable.obj;
         current.glb = fileTable.glb;
+        current.fbx = fileTable.fbx;
 
         renderLoop();
 
@@ -113,8 +116,16 @@ function makeObject(fileTable, scene, camera, render, setMain) {
     let mtlName = fileTable.mtl;
     let objName = fileTable.obj;
     let glbName = fileTable.glb;
+    let fbxName = fileTable.fbx;
 
-    if (fileTable.glb) {
+    if (fileTable.fbx) {
+        const fbxLoad = new FBXLoader();
+        fbxLoad.load(fbxName, function(object) {
+            defaultView(object, camera, setMain);
+            scene.add(object);
+            render.render(scene, camera);
+        }, displayLoadingText);
+    } else if (fileTable.glb) {
         const glbLoad = new GLTFLoader();
         glbLoad.load(glbName, function (gltf) {
             gltf.scene.traverse(function (child) {
@@ -200,7 +211,9 @@ function clearBoard(scene, noDispose) {
 function findButtonSelect(fileTable) {
     let query;
 
-    if (fileTable.glb) {
+    if (fileTable.fbx) {
+        query = list_holder.querySelector(`[fbx="${fileTable.fbx}"]`);
+    } else if (fileTable.glb) {
         query = list_holder.querySelector(`[glb="${fileTable.glb}"]`);
     } else if (fileTable.obj && fileTable.mtl) {
         query = list_holder.querySelector(`[mtl="${fileTable.mtl}"][obj="${fileTable.obj}"]`);
@@ -211,7 +224,9 @@ function findButtonSelect(fileTable) {
 
 function makeClone(fileTable, saveName, img, preset, creditTable) {
     let clone = placeholder.cloneNode(true);
-    if (fileTable.glb) {
+    if (fileTable.fbx) {
+        clone.setAttribute('fbx', fileTable.fbx);
+    } else if (fileTable.glb) {
         clone.setAttribute('glb', fileTable.glb)
     } else if (fileTable.obj && fileTable.mtl) {
         clone.setAttribute('mtl', fileTable.mtl);
@@ -239,9 +254,10 @@ function makeClone(fileTable, saveName, img, preset, creditTable) {
         let thisMTL = clone.getAttribute('mtl');
         let thisOBJ = clone.getAttribute('obj');
         let thisGLB = clone.getAttribute('glb');
+        let thisFBX = clone.getAttribute('fbx');
 
         clone.onclick = function () {
-            loadObject(null, { mtl: thisMTL, obj: thisOBJ, glb: thisGLB }, true);
+            loadObject(null, { mtl: thisMTL, obj: thisOBJ, glb: thisGLB, fbx: thisFBX}, true);
             handleMobileUI();
             updateObjectName(clone, creditTable, preset, saveName);
         };
@@ -317,7 +333,7 @@ function handleMobileUI() {
 
 function renameRender() {
     let new_name = name_input.value;
-    let button_select = findButtonSelect({ obj: current.obj, mtl: current.mtl, glb: current.glb });
+    let button_select = findButtonSelect({ obj: current.obj, mtl: current.mtl, glb: current.glb, fbx: current.fbx});
     button_select.setAttribute('name', new_name);
     saveInstance();
 }
