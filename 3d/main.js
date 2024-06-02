@@ -112,6 +112,47 @@ function loadObject(element, fileTable, reload, saveName, fromLoad) {
     }
 }
 
+function isFBX(fbxName, scene, camera, render, setMain) {
+    const fbxLoad = new FBXLoader();
+    fbxLoad.load(fbxName, function(object) {
+        defaultView(object, camera, setMain);
+        scene.add(object);
+        render.render(scene, camera);
+    }, displayLoadingText);
+}
+
+function isGLB(glbName, scene, camera, render, setMain) {
+    const glbLoad = new GLTFLoader();
+    glbLoad.load(glbName, function (gltf) {
+        gltf.scene.traverse(function (child) {
+            if (child.isMesh) { //also tried without this if statement
+                child.material.depthWrite = true;
+            }
+        });
+
+        defaultView(gltf.scene, camera, setMain);
+        scene.add(gltf.scene);
+        render.render(scene, camera);
+    }, displayLoadingText)
+}
+
+function isOBJ(mtlName, objName, scene, camera, render, setMain) {
+    const mtlLoad = new MTLLoader();
+
+    mtlLoad.load(mtlName, function (materials) {
+        materials.preload();
+
+        const objLoad = new OBJLoader();
+        objLoad.setMaterials(materials);
+        objLoad.load(objName, function (object) {
+            defaultView(object, camera, setMain);
+
+            scene.add(object);
+            render.render(current.scene, current.camera);
+        });
+    }, displayLoadingText)
+}
+
 function makeObject(fileTable, scene, camera, render, setMain) {
     let mtlName = fileTable.mtl;
     let objName = fileTable.obj;
@@ -119,40 +160,11 @@ function makeObject(fileTable, scene, camera, render, setMain) {
     let fbxName = fileTable.fbx;
 
     if (fileTable.fbx) {
-        const fbxLoad = new FBXLoader();
-        fbxLoad.load(fbxName, function(object) {
-            defaultView(object, camera, setMain);
-            scene.add(object);
-            render.render(scene, camera);
-        }, displayLoadingText);
+        isFBX(fbxName, scene, camera, render, setMain);
     } else if (fileTable.glb) {
-        const glbLoad = new GLTFLoader();
-        glbLoad.load(glbName, function (gltf) {
-            gltf.scene.traverse(function (child) {
-                if (child.isMesh) { //also tried without this if statement
-                    child.material.depthWrite = true;
-                }
-            });
-
-            defaultView(gltf.scene, camera, setMain);
-            scene.add(gltf.scene);
-            render.render(scene, camera);
-        }, displayLoadingText)
+        isGLB(glbName, scene, camera, render, setMain);
     } else if (fileTable.mtl && fileTable.obj) {
-        const mtlLoad = new MTLLoader();
-
-        mtlLoad.load(mtlName, function (materials) {
-            materials.preload();
-
-            const objLoad = new OBJLoader();
-            objLoad.setMaterials(materials);
-            objLoad.load(objName, function (object) {
-                defaultView(object, camera, setMain);
-
-                scene.add(object);
-                render.render(current.scene, current.camera);
-            });
-        }, displayLoadingText)
+        isOBJ(mtlName, objName, scene, camera, render, setMain);
     }
 }
 
