@@ -192,10 +192,11 @@ canvas {
     }
 
     .select {
-        width: 80vw;
+        width: 75vw;
+        height: 16%;
     }
 
     .title {
-        font-size: 2rem;
+        font-size: 3rem;
     }
 }
