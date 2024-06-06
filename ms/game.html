@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Minesweeper+</title>
+        <link rel="stylesheet" href="mc.css">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="kircic">
+        <meta name="description" content="An improved version of the original game minesweeper, with an infinite mode.">
+        <meta property="og:title" content="Minesweeper+">
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://www.kircic.org/ms/game.html">
+        <meta property="og:image" content="https://www.kircic.org/icon/Entire-Network.psd">
+        <meta property="og:description" content="An improved version of te original game minesweeper, with an infinite mode.">
+        <meta name="theme-color" content="#000001">
+        <link rel="icon" type="image/x-icon" href="https://www.kircic.org/ms/minesweeper_assets/flag.png">
+    </head>
+    <body>
+        <div class="game_holder">
+            <div class="start_overlay show">
+                <div class="title_holder">
+                    <span class="title">Minesweeper</span>
+                </div>
+
+                <div class="button_holder">
+                    <div class="select normal"></div>
+                    <div class="select expert"></div>
+                    <div class="select infinite"></div>
+                </div>
+            </div>
+
+            <div class="canvas_holder" style="left:0;top:0">
+            </div>
+        </div>
+        
+        <canvas class="placeholder_canvas" width="512" height="512"></canvas>
+        <script src="main.js"></script>
+    </body>
+</html>

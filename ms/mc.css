@@ -1,0 +1,193 @@
+body {
+    margin: 0;
+    background-color: #151515;
+    overflow: hidden;
+}
+
+.placeholder_canvas {
+    display: none;
+}
+
+.game_holder {
+    aspect-ratio: 1/1;
+    height: 100vh;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+}
+
+.start_overlay {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0;
+    z-index: 10;
+    transition: opacity 0.6s;
+}
+
+.start_overlay::before {
+    content: '';
+    width: 100vw;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-size: 5vh;
+    background-image: url(minesweeper_assets/0.png);
+    background-position: center;
+    z-index: -1;
+}
+
+.start_overlay.show {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.title_holder {
+    width: 100%;
+    height: 30%;
+}
+
+.button_holder {
+    width: 100%;
+    height: 60%;
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10%;
+}
+
+.title {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    position: absolute;
+    top: 15px;
+    font-size: 3.5rem;
+    width: 100%;
+    height: 20%;
+    color: white;
+    text-shadow: 2px 2px 4px black;
+    font-weight: 700;
+    user-select: none;
+}
+
+.title.loss {
+    color: #8a2121;
+}
+
+.title.won {
+    color: #2d8a21;
+}
+
+.select {
+    width: 55%;
+    height: 20%;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 16px;
+    box-sizing: border-box;
+    background-size: 6.2%;
+    background-position-y: -1px;
+    background-position-x: 2px;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.select::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(32, 32, 32, 0.5);
+    color: white;
+    text-shadow: 2px 2px 4px black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.6rem;
+    font-weight: 900;
+}
+
+.select:hover {
+    transform: translateY(6px);
+}
+
+.normal {
+    border: 8px solid #202020;
+    background-image: url(minesweeper_assets/flag.png);
+    box-shadow: #151515 0 12px 0;
+}
+
+.normal::after {
+    content: 'Normal';
+}
+
+.normal:hover {
+    box-shadow: #151515 0 6px 0;
+}
+
+.expert {
+    border: 8px solid #8a2121;
+    background-image: url(minesweeper_assets/mine.png);
+    box-shadow: #6d1a1a 0 12px 0;
+    
+}
+
+.expert::after {
+    background-color: rgba(138, 33, 33, 0.5);
+    content: 'Expert';
+}
+
+.expert:hover {
+    box-shadow: #6d1a1a 0 6px 0;
+}
+
+.infinite {
+    border: 8px solid #333333;
+    background-image: url(minesweeper_assets/infinite.png);
+    box-shadow: #282828 0 12px 0;
+    
+}
+
+.infinite::after {
+    background-color: rgba(51, 51, 51, 0.5);
+    content: 'Infinite';
+}
+
+.infinite:hover {
+    box-shadow: #282828 0 6px 0;
+}
+
+.canvas_holder {
+    aspect-ratio: 1/1;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    background-color: #202020;
+}
+
+canvas {
+    aspect-ratio: 1/1;
+    width: 100%;
+    position: absolute;
+    box-sizing: border-box;
+}
+
+* {
+    font-family: Arial;
+}
+
+@media screen and (max-width: 767px) {
+    .game_holder {
+        aspect-ratio: unset;
+        width: 100vw;
+        height: 100vh;
+    }
+}
