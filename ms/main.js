@@ -394,7 +394,31 @@ function start(event) {
     set_dimensions = dimensions;
     mode = set_mode;
     makeCanvas('0:0', dimensions)
+    moveRender();
     start_overlay.classList.remove('show');
+}
+
+function moveRender() {
+    if (block_events) { return false };
+    if (mode != 'infinite') { return false };
+
+    if (keysDown.includes(65)) {
+        
+    }
+
+    if (keysDown.includes(68)) {
+
+    }
+
+    if (keysDown.includes(87)) {
+
+    }
+
+    if (keysDown.includes(83)) {
+        
+    }
+
+    setTimeout(moveRender, 1000/60);
 }
 
 function makeCanvas(canvas_position, dimensions) {

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Website Builder</title>
+        <link rel="stylesheet" href="create.css">
+    </head>
+
+    <body>
+        <header>
+            <div class="site_name">
+                <div class="home"></div>
+                <div class="name">
+                    <span contenteditable>Draft</span>
+                </div>
+            </div>
+
+            <div class="right_header">
+                <div class="controls">
+                    <div class="undo"></div>
+                    <div class="redo"></div>
+                    <div class="settings"></div>
+                </div>
+
+                <div class="saving">
+                    <div class="save_button import">Import</div>
+                    <div class="save_button export">export</div>
+                </div>
+            </div>
+        </header>
+
+        <nav class="sidebar">
+            <div class="select">
+                <div class="on">Add</div>
+                <div>Outline</div>
+            </div>
+
+            <span class="type_header image hide">Image Editor</span>
+
+            <div class="image_edit_holder hide">
+                <input class="url_box" placeholder="Image URL...">
+
+                <div class="image_size_edit">
+                    <input type="number" class="image_width" placeholder="Width" step="10" max="800">
+                    <input type="number" class="image_height" placeholder="Height" step="10" max="800">
+                </div>
+
+                <div class="image_position_edit">
+                    <div class="shift_left"></div>
+                    <div class="shift_center"></div>
+                    <div class="shift_right"></div>
+                </div>
+            </div>
+
+            <span class="type_header text hide">Text Editor</span>
+
+            <div class="text_edit_holder hide">
+                <div class="text_style_holder">
+                    <div class="color">
+                        <input type="color" class="text_color_input">
+                    </div>
+
+                    <div class="size_holder">
+                        <div class="header">Head</div>
+                        <div class="subheader">Sub</div>
+                        <div class="body">Body</div>
+                    </div>
+                </div>
+
+                <textarea class="text_edit" placeholder="Text here..."></textarea>
+            </div>
+
+            <span class="type_header">Elements</span>
+
+            <div class="element_select">
+                <div class="element textbox">
+                    <div class="icon text"></div>
+                    <span class="name">Text Box</span>
+                </div>
+
+                <div class="element image">
+                    <div class="icon image"></div>
+                    <span class="name">Image</span>
+                </div>
+
+                <div class="element embed">
+                    <div class="icon embed"></div>
+                    <span class="name">Embed</span>
+                </div>
+
+                <div class="element link">
+                    <div class="icon link"></div>
+                    <span class="name">Link</span>
+                </div>
+            </div>
+
+            <span class="type_header">Content Blocks</span>
+
+            <div class="content_holder">
+                <div class="block"></div>
+
+                <div class="block"></div>
+            </div>
+        </nav>
+
+        <div class="content"></div>
+
+        <script src="create.js"></script>
+    </body>
+</html>
