@@ -23,6 +23,7 @@ h1,
 h3 {
     text-align: center;
     color: rgba(255, 255, 255, 0.9);
+    user-select: none;
 }
 
 .blurred_img_bg {
@@ -792,6 +793,7 @@ a.red .icon:hover {
     margin-top: 25px;
     margin-bottom: 25px;
     text-align: center;
+    user-select: none;
 }
 
 .copyright {
