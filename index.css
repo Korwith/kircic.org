@@ -839,7 +839,7 @@ a.red .icon:hover {
 }
 
 .holder.discord::before {
-    background: linear-gradient(to right, #91a1da, #5874d8)
+    /* background: linear-gradient(to right, #91a1da, #5874d8) */
 }
 
 .holder:hover {
