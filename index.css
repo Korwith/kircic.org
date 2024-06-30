@@ -802,7 +802,7 @@ a.red .icon:hover {
     margin-bottom: 10px;
     border-radius: 8px;
     display: flex;
-    gap: 10px;
+    justify-content: space-between;
 }
 
 .small_holder a {
