@@ -796,6 +796,109 @@ a.red .icon:hover {
     user-select: none;
 }
 
+.small_holder {
+    width: 100%;
+    height: fit-content;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    display: flex;
+    gap: 10px;
+}
+
+.small_holder a {
+    width: calc(100% - 5px);
+    text-decoration: none;
+}
+
+.holder {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-sizing: border-box;
+    height: 60px;
+    display: flex;
+    border-radius: 12px;
+    transition: border 0.2s;
+    position: relative;
+}
+
+.holder::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    z-index: -1;
+    opacity: 0.15;
+}
+
+.holder.snapshot::before {
+    background: linear-gradient(to right, #EB4D27, #4294F8, #7CC947, #F4CC46);
+}
+
+.holder.discord::before {
+    background: linear-gradient(to right, #91a1da, #5874d8)
+}
+
+.holder:hover {
+    border: 1px solid white;
+}
+
+.holder .icon {
+    aspect-ratio: 1/1;
+    flex: 0 0 auto;
+    height: calc(100% - 10px);
+    margin: 5px;
+    background-color: rgba(255, 255, 255, 0.08);
+    box-sizing: border-box;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.holder .icon.snapshot {
+    background-size: 90%;
+}
+
+.holder .icon.discord {
+    background-size: 80%;
+}
+
+.holder .info {
+    max-width: calc(100% - 60px - 3px);
+    flex: 1;
+    height: 80%;
+    margin-top: auto;
+    margin-bottom: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 5px;
+    gap: 2px;
+}
+
+.holder .info span {
+    display: flex;
+    width: 100%;
+    height: fit-content;
+    user-select: none;
+    align-items: center;
+    font-size: 0.95rem;
+    white-space: nowrap;
+    text-overflow: clip;
+}
+
+.holder .info span.bio {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.icon.snapshot {
+    background-image: url(icon/snapshot.png);
+}
+
 .copyright {
     width: 100%;
     padding-top: 15px;
@@ -1168,4 +1271,8 @@ a.red .icon:hover {
     .copyright {
         margin-bottom: 10px;
     }
+
+    .holder .info span {
+        font-size: 0.85rem;
+    }    
 }
