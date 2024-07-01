@@ -874,7 +874,7 @@ a.red .icon:hover {
 .holder.discord {
     flex: 0 0 auto;
     aspect-ratio: 1/1;
-    height: 60px;
+    height: 55px;
     float: right;
     background-size: 70%;
     background-position: center;
@@ -898,8 +898,8 @@ a.red .icon:hover {
 }
 
 .holder.discord::before {
-    background: linear-gradient(to bottom right, #5975da, #030d2f);
-    opacity: 0.35;
+    /* background: linear-gradient(to bottom right, #5975da, #030d2f); */
+    opacity: 0;
 }
 
 .holder:hover {
