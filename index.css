@@ -857,6 +857,7 @@ a.red .icon:hover {
     border-radius: 12px;
     transition: border 0.2s;
     position: relative;
+    box-sizing: border-box;
 }
 
 .holder a {
