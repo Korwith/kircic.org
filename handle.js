@@ -36,7 +36,7 @@ function moveSidebar() {
         }
     }
 }
-sidebarToggle.addEventListener('mousedown', moveSidebar);
+sidebarToggle.addEventListener('mouseup', moveSidebar);
 
 function fullscreen() {
     if (!document.fullscreenElement) {
