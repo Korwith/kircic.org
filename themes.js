@@ -39,7 +39,7 @@ function checkSave() {
         blurred_img_bg.classList = 'blurred_img_bg';
         blurred_img_bg.classList.add(checkStorage);
     } else {
-        localStorage.setItem('color', 'purple_bg');
+        localStorage.setItem('color', 'blue_bg');
     }
 }
 

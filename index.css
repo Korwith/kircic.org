@@ -121,8 +121,6 @@ header .header_item_holder {
     position: fixed;
     float: left;
     transition: transform 0.3s;
-    overflow-x: hidden;
-    overflow-y: auto;
 }
 
 .sidebar.closed {
@@ -149,6 +147,51 @@ header .header_item_holder {
     box-sizing: border-box;
     position: relative;
     transition: opacity 0.2s;
+}
+
+.sidebar_top {
+    width: 100%;
+    height: 90px;
+    box-sizing: border-box;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar_main {
+    width: 100%;
+    height: calc(100% - 145px);
+    padding-top: 10px;
+    overflow-y: auto;
+}
+
+.sidebar_bottom {
+    width: 100%;
+    height: 35px;
+    box-sizing: border-box;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.sidebar_bottom span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 22px;
+    width: fit-content;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: auto;
+    margin-bottom: auto;
+    border-radius: 8px;
+    box-sizing: border-box;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    background-color: rgba(255, 255, 255, 0.05);
+    font-size: 0.9rem;
+    font-weight: 700;
+    user-select: none;
 }
 
 .sidebar_dots_holder.hide_traffic .dot1, .sidebar_dots_holder.hide_traffic .dot2, .sidebar_dots_holder.hide_traffic .dot3 {
