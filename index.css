@@ -852,7 +852,7 @@ a.red .icon:hover {
     background-color: rgba(255, 255, 255, 0.12);
     border: 1px solid rgba(255, 255, 255, 0.15);
     box-sizing: border-box;
-    height: 60px;
+    height: 55px;
     display: flex;
     border-radius: 12px;
     transition: border 0.2s;
