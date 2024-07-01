@@ -1,2 +1,3 @@
-# kricic.org
-Welcome to kircic.org, a portfolio made by me.
+# kircic.org
+This website is a collection of my personal projects and ideas.
+Originally kirhub.com, now kircic.org.
