@@ -845,17 +845,10 @@ a.red .icon:hover {
     margin-bottom: 10px;
     border-radius: 8px;
     display: flex;
-    justify-content: space-between;
     gap: 10px;
 }
 
-.small_holder a {
-    width: calc(100% - 5px);
-    text-decoration: none;
-}
-
 .holder {
-    width: 100%;
     background-color: rgba(255, 255, 255, 0.12);
     border: 1px solid rgba(255, 255, 255, 0.15);
     box-sizing: border-box;
@@ -864,6 +857,27 @@ a.red .icon:hover {
     border-radius: 12px;
     transition: border 0.2s;
     position: relative;
+}
+
+.holder a {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    text-decoration: none;
+}
+
+.holder.snapshot {
+    flex: 1;
+}
+
+.holder.discord {
+    flex: 0 0 auto;
+    aspect-ratio: 1/1;
+    height: 60px;
+    float: right;
+    background-size: 80%;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .holder::before {
@@ -883,7 +897,8 @@ a.red .icon:hover {
 }
 
 .holder.discord::before {
-    /* background: linear-gradient(to right, #91a1da, #5874d8) */
+    background: linear-gradient(to bottom right, #5975da, #030d2f);
+    opacity: 0.5;
 }
 
 .holder:hover {
@@ -905,10 +920,6 @@ a.red .icon:hover {
 
 .holder .icon.snapshot {
     background-size: 90%;
-}
-
-.holder .icon.discord {
-    background-size: 80%;
 }
 
 .holder .info {
