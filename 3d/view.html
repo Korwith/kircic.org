@@ -3,12 +3,10 @@
 
 <head>
     <title>3D Viewer</title>
-    <link rel="stylesheet" href="styles.css">
-    <title>3D Viewer</title>
     <meta name="title" content="3D Viewer" />
-    <meta name="description" content="3D File Viewer which supports OBJ and MTL files." />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> 
-    <meta name="theme-color" content="#7AA1FF">
+    <meta name="description" content="3D File Viewer" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#101010">
     <meta name="author" content="kircic">
     <meta property="og:title" content="3D Viewer">
     <meta property="og:type" content="website">
@@ -16,61 +14,55 @@
     <meta property="og:description" content="3D File Viewer which supports OBJ and MTL files.">
     <meta property="og:image" content="https://www.kircic.org/3d/assets/favicon.png">
     <link rel="icon" type="image/x-icon" href="https://www.kircic.org/3d/assets/favicon.png">
+
+    <link rel="stylesheet" href="index.css">
 </head>
 
-<body class="no-transition">
-    <div class="object_sidebar">
-        <div class="list_holder">
-            <div id='placeholder'></div>
-        </div>
+<body>
+    <div class="blur_bg"></div>
 
-        <div class="button_holder">
-            <button id="import">Import</button>
-        </div>
-    </div>
-
-    <div class="main_view">
-        <span class="percent_text"></span>
-    </div>
-
-    <div class="render_header">
-        <div class="render_name">
-            <input class="name_text" placeholder="None Selected...">
-            <button class="name_edit"></button>
-        </div>
-
-        <div class="right_header">
-            <button class="plus"></button>
-            <button class="delete"></button>
-        </div>
-    </div>
-
-    <div class="render_info hide">
-        <div class="user_credit">
+    <header>
+        <div class='left_header'>
             <div class="icon"></div>
-            <span class="username">Phamian</span>
+            <span class="title">3D Viewer</span>
         </div>
+    </header>
+
+    <nav class="sidebar">
+        <div class="left_sidebar">
+            <div class="left_button open" hovertext='Open File'></div>
+            <div class="left_button link" hovertext='Open Link'></div>
+            <hr>
+            <div class="left_button rotate" hovertext="Auto Rotate"></div>
+            <div class="left_button camera" hovertext="Take Snapshot"></div>
+            <div class="left_button minimize" hovertext="Minimize"></div>
+            <div class="left_button plus" hovertext="Open Menu"></div>
+            <div class="hover_tag hide"></div>
+        </div>
+
+        <div class="right_sidebar">
+            <div class="object_select"></div>
+        </div>
+    </nav>
+
+    <div class="content">
+
     </div>
 
-    <div class="stats">
-        <!-- <span class="fps">60FPS</span> -->
-    </div>
-</body>
-
-<script type="importmap">
-    {
-        "imports": {
-            "three": "./node_modules/three/build/three.module.js",
-            "OrbitControls": "./node_modules/three/examples/jsm/controls/OrbitControls.js",
-            "OBJLoader": "./node_modules/three/examples/jsm/loaders/OBJLoader.js",
-            "MTLLoader": "./node_modules/three/examples/jsm/loaders/MTLLoader.js",
-            "GLTFLoader": "./node_modules/three/examples/jsm/loaders/GLTFLoader.js",
-            "FBXLoader": "./node_modules/three/examples/jsm/loaders/FBXLoader.js",
-            "Stats": "./node_modules/three/examples/jsm/libs/stats.module.js"
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "./node_modules/three/build/three.module.js",
+                "OrbitControls": "./node_modules/three/examples/jsm/controls/OrbitControls.js",
+                "OBJLoader": "./node_modules/three/examples/jsm/loaders/OBJLoader.js",
+                "MTLLoader": "./node_modules/three/examples/jsm/loaders/MTLLoader.js",
+                "GLTFLoader": "./node_modules/three/examples/jsm/loaders/GLTFLoader.js",
+                "FBXLoader": "./node_modules/three/examples/jsm/loaders/FBXLoader.js",
+                "Stats": "./node_modules/three/examples/jsm/libs/stats.module.js"
+            }
         }
-    }
-</script>
-
-<script type='module' src="import.js"></script>
+    </script>
+    <script type="module" src="handle.js"></script>
+</body>
 
 </html>
