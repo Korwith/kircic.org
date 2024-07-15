@@ -253,13 +253,25 @@ nav.sidebar.shrink .right_sidebar .preview {
     border-radius: 8px;
     box-sizing: border-box;
     position: relative;
-    border: 1px solid rgba(255, 255, 255, 0.1);
     background-size: cover;
-    transition: border 0.2s, opacity 0.2s;
+    transition: opacity 0.2s;
 }
 
-.preview:hover {
-    border: 1px solid white;
+.preview::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    box-sizing: border-box;
+    border: 2px solid rgba(255, 255, 255, 0);
+    border-radius: 4px;
+    transition: border 0.2s;
+}
+
+.preview:hover::after {
+    border: 2px solid white;
 }
 
 .preview canvas {
@@ -414,6 +426,10 @@ nav.sidebar.shrink .right_sidebar .preview {
     }
 
     .hover_tag {
+        display: none;
+    }
+
+    .model_info {
         display: none;
     }
 }

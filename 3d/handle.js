@@ -53,14 +53,22 @@ const preview_list = {
         credit: 'PinkSock82',
         source: 'WTRBU',
     },
+
+    'Minecraft Logo': {
+        icon: 'mc_logo.png',
+        url: { mtl: 'preset/sign_alt.mtl', obj: 'preset/sign_alt.obj'},
+        type: 'obj',
+        credit: 'Kircic',
+        source: 'jMc2Obj'
+    },
     
     'Stone Steve': {
         icon: 'stone_steve.png',
         url: { mtl: 'preset/StoneSteve.mtl', obj: 'preset/StoneSteve.obj'},
         type: 'obj',
         credit: 'Kircic',
-        source: 'jmc2obj'
-    }
+        source: 'jMc2Obj'
+    },
 }
 
 let url_blob = [
