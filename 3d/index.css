@@ -297,6 +297,33 @@ nav.sidebar.shrink .right_sidebar .preview {
     z-index: -1;
 }
 
+.model_info {
+    width: fit-content;
+    height: fit-content;
+    user-select: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(255, 255, 255, 0.025);
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px;
+    box-sizing: border-box;
+    border-bottom-right-radius: 12px;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.model_info span {
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.9);
+}
+
 @keyframes breathe {
     0% {
         background-position-x: 0;

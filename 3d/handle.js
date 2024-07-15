@@ -17,12 +17,17 @@ const minimize_button = left_sidebar.querySelector('.minimize');
 const plus_button = left_sidebar.querySelector('.plus');
 const hover_tag = left_sidebar.querySelector('.hover_tag');
 
+const model_name = content.querySelector('.model_info .model_name');
+const profile_username = content.querySelector('.model_info .username');
+const source_text = content.querySelector('.model_info .source_text');
+
 const preview_list = {
     'Discord': {
         icon: 'qr_preview.png',
         url: { mtl: 'preset/discord_qr.mtl', obj: 'preset/discord_qr.obj' },
         type: 'obj',
         credit: 'Kircic',
+        source: 'Tinkercad'
     },
 
     'Dark Church': {
@@ -30,6 +35,7 @@ const preview_list = {
         url: { glb: 'preset/dark_church.glb' },
         type: 'gltf',
         credit: 'Kircic',
+        source: 'WTRB',
     },
 
     'Spaceship': {
@@ -37,13 +43,23 @@ const preview_list = {
         url: { glb: 'preset/ship.glb' },
         type: 'gltf',
         credit: 'vite',
+        source: 'WTRB',
     },
 
     'Skull': {
         icon: 'skull.png',
         url: { glb: 'preset/82skull.glb' },
         type: 'gltf',
-        credit: 'PinkSock82'
+        credit: 'PinkSock82',
+        source: 'WTRBU',
+    },
+    
+    'Stone Steve': {
+        icon: 'stone_steve.png',
+        url: { mtl: 'preset/StoneSteve.mtl', obj: 'preset/StoneSteve.obj'},
+        type: 'obj',
+        credit: 'Kircic',
+        source: 'jmc2obj'
     }
 }
 
@@ -223,6 +239,7 @@ function objectClick(event) {
         let preset_info = preview_list[found_preset];
         let preset_url_object = preset_info.url;
         objectSelect(preset_url_object);
+        updateProfile(preset_info, found_preset);
     } else {
         let found_index = parseInt(event.target.getAttribute('importindex'));
         let found_info = url_blob[found_index];
@@ -233,6 +250,12 @@ function objectClick(event) {
         handleMobileButton();
     }
 };
+
+function updateProfile(preset_info, name) {
+    model_name.innerHTML = 'Name: ' + name;
+    profile_username.innerHTML = 'Creator: ' + preset_info.credit;
+    source_text.innerHTML = 'Source: ' + preset_info.source;
+}
 
 function makePreview(name, url) {
     let clone = document.createElement('div');
