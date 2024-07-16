@@ -266,7 +266,7 @@ nav.sidebar.shrink .right_sidebar .preview {
     top: 0;
     box-sizing: border-box;
     border: 2px solid rgba(255, 255, 255, 0);
-    border-radius: 4px;
+    border-radius: 8px;
     transition: border 0.2s;
 }
 

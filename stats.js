@@ -62,9 +62,8 @@ function formatSize(bytes) {
 
 async function displayRepoSize() {
     const repoSize = await fetchRepoSize(owner, repo);
-    // *1024 to convert KB to B. *2 because the actual stored files on my device are 
-    // almost exactly double as to what github really stores (not sure how they have such good compression)
-    const formattedSize = formatSize(repoSize*1024*2);
+    // *1024 to convert KB to B.
+    const formattedSize = formatSize(repoSize*1024);
     size_stat.innerHTML = formattedSize;
 }
 
