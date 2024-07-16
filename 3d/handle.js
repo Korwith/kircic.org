@@ -69,6 +69,14 @@ const preview_list = {
         credit: 'Kircic',
         source: 'jMc2Obj'
     },
+
+    'Pyramid': {
+        icon: 'castle.png',
+        url: { mtl: 'preset/CastleI.mtl', obj: 'preset/CastleI.obj'},
+        type: 'obj',
+        credit: 'Kircic',
+        source: 'jMc2Obj'
+    },
 }
 
 let url_blob = [
