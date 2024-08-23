@@ -557,6 +557,11 @@ header .header_item_holder {
     background-size: 80%;
 }
 
+.project_icon.notilify {
+    background-image: url(icon/notilify.png);
+    background-size: 70%;
+}
+
 .project_icon.qrcode {
     background-image: url(icon/discord_qr.png);
     background-size: 75%;
