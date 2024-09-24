@@ -16,7 +16,7 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.15);
     background: rgba(255, 255, 255, 0.12);
     border-radius: 12px;
-    box-sizing: border-box;
+    box-sizing: border-box; 
 }
 
 h1,
@@ -565,6 +565,10 @@ header .header_item_holder {
 .project_icon.qrcode {
     background-image: url(icon/discord_qr.png);
     background-size: 75%;
+}
+
+.project_icon.stocks {
+    background-image: url(icon/stocks.svg);
 }
 
 .search_page {
