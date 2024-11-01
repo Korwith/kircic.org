@@ -1,8 +1,8 @@
 const owner = 'Korwith';
 const repo = 'kircic.org';
 
-const commit_stat = document.querySelector('.commit_stat');
-const size_stat = document.querySelector('.size_stat');
+const commit_stat = document.querySelector('.commit_count');
+const size_stat = document.querySelector('.digital_size');
 
 async function fetchCommitCount(owner, repo) {
     try {
