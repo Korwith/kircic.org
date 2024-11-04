@@ -211,7 +211,7 @@ function runSearch(name) {
     let search_holder = search_page.querySelector(`[search="${name}"]`);
     let search_box = search_holder.querySelector('.search_box');
     let search_url = search_data[name];
-    window.open(`https://${search_url}${search_box.value.replaceAll(' ', '+')}`);
+    window.location.href = `https://${search_url}${search_box.value.replaceAll(' ', '+')}`;
 }
 
 function handleKeyDown(event) {
