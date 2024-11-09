@@ -246,8 +246,8 @@ let settingsMap = {
 function changePageHue() {
     let target_holder = settings_pane.querySelector('[alter="changePageHue"]');
     let target_input = target_holder.querySelector('input');
-    let hue_rotation = getHueRotation('#0c3365', target_input.value);
-    blurred_img_bg.style.filter = `hue-rotate(${hue_rotation}deg)`;
+    let filter_string = getFilterString('#0c3365', target_input.value);
+    blurred_img_bg.style.filter = filter_string;
 }
 
 function handleSettings() {
@@ -318,7 +318,7 @@ function hexToHSL(hex) {
     };
 }
 
-function getHueRotation(currentHex, targetHex) {
+function getFilterString(currentHex, targetHex) {
     let currentHSL = hexToHSL(currentHex);
     let targetHSL = hexToHSL(targetHex);
     let hueDifference = targetHSL.h - currentHSL.h;
@@ -326,7 +326,26 @@ function getHueRotation(currentHex, targetHex) {
     if (hueDifference < 0) {
         hueDifference += 360;
     }
-    return hueDifference;
+
+    // Dynamic saturation threshold based on lightness
+    const baseGrayThreshold = 0.1; // Base threshold for gray detection
+    const dynamicGrayThreshold = baseGrayThreshold + (1 - targetHSL.l) * 0.2; // Increases with darkness
+    
+    const lightnessWhite = 0.95; // Lightness threshold for white
+    const lightnessBlack = 0.05; // Lightness threshold for black
+
+    let filterString = `hue-rotate(${hueDifference}deg)`;
+
+    // Check for black
+    if (targetHSL.l <= lightnessBlack) {
+        filterString += ' brightness(0)';
+    }
+    // Check for white or gray
+    else if (targetHSL.l >= lightnessWhite || targetHSL.s <= dynamicGrayThreshold) {
+        filterString += ' contrast(0)';
+    }
+    
+    return filterString;
 }
 
 // On Run
