@@ -17,6 +17,12 @@ const red_button = sidebar.querySelector('.red');
 const yellow_button = sidebar.querySelector('.yellow');
 const green_button = sidebar.querySelector('.green');
 const page_button = sidebar.querySelectorAll('[pagelink]');
+const cog = sidebar.querySelector('.cog');
+
+const navigation_pane = sidebar.querySelector('.sidebar_container.mid.navigate');
+const settings_pane = sidebar.querySelector('.sidebar_container.mid.settings');
+
+const all_switches = sidebar.querySelectorAll('.settings_switch .switch');
 
 const project_data = {
     'Wordle': {
@@ -231,13 +237,33 @@ function fullscreen() {
     }
 }
 
+function handleSettings() {
+    let showing_settings = settings_pane.classList.contains('hide');
+    settings_pane.classList.toggle('hide', !showing_settings);
+    navigation_pane.classList.toggle('hide', showing_settings);
+}
+
+function loadSettingsSwitch() {
+    for (var i = 0; i < all_switches.length; i++) {
+        let this_switch = all_switches[i];
+        this_switch.onclick = updateSwitch;
+    }
+}
+
+function updateSwitch(event) {
+    if (!event.target) { return false };
+    event.target.classList.toggle('toggle');
+}
+
 loadProjects();
 handlePageButtons();
 loadSearches();
 updateScrollClass();
 handlePushState();
+loadSettingsSwitch();
 sidebar_button.addEventListener('mouseup', handleSidebar);
 yellow_button.addEventListener('mouseup', handleSidebar);
 green_button.addEventListener('mouseup', fullscreen);
+cog.addEventListener('mouseup', handleSettings);
 document.addEventListener('keydown', handleKeyDown);
 window.onresize = updateScrollClass;

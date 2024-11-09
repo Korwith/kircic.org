@@ -76,6 +76,10 @@ nav.sidebar {
     overflow-y: auto;
 }
 
+.sidebar_container.mid.hide {
+    display: none;
+}
+
 nav.sidebar.shift {
     transform: translateX(calc(-100% - 10px));
 }
@@ -85,6 +89,7 @@ nav.sidebar.shift {
 }
 
 .traffic {
+    position: relative;
     width: calc(100% - 30px);
     height: 20px;
     margin-top: 15px;
@@ -117,6 +122,22 @@ nav.sidebar.shift {
 .traffic div.green {
     background-color: rgb(44, 201, 63);
     border-color: rgb(39, 170, 53);
+}
+
+.traffic div.cog {
+    position: absolute;
+    right: 0;
+    border: 0;
+    margin: 1px;
+    height: 18px;
+    opacity: 0.7;
+    background-size: cover;
+    background-image: url(icon/settings.svg);
+    transition: opacity 0.2s;
+}
+
+.traffic div.cog:hover {
+    opacity: 1;
 }
 
 .select {
@@ -238,6 +259,55 @@ span.category {
     justify-content: center;
     user-select: none;
     opacity: 0.9;
+}
+
+.settings_switch {
+    width: calc(100% - 20px);
+    height: 50px;
+    padding-left: 10px;
+    padding-right: 10px;
+    display: flex;
+    position: relative;
+}
+
+.settings_switch span {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    font-size: 1rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.9);
+    user-select: none;
+}
+
+.settings_switch .switch {
+    position: relative;
+    width: 55px;
+    height: 30px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.settings_switch .switch.toggle {
+    background-color: rgba(0, 255, 0, 0.15)
+}
+
+.shifter {
+    pointer-events: none;
+    height: 24px;
+    width: 24px;
+    margin: 2px;
+    border-radius: 50%;
+    position: absolute;
+    left: 0;
+    transition: left 0.15s
+}
+
+.switch.toggle .shifter {
+    left: calc(100% - 28px);
 }
 
 header {
