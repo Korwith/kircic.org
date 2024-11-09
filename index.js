@@ -1,12 +1,12 @@
 const project_placeholder = document.querySelector('#project_placeholder');
 const search_placeholder = document.querySelector('#search_placeholder');
 
+const blurred_img_bg = document.querySelector('.blurred_img_bg');
 const content = document.querySelector('.content');
 const all_page = content.querySelectorAll('.page');
 const home_page = content.querySelector('.page.home');
 const project_page = content.querySelector('.page.projects');
 const search_page = content.querySelector('.page.search');
-
 const home = content.querySelector('.page.home');
 const featured = home.querySelector('.horizontal_pane');
 
@@ -22,7 +22,8 @@ const cog = sidebar.querySelector('.cog');
 const navigation_pane = sidebar.querySelector('.sidebar_container.mid.navigate');
 const settings_pane = sidebar.querySelector('.sidebar_container.mid.settings');
 
-const all_switches = sidebar.querySelectorAll('.settings_switch .switch');
+const all_switches = settings_pane.querySelectorAll('.settings_switch .switch');
+const all_color_picker = settings_pane.querySelectorAll('.settings_switch .colorpicker input');
 
 const project_data = {
     'Wordle': {
@@ -237,6 +238,18 @@ function fullscreen() {
     }
 }
 
+// Settings
+let settingsMap = {
+    'changePageHue': changePageHue
+}
+
+function changePageHue() {
+    let target_holder = settings_pane.querySelector('[alter="changePageHue"]');
+    let target_input = target_holder.querySelector('input');
+    let hue_rotation = getHueRotation('#0c3365', target_input.value);
+    blurred_img_bg.style.filter = `hue-rotate(${hue_rotation}deg)`;
+}
+
 function handleSettings() {
     let showing_settings = settings_pane.classList.contains('hide');
     settings_pane.classList.toggle('hide', !showing_settings);
@@ -246,6 +259,7 @@ function handleSettings() {
 function loadSettingsSwitch() {
     for (var i = 0; i < all_switches.length; i++) {
         let this_switch = all_switches[i];
+        console.log(this_switch);
         this_switch.onclick = updateSwitch;
     }
 }
@@ -253,14 +267,76 @@ function loadSettingsSwitch() {
 function updateSwitch(event) {
     if (!event.target) { return false };
     event.target.classList.toggle('toggle');
+
+    let functionID = event.target.getAttribute('alter');
+    if (!functionID) { return false };
 }
 
+function loadSettingsColor() {
+    for (var i = 0; i < all_color_picker.length; i++) {
+        let this_input = all_color_picker[i];
+        let this_input_holder = this_input.parentElement;
+        let functionID = this_input_holder.getAttribute('alter');
+        if (!functionID) { return false };
+        this_input.addEventListener('input', settingsMap[functionID]);
+    }
+}
+
+// Other
+function hexToHSL(hex) {
+    let r = parseInt(hex.substring(1, 3), 16) / 255;
+    let g = parseInt(hex.substring(3, 5), 16) / 255;
+    let b = parseInt(hex.substring(5, 7), 16) / 255;
+
+    let max = Math.max(r, g, b);
+    let min = Math.min(r, g, b);
+    let h, s, l = (max + min) / 2;
+    
+    if (max === min) {
+        h = s = 0;
+    } else {
+        let d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+        switch (max) {
+            case r:
+                h = (g - b) / d + (g < b ? 6 : 0);
+                break;
+            case g:
+                h = (b - r) / d + 2;
+                break;
+            case b:
+                h = (r - g) / d + 4;
+                break;
+        }
+        h /= 6;
+    }
+
+    return {
+        h: Math.round(h * 360),
+        s: s,
+        l: l
+    };
+}
+
+function getHueRotation(currentHex, targetHex) {
+    let currentHSL = hexToHSL(currentHex);
+    let targetHSL = hexToHSL(targetHex);
+    let hueDifference = targetHSL.h - currentHSL.h;
+    
+    if (hueDifference < 0) {
+        hueDifference += 360;
+    }
+    return hueDifference;
+}
+
+// On Run
 loadProjects();
 handlePageButtons();
 loadSearches();
 updateScrollClass();
 handlePushState();
 loadSettingsSwitch();
+loadSettingsColor();
 sidebar_button.addEventListener('mouseup', handleSidebar);
 yellow_button.addEventListener('mouseup', handleSidebar);
 green_button.addEventListener('mouseup', fullscreen);
