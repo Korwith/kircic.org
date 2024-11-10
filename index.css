@@ -257,6 +257,8 @@ nav.sidebar.shift {
     margin-left: auto;
     margin-right: auto;
     transition: border 0.2s;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .reset_defaults:hover {
