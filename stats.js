@@ -1,9 +1,6 @@
 const owner = 'Korwith';
 const repo = 'kircic.org';
 
-const commit_stat = document.querySelector('.commit_count');
-const size_stat = document.querySelector('.digital_size');
-
 async function fetchCommitCount(owner, repo) {
     try {
         const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/commits?per_page=1`);

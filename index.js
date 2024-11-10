@@ -18,10 +18,12 @@ const yellow_button = sidebar.querySelector('.yellow');
 const green_button = sidebar.querySelector('.green');
 const page_button = sidebar.querySelectorAll('[pagelink]');
 const cog = sidebar.querySelector('.cog');
+const commit_stat = sidebar.querySelector('.commit_count');
+const size_stat = sidebar.querySelector('.digital_size');
 
 const navigation_pane = sidebar.querySelector('.sidebar_container.mid.navigate');
 const settings_pane = sidebar.querySelector('.sidebar_container.mid.settings');
-
+const reset_defaults = sidebar.querySelector('.reset_defaults');
 const all_switches = settings_pane.querySelectorAll('.settings_switch .switch');
 const all_color_picker = settings_pane.querySelectorAll('.settings_switch .colorpicker input');
 
@@ -254,6 +256,9 @@ function handleSettings() {
     let showing_settings = settings_pane.classList.contains('hide');
     settings_pane.classList.toggle('hide', !showing_settings);
     navigation_pane.classList.toggle('hide', showing_settings);
+    commit_stat.classList.toggle('hide', showing_settings);
+    size_stat.classList.toggle('hide', showing_settings);
+    reset_defaults.classList.toggle('hide', !showing_settings);
 }
 
 function loadSettingsSwitch() {
