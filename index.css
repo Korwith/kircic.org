@@ -693,6 +693,7 @@ header.shift {
 }
 
 .bookmarks {
+    position: relative;
     width: calc(100% - 20px);
     height: fit-content;
     margin-left: 10px;
@@ -735,15 +736,58 @@ header.shift {
     height: 100%;
 }
 
+.bookmarks a {
+    cursor: pointer;
+}
+
+.bookmarks a:hover .mark {
+    border: 1px solid white;
+}
+
 .mark {
     height: 36px;
     width: 36px;
+    outline: none;
     cursor: pointer;
-    transition: border 0.2s;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    transition: border 0.2s, opacity 0.2s;
+}
+
+.mark.add {
+    background-image: url(icon/plus.svg);
+    background-size: 80%;
+    order: 99;
+}
+
+.mark.delete {
+    background-image: url(icon/delete.svg);
+    background-size: 80%;
+    position: absolute;
+    right: 0;
+}
+
+.mark.usermade {
+    pointer-events: none;
+    position: relative;
 }
 
 .mark:hover, .last_search:hover {
     border: 1px solid white;
+}
+
+.bookmarks.deletion .add {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.bookmarks.deletion .mark {
+    border: 1px solid rgba(255, 75, 75, 0.5);
+}
+
+.bookmarks.deletion .mark::after {
+    content: unset;
 }
 
 .search_holder {

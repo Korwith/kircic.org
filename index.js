@@ -7,6 +7,8 @@ const search_page = content.querySelector('.page.search');
 const home = content.querySelector('.page.home');
 const featured = home.querySelector('.horizontal_pane');
 const bookmarks = search_page.querySelector('.bookmarks');
+const add_bookmark = bookmarks.querySelector('.mark.add');
+const delete_bookmark = bookmarks.querySelector('.mark.delete');
 
 const header = document.querySelector('header');
 const sidebar = document.querySelector('nav.sidebar');
@@ -261,6 +263,9 @@ let functionMap = {
     'saveLastSearch': saveSearchVisible,
 }
 
+let user_searches = [];
+let user_bookmarks = [];
+
 function loadSettings() {
     let filter_string = localStorage.getItem('changePageHue');
     if (filter_string) {
@@ -337,9 +342,8 @@ function updateSwitch(event) {
 }
 
 function resetSettings() {
-    localStorage.clear();
     blurred_img_bg.style.filter = defaults['changePageHue'];
-    bookmarks.classList.toggle('hidebookmarks', !defaults.hideBookmarks);
+    bookmarks.classList.toggle('hidebookmarks', defaults.hideBookmarks);
 
     for (var i = 0; i < all_switches.length; i++) {
         let this_switch = all_switches[i];
