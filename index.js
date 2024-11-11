@@ -24,8 +24,9 @@ const size_stat = sidebar.querySelector('.digital_size');
 const navigation_pane = sidebar.querySelector('.sidebar_container.mid.navigate');
 const settings_pane = sidebar.querySelector('.sidebar_container.mid.settings');
 const reset_defaults = sidebar.querySelector('.reset_defaults');
+const color_holder = sidebar.querySelector('[alter="changePageHue"]');
+const color_input = color_holder.querySelector('input');
 const all_switches = settings_pane.querySelectorAll('.settings_switch .switch');
-const all_color_picker = settings_pane.querySelectorAll('.settings_switch .colorpicker input');
 
 const project_data = {
     'Wordle': {
@@ -241,53 +242,60 @@ function fullscreen() {
 }
 
 // Settings
-let settingsMap = {
-    'changePageHue': changePageHue
+let defaults = {
+    'changePageHue': 'unset',
+    'showBookmarks': true,
+    'saveLastSearch': false
+}
+
+function loadSettings() {
+    let filter_string = localStorage.getItem('changePageHue');
+    if (filter_string) {
+        blurred_img_bg.style.filter = filter_string;
+    } else {
+        blurred_img_bg.style.filter = defaults['changePageHue'];
+    }
 }
 
 function changePageHue() {
-    let target_holder = settings_pane.querySelector('[alter="changePageHue"]');
-    let target_input = target_holder.querySelector('input');
-    let filter_string = getFilterString('#0c3365', target_input.value);
+    let filter_string = getFilterString('#0c3365', color_input.value);
     blurred_img_bg.style.filter = filter_string;
+    localStorage.setItem('changePageHue', filter_string);
 }
 
 function handleSettings() {
     let showing_settings = settings_pane.classList.contains('hide');
     settings_pane.classList.toggle('hide', !showing_settings);
+    reset_defaults.classList.toggle('hide', !showing_settings);
     navigation_pane.classList.toggle('hide', showing_settings);
     commit_stat.classList.toggle('hide', showing_settings);
     size_stat.classList.toggle('hide', showing_settings);
-    reset_defaults.classList.toggle('hide', !showing_settings);
 }
 
 function loadSettingsSwitch() {
     for (var i = 0; i < all_switches.length; i++) {
         let this_switch = all_switches[i];
-        console.log(this_switch);
         this_switch.onclick = updateSwitch;
+
+        let switch_parent = this_switch.parentElement;
+        let functionID = switch_parent.getAttribute('alter');
+        let saved_state = localStorage.getItem(functionID);
+        if (!saved_state) { return false };
+        this_switch.classList.toggle('toggle', saved_state);
     }
 }
 
 function updateSwitch(event) {
     if (!event.target) { return false };
-    event.target.classList.toggle('toggle');
+    let switch_parent = event.target.parentElement;
+    let functionID = switch_parent.getAttribute('alter');
 
-    let functionID = event.target.getAttribute('alter');
     if (!functionID) { return false };
+    event.target.classList.toggle('toggle');
+    localStorage.setItem(functionID, event.target.classList.contains('toggle'));
 }
 
-function loadSettingsColor() {
-    for (var i = 0; i < all_color_picker.length; i++) {
-        let this_input = all_color_picker[i];
-        let this_input_holder = this_input.parentElement;
-        let functionID = this_input_holder.getAttribute('alter');
-        if (!functionID) { return false };
-        this_input.addEventListener('input', settingsMap[functionID]);
-    }
-}
-
-// Other
+// Complicated background-filter logic
 function hexToHSL(hex) {
     let r = parseInt(hex.substring(1, 3), 16) / 255;
     let g = parseInt(hex.substring(3, 5), 16) / 255;
@@ -296,7 +304,7 @@ function hexToHSL(hex) {
     let max = Math.max(r, g, b);
     let min = Math.min(r, g, b);
     let h, s, l = (max + min) / 2;
-    
+
     if (max === min) {
         h = s = 0;
     } else {
@@ -327,7 +335,7 @@ function getFilterString(currentHex, targetHex) {
     let currentHSL = hexToHSL(currentHex);
     let targetHSL = hexToHSL(targetHex);
     let hueDifference = targetHSL.h - currentHSL.h;
-    
+
     if (hueDifference < 0) {
         hueDifference += 360;
     }
@@ -335,7 +343,7 @@ function getFilterString(currentHex, targetHex) {
     // Dynamic saturation threshold based on lightness
     const baseGrayThreshold = 0.1; // Base threshold for gray detection
     const dynamicGrayThreshold = baseGrayThreshold + (1 - targetHSL.l) * 0.2; // Increases with darkness
-    
+
     const lightnessWhite = 0.95; // Lightness threshold for white
     const lightnessBlack = 0.05; // Lightness threshold for black
 
@@ -349,7 +357,7 @@ function getFilterString(currentHex, targetHex) {
     else if (targetHSL.l >= lightnessWhite || targetHSL.s <= dynamicGrayThreshold) {
         filterString += ' contrast(0)';
     }
-    
+
     return filterString;
 }
 
@@ -359,11 +367,12 @@ handlePageButtons();
 loadSearches();
 updateScrollClass();
 handlePushState();
+loadSettings();
 loadSettingsSwitch();
-loadSettingsColor();
 sidebar_button.addEventListener('mouseup', handleSidebar);
 yellow_button.addEventListener('mouseup', handleSidebar);
 green_button.addEventListener('mouseup', fullscreen);
 cog.addEventListener('mouseup', handleSettings);
+color_input.addEventListener('input', changePageHue);
 document.addEventListener('keydown', handleKeyDown);
 window.onresize = updateScrollClass;
