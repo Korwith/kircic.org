@@ -29,7 +29,7 @@ body {
     margin: 10px;
 }
 
-#project_placeholder, #search_placeholder {
+#project_placeholder, #search_placeholder, #last_search_placeholder {
     display: none;
 }
 
@@ -690,6 +690,60 @@ header.shift {
     justify-content: center;
     user-select: none;
     font-weight: 700;
+}
+
+.bookmarks {
+    width: calc(100% - 20px);
+    height: fit-content;
+    margin-left: 10px;
+    margin-right: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.bookmarks.hidebookmarks .mark {
+    display: none;
+}
+
+.bookmarks.lastsearch .last_search {
+    display: flex;
+}
+
+.last_search {
+    display: none;
+    height: 36px;
+    width: fit-content;
+    padding-right: 10px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: border 0.2s;
+}
+
+.last_search .icon {
+    background-size: cover;
+    background-image: url(icon/google.svg);
+    height: 24px;
+    width: 24px;
+    margin: 6px;
+    flex: 0 0 auto;
+}
+
+.last_search span {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.mark {
+    height: 36px;
+    width: 36px;
+    cursor: pointer;
+    transition: border 0.2s;
+}
+
+.mark:hover, .last_search:hover {
+    border: 1px solid white;
 }
 
 .search_holder {

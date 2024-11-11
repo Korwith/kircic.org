@@ -1,6 +1,3 @@
-const project_placeholder = document.querySelector('#project_placeholder');
-const search_placeholder = document.querySelector('#search_placeholder');
-
 const blurred_img_bg = document.querySelector('.blurred_img_bg');
 const content = document.querySelector('.content');
 const all_page = content.querySelectorAll('.page');
@@ -9,6 +6,7 @@ const project_page = content.querySelector('.page.projects');
 const search_page = content.querySelector('.page.search');
 const home = content.querySelector('.page.home');
 const featured = home.querySelector('.horizontal_pane');
+const bookmarks = search_page.querySelector('.bookmarks');
 
 const header = document.querySelector('header');
 const sidebar = document.querySelector('nav.sidebar');
@@ -27,6 +25,10 @@ const reset_defaults = sidebar.querySelector('.reset_defaults');
 const color_holder = sidebar.querySelector('[alter="changePageHue"]');
 const color_input = color_holder.querySelector('input');
 const all_switches = settings_pane.querySelectorAll('.settings_switch .switch');
+
+const project_placeholder = document.querySelector('#project_placeholder');
+const search_placeholder = document.querySelector('#search_placeholder');
+const last_search_placeholder = document.querySelector('#last_search_placeholder');
 
 const project_data = {
     'Wordle': {
@@ -244,16 +246,39 @@ function fullscreen() {
 // Settings
 let defaults = {
     'changePageHue': 'unset',
-    'showBookmarks': true,
+    'hideBookmarks': false,
     'saveLastSearch': false
+}
+
+let current_settings = {
+    'changePageHue': 'unset',
+    'hideBookmarks': false,
+    'saveLastSearch': false
+}
+
+let functionMap = {
+    'hideBookmarks': bookmarksVisible,
+    'saveLastSearch': saveSearchVisible,
 }
 
 function loadSettings() {
     let filter_string = localStorage.getItem('changePageHue');
     if (filter_string) {
         blurred_img_bg.style.filter = filter_string;
+        current_settings.changePageHue = filter_string;
     } else {
         blurred_img_bg.style.filter = defaults['changePageHue'];
+    }
+
+    let bookmark_string = localStorage.getItem('hideBookmarks');
+    if (bookmark_string == 'true') {
+        current_settings.hideBookmarks = true;
+        bookmarksVisible();
+    }
+
+    let last_search = localStorage.getItem('saveLastSearch');
+    if (last_search == 'true') {
+        bookmarks.classList.add('lastsearch');
     }
 }
 
@@ -261,6 +286,14 @@ function changePageHue() {
     let filter_string = getFilterString('#0c3365', color_input.value);
     blurred_img_bg.style.filter = filter_string;
     localStorage.setItem('changePageHue', filter_string);
+}
+
+function bookmarksVisible() {
+    bookmarks.classList.toggle('hidebookmarks', current_settings.hideBookmarks);
+}
+
+function saveSearchVisible() {
+    bookmarks.classList.toggle('lastsearch', current_settings.saveLastSearch);
 }
 
 function handleSettings() {
@@ -275,13 +308,13 @@ function handleSettings() {
 function loadSettingsSwitch() {
     for (var i = 0; i < all_switches.length; i++) {
         let this_switch = all_switches[i];
-        this_switch.onclick = updateSwitch;
-
         let switch_parent = this_switch.parentElement;
         let functionID = switch_parent.getAttribute('alter');
         let saved_state = localStorage.getItem(functionID);
-        if (!saved_state) { return false };
-        this_switch.classList.toggle('toggle', saved_state);
+        if (saved_state == 'true') {
+            this_switch.classList.add('toggle');
+        }
+        this_switch.onclick = updateSwitch;
     }
 }
 
@@ -289,10 +322,31 @@ function updateSwitch(event) {
     if (!event.target) { return false };
     let switch_parent = event.target.parentElement;
     let functionID = switch_parent.getAttribute('alter');
-
+    
     if (!functionID) { return false };
     event.target.classList.toggle('toggle');
     localStorage.setItem(functionID, event.target.classList.contains('toggle'));
+
+    if (current_settings[functionID] != null) {
+        current_settings[functionID] = event.target.classList.contains('toggle');
+    }
+
+    if (functionMap[functionID]) {
+        functionMap[functionID]();
+    }
+}
+
+function resetSettings() {
+    localStorage.clear();
+    blurred_img_bg.style.filter = defaults['changePageHue'];
+    bookmarks.classList.toggle('hidebookmarks', !defaults.hideBookmarks);
+
+    for (var i = 0; i < all_switches.length; i++) {
+        let this_switch = all_switches[i];
+        let switch_parent = this_switch.parentElement;
+        let functionID = switch_parent.getAttribute('alter');
+        this_switch.classList.toggle('toggle', defaults[functionID]);
+    }
 }
 
 // Complicated background-filter logic
@@ -374,5 +428,6 @@ yellow_button.addEventListener('mouseup', handleSidebar);
 green_button.addEventListener('mouseup', fullscreen);
 cog.addEventListener('mouseup', handleSettings);
 color_input.addEventListener('input', changePageHue);
+reset_defaults.addEventListener('mouseup', resetSettings);
 document.addEventListener('keydown', handleKeyDown);
 window.onresize = updateScrollClass;
