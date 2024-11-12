@@ -225,7 +225,11 @@ function runSearch(name) {
     let search_holder = search_page.querySelector(`[search="${name}"]`);
     let search_box = search_holder.querySelector('.search_box');
     let search_url = search_data[name];
-    window.location.href = `https://${search_url}${search_box.value.replaceAll(' ', '+')}`;
+    let formatted_url = `https://${search_url}${search_box.value.replaceAll(' ', '+')}`;
+    clearLastSearch();
+    handleLastSearch(formatted_url);
+    loadLastSearch(formatted_url);
+    window.location.href = formatted_url
 }
 
 function handleKeyDown(event) {
@@ -263,7 +267,7 @@ let functionMap = {
     'saveLastSearch': saveSearchVisible,
 }
 
-let user_searches = [];
+let last_search;
 let user_bookmarks = [];
 
 function loadSettings() {
@@ -283,7 +287,13 @@ function loadSettings() {
 
     let last_search = localStorage.getItem('saveLastSearch');
     if (last_search == 'true') {
+        current_settings.saveLastSearch = true;
         bookmarks.classList.add('lastsearch');
+    }
+
+    let last_search_storage = localStorage.getItem('lastSearch');
+    if (last_search_storage) {
+        loadLastSearch(last_search_storage);
     }
 }
 
@@ -299,6 +309,9 @@ function bookmarksVisible() {
 
 function saveSearchVisible() {
     bookmarks.classList.toggle('lastsearch', current_settings.saveLastSearch);
+    if (!current_settings.saveLastSearch) {
+        clearLastSearch();
+    }
 }
 
 function handleSettings() {
@@ -344,6 +357,8 @@ function updateSwitch(event) {
 function resetSettings() {
     blurred_img_bg.style.filter = defaults['changePageHue'];
     bookmarks.classList.toggle('hidebookmarks', defaults.hideBookmarks);
+    bookmarks.classList.toggle('lastsearch', defaults.last_search);
+    clearLastSearch();
 
     for (var i = 0; i < all_switches.length; i++) {
         let this_switch = all_switches[i];
@@ -351,6 +366,32 @@ function resetSettings() {
         let functionID = switch_parent.getAttribute('alter');
         this_switch.classList.toggle('toggle', defaults[functionID]);
     }
+}
+
+function handleLastSearch(url) {
+    if (!current_settings.saveLastSearch) { return false };
+    localStorage.setItem('lastSearch', url);
+}
+
+function loadLastSearch(url) {
+    if (url.length < 1) { return false };
+    let query = url.split('=')[1].replaceAll('+', ' ');
+    let clone = last_search_placeholder.cloneNode(true);
+    let term = clone.querySelector('span');
+
+    clone.setAttribute('href', url);
+    clone.removeAttribute('id');
+    clone.style.order = '0';
+    term.textContent = query;
+    bookmarks.appendChild(clone);
+}
+
+function clearLastSearch() {
+    let search_div = bookmarks.querySelector('.last_search');
+    if (!search_div) { return false };
+    let search_link = search_div.parentElement;
+    search_link.remove();
+    localStorage.removeItem('lastSearch');
 }
 
 // Complicated background-filter logic

@@ -702,6 +702,10 @@ header.shift {
     gap: 10px;
 }
 
+.bookmarks a {
+    text-decoration: none;
+}
+
 .bookmarks.hidebookmarks .mark {
     display: none;
 }
