@@ -66,9 +66,7 @@ function deletionMode() {
 
 function bookmarkClick(event) {
     if (!event.target) { return false };
-    let inner_div = event.target.querySelector('.mark');
-
-    if (!inner_div.classList.contains('usermade')) { return false };
+    if (event.target.classList.contains('usermade')) { return false };
     if (!deletion_mode) { return false };
     let mark_link = event.target.getAttribute('nohref');
     let link_splice = mark_link.slice(0, -1);
