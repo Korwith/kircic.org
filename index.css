@@ -769,7 +769,6 @@ header.shift {
 }
 
 .mark.usermade {
-    pointer-events: none;
     position: relative;
 }
 
