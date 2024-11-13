@@ -738,6 +738,10 @@ header.shift {
     display: flex;
     align-items: center;
     height: 100%;
+    width: fit-content;
+    max-width: 80px;
+    overflow: hidden;
+    text-wrap: nowrap;
 }
 
 .bookmarks a {
@@ -770,11 +774,6 @@ header.shift {
     background-size: 80%;
     position: absolute;
     right: 0;
-}
-
-.mark.usermade {
-    pointer-events: none;
-    position: relative;
 }
 
 .mark:hover, .last_search:hover {

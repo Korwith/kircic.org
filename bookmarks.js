@@ -17,17 +17,14 @@ function newBookmark() {
 }
 
 function bookmarkCreate(formatted) {
-    let link = document.createElement('a');
-    let mark = document.createElement('div');
+    let mark = document.createElement('a');
     mark.classList.add('mark');
     mark.classList.add('darkglass');
-    mark.classList.add('usermade');
     mark.style.backgroundImage = `url(https://www.google.com/s2/favicons?sz=64&domain=${formatted})`;
-    link.href = formatted;
+    mark.href = formatted;
 
-    link.onclick = bookmarkClick;
-    link.appendChild(mark);
-    bookmarks.appendChild(link);
+    mark.onclick = bookmarkClick;
+    bookmarks.appendChild(mark);
 }
 
 function loadBookmarks() {
@@ -66,7 +63,6 @@ function deletionMode() {
 
 function bookmarkClick(event) {
     if (!event.target) { return false };
-    if (event.target.classList.contains('usermade')) { return false };
     if (!deletion_mode) { return false };
     let mark_link = event.target.getAttribute('nohref');
     let link_splice = mark_link.slice(0, -1);
