@@ -164,12 +164,14 @@ function loadSearches() {
         let service_link = search_clone.querySelector('a');
         let service_icon = service_link.querySelector('div');
         let search_box = search_clone.querySelector('.search_box');
+        let search_button = search_clone.querySelector('.search_go');
 
         search_clone.setAttribute('search', i);
         service_link.href = `https://${this_info.split('/')[0]}`;
         service_icon.style.backgroundImage = `url(icon/${i.toLowerCase().replaceAll(' ', '')}.svg)`
         search_box.setAttribute('placeholder', 'Search ' + i);
         search_clone.removeAttribute('id');
+        search_button.onclick = searchClick;
         search_page.appendChild(search_clone);
     }
 }
@@ -229,7 +231,19 @@ function runSearch(name) {
     clearLastSearch();
     handleLastSearch(formatted_url);
     loadLastSearch(formatted_url);
-    window.location.href = formatted_url
+
+    if (!current_settings.searchNewTab) {
+        window.location.href = formatted_url
+    } else {
+        window.open(formatted_url, '_blank');
+    }
+}
+
+function searchClick(event) {
+    if (!event.target) { return false };
+    let search_holder = event.target.parentElement;
+    let service = search_holder.getAttribute('search');
+    runSearch(service);
 }
 
 function handleKeyDown(event) {
@@ -253,13 +267,15 @@ function fullscreen() {
 let defaults = {
     'changePageHue': 'unset',
     'hideBookmarks': false,
-    'saveLastSearch': false
+    'saveLastSearch': false,
+    'searchNewTab': false
 }
 
 let current_settings = {
     'changePageHue': 'unset',
     'hideBookmarks': false,
-    'saveLastSearch': false
+    'saveLastSearch': false,
+    'searchNewTab': false
 }
 
 let functionMap = {
@@ -370,13 +386,16 @@ function resetSettings() {
 
 function handleLastSearch(url) {
     if (!current_settings.saveLastSearch) { return false };
+    if (url.length < 1) { return false };
     localStorage.setItem('lastSearch', url);
 }
 
 function loadLastSearch(url) {
-    if (url.length < 1) { return false };
+    if (!current_settings.saveLastSearch) { return false };
     let query = url.split('=')[1].replaceAll('+', ' ');
+    if (query.length < 1) { return false };
     let clone = last_search_placeholder.cloneNode(true);
+    let icon = clone.querySelector('.icon');
     let term = clone.querySelector('span');
 
     clone.setAttribute('href', url);
@@ -384,6 +403,15 @@ function loadLastSearch(url) {
     clone.style.order = '0';
     term.textContent = query;
     bookmarks.appendChild(clone);
+    
+    for (var i in search_data) {
+        let this_url = search_data[i];
+        if (!url.includes(this_url)) { continue };
+        let search_box = search_page.querySelector(`.search_holder[search="${i}"]`);
+        let search_input = search_box.querySelector('input');
+        icon.style.backgroundImage = `url(icon/${i.toLowerCase()}.svg)`;
+        search_input.value = query;
+    }
 }
 
 function clearLastSearch() {
