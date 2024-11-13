@@ -50,19 +50,6 @@ function loadBookmarks() {
     }
 }
 
-function faviconTest(url) {
-    let img = new Image();
-    img.onerror = function () {
-        console.log('fail')
-    };
-    img.onload = function () {
-        console.log('loaded')
-        console.log('returned', url);
-        return url;
-    }
-    img.src = url;
-}
-
 let deletion_mode;
 function deletionMode() {
     deletion_mode = !deletion_mode;
