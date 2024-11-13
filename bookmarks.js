@@ -10,7 +10,7 @@ function newBookmark() {
     } else {
         formatted = result;
     }
-    
+
     bookmarkCreate(formatted);
     user_bookmarks.push(formatted);
     localStorage.setItem('user_bookmarks', JSON.stringify(user_bookmarks));
@@ -26,7 +26,7 @@ async function bookmarkCreate(formatted) {
 
     let attempt = new Image();
     attempt.src = favicon;
-    attempt.onload = function() {
+    attempt.onload = function () {
         if (attempt.width == 16 && attempt.height == 16) {
             mark.classList.add('default');
         } else {
@@ -34,7 +34,7 @@ async function bookmarkCreate(formatted) {
         }
     }
 
-    //mark.onclick = bookmarkClick;
+    mark.onclick = bookmarkClick;
     bookmarks.appendChild(mark);
 }
 
@@ -52,10 +52,10 @@ function loadBookmarks() {
 
 function faviconTest(url) {
     let img = new Image();
-    img.onerror = function() {
+    img.onerror = function () {
         console.log('fail')
     };
-    img.onload = function() {
+    img.onload = function () {
         console.log('loaded')
         console.log('returned', url);
         return url;
@@ -87,15 +87,17 @@ function deletionMode() {
 
 function bookmarkClick(event) {
     if (!event.target) { return false };
-    if (!deletion_mode) { return false };
-    let mark_link = event.target.getAttribute('nohref');
-    let link_splice = mark_link.slice(0, -1);
-    let linkID = user_bookmarks.indexOf(link_splice);;
+    if (deletion_mode) {
+        let mark_link = event.target.getAttribute('nohref');
+        let link_splice = mark_link.slice(0, -1);
+        let linkID = user_bookmarks.indexOf(link_splice);;
 
-    if (linkID < 0) { return false };
-    event.target.remove();
-    user_bookmarks.splice(linkID, 1);
-    localStorage.setItem('user_bookmarks', JSON.stringify(user_bookmarks));
+        if (linkID > -1) {
+            event.target.remove();
+            user_bookmarks.splice(linkID, 1);
+            localStorage.setItem('user_bookmarks', JSON.stringify(user_bookmarks));
+        }
+    }
 }
 
 loadBookmarks();
