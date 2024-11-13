@@ -16,7 +16,7 @@ function newBookmark() {
     localStorage.setItem('user_bookmarks', JSON.stringify(user_bookmarks));
 }
 
-async function bookmarkCreate(formatted) {
+function bookmarkCreate(formatted) {
     let mark = document.createElement('a');
     let favicon = `https://www.google.com/s2/favicons?sz=64&domain=${formatted}`;
     mark.classList.add('mark');
