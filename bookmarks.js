@@ -34,7 +34,7 @@ async function bookmarkCreate(formatted) {
         }
     }
 
-    mark.onclick = bookmarkClick;
+    //mark.onclick = bookmarkClick;
     bookmarks.appendChild(mark);
 }
 
