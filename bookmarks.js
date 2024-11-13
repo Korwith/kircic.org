@@ -5,7 +5,7 @@ function newBookmark() {
     let sliced = result.substring(0, 8).toLowerCase();
     let formatted;
 
-    if (!sliced.includes('https://') || !sliced.includes('http://')) {
+    if (!sliced.includes('https://') && !sliced.includes('http://')) {
         formatted = 'http://' + result;
     } else {
         formatted = result;
@@ -16,12 +16,23 @@ function newBookmark() {
     localStorage.setItem('user_bookmarks', JSON.stringify(user_bookmarks));
 }
 
-function bookmarkCreate(formatted) {
+async function bookmarkCreate(formatted) {
     let mark = document.createElement('a');
+    let favicon = `https://www.google.com/s2/favicons?sz=64&domain=${formatted}`;
     mark.classList.add('mark');
     mark.classList.add('darkglass');
-    mark.style.backgroundImage = `url(https://www.google.com/s2/favicons?sz=64&domain=${formatted})`;
     mark.href = formatted;
+    mark.title = formatted;
+
+    let attempt = new Image();
+    attempt.src = favicon;
+    attempt.onload = function() {
+        if (attempt.width == 16 && attempt.height == 16) {
+            mark.classList.add('default');
+        } else {
+            mark.style.backgroundImage = `url(${favicon})`;
+        }
+    }
 
     mark.onclick = bookmarkClick;
     bookmarks.appendChild(mark);
@@ -39,13 +50,26 @@ function loadBookmarks() {
     }
 }
 
+function faviconTest(url) {
+    let img = new Image();
+    img.onerror = function() {
+        console.log('fail')
+    };
+    img.onload = function() {
+        console.log('loaded')
+        console.log('returned', url);
+        return url;
+    }
+    img.src = url;
+}
+
 let deletion_mode;
 function deletionMode() {
     deletion_mode = !deletion_mode;
     bookmarks.classList.toggle('deletion', deletion_mode);
     let all_links = bookmarks.querySelectorAll('a');
 
-    if (deletion_mode == true) {
+    if (deletion_mode) {
         for (var i = 0; i < all_links.length; i++) {
             let this_mark = all_links[i];
             this_mark.setAttribute('nohref', this_mark.href);

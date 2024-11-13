@@ -776,6 +776,10 @@ header.shift {
     right: 0;
 }
 
+.mark.default {
+    background-image: url(icon/globe.svg);
+}
+
 .mark:hover, .last_search:hover {
     border: 1px solid white;
 }
