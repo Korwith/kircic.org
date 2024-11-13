@@ -78,7 +78,7 @@ function bookmarkClick(event) {
         let mark_link = event.target.getAttribute('nohref');
         //let link_splice = mark_link.slice(0, -1);
         let linkID = user_bookmarks.indexOf(mark_link);
-        
+        alert(linkID, mark_link);
         if (linkID > -1) {
             event.target.remove();
             user_bookmarks.splice(linkID, 1);
