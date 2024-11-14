@@ -704,6 +704,7 @@ header.shift {
 
 .bookmarks a {
     text-decoration: none;
+    cursor: pointer;
 }
 
 .bookmarks.hidebookmarks .mark {
@@ -742,10 +743,6 @@ header.shift {
     max-width: 80px;
     overflow: hidden;
     text-wrap: nowrap;
-}
-
-.bookmarks a {
-    cursor: pointer;
 }
 
 .bookmarks a:hover .mark {
