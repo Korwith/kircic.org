@@ -10,6 +10,7 @@ function newBookmark() {
     } else {
         formatted = result;
     }
+    formatted = formatted.toLowerCase();
 
     bookmarkCreate(formatted);
     user_bookmarks.push(formatted);
