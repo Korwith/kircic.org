@@ -27,7 +27,7 @@ function bookmarkCreate(formatted) {
     let attempt = new Image();
     attempt.src = favicon;
     attempt.onload = function () {
-        if (attempt.width == 16 && attempt.height == 16) {
+        if (attempt.width <= 20 && attempt.height <= 20) {
             mark.classList.add('default');
         } else {
             mark.style.backgroundImage = `url(${favicon})`;
