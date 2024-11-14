@@ -410,7 +410,7 @@ function loadLastSearch(url) {
         let search_box = search_page.querySelector(`.search_holder[search="${i}"]`);
         let search_input = search_box.querySelector('input');
         icon.style.backgroundImage = `url(icon/${i.toLowerCase()}.svg)`;
-        search_input.value = query;
+        search_input.placeholder = query;
     }
 }
 

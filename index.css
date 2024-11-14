@@ -739,7 +739,6 @@ header.shift {
     align-items: center;
     height: 100%;
     width: fit-content;
-    max-width: 80px;
     overflow: hidden;
     text-wrap: nowrap;
 }
