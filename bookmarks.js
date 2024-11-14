@@ -1,4 +1,10 @@
 // Bookmark Management
+const preset_icon = {
+    'blackboard.com': 'blackboard.ico',
+    'lms.fcps.org': 'schoology.ico',
+    'schoology.com': 'schoology.ico',
+}
+
 function newBookmark() {
     let result = prompt('Enter URL');
     if (!result) { return false };
@@ -19,12 +25,16 @@ function newBookmark() {
 
 function bookmarkCreate(formatted) {
     let mark = document.createElement('a');
-    let favicon = `https://www.google.com/s2/favicons?sz=64&domain=${formatted}`;
     mark.classList.add('mark');
     mark.classList.add('darkglass');
     mark.href = formatted;
     mark.title = formatted;
 
+    mark.onclick = bookmarkClick;
+    bookmarks.appendChild(mark);
+    
+    // set web icon
+    let favicon = `https://www.google.com/s2/favicons?sz=64&domain=${formatted}`;
     let attempt = new Image();
     attempt.src = favicon;
     attempt.onload = function () {
@@ -34,9 +44,6 @@ function bookmarkCreate(formatted) {
             mark.style.backgroundImage = `url(${favicon})`;
         }
     }
-
-    mark.onclick = bookmarkClick;
-    bookmarks.appendChild(mark);
 }
 
 function loadBookmarks() {

@@ -719,6 +719,7 @@ header.shift {
     display: none;
     height: 36px;
     width: fit-content;
+    max-width: 20vw;
     padding-right: 10px;
     font-size: 0.9rem;
     cursor: pointer;

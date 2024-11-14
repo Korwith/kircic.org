@@ -283,10 +283,12 @@ let functionMap = {
     'saveLastSearch': saveSearchVisible,
 }
 
+let skip = ['changePageHue'];
 let last_search;
 let user_bookmarks = [];
 
 function loadSettings() {
+    // background hue specifically
     let filter_string = localStorage.getItem('changePageHue');
     if (filter_string) {
         blurred_img_bg.style.filter = filter_string;
@@ -295,18 +297,20 @@ function loadSettings() {
         blurred_img_bg.style.filter = defaults['changePageHue'];
     }
 
-    let bookmark_string = localStorage.getItem('hideBookmarks');
-    if (bookmark_string == 'true') {
-        current_settings.hideBookmarks = true;
-        bookmarksVisible();
+    // switch settings
+    // set currentsettings and run function
+    for (var i in current_settings) {
+        if (skip.includes(i)) { continue };
+        let check_storage = localStorage.getItem(i);
+        if (!check_storage) { continue }
+        if (check_storage == 'true') {
+            current_settings[i] = true;
+            if (!functionMap[i]) { continue };
+            functionMap[i]();
+        }
     }
 
-    let last_search = localStorage.getItem('saveLastSearch');
-    if (last_search == 'true') {
-        current_settings.saveLastSearch = true;
-        bookmarks.classList.add('lastsearch');
-    }
-
+    // last search data
     let last_search_storage = localStorage.getItem('lastSearch');
     if (last_search_storage) {
         loadLastSearch(last_search_storage);
@@ -411,6 +415,7 @@ function loadLastSearch(url) {
         let search_input = search_box.querySelector('input');
         icon.style.backgroundImage = `url(icon/${i.toLowerCase()}.svg)`;
         search_input.placeholder = query;
+        search_box.classList.add('previous');
     }
 }
 
@@ -420,6 +425,12 @@ function clearLastSearch() {
     let search_link = search_div.parentElement;
     search_link.remove();
     localStorage.removeItem('lastSearch');
+
+    let previous_search = search_page.querySelector('.search_holder.previous');
+    if (!previous_search) { return false };
+    let previous_input = previous_search.querySelector('input');
+    let previous_service = previous_search.getAttribute('search');
+    previous_input.placeholder = 'Search ' + previous_service;
 }
 
 // Complicated background-filter logic
