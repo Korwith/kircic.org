@@ -351,6 +351,7 @@ span.category {
     margin-bottom: 10px;
     border-radius: 999px;
     cursor: pointer;
+    touch-action: manipulation;
 }
 
 .shifter {
