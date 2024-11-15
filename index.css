@@ -104,6 +104,7 @@ nav.sidebar.shift {
 .traffic div {
     aspect-ratio: 1/1;
     height: 14px;
+    width: 14px;
     margin: 3px;
     border-radius: 50%;
     border: 1px solid;
@@ -735,7 +736,6 @@ header.shift {
     display: none;
     height: 36px;
     width: fit-content;
-    max-width: 20vw;
     padding-right: 10px;
     font-size: 0.9rem;
     cursor: pointer;
