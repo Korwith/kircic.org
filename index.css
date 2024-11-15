@@ -131,6 +131,7 @@ nav.sidebar.shift {
     right: 0;
     border: 0;
     margin: 1px;
+    width: 18px;
     height: 18px;
     opacity: 0.7;
     background-size: cover;
@@ -921,5 +922,9 @@ header.shift {
 
     .image_holder {
         height: 50px;
+    }
+
+    .last_search {
+        max-width: 90vw;
     }
 }
