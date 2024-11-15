@@ -33,7 +33,15 @@ function bookmarkCreate(formatted) {
     mark.onclick = bookmarkClick;
     bookmarks.appendChild(mark);
     
-    // set web icon
+    // check presets
+    for (var i in preset_icon) {
+        if (formatted.includes(i)) {
+            let found_preset = preset_icon[i];
+            mark.style.backgroundImage = `url(icon/bookmark/${found_preset})`;
+            return false;
+        }
+    }
+    // else, set web icon
     let favicon = `https://www.google.com/s2/favicons?sz=64&domain=${formatted}`;
     let attempt = new Image();
     attempt.src = favicon;
