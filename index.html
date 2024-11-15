@@ -23,12 +23,10 @@
     <nav class="sidebar glass">
         <div class="sidebar_container">
             <div class="traffic">
-                <a href='https://google.com'>
-                    <div class="red"></div>
-                </a>
-                <div class="yellow"></div>
-                <div class="green"></div>
-                <div class="cog" title="Settings"></div>
+                <a class='red' href='https://google.com'></a>
+                <button class="yellow"></button>
+                <button class="green"></button>
+                <button class="cog" title="Settings"></button>
             </div>
 
             <div class="select hold">
@@ -104,25 +102,27 @@
             <span class="category">Search</span>
             <div class="settings_switch" alter="hideBookmarks">
                 <span>Hide Bookmarks</span>
-                <div class="switch darkglass">
+                <button class="switch darkglass">
                     <div class="shifter darkglass"></div>
-                </div>
+                </button>
             </div>
 
             <div class="settings_switch" alter="saveLastSearch">
                 <span>Save Last Search</span>
-                <div class="switch darkglass">
+                <button class="switch darkglass">
                     <div class="shifter darkglass"></div>
-                </div>
+                </button>
             </div>
 
             <div class="settings_switch" alter="searchNewTab">
                 <span>Open New Tab</span>
-                <div class="switch darkglass">
+                <button class="switch darkglass">
                     <div class="shifter darkglass"></div>
-                </div>
+                </button>
             </div>
 
+            <hr></hr>
+            <span class='category'>Console</span>
             <textarea class="console darkglass" spellcheck="false" placeholder="Enter a command.."></textarea>
         </div>
 
