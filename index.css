@@ -101,33 +101,31 @@ nav.sidebar.shift {
     gap: 6px;
 }
 
-.traffic a, .traffic button {
+.traffic div {
     aspect-ratio: 1/1;
     height: 14px;
     margin: 3px;
     border-radius: 50%;
     border: 1px solid;
     cursor: pointer;
-    background-color: rgba(0, 0, 0, 0);
-    border: 1px solid rgba(0, 0, 0, 0);
 }
 
-.traffic .red {
+.traffic div.red {
     background-color: rgb(252, 97, 86);
     border-color: rgb(223, 71, 68);
 }
 
-.traffic .yellow {
+.traffic div.yellow {
     background-color: rgb(252, 190, 43);
     border-color: rgb(222, 159, 52);
 }
 
-.traffic .green {
+.traffic div.green {
     background-color: rgb(44, 201, 63);
     border-color: rgb(39, 170, 53);
 }
 
-.traffic .cog {
+.traffic div.cog {
     position: absolute;
     right: 0;
     border: 0;
@@ -139,7 +137,7 @@ nav.sidebar.shift {
     transition: opacity 0.2s;
 }
 
-.traffic .cog:hover {
+.traffic div.cog:hover {
     opacity: 1;
 }
 
