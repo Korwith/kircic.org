@@ -367,6 +367,20 @@ span.category {
     left: calc(100% - 28px);
 }
 
+.console {
+    width: calc(100% - 20px);
+    height: 80px;
+    margin: 10px;
+    resize: none;
+    outline: none;
+    font-family: monospace;
+    transition: border 0.2s;
+}
+
+.console:focus {
+    border: 1px solid white;
+}
+
 header {
     position: fixed;
     display: flex;

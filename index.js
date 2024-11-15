@@ -27,6 +27,7 @@ const reset_defaults = sidebar.querySelector('.reset_defaults');
 const color_holder = sidebar.querySelector('[alter="changePageHue"]');
 const color_input = color_holder.querySelector('input');
 const all_switches = settings_pane.querySelectorAll('.settings_switch .switch');
+const console_box = settings_pane.querySelector('textarea.console');
 
 const project_placeholder = document.querySelector('#project_placeholder');
 const search_placeholder = document.querySelector('#search_placeholder');
@@ -499,6 +500,21 @@ function getFilterString(currentHex, targetHex) {
     return filterString;
 }
 
+// Run Console
+function runConsole(event) {
+    if (event.key == 'Enter') {
+        if (!event.shiftKey) {
+            try {
+                eval(console_box.value); 
+            } catch(error) {
+                alert(error);
+            }
+            event.preventDefault();
+            console_box.value = null;
+        }
+    }
+}
+
 // On Run
 loadProjects();
 handlePageButtons();
@@ -513,5 +529,6 @@ green_button.addEventListener('mouseup', fullscreen);
 cog.addEventListener('mouseup', handleSettings);
 color_input.addEventListener('input', changePageHue);
 reset_defaults.addEventListener('mouseup', resetSettings);
+console_box.addEventListener('keydown', runConsole);
 document.addEventListener('keydown', handleKeyDown);
 window.onresize = updateScrollClass;
