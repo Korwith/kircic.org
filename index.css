@@ -605,15 +605,15 @@ header.shift {
     overflow: hidden;
 }
 
-.project_holder:hover video {
-    opacity: 0.8;
+.project_holder:hover video, .project_holder:hover img {
+    opacity: 1;
 }
 
 .project_holder a {
     text-decoration: none;
 }
 
-.project_holder video {
+.project_holder video, .project_holder img {
     aspect-ratio: 640/480;
     position: absolute;
     left: 50%;

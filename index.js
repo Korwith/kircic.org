@@ -79,7 +79,8 @@ const project_data = {
         description: 'Collaboration with Ariel Araya, a web port of the iOS application Notilify.',
         icon: { url: 'icon/notilify.png', size: '90%' },
         href: 'https://arielaraya.xyz/notilifyPWA/index.html',
-        featured: 5
+        featured: 5,
+        background: 'icon/notilifyweb.jpg'
     },
     'QR Generator': {
         description: 'Create custom QR codes for any text or URL',
@@ -95,7 +96,8 @@ const project_data = {
         description: 'Provides real time stock graphs and detailed statistics about the market.',
         icon: { url: 'icon/stock.svg', size: '90%' },
         href: 'https://kir.lol/',
-        featured: 1
+        background: 'icon/stocktracker.jpg',
+        featured: 1,
     }
 }
 
@@ -104,7 +106,7 @@ const search_data = {
     'DuckDuckGo': 'duckduckgo.com/?q=',
     'Brave': 'search.brave.com/search?q=',
     'Bing': 'bing.com/search?q=',
-    'Ecosia': 'ecosia.org/search?q=',
+    'Ecosia': 'fecosia.org/search?q=',
     'Yandex': 'yandex.com/search/?text=',
     'Wikipedia': 'wikipedia.org/w/index.php?search=',
     'GitHub': 'github.com/search?q=',
@@ -127,6 +129,7 @@ function makeProjectFrame(project) {
     let info = project_clone.querySelector('.info');
     let link = project_clone.querySelector('a');
     let video = project_clone.querySelector('video');
+    let background = project_clone.querySelector('img');
 
     name.textContent = project;
     icon.style.backgroundImage = `url(${this_data.icon.url})`;
@@ -139,6 +142,14 @@ function makeProjectFrame(project) {
 
     if (this_data.video) {
         video.src = this_data.video;
+    } else {
+        video.remove();
+    }
+
+    if (this_data.background) {
+        background.src = this_data.background;
+    } else {
+        background.remove();
     }
 
     if (this_data.featured) {
