@@ -109,6 +109,7 @@ nav.sidebar.shift {
     border-radius: 50%;
     border: 1px solid;
     cursor: pointer;
+    touch-action: manipulation;
 }
 
 .traffic div.red {
@@ -776,6 +777,7 @@ header.shift {
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+    touch-action: manipulation;
     transition: border 0.2s, opacity 0.2s;
 }
 

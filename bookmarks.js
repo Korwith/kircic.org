@@ -9,7 +9,11 @@ const preset_icon = {
     'sites.google.com': 'sites.ico',
     'docs.google.com': 'docs.ico',
     'classroom.google.com': 'classroom.png',
-    
+    'maps.google.com': 'maps.ico',
+    'google.com/maps': 'maps.ico',
+    'earth.google.com': 'earth.ico',
+    'remotedesktop.google.com': 'remotedesktop.png',
+    'mail.google.com': 'gmail.ico',
 }
 
 function newBookmark() {
