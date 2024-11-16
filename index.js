@@ -58,7 +58,7 @@ const project_data = {
     '3D Viewer': {
         description: '3D File Viewer, supporting OBJ, MTL, OBJ files.',
         icon: { url: 'icon/3dviewer.svg', size: '80%' },
-        href: 'https://www.kircic.org/sub/study/index.html',
+        href: 'https://www.kircic.org/3d/view.html',
     },
     'A+ Study Tool': {
         description: 'A simple study assistant for the A+ certification with a general practice test, a study quiz for ports, and a study quiz for the six troubleshooting steps.',
