@@ -110,6 +110,23 @@ nav.sidebar.shift {
     border: 1px solid;
     cursor: pointer;
     touch-action: manipulation;
+    position: relative;
+}
+
+.traffic div::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    background-size: cover;
+    transition: opacity 0.2s;
+}
+
+.traffic div:hover::after {
+    opacity: 1;
 }
 
 .traffic div.red {
@@ -117,14 +134,26 @@ nav.sidebar.shift {
     border-color: rgb(223, 71, 68);
 }
 
+.traffic div.red::after {
+    background-image: url(icon/exit_red.svg);
+}
+
 .traffic div.yellow {
     background-color: rgb(252, 190, 43);
     border-color: rgb(222, 159, 52);
 }
 
+.traffic div.yellow:after {
+    background-image: url(icon/minimize_yellow.svg);
+}
+
 .traffic div.green {
     background-color: rgb(44, 201, 63);
     border-color: rgb(39, 170, 53);
+}
+
+.traffic div.green::after {
+    background-image: url(icon/fullscreen_green.svg);
 }
 
 .traffic div.cog {
@@ -571,7 +600,7 @@ header.shift {
 
 .java {
     background-image: url(icon/java.svg);
-    background-size: 70%;
+    background-size: 80%;
     display: none;
 }
 
