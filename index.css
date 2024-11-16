@@ -413,6 +413,7 @@ header.shift {
     background-repeat: no-repeat;
     cursor: pointer;
     opacity: 0.9;
+    touch-action: manipulation;
 }
 
 .clock {
