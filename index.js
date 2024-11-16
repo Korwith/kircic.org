@@ -443,6 +443,7 @@ function clearLastSearch() {
     let previous_input = previous_search.querySelector('input');
     let previous_service = previous_search.getAttribute('search');
     previous_input.placeholder = 'Search ' + previous_service;
+    previous_input.value = '';
 }
 
 // Complicated background-filter logic
