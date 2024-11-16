@@ -3,6 +3,13 @@ const preset_icon = {
     'blackboard.com': 'blackboard.ico',
     'lms.fcps.org': 'schoology.ico',
     'schoology.com': 'schoology.ico',
+    'drive.google.com': 'drive.png',
+    'meet.google.com': 'meet.png',
+    'slides.google.com': 'slides.ico',
+    'sites.google.com': 'sites.ico',
+    'docs.google.com': 'docs.ico',
+    'classroom.google.com': 'classroom.png',
+    
 }
 
 function newBookmark() {
@@ -41,6 +48,7 @@ function bookmarkCreate(formatted) {
             return false;
         }
     }
+    
     // else, set web icon
     let favicon = `https://www.google.com/s2/favicons?sz=64&domain=${formatted}`;
     let attempt = new Image();
