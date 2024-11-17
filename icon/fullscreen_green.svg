@@ -1,7 +1,7 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <!-- Uploaded to: SVG Repo, www.svgrepo.com, Transformed by: SVG Repo Mixer Tools -->
-<svg width="800px" height="800px" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg fill="#098c17" xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 52 52" enable-background="new 0 0 52 52" xml:space="preserve" stroke="#098c17">
 <g id="SVGRepo_bgCarrier" stroke-width="0"/>
 <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
-<g id="SVGRepo_iconCarrier"> <path d="M15.7071 1.70712L12.7071 4.70712L15 7.00001L14 8.00001H7.99995V2.00001L8.99995 1.00001L11.2928 3.29291L14.2928 0.292908L15.7071 1.70712Z" fill="#098c21"/> <path d="M4.70706 12.7071L6.99995 15L7.99995 14V8.00001L1.99995 8.00001L0.999953 9.00002L3.29285 11.2929L0.292847 14.2929L1.70706 15.7071L4.70706 12.7071Z" fill="#098c21"/> </g>
+<g id="SVGRepo_iconCarrier"> <path d="M48.8,2H33.3c-1,0-1.3,0.9-0.5,1.7l4.9,4.9l-9,9c-0.5,0.5-0.5,1.3,0,1.9l3.7,3.7c0.5,0.5,1.3,0.5,1.9,0 l9.1-9.1l4.9,4.9c0.8,0.8,1.7,0.5,1.7-0.5V3.1C50,2.5,49.4,2,48.8,2z"/> <path d="M3.5,50h15.4c1,0,1.3-1.1,0.5-1.9l-4.9-5l9-9.1c0.5-0.5,0.5-1.4,0-1.9l-3.7-3.7c-0.5-0.5-1.3-0.5-1.9,0l-9,9 l-5-4.9C3,31.7,2,32,2,33v15.4C2,49.1,2.8,50,3.5,50z"/> </g>
 </svg>

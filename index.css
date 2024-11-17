@@ -122,6 +122,8 @@ nav.sidebar.shift {
     height: 100%;
     opacity: 0;
     background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
     transition: opacity 0.2s;
 }
 
@@ -154,6 +156,7 @@ nav.sidebar.shift {
 
 .traffic div.green::after {
     background-image: url(icon/fullscreen_green.svg);
+    background-size: 76%;
 }
 
 .traffic div.cog {
