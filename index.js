@@ -201,6 +201,8 @@ function openPage(name) {
         open_page.classList.remove('show');
     }
     new_page.classList.add('show');
+    content.scrollTop = 0;
+    content.focus();
     updateScrollClass();
 }
 
