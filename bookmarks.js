@@ -50,6 +50,7 @@ function bookmarkCreate(formatted) {
         if (formatted.includes(i)) {
             let found_preset = preset_icon[i];
             mark.style.backgroundImage = `url(icon/bookmark/${found_preset})`;
+            mark.classList.remove('noload');
             return false;
         }
     }
@@ -69,6 +70,7 @@ function bookmarkCreate(formatted) {
         mark.classList.add('default')
         mark.classList.remove('noload')
     }
+
     attempt.src = favicon;
 }
 
