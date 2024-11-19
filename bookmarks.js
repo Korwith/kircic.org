@@ -38,6 +38,7 @@ function bookmarkCreate(formatted) {
     let mark = document.createElement('a');
     mark.classList.add('mark');
     mark.classList.add('darkglass');
+    mark.classList.add('noload');
     mark.href = formatted;
     mark.title = formatted;
 
@@ -53,17 +54,22 @@ function bookmarkCreate(formatted) {
         }
     }
     
-    // else, set web icon
+    // else, set web iconit 
     let favicon = `https://www.google.com/s2/favicons?sz=64&domain=${formatted}`;
     let attempt = new Image();
-    attempt.src = favicon;
     attempt.onload = function () {
+        mark.classList.remove('noload');
         if (attempt.width <= 20 && attempt.height <= 20) {
             mark.classList.add('default');
         } else {
             mark.style.backgroundImage = `url(${favicon})`;
         }
     }
+    attempt.onerror = function() {
+        mark.classList.add('default')
+        mark.classList.remove('noload')
+    }
+    attempt.src = favicon;
 }
 
 function loadBookmarks() {
