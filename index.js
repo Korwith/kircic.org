@@ -4,6 +4,7 @@ const all_page = content.querySelectorAll('.page');
 const home_page = content.querySelector('.page.home');
 const project_page = content.querySelector('.page.projects');
 const search_page = content.querySelector('.page.search');
+const checklist_page = content.querySelector('.page.checklist');
 const home = content.querySelector('.page.home');
 const featured = home.querySelector('.horizontal_pane');
 const bookmarks = search_page.querySelector('.bookmarks');
@@ -353,6 +354,7 @@ function handleSettings() {
     settings_pane.classList.toggle('hide', !showing_settings);
     reset_defaults.classList.toggle('hide', !showing_settings);
     navigation_pane.classList.toggle('hide', showing_settings);
+    cog.classList.toggle('active', showing_settings);
     commit_stat.classList.toggle('hide', showing_settings);
     size_stat.classList.toggle('hide', showing_settings);
 }

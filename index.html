@@ -67,6 +67,12 @@
                     <span>Search</span>
                 </div>
             </a>
+            <a href="#checklist" class="hide" pagelink>
+                <div class="select  ">
+                    <div class="icon clipboard"></div>
+                    <span>Checklist</span>
+                </div>
+            </a>
 
             <hr>
             <span class="category">Support</span>
@@ -101,7 +107,16 @@
                     <input type="color">
                 </div>
             </div>
+
+            <div class="settings_switch" alter="hideBookmarks">
+                <span>Hide Checklist</span>
+                <button class="switch darkglass">
+                    <div class="shifter darkglass"></div>
+                </button>
+            </div>
+
             <hr>
+
             <span class="category">Search</span>
             <div class="settings_switch" alter="hideBookmarks">
                 <span>Hide Bookmarks</span>
@@ -170,12 +185,27 @@
         </div>
 
         <div class="page projects glass"></div>
+
         <div class="page search glass">
             <h1>Search</h1>
             <span>Search Engines</span>
             <div class="bookmarks">
                 <button class="mark darkglass add"></button>
                 <button class="mark darkglass delete"></button>
+            </div>
+        </div>
+
+        <div class="page checklist">
+            <div class="segment glass no_top_pad">
+                <h1>Checklist</h1>
+                <div class="checklist_add">
+                    <input class="add_input darkglass" placeholder="Add a task..">
+                    <button class="checklist_button darkglass"></button>
+                </div>    
+            </div>
+
+            <div class="segment glass">
+
             </div>
         </div>
     </div>

@@ -59,6 +59,17 @@ body {
     border-radius: 12px;
 }
 
+.segment {
+    width: 100%;
+    height: fit-content;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+.segment.no_top_pad {
+    padding-top: unset;
+}
+
 nav.sidebar {
     width: 275px;
     height: calc(100% - 20px);
@@ -78,6 +89,10 @@ nav.sidebar {
 }
 
 .sidebar_container.mid.hide {
+    display: none;
+}
+
+.sidebar_container a.hide {
     display: none;
 }
 
@@ -172,7 +187,7 @@ nav.sidebar.shift {
     transition: opacity 0.2s;
 }
 
-.traffic div.cog:hover {
+.traffic div.cog:hover, .traffic div.cog.active {
     opacity: 1;
 }
 
@@ -242,6 +257,11 @@ nav.sidebar.shift {
 .select .icon.search {
     background-image: url(icon/search.svg);
     background-size: 90%;
+}
+
+.select .icon.clipboard {
+    background-image: url(icon/clipboard.svg);
+    background-size: 98%;
 }
 
 .select .icon.link {
@@ -936,6 +956,43 @@ header.shift {
 }
 
 .service:focus, .search_go:focus, .search_box:focus {
+    border: 1px solid white;
+}
+
+.checklist_add {
+    height: 50px;
+    width: calc(100% - 20px);
+    margin-left: 10px;
+    margin-right: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.add_input {
+    flex: 1;
+    display: block;
+    outline: none;
+    padding-left: 10px;
+    padding-right: 49px;
+    font-weight: 600;
+}
+
+.checklist_button {
+    position: absolute;
+    right: 12px;
+    display: block;
+    height: 36px;
+    width: 36px;
+    margin: 7px;
+    cursor: pointer;
+    transition: border 0.2s;
+    background-size: 70%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url(icon/plus.svg);
+}
+
+.checklist_button:hover {
     border: 1px solid white;
 }
 
