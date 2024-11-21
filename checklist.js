@@ -6,6 +6,10 @@ const checklist_add = checklist_bar.querySelector('.add');
 const checklist_holder = checklist.querySelector('.holder');
 const checklist_holder_past = checklist.querySelector('.previous');
 
+function toggleRecentlyCompleted() {
+    checklist_holder_past.classList.toggle('hide', !checklist_holder_past.querySelector('.checklist_entry'))
+}
+
 function addTask(text, holder) {
     let clone = checklist_placeholder.cloneNode(true);
     let clone_span = clone.querySelector('span');
@@ -19,6 +23,8 @@ function addTask(text, holder) {
         clone.classList.add('removing');
         clone_button.onclick = removeTask;
     }
+    checklist_input.blur();
+    toggleRecentlyCompleted();
     updateScrollClass();
 }
 
@@ -28,6 +34,7 @@ function removeTask(event) {
     found_task.classList.add('resolved');
     setTimeout(function() {
         found_task.remove();
+        toggleRecentlyCompleted();
     }, 400);
 }
 

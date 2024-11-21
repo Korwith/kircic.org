@@ -64,10 +64,15 @@ body {
     height: fit-content;
     padding-bottom: 10px;
     padding-top: 10px;
+    transition: opacity 0.2s;
 }
 
 .segment.no_top_pad {
     padding-top: unset;
+}
+
+.segment.hide {
+    opacity: 0;
 }
 
 nav.sidebar {
