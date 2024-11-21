@@ -3,6 +3,7 @@ const tasklist = document.querySelector('.page.tasklist');
 const tasklist_bar = tasklist.querySelector('.tasklist_bar');
 const tasklist_input = tasklist_bar.querySelector('span');
 const tasklist_add = tasklist_bar.querySelector('.add');
+const tasklist_edit = tasklist_bar.querySelector('.edit');
 const tasklist_holder = tasklist.querySelector('.holder');
 const tasklist_holder_past = tasklist.querySelector('.previous');
 
@@ -16,6 +17,7 @@ function addTask(text, holder, nosave) {
     let clone_button = clone.querySelector('button');
     clone_span.textContent = text;
     clone_button.onclick = resolveEntry;
+    clone_span.addEventListener('keydown', saveTasks);
     clone.removeAttribute('id');
     holder.appendChild(clone);
 
@@ -91,7 +93,24 @@ function setCheckPlaceholder() {
     tasklist_input.classList.add('empty');
 }
 
-function saveTasks() {
+function tasklistEditing() {
+    let edit_active = tasklist_edit.classList.contains('active');
+    tasklist_edit.classList.toggle('active', !edit_active);
+    tasklist.classList.toggle('editing', !edit_active);
+
+    let all_tasks = tasklist.querySelectorAll('.tasklist_entry');
+    for (var i = 0; i < all_tasks.length; i++) {
+        let this_task = all_tasks[i];
+        let found_span = this_task.querySelector('span');
+        if (edit_active) {
+            found_span.removeAttribute('contenteditable');
+        } else {
+            found_span.setAttribute('contenteditable', true);
+        }
+    }
+}
+
+function saveTasks(event) {
     let task_array = [];
     let all_tasks = tasklist.querySelectorAll('.tasklist_entry');
     
@@ -107,14 +126,21 @@ function saveTasks() {
     }
     let json_save = JSON.stringify(task_array);
     localStorage.setItem('tasks', json_save);
-}
 
-let status_to_holder = {
-    true: tasklist_holder_past,
-    false: tasklist_holder
+    if (event) {
+        if (event.key == 'Enter') { 
+            event.preventDefault();
+            event.target.blur();
+        }
+    }
 }
 
 function loadTasks() {
+    let status_to_holder = {
+        true: tasklist_holder_past,
+        false: tasklist_holder
+    }
+
     let found_save = localStorage.getItem('tasks');
     if (!found_save) { 
         addDefaultTasks();
@@ -131,3 +157,4 @@ loadTasks();
 tasklist_input.addEventListener('input', tasklistInput);
 tasklist_input.addEventListener('keydown', tasklistKeyDown);
 tasklist_add.addEventListener('mouseup', tasklistButton);
+tasklist_edit.addEventListener('mouseup', tasklistEditing);

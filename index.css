@@ -854,6 +854,26 @@ header.shift {
     opacity: 1;
 }
 
+.edit {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: fit-content;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    transition: border 0.2s, color 0.2s;
+}
+
+.edit:hover, .edit.active {
+    border: 1px solid white;
+    color: white;
+}
+
 .last_search {
     display: none;
     height: 36px;
@@ -1088,6 +1108,7 @@ header.shift {
     justify-content: flex-start;
     text-overflow: ellipsis;
     overflow: hidden;
+    outline: none;
 }
 
 .tasklist_entry span::before {
@@ -1096,7 +1117,19 @@ header.shift {
     height: 30px;
     margin-right: 6px;
     background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     background-image: url(icon/clipboard.svg);
+}
+
+.page.tasklist.editing .tasklist_entry span {
+    cursor: text;
+    text-decoration: underline;
+}
+
+.page.tasklist.editing .tasklist_entry span::before {
+    background-image: url(icon/pencil.svg);
+    background-size: 80%;
 }
 
 .checkbox {
