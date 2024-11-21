@@ -637,6 +637,100 @@ header.shift {
     background-size: 110%;
 }
 
+.social_holder {
+    height: 40px;
+    width: fit-content;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.social_holder a {
+    display: block;
+    height: 35px;
+    width: 35px;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    border-radius: 8px;
+}
+
+.social_holder a::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    border-radius: 8px;
+}
+
+.social_holder a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    border: 2px solid rgba(0, 0, 0, 0.5);
+    box-sizing: border-box;
+    border-radius: 8px;
+    transition: border 0.2s;
+}
+
+.social_holder a:hover::after {
+    border: 2px solid white;
+}
+
+.social_holder a.cashapp {
+    background-image: url(icon/cashapp.svg);
+    background-size: 58%;
+}
+
+.social_holder a.cashapp::before {
+    background: linear-gradient(to bottom right, #0cdb62, #046b23);
+}
+
+.social_holder a.discord {
+    background-image: url(icon/discord.svg);
+    background-size: 85%;
+}
+
+.social_holder a.discord::before {
+    background: linear-gradient(to bottom right, #5975da, #030d2f);
+}
+
+.social_holder a.github {
+    background-image: url(icon/github.svg);
+    background-size: 70%;
+}
+
+.social_holder a.github::before {
+    background: linear-gradient(to bottom right, #24292E, #31363b)
+}
+
+.social_holder a.instagram {
+    background-image: url(icon/instagram.svg);
+    background-size: 73%;
+}
+
+.social_holder a.instagram::before {
+    background: linear-gradient(to bottom left, #7455A2, #EC287C, #F07B2B, #F1C65C);
+}
+
+.social_holder a.youtube {
+    background-image: url(icon/youtube.svg);
+    background-size: 70%;
+}
+
+.social_holder a.youtube::before {
+    background: linear-gradient(to top left, #ff2222, #9c0000);
+}
+
 .featured {
     padding-top: 10px;
     padding-bottom: 10px;
