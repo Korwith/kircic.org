@@ -7,8 +7,8 @@ const tasklist_edit = tasklist_bar.querySelector('.edit');
 const tasklist_holder = tasklist.querySelector('.holder');
 const tasklist_holder_past = tasklist.querySelector('.previous');
 
-function toggleRecentlyCompleted() {
-    tasklist_holder_past.classList.toggle('hide', !tasklist_holder_past.querySelector('.tasklist_entry'))
+function toggleRecentlyCompleted(force) {
+    tasklist_holder_past.classList.toggle('hide', force || !tasklist_holder_past.querySelector('.tasklist_entry'))
 }
 
 function addTask(text, holder, nosave) {
@@ -38,9 +38,9 @@ function removeTask(event) {
     let found_task = event.target.parentElement;
     found_task.classList.add('resolved');
     saveTasks();
+    toggleRecentlyCompleted(true);
     setTimeout(function () {
         found_task.remove();
-        toggleRecentlyCompleted();
     }, 400);
 }
 

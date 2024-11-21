@@ -64,7 +64,7 @@ body {
     height: fit-content;
     padding-bottom: 10px;
     padding-top: 10px;
-    transition: opacity 0.2s;
+    transition: opacity 0.4s;
 }
 
 .segment.no_top_pad {
