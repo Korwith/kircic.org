@@ -10,6 +10,8 @@ function toggleRecentlyCompleted() {
     checklist_holder_past.classList.toggle('hide', !checklist_holder_past.querySelector('.checklist_entry'))
 }
 
+let checklist_data = [];
+
 function addTask(text, holder) {
     let clone = checklist_placeholder.cloneNode(true);
     let clone_span = clone.querySelector('span');

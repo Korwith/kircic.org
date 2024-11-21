@@ -796,7 +796,7 @@ header.shift {
 
 .checklist_bar span.input {
     height: 36px;
-    min-width: 175px;
+    min-width: 210px;
     width: fit-content;
     display: flex;
     justify-content: flex-start;
@@ -811,8 +811,20 @@ header.shift {
     position: relative;
     font-size: 14px;
 }
+
 .checklist_bar span.input.empty {
     color: rgba(255, 255, 255, 0.7);
+}
+
+.checklist_bar span.input.empty::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    width: 18px;
+    height: 18px;
+    background-size: cover;
+    background-image: url(icon/pencil.svg);
+    opacity: 0.7;
 }
 
 .checklist_bar span.input.empty::after {
@@ -822,7 +834,7 @@ header.shift {
     position: absolute;
     padding-left: 10px;
     padding-right: 10px;
-    left: 0;
+    left: 24px;
     top: 0;
     width: 172px;
     text-wrap: nowrap;
@@ -1068,6 +1080,15 @@ header.shift {
     overflow: hidden;
 }
 
+.checklist_entry span::before {
+    content: '';
+    width: 30px;
+    height: 30px;
+    margin-right: 6px;
+    background-size: cover;
+    background-image: url(icon/clipboard.svg);
+}
+
 .checkbox {
     display: block;
     position: absolute;
@@ -1078,10 +1099,6 @@ header.shift {
     height: 36px;
     cursor: pointer;
     transition: border 0.2s;
-}
-
-.checkbox:hover::after {
-    opacity: 0.3;
 }
 
 .checkbox::after {
@@ -1098,6 +1115,11 @@ header.shift {
     opacity: 0;
     transition: opacity 0.2s;
 }
+
+.checkbox:hover::after {
+    opacity: 0.3;
+}
+
 .checklist_entry.removing .checkbox::after {
     background-image: url(icon/close.svg);
     background-size: 80%;
