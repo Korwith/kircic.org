@@ -816,7 +816,7 @@ header.shift {
     color: rgba(255, 255, 255, 0.7);
 }
 
-.tasklist_bar span.input.empty::before {
+.tasklist_bar span.input::before {
     content: '';
     position: absolute;
     left: 8px;
@@ -824,10 +824,11 @@ header.shift {
     height: 18px;
     background-size: cover;
     background-image: url(icon/pencil.svg);
-    opacity: 0.7;
+    opacity: 0;
+    transition: opacity 0.2s;
 }
 
-.tasklist_bar span.input.empty::after {
+.tasklist_bar span.input::after {
     content: 'Add to your tasks..';
     display: flex;
     align-items: center;
@@ -839,9 +840,18 @@ header.shift {
     width: 172px;
     text-wrap: nowrap;
     height: 100%;
-    opacity: 0.7;
     font-size: 14px;
     font-weight: 600;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.tasklist_bar span.input.empty::before {
+    opacity: 0.7;
+}
+
+.tasklist_bar span.input.empty::after {
+    opacity: 1;
 }
 
 .last_search {
