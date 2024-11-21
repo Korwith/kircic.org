@@ -52,8 +52,7 @@ function resolveEntry(event) {
 
 function addDefaultTasks() {
     addTask('Add some tasks', checklist_holder);
-    addTask('Take the trash out', checklist_holder)
-    addTask('Stay hydrated', checklist_holder)
+    addTask('Add saving to checklist', checklist_holder)
 }
 
 function checklistInput(event) {
