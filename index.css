@@ -29,7 +29,7 @@ body {
     margin: 10px;
 }
 
-#project_placeholder, #search_placeholder, #last_search_placeholder, #checklist_entry_placeholder {
+#project_placeholder, #search_placeholder, #last_search_placeholder, #tasklist_entry_placeholder {
     display: none;
 }
 
@@ -528,12 +528,12 @@ header.shift {
     padding-bottom: 10px;
 }
 
-.page.search span, .page.checklist span {
+.page.search span, .page.tasklist span {
     margin-top: 0;
     margin-bottom: 5px;
 }
 
-.page.search h1, .page.checklist h1 {
+.page.search h1, .page.tasklist h1 {
     margin-top: 20px;
     margin-bottom: 10px;
 }
@@ -770,7 +770,7 @@ header.shift {
     font-weight: 700;
 }
 
-.bookmarks, .checklist_bar {
+.bookmarks, .tasklist_bar {
     position: relative;
     width: calc(100% - 20px);
     height: fit-content;
@@ -794,9 +794,9 @@ header.shift {
 }
 
 
-.checklist_bar span.input {
+.tasklist_bar span.input {
     height: 36px;
-    min-width: 210px;
+    min-width: 180px;
     width: fit-content;
     display: flex;
     justify-content: flex-start;
@@ -812,11 +812,11 @@ header.shift {
     font-size: 14px;
 }
 
-.checklist_bar span.input.empty {
+.tasklist_bar span.input.empty {
     color: rgba(255, 255, 255, 0.7);
 }
 
-.checklist_bar span.input.empty::before {
+.tasklist_bar span.input.empty::before {
     content: '';
     position: absolute;
     left: 8px;
@@ -827,8 +827,8 @@ header.shift {
     opacity: 0.7;
 }
 
-.checklist_bar span.input.empty::after {
-    content: 'Add to your checklist..';
+.tasklist_bar span.input.empty::after {
+    content: 'Add to your tasks..';
     display: flex;
     align-items: center;
     position: absolute;
@@ -1015,13 +1015,13 @@ header.shift {
     border: 1px solid white;
 }
 
-.page.checklist .holder, .page.checklist .previous {
+.page.tasklist .holder, .page.tasklist .previous {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-.checklist_add {
+.tasklist_add {
     height: 50px;
     width: calc(100% - 20px);
     margin-left: 10px;
@@ -1040,7 +1040,7 @@ header.shift {
     position: relative;
 }
 
-.checklist_button {
+.tasklist_button {
     position: absolute;
     right: 12px;
     display: block;
@@ -1055,11 +1055,11 @@ header.shift {
     background-image: url(icon/plus.svg);
 }
 
-.checklist_button:hover {
+.tasklist_button:hover {
     border: 1px solid white;
 }
 
-.checklist_entry {
+.tasklist_entry {
     height: 50px;
     width: calc(100% - 20px);
     margin-left: auto;
@@ -1068,7 +1068,7 @@ header.shift {
     transition: opacity 0.4s, border 0.2s;
 }
 
-.checklist_entry span {
+.tasklist_entry span {
     display: flex;
     width: calc(100% - 60px);
     height: 100%;
@@ -1080,7 +1080,7 @@ header.shift {
     overflow: hidden;
 }
 
-.checklist_entry span::before {
+.tasklist_entry span::before {
     content: '';
     width: 30px;
     height: 30px;
@@ -1120,7 +1120,7 @@ header.shift {
     opacity: 0.3;
 }
 
-.checklist_entry.removing .checkbox::after {
+.tasklist_entry.removing .checkbox::after {
     background-image: url(icon/close.svg);
     background-size: 80%;
 }
@@ -1129,15 +1129,15 @@ header.shift {
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-.checklist_entry.resolved .checkbox::after {
+.tasklist_entry.resolved .checkbox::after {
     opacity: 1;
 }
 
-.checklist_entry.resolved .checkbox {
+.tasklist_entry.resolved .checkbox {
     border: 1px solid white;
 }
 
-.checklist_entry.resolved {
+.tasklist_entry.resolved {
     border: 1px solid rgba(255, 255, 255, 0.7);
     opacity: 0;
 }
