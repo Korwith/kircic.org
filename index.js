@@ -40,58 +40,68 @@ const project_data = {
         icon: { url: 'icon/wordle.png', size: '75%' },
         href: 'https://www.kircic.org/sub/wordle/game.html',
         video: 'icon/wordle_preview.mp4',
-        featured: 2
+        featured: 2,
+        category: 'game'
     },
     'Infinisweeper': {
         description: 'An infinite minesweeper sandbox. Just like the original minesweeper, but with proceduraly generating terrain.',
         icon: { url: 'icon/infinisweeper.png', size: '75%' },
         href: 'https://www.kircic.org/sub/infinisweeper.html',
         video: 'icon/infinite_preview.mp4',
-        featured: 3
+        featured: 3,
+        category: 'game'
     },
     'Minesweeper': {
         description: 'Recreation of the Windows game minesweeper. Has normal and expert modes, 10x10 and 20x20.',
         icon: { url: 'icon/minesweeper.png', size: '75%' },
         href: 'https://www.kircic.org/sub/minesweeper.html',
         video: 'icon/minesweeper_preview.mp4',
-        featured: 4
+        featured: 4,
+        category: 'game'
     },
     '3D Viewer': {
         description: '3D File Viewer, supporting OBJ, MTL, OBJ files.',
         icon: { url: 'icon/3dviewer.svg', size: '80%' },
         href: 'https://www.kircic.org/3d/view.html',
+        category: 'app'
     },
     'A+ Study Tool': {
         description: 'A simple study assistant for the A+ certification with a general practice test, a study quiz for ports, and a study quiz for the six troubleshooting steps.',
         icon: { url: 'icon/certification1.svg', size: '105%' },
-        href: 'https://www.kircic.org/sub/study/index.html'
+        href: 'https://www.kircic.org/sub/study/index.html',
+        category: 'app'
     },
     'Connections': {
         description: 'Match all the groups of four like terms to solve the puzzle',
         icon: { url: 'icon/connections.svg', size: '105%' },
-        href: 'https://www.kircic.org/sub/connections/game.html'
+        href: 'https://www.kircic.org/sub/connections/game.html',
+        category: 'game'
     },
     'Letter Boxed': {
         description: 'Solve the puzzle by using all letters on different sides to make words.',
         icon: { url: 'icon/letterboxed.svg', size: '105%' },
-        href: 'https://www.kircic.org/sub/letter-boxed.html'
+        href: 'https://www.kircic.org/sub/letter-boxed.html',
+        category: 'game'
     },
     'Notilify': {
         description: 'Collaboration with Ariel Araya, a web port of the iOS application Notilify.',
         icon: { url: 'icon/notilify.png', size: '90%' },
         href: 'https://arielaraya.xyz/notilifyPWA/index.html',
         featured: 5,
-        background: 'icon/notilifyweb.jpg'
+        background: 'icon/notilifyweb.jpg',
+        category: 'app'
     },
     'QR Generator': {
         description: 'Create custom QR codes for any text or URL',
         icon: { url: 'icon/qr.svg', size: '85%' },
         href: 'https://www.kircic.org/qr/gen.html',
+        category: 'app'
     },
     'Snake': {
         description: 'Collect apples without running into the edge or yourself.',
         icon: { url: 'icon/snake.png', size: '80%' },
         href: 'https://www.kircic.org/sub/snake/game.html',
+        category: 'game'
     },
     'Stock Tracker': {
         description: 'Provides real time stock graphs and detailed statistics about the market.',
@@ -99,6 +109,7 @@ const project_data = {
         href: 'https://kir.lol/',
         background: 'icon/stocktracker.jpg',
         featured: 1,
+        category: 'app'
     }
 }
 
@@ -109,6 +120,7 @@ const search_data = {
     'Bing': 'bing.com/search?q=',
     'Ecosia': 'fecosia.org/search?q=',
     'Yandex': 'yandex.com/search/?text=',
+    'Google Scholar': 'scholar.google.com/scholar?q=',
     'Wikipedia': 'wikipedia.org/w/index.php?search=',
     'GitHub': 'github.com/search?q=',
     'MDN Web Docs': 'developer.mozilla.org/en-US/search?q=',
@@ -131,6 +143,7 @@ function makeProjectFrame(project) {
     let link = project_clone.querySelector('a');
     let video = project_clone.querySelector('video');
     let background = project_clone.querySelector('img');
+    let parent_element = project_page.querySelector(`.${this_data.category}`);
 
     name.textContent = project;
     icon.style.backgroundImage = `url(${this_data.icon.url})`;
@@ -159,7 +172,7 @@ function makeProjectFrame(project) {
         featured.appendChild(make_featured);
     }
 
-    project_page.appendChild(project_clone);
+    parent_element.appendChild(project_clone);
 }
 
 function loadProjects() {

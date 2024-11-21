@@ -515,8 +515,7 @@ header.shift {
     padding-right: 10px;
 }
 
-.page.projects.show {
-    padding: 10px;
+.page.projects.show .segment{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -533,9 +532,10 @@ header.shift {
     margin-bottom: 5px;
 }
 
-.page.search h1, .page.tasklist h1 {
+.page.search h1, .page.tasklist h1, .page.projects h1 {
     margin-top: 20px;
     margin-bottom: 10px;
+    width: 100%;
 }
 
 .page.show {
