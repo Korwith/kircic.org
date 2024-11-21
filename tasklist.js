@@ -7,8 +7,14 @@ const tasklist_edit = tasklist_bar.querySelector('.edit');
 const tasklist_holder = tasklist.querySelector('.holder');
 const tasklist_holder_past = tasklist.querySelector('.previous');
 
-function toggleRecentlyCompleted(force) {
-    tasklist_holder_past.classList.toggle('hide', force || !tasklist_holder_past.querySelector('.tasklist_entry'))
+function toggleRecentlyCompleted() {
+    let all_entry = tasklist_holder_past.querySelectorAll('.tasklist_entry');
+    tasklist_holder_past.classList.toggle('hide', all_entry.length == 0);
+    if (all_entry.length == 1) {
+        if (all_entry[0].classList.contains('resolved')) {
+            tasklist_holder_past.classList.add('hide');
+        }
+    }
 }
 
 function addTask(text, holder, nosave) {
@@ -38,7 +44,7 @@ function removeTask(event) {
     let found_task = event.target.parentElement;
     found_task.classList.add('resolved');
     saveTasks();
-    toggleRecentlyCompleted(true);
+    toggleRecentlyCompleted();
     setTimeout(function () {
         found_task.remove();
     }, 400);
