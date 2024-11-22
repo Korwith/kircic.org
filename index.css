@@ -749,8 +749,8 @@ header.shift {
 }
 
 .social_holder a.site div {
-    width: 30px;
-    height: 30px;
+    aspect-ratio: 1/1;
+    width: calc(100% - 10px);
     background-repeat: no-repeat;
     background-position: center;
     margin: 5px;
@@ -1356,7 +1356,13 @@ header.shift {
     }
 
     .social_holder {
+        height: 40px;
         justify-content: flex-start;
+    }
+
+    .social_holder a {
+        height: 40px;
+        width: 40px;
     }
 
     .image_holder {
