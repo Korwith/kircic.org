@@ -645,12 +645,13 @@ header.shift {
     gap: 8px;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 10px;
 }
 
 .social_holder a {
     display: block;
-    height: 35px;
-    width: 35px;
+    height: 40px;
+    width: 40px;
     background-position: center;
     background-repeat: no-repeat;
     position: relative;
