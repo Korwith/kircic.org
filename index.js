@@ -18,6 +18,7 @@ const red_button = sidebar.querySelector('.red');
 const yellow_button = sidebar.querySelector('.yellow');
 const green_button = sidebar.querySelector('.green');
 const page_button = sidebar.querySelectorAll('[pagelink]');
+const tasks_button = sidebar.querySelector('[pagelink][href="#tasklist"]');
 const cog = sidebar.querySelector('.cog');
 const commit_stat = sidebar.querySelector('.commit_count');
 const size_stat = sidebar.querySelector('.digital_size');
@@ -296,19 +297,22 @@ let defaults = {
     'changePageHue': 'unset',
     'hideBookmarks': false,
     'saveLastSearch': false,
-    'searchNewTab': false
+    'searchNewTab': false,
+    'hideTasks': false,
 }
 
 let current_settings = {
     'changePageHue': 'unset',
     'hideBookmarks': false,
     'saveLastSearch': false,
-    'searchNewTab': false
+    'searchNewTab': false,
+    'hideTasks': false
 }
 
 let functionMap = {
     'hideBookmarks': bookmarksVisible,
     'saveLastSearch': saveSearchVisible,
+    'hideTasks': tasksPageVisible
 }
 
 let skip = ['changePageHue'];
@@ -360,6 +364,10 @@ function saveSearchVisible() {
     if (!current_settings.saveLastSearch) {
         clearLastSearch();
     }
+}
+
+function tasksPageVisible() {
+    tasks_button.classList.toggle('hide', current_settings.hideTasks);
 }
 
 function handleSettings() {
