@@ -572,8 +572,7 @@ header.shift {
 .content span {
     width: 100%;
     height: 20px;
-    margin-top: 25px;
-    margin-bottom: 25px;
+    padding-top: 25px;
     display: block;
     display: flex;
     justify-content: center;
@@ -638,20 +637,27 @@ header.shift {
 }
 
 .social_holder {
-    height: 40px;
+    height: 90px;
+    margin-top: 20px;
     width: fit-content;
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    gap: 8px;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 10px;
+}
+
+.social_holder .break {
+    flex-basis: 100%;
+    height: 0;
 }
 
 .social_holder a {
     display: block;
     height: 40px;
     width: 40px;
+    margin-left: 4px;
+    margin-right: 4px;
     background-position: center;
     background-repeat: no-repeat;
     position: relative;
@@ -701,7 +707,7 @@ header.shift {
     background-size: 85%;
 }
 
-.social_holder a.discord::before {
+.social_holder a.discord::before, .social_holder a.kirlol::before {
     background: linear-gradient(to bottom right, #5975da, #030d2f);
 }
 
@@ -711,7 +717,7 @@ header.shift {
 }
 
 .social_holder a.github::before {
-    background: linear-gradient(to bottom right, #24292E, #31363b)
+    background: linear-gradient(to bottom right, #15171a, #2b2e31)
 }
 
 .social_holder a.instagram {
@@ -719,7 +725,7 @@ header.shift {
     background-size: 73%;
 }
 
-.social_holder a.instagram::before {
+.social_holder a.instagram::before, .social_holder a.snapshot::before {
     background: linear-gradient(to bottom left, #7455A2, #EC287C, #F07B2B, #F1C65C);
 }
 
@@ -730,6 +736,41 @@ header.shift {
 
 .social_holder a.youtube::before {
     background: linear-gradient(to top left, #ff2222, #9c0000);
+}
+
+.social_holder a.site {
+    padding-right: 10px;
+    position: relative;
+    width: fit-content;
+    display: flex;
+    text-decoration: none;
+}
+
+.social_holder a.site span {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+}
+
+.social_holder a.site div {
+    width: 30px;
+    height: 30px;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 5px;
+}
+
+.social_holder a.site.snapshot div {
+    background-image: url(icon/image.svg);
+    background-size: 92%;
+}
+
+.social_holder a.site.kirlol div {
+    background-image: url(icon/stock.svg);
+    background-size: 88%;
 }
 
 .featured {
