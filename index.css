@@ -731,6 +731,15 @@ header.shift {
     background: linear-gradient(to top left, #ff2222, #9c0000);
 }
 
+.social_holder a.monkeytype {
+    background-image: url(icon/keyboard.svg);
+    background-size: 80%;
+}
+
+.social_holder a.monkeytype::before {
+    background: linear-gradient(to bottom right, #E2B714, #504007)
+}
+
 .social_holder a.site {
     padding-right: 10px;
     position: relative;
@@ -747,7 +756,7 @@ header.shift {
     margin: 0;
     height: 100%;
 }
-/* why didnt this publish*/
+
 .social_holder a.site div {
     width: 30px;
     height: 30px;
@@ -763,7 +772,7 @@ header.shift {
 
 .social_holder a.site.kirlol div {
     background-image: url(icon/stock.svg);
-    background-size: 88%;
+    background-size: 84%;
 }
 
 .featured {
