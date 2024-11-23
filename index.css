@@ -1031,6 +1031,7 @@ header.shift {
     width: fit-content;
     overflow: hidden;
     text-wrap: nowrap;
+    padding: 0;
 }
 
 .bookmarks a:hover .mark {
