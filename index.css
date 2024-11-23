@@ -749,8 +749,8 @@ header.shift {
 }
 
 .social_holder a.site div {
-    aspect-ratio: 1/1;
-    width: calc(100% - 10px);
+    width: 30px;
+    height: 30px;
     background-repeat: no-repeat;
     background-position: center;
     margin: 5px;
