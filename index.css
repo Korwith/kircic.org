@@ -732,12 +732,12 @@ header.shift {
 }
 
 .social_holder a.monkeytype {
-    background-image: url(icon/keyboard.svg);
+    background-image: url(icon/monkeytype.svg);
     background-size: 80%;
 }
 
 .social_holder a.monkeytype::before {
-    background: linear-gradient(to bottom right, #E2B714, #504007)
+    background: linear-gradient(to bottom right, #414141, #272727)
 }
 
 .social_holder a.site {
