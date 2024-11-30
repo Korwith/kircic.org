@@ -1014,6 +1014,7 @@ header.shift {
     font-weight: 600;
     color: rgba(255, 255, 255, 0.7);
     cursor: pointer;
+    touch-action: manipulation;
     transition: border 0.2s, color 0.2s;
 }
 
