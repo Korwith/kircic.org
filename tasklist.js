@@ -1,5 +1,5 @@
 const tasklist_placeholder = document.querySelector('#tasklist_entry_placeholder')
-const tasklist = document.querySelector('.page.tasklist');
+const tasklist = document.querySelector('.page.tasks');
 const tasklist_bar = tasklist.querySelector('.tasklist_bar');
 const tasklist_input = tasklist_bar.querySelector('span');
 const tasklist_add = tasklist_bar.querySelector('.add');

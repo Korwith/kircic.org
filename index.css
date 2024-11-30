@@ -1200,7 +1200,7 @@ header.shift {
     border: 1px solid white;
 }
 
-.page.tasklist .holder, .page.tasklist .previous {
+.page.tasks .holder, .page.tasklist .previous {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -1277,12 +1277,12 @@ header.shift {
     background-image: url(icon/clipboard.svg);
 }
 
-.page.tasklist.editing .tasklist_entry span {
+.page.tasks.editing .tasklist_entry span {
     cursor: text;
     text-decoration: underline;
 }
 
-.page.tasklist.editing .tasklist_entry span::before {
+.page.tasks.editing .tasklist_entry span::before {
     background-image: url(icon/pencil.svg);
     background-size: 80%;
 }

@@ -18,7 +18,7 @@ const red_button = sidebar.querySelector('.red');
 const yellow_button = sidebar.querySelector('.yellow');
 const green_button = sidebar.querySelector('.green');
 const page_button = sidebar.querySelectorAll('[pagelink]');
-const tasks_button = sidebar.querySelector('[pagelink][href="#tasklist"]');
+const tasks_button = sidebar.querySelector('[pagelink][href="#tasks"]');
 const cog = sidebar.querySelector('.cog');
 const commit_stat = sidebar.querySelector('.commit_count');
 const size_stat = sidebar.querySelector('.digital_size');
@@ -367,7 +367,13 @@ function saveSearchVisible() {
 }
 
 function tasksPageVisible() {
-    tasks_button.classList.toggle('hide', current_settings.hideTasks);
+    let hidden = current_settings.hideTasks;
+    tasks_button.classList.toggle('hide', hidden);
+
+    if (window.location.href.includes('#tasks')) {
+        history.pushState(null, null, window.location.href.split('#')[0]);
+        openPage('home');
+    }
 }
 
 function handleSettings() {
