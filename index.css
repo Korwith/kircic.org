@@ -775,6 +775,15 @@ header.shift {
     background-size: 84%;
 }
 
+.social_holder a.site.external::before {
+    background: linear-gradient(to bottom right, #555555, #888888);
+}
+
+.social_holder a.site.external div {
+    background-image: url(icon/friend.svg);
+    background-size: 96%;
+}
+
 .featured {
     padding-top: 10px;
     padding-bottom: 10px;
