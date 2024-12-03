@@ -527,12 +527,12 @@ header.shift {
     padding-bottom: 10px;
 }
 
-.page.search span, .page.tasklist span {
+.page.search span, .page.tasks span {
     margin-top: 0;
     margin-bottom: 5px;
 }
 
-.page.search h1, .page.tasklist h1, .page.projects h1 {
+.page.search h1, .page.tasks h1, .page.projects h1 {
     margin-top: 20px;
     margin-bottom: 10px;
     width: 100%;
@@ -1200,7 +1200,7 @@ header.shift {
     border: 1px solid white;
 }
 
-.page.tasks .holder, .page.tasklist .previous {
+.page.tasks .holder, .page.tasks .previous {
     display: flex;
     flex-direction: column;
     gap: 10px;
