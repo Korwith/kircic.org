@@ -444,6 +444,24 @@ span.category {
     border: 1px solid white;
 }
 
+.commit_hash {
+    width: fit-content;
+    max-width: 100px;
+    overflow: hidden;
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+    font-weight: 500;
+    font-family: monospace;
+}
+
 header {
     position: fixed;
     display: flex;

@@ -49,7 +49,6 @@ async function displayCommitCount() {
     commit_stat.innerHTML = `${commitCount} commits`;
 }
 
-
 function formatSize(bytes) {
     const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
     if (bytes === 0) return '0 Byte';
@@ -64,5 +63,28 @@ async function displayRepoSize() {
     size_stat.innerHTML = formattedSize;
 }
 
+async function fetchLatestCommitHash() {
+    try {
+        const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/commits?per_page=1`);
+        if (!response.ok) {
+            throw new Error(`HTTP error, status: ${response.status}`);
+        }
+
+        const commits = await response.json();
+        // Return the hash of the most recent commit
+        const latestCommitHash = commits[0].sha;
+        displayLatestCommitHash(latestCommitHash);
+    } catch (error) {
+        console.error('Error fetching latest commit hash:', error);
+        return 'Error fetching commit hash';
+    }
+}
+
+async function displayLatestCommitHash(hash) {
+    let commit_hash = document.querySelector('.commit_hash');
+    commit_hash.textContent = hash.slice(0, 7);
+}
+
 displayCommitCount();
 displayRepoSize();
+fetchLatestCommitHash();
