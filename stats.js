@@ -73,7 +73,9 @@ async function fetchLatestCommitHash() {
         const commits = await response.json();
         // Return the hash of the most recent commit
         const latestCommitHash = commits[0].sha;
+        const latestCommitDate = commits[0].commit.committer.date;
         displayLatestCommitHash(latestCommitHash);
+        displayLatestDate(latestCommitDate);
     } catch (error) {
         console.error('Error fetching latest commit hash:', error);
         return 'Error fetching commit hash';
@@ -81,8 +83,15 @@ async function fetchLatestCommitHash() {
 }
 
 async function displayLatestCommitHash(hash) {
-    let commit_hash = document.querySelector('.commit_hash');
+    let commit_hash = document.querySelector('.settings_stat.commit_hash');
     commit_hash.textContent = 'Build '+ hash.slice(0, 7);
+}
+
+async function displayLatestDate(date) {
+    let commit_date = document.querySelector('.settings_stat.commit_date');
+    let split = date.split('T')[0];
+    let swap = split.replaceAll('-', '/');
+    commit_date.textContent = 'Published ' + swap;
 }
 
 displayCommitCount();

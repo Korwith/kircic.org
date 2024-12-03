@@ -444,7 +444,7 @@ span.category {
     border: 1px solid white;
 }
 
-.commit_hash {
+.settings_stat {
     width: fit-content;
     overflow: hidden;
     padding-left: 15px;
