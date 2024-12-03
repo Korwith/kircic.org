@@ -446,10 +446,9 @@ span.category {
 
 .commit_hash {
     width: fit-content;
-    max-width: 100px;
     overflow: hidden;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
     height: 30px;
     margin-left: auto;
     margin-right: auto;
@@ -460,6 +459,7 @@ span.category {
     user-select: none;
     font-weight: 500;
     font-family: monospace;
+    color: rgba(255, 255, 255, 0.8);
 }
 
 header {

@@ -82,7 +82,7 @@ async function fetchLatestCommitHash() {
 
 async function displayLatestCommitHash(hash) {
     let commit_hash = document.querySelector('.commit_hash');
-    commit_hash.textContent = hash.slice(0, 7);
+    commit_hash.textContent = 'Build '+ hash.slice(0, 7);
 }
 
 displayCommitCount();
