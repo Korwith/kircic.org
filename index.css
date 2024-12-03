@@ -462,6 +462,10 @@ span.category {
     color: rgba(255, 255, 255, 0.8);
 }
 
+.settings_stat:empty {
+    display: none;
+}
+
 header {
     position: fixed;
     display: flex;
