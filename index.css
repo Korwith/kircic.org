@@ -1267,6 +1267,8 @@ header.shift {
 }
 
 .tasklist_entry {
+    display: flex;
+    justify-content: space-between;
     height: 50px;
     width: calc(100% - 20px);
     margin-left: auto;
@@ -1277,11 +1279,11 @@ header.shift {
 
 .tasklist_entry span {
     display: flex;
-    width: calc(100% - 60px);
+    flex: 1;
     height: 100%;
     padding: 0;
     padding-left: 10px;
-    margin: 0;
+    margin: 0 !important;
     justify-content: flex-start;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -1310,9 +1312,6 @@ header.shift {
 }
 
 .task_actions {
-    position: absolute;
-    top: 0;
-    right: 0;
     width: fit-content;
     height: 36px;
     margin: 6px;
