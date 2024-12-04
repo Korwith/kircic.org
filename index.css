@@ -1325,6 +1325,7 @@ header.shift {
     height: 36px;
     display: block;
     cursor: pointer;
+    touch-action: manipulation;
     transition: border 0.2s;
 }
 
