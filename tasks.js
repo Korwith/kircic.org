@@ -20,8 +20,8 @@ function toggleRecentlyCompleted() {
 function addTask(text, holder, nosave) {
     let clone = tasklist_placeholder.cloneNode(true);
     let clone_span = clone.querySelector('span');
-    let clone_button = clone.querySelector('button');
-    clone_span.textContent = text;
+    let clone_button = clone.querySelector('button.checkbox');
+    clone_span.textContent = text.replaceAll(' ', '');
     clone_button.onclick = resolveEntry;
     clone_span.addEventListener('keydown', saveTasks);
     clone.removeAttribute('id');
@@ -41,7 +41,7 @@ function addTask(text, holder, nosave) {
 
 function removeTask(event) {
     if (!event.target) { return false };
-    let found_task = event.target.parentElement;
+    let found_task = event.target.parentElement.parentElement;
     found_task.classList.add('resolved');
     saveTasks();
     toggleRecentlyCompleted();
@@ -52,7 +52,7 @@ function removeTask(event) {
 
 function resolveEntry(event) {
     if (!event.target) { return false };
-    let this_entry = event.target.parentElement;
+    let this_entry = event.target.parentElement.parentElement;
     let span = this_entry.querySelector('span');
     this_entry.classList.add('resolved');
 
