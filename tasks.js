@@ -21,7 +21,11 @@ function addTask(text, holder, nosave) {
     let clone = tasklist_placeholder.cloneNode(true);
     let clone_span = clone.querySelector('span');
     let clone_button = clone.querySelector('button.checkbox');
+    let shift_up = clone.querySelector('.shift.up');
+    let shift_down = clone.querySelector('.shift.down');
     clone_span.textContent = text.replaceAll(' ', '');
+    shift_up.onclick = handleShiftUp;
+    shift_down.onclick = handleShiftDown;
     clone_button.onclick = resolveEntry;
     clone_span.addEventListener('keydown', saveTasks);
     clone.removeAttribute('id');
@@ -47,6 +51,72 @@ function removeTask(event) {
     toggleRecentlyCompleted();
     setTimeout(function () {
         found_task.remove();
+    }, 400);
+}
+
+function handleShiftUp(event) {
+    if (!event.target) { return false; }
+    let origin_task = event.target.parentElement.parentElement;
+    let origin_holder = origin_task.parentElement;
+    let tasks_array = Array.from(origin_holder.querySelectorAll('.tasklist_entry'));
+    let origin_index = tasks_array.indexOf(origin_task);
+
+    if (origin_index < 1) { return false; }
+    let previous_task = tasks_array[origin_index - 1];
+    origin_task.classList.add('transform_up');
+    previous_task.classList.add('transform_down');
+
+    setTimeout(function() {
+        origin_task.classList.remove('transform_up');
+        previous_task.classList.remove('transform_down');
+        tasks_array.splice(origin_index, 1); 
+        tasks_array.splice(origin_index - 1, 0, origin_task);
+
+        let all_children = Array.from(origin_holder.children);
+        origin_holder.innerHTML = '';
+
+        all_children.forEach(child => {
+            if (child.classList.contains('tasklist_entry')) {
+                let task = tasks_array.shift();
+                origin_holder.appendChild(task);
+            } else {
+                origin_holder.appendChild(child);
+            }
+        });
+        saveTasks();
+    }, 400);
+}
+
+function handleShiftDown(event) {
+    if (!event.target) { return false; }
+    let origin_task = event.target.parentElement.parentElement;
+    let origin_holder = origin_task.parentElement;
+    let tasks_array = Array.from(origin_holder.querySelectorAll('.tasklist_entry'));
+    let origin_index = tasks_array.indexOf(origin_task);
+
+    if (origin_index === -1 || origin_index >= tasks_array.length - 1) { return false; }
+    let next_task = tasks_array[origin_index + 1];
+    origin_task.classList.add('transform_down');
+    next_task.classList.add('transform_up');
+
+    setTimeout(function() {
+        origin_task.classList.remove('transform_down');
+        next_task.classList.remove('transform_up');
+        tasks_array.splice(origin_index, 1); 
+        tasks_array.splice(origin_index + 1, 0, origin_task);
+
+        let all_children = Array.from(origin_holder.children);
+        origin_holder.innerHTML = '';
+
+        all_children.forEach(child => {
+            if (child.classList.contains('tasklist_entry')) {
+                let task = tasks_array.shift();
+                origin_holder.appendChild(task);
+            } else {
+                origin_holder.appendChild(child);
+            }
+        });
+        saveTasks();
     }, 400);
 }
 

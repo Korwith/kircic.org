@@ -1277,6 +1277,29 @@ header.shift {
     transition: opacity 0.4s, border 0.2s;
 }
 
+.tasklist_entry.resolved .checkbox::after {
+    opacity: 1;
+}
+
+.tasklist_entry.resolved .checkbox {
+    border: 1px solid white;
+}
+
+.tasklist_entry.resolved {
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    opacity: 0;
+}
+
+.tasklist_entry.transform_up {
+    transform: translateY(calc(-100% - 10px));
+    transition: transform 0.4s;
+}
+
+.tasklist_entry.transform_down {
+    transform: translateY(calc(100% + 10px));
+    transition: transform 0.4s;
+}
+
 .tasklist_entry span {
     display: flex;
     flex: 1;
@@ -1388,19 +1411,6 @@ header.shift {
 
 .checkbox:hover {
     border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.tasklist_entry.resolved .checkbox::after {
-    opacity: 1;
-}
-
-.tasklist_entry.resolved .checkbox {
-    border: 1px solid white;
-}
-
-.tasklist_entry.resolved {
-    border: 1px solid rgba(255, 255, 255, 0.7);
-    opacity: 0;
 }
 
 * {
