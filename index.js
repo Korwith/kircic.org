@@ -245,10 +245,15 @@ function handlePushState() {
         return;
     };
 
-    let page_name = window.location.href.split('#')[1];
+    let hash_split = window.location.href.split('#');
+    let root_domain = hash_split[0];
+    let page_name = hash_split[1];
     let found_page = content.querySelector('.page.' + page_name);
     if (found_page) {
         openPage(page_name);
+    } else {
+        openPage('home')
+        window.history.pushState(null, null, root_domain);
     }
 }
 
