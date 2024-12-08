@@ -87,13 +87,15 @@ async function displayLatestCommitHash(hash) {
     commit_hash.textContent = 'Build '+ hash.slice(0, 7);
 }
 
-async function displayLatestDate(date) {
-    let commit_date = document.querySelector('.settings_stat.commit_date');
-    let split = date.split('T')[0];
-    let swap = split.replaceAll('-', '/');
-    commit_date.textContent = 'Published ' + swap;
+async function displayLatestDate(time_data) {
+    let time_element = document.querySelector('.settings_stat.commit_date');
+    let seperate = time_data.split('T');
+    let date_split = seperate[0].split('-');
+    let time_replace = seperate[1].replace('Z', '');
+    let formatted_date = `${date_split[1]}/${date_split[2]}/${date_split[0]}`;
+    
+    time_element.textContent = `${formatted_date} ${time_replace}`;
 }
-
 displayCommitCount();
 displayRepoSize();
 fetchLatestCommitHash();
