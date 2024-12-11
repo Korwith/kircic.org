@@ -453,7 +453,12 @@ function loadLastSearch(url) {
     clone.setAttribute('href', url);
     clone.removeAttribute('id');
     clone.style.order = '0';
-    term.textContent = query;
+    if (query.length > 25) {
+        term.textContent = query.substring(0, 25) + '...'
+    } else {
+        term.textContent = query;
+    }
+    
     bookmarks.appendChild(clone);
     
     for (var i in search_data) {
