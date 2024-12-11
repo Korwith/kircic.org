@@ -1428,13 +1428,16 @@ header.shift {
 }
 
 .action_row button {
+    height: 100%;
+    width: fit-content;
+    padding-right: 20px;
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 6px;
-    height: 100%;
-    width: 150px;
     font-weight: 600;
+    font-size: 1rem;
     cursor: pointer;
     transition: border 0.2s;
 }
@@ -1445,9 +1448,10 @@ header.shift {
 
 .action_row button::before {
     content: '';
-    display: inline-block;
-    width: 21px;
-    height: 21px;
+    display: block;
+    width: 30px;
+    height: 30px;
+    margin: 5px;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
