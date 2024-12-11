@@ -4,6 +4,7 @@ const all_page = content.querySelectorAll('.page');
 const home_page = content.querySelector('.page.home');
 const project_page = content.querySelector('.page.projects');
 const search_page = content.querySelector('.page.search');
+const search_segment = search_page.querySelector('.segment.searcher');
 const checklist_page = content.querySelector('.page.checklist');
 const home = content.querySelector('.page.home');
 const featured = home.querySelector('.horizontal_pane');
@@ -199,7 +200,7 @@ function loadSearches() {
         search_box.setAttribute('placeholder', 'Search ' + i);
         search_clone.removeAttribute('id');
         search_button.onclick = searchClick;
-        search_page.appendChild(search_clone);
+        search_segment.appendChild(search_clone);
     }
 }
 

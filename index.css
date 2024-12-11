@@ -1160,6 +1160,12 @@ header.shift {
     content: unset;
 }
 
+.searcher {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 .search_holder {
     width: calc(100% - 20px);
     min-height: 50px;
