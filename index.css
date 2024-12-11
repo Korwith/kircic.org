@@ -1530,5 +1530,12 @@ header.shift {
 
     .action_row button {
         width: calc(100% - 20px);
+        justify-content: center;
+        font-size: 0.8rem;
+    }
+
+    .action_row button::before {
+        width: 25px;
+        height: 25px;
     }
 }
