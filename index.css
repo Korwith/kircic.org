@@ -1419,6 +1419,53 @@ header.shift {
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
+.action_row {
+    display: flex;
+    gap: 10px;
+    height: 40px;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.action_row button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    height: 100%;
+    width: 150px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: border 0.2s;
+}
+
+.action_row button:hover {
+    border: 1px solid white;
+}
+
+.action_row button::before {
+    content: '';
+    display: inline-block;
+    width: 21px;
+    height: 21px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.action_row button.import::before {
+    background-image: url(icon/folder.svg);
+}
+
+.action_row button.export::before {
+    background-image: url(icon/export.svg)
+}
+
+.action_row button.clear::before {
+    background-image: url(icon/close.svg);
+    background-size: 88%;
+}
+
 * {
     color: white;
     text-shadow: 2px 2px 4px black;
@@ -1475,5 +1522,9 @@ header.shift {
 
     .last_search {
         max-width: 90vw;
+    }
+
+    .action_row button {
+        width: calc(100% - 20px);
     }
 }
