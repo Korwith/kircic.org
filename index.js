@@ -213,10 +213,16 @@ function handleSidebar() {
 function openPage(name) {
     let open_page = content.querySelector('.page.show');
     let new_page = content.querySelector('.page.' + name);
+    let ui_button = sidebar.querySelector(`[href="#${name}"] .select`);
+    let previous_button = sidebar.querySelector('.sidebar_container.mid .select.hold');
     if (open_page) {
         open_page.classList.remove('show');
     }
+    if (previous_button) {
+        previous_button.classList.remove('hold');
+    }
     new_page.classList.add('show');
+    ui_button.classList.add('hold')
     content.scrollTop = 0;
     content.focus();
     updateScrollClass();

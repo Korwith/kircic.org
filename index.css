@@ -211,7 +211,7 @@ nav.sidebar.shift {
     transition: background-color 0.2s;
 }
 
-.select.hold {
+.select.hold, .select.hold:hover {
     background-color: rgba(0, 0, 0, 0.15);
 }
 
