@@ -594,6 +594,7 @@ header.shift {
 .content .about span {
     padding-top: 30px;
     padding-bottom: 0;
+    text-align: center;
 }
 
 .content span {
