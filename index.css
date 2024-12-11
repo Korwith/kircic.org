@@ -658,6 +658,11 @@ header.shift {
     display: none;
 }
 
+.kubuntu {
+    background-image: url(icon/kubuntu.svg);
+    background-size: 78%;
+}
+
 .cert {
     background-image: url(icon/certification1.svg);
     background-size: 110%;
