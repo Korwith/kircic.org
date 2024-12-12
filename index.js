@@ -450,6 +450,7 @@ function loadLastSearch(url) {
     let icon = clone.querySelector('.icon');
     let term = clone.querySelector('span');
 
+    clone.setAttribute('title', query);
     clone.setAttribute('href', url);
     clone.removeAttribute('id');
     clone.style.order = '0';
