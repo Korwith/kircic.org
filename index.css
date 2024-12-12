@@ -211,7 +211,7 @@ nav.sidebar.shift {
     transition: background-color 0.2s;
 }
 
-.select.hold {
+.select.hold, .select.hold:hover {
     background-color: rgba(0, 0, 0, 0.15);
 }
 
@@ -594,6 +594,7 @@ header.shift {
 .content .about span {
     padding-top: 30px;
     padding-bottom: 0;
+    text-align: center;
 }
 
 .content span {
@@ -656,6 +657,11 @@ header.shift {
     background-image: url(icon/java.svg);
     background-size: 80%;
     display: none;
+}
+
+.kubuntu {
+    background-image: url(icon/kubuntu.svg);
+    background-size: 75%;
 }
 
 .cert {
@@ -1154,6 +1160,12 @@ header.shift {
     content: unset;
 }
 
+.searcher {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 .search_holder {
     width: calc(100% - 20px);
     min-height: 50px;
@@ -1413,6 +1425,57 @@ header.shift {
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
+.action_row {
+    display: flex;
+    gap: 10px;
+    height: 40px;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.action_row button {
+    height: 100%;
+    width: fit-content;
+    padding-right: 20px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: border 0.2s;
+}
+
+.action_row button:hover {
+    border: 1px solid white;
+}
+
+.action_row button::before {
+    content: '';
+    display: block;
+    width: 30px;
+    height: 30px;
+    margin: 5px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.action_row button.import::before {
+    background-image: url(icon/folder.svg);
+}
+
+.action_row button.export::before {
+    background-image: url(icon/export.svg)
+}
+
+.action_row button.clear::before {
+    background-image: url(icon/close.svg);
+    background-size: 88%;
+}
+
 * {
     color: white;
     text-shadow: 2px 2px 4px black;
@@ -1464,10 +1527,21 @@ header.shift {
     }
 
     .image_holder {
-        height: 50px;
+        height: 42px;
     }
 
     .last_search {
         max-width: 90vw;
+    }
+
+    .action_row button {
+        width: calc(100% - 20px);
+        justify-content: center;
+        font-size: 0.8rem;
+    }
+
+    .action_row button::before {
+        width: 25px;
+        height: 25px;
     }
 }

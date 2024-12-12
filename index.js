@@ -4,6 +4,7 @@ const all_page = content.querySelectorAll('.page');
 const home_page = content.querySelector('.page.home');
 const project_page = content.querySelector('.page.projects');
 const search_page = content.querySelector('.page.search');
+const search_segment = search_page.querySelector('.segment.searcher');
 const checklist_page = content.querySelector('.page.checklist');
 const home = content.querySelector('.page.home');
 const featured = home.querySelector('.horizontal_pane');
@@ -199,7 +200,7 @@ function loadSearches() {
         search_box.setAttribute('placeholder', 'Search ' + i);
         search_clone.removeAttribute('id');
         search_button.onclick = searchClick;
-        search_page.appendChild(search_clone);
+        search_segment.appendChild(search_clone);
     }
 }
 
@@ -212,10 +213,16 @@ function handleSidebar() {
 function openPage(name) {
     let open_page = content.querySelector('.page.show');
     let new_page = content.querySelector('.page.' + name);
+    let ui_button = sidebar.querySelector(`[href="#${name}"] .select`);
+    let previous_button = sidebar.querySelector('.sidebar_container.mid .select.hold');
     if (open_page) {
         open_page.classList.remove('show');
     }
+    if (previous_button) {
+        previous_button.classList.remove('hold');
+    }
     new_page.classList.add('show');
+    ui_button.classList.add('hold')
     content.scrollTop = 0;
     content.focus();
     updateScrollClass();
