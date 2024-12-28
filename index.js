@@ -255,6 +255,7 @@ function handlePushState() {
     let hash_split = window.location.href.split('#');
     let root_domain = hash_split[0];
     let page_name = hash_split[1];
+    if (page_name == 'extra') { return };
     let found_page = content.querySelector('.page.' + page_name);
     if (found_page) {
         openPage(page_name);
