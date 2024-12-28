@@ -1476,6 +1476,14 @@ header.shift {
     background-size: 88%;
 }
 
+.noafter::before {
+    content: unset !important;
+}
+
+.noafter::after {
+    content: unset !important;
+}
+
 * {
     color: white;
     text-shadow: 2px 2px 4px black;
