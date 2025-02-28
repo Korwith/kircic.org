@@ -658,9 +658,9 @@ header.shift {
     background-size: 75%;
 }
 
-.kubuntu {
-    background-image: url(icon/kubuntu.svg);
-    background-size: 75%;
+.linux {
+    background-image: url(icon/linux.svg);
+    background-size: 80%;
 }
 
 .cert {
