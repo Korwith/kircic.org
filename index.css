@@ -655,8 +655,7 @@ header.shift {
 
 .java {
     background-image: url(icon/java.svg);
-    background-size: 80%;
-    display: none;
+    background-size: 75%;
 }
 
 .kubuntu {
@@ -1535,7 +1534,13 @@ header.shift {
     }
 
     .image_holder {
-        height: 42px;
+        height: fit-content;
+        flex-wrap: wrap;
+    }
+
+    .image_holder div {
+        height: 50px;
+        width: 50px;
     }
 
     .last_search {
