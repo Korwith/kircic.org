@@ -467,6 +467,13 @@ span.category {
     display: none;
 }
 
+.settings_stat.commit_name {
+    overflow-x: auto;
+    text-wrap: nowrap;
+    scrollbar-width: none;
+    justify-content: flex-start;
+}
+
 header {
     position: fixed;
     display: flex;
