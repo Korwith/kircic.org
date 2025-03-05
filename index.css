@@ -446,6 +446,7 @@ span.category {
 
 .settings_stat {
     width: fit-content;
+    max-width: calc(100% - 20px);
     overflow: hidden;
     padding-left: 15px;
     padding-right: 15px;

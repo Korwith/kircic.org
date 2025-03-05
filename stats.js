@@ -72,15 +72,21 @@ async function fetchLatestCommitHash() {
         }
 
         const commits = await response.json();
-        // Return the hash of the most recent commit
+        const latestCommitName = commits[0].commit.message;
         const latestCommitHash = commits[0].sha;
         const latestCommitDate = commits[0].commit.committer.date;
+        displayLatestCommitName(latestCommitName);
         displayLatestCommitHash(latestCommitHash);
         displayLatestDate(latestCommitDate);
     } catch (error) {
         console.error('Error fetching latest commit hash:', error);
         return 'Error fetching commit hash';
     }
+}
+
+async function displayLatestCommitName(name) {
+    let commit_name = document.querySelector('.settings_stat.commit_name');
+    commit_name.textContent = name;
 }
 
 async function displayLatestCommitHash(hash) {
