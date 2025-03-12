@@ -121,7 +121,9 @@ function handleKeyDown(event) {
     if (event.which == 70) {
         toggleFlag();
     } else if (event.which == 81) {
-        toggleMovement()
+        toggleMovement();
+    } else if (event.which == 67) {
+        centerGame();
     }
 }
 
