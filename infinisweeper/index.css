@@ -303,13 +303,13 @@ span.number_stat::before {
     }
 
     .main_row .menu_button {
-        width: calc(25vw - 20px);
-        height: calc(25vw - 20px);
+        width: calc(20vw - 20px);
+        height: calc(20vw - 20px);
     }
 
     .main_row .game_buttons {
-        width: calc(75vw - 10px);
-        height: calc(25vw - 20px);
+        width: calc(80vw - 10px);
+        height: calc(20vw - 20px);
         align-items: center;
         justify-content: space-evenly;
     }
@@ -318,6 +318,18 @@ span.number_stat::before {
         aspect-ratio: 1/1;
         height: calc(100% - 10px);
         width: calc(100% / 3 - 10px);
+    }
+
+    .game_buttons button.flag {
+        background-size: 58%;
+    }
+
+    .game_buttons button.move {
+        background-size: 56%;
+    }
+
+    .game_buttons button.center {
+        background-size: 58%;
     }
 
     .button_holder.menu.slider {
