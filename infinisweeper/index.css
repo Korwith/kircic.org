@@ -321,15 +321,15 @@ span.number_stat::before {
     }
 
     .game_buttons button.flag {
-        background-size: 58%;
-    }
-
-    .game_buttons button.move {
         background-size: 56%;
     }
 
+    .game_buttons button.move {
+        background-size: 54%;
+    }
+
     .game_buttons button.center {
-        background-size: 58%;
+        background-size: 56%;
     }
 
     .button_holder.menu.slider {
