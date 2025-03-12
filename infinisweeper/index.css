@@ -6,6 +6,7 @@ body {
     linear-gradient(to bottom, #252525 1px, transparent 1px);
     margin: 0;
     overflow: hidden;
+    touch-action: manipulation;
 }
 
 #show_tile {
@@ -288,14 +289,17 @@ span.number_stat::before {
     .action_pane {
         top: unset;
         bottom: 0;
-        max-width: unset;
         width: calc(100vw - 10px);
         margin: 10px;
         flex-direction: column-reverse;
-    }
+    }  
 
     .main_row {
         height: fit-content;
+    }
+
+    .secondary_row {
+        width: calc(100vw - 10px);
     }
 
     .main_row .menu_button {
