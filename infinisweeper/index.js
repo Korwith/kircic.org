@@ -4,18 +4,22 @@ const score_pane = document.querySelector('.score_pane')
 const show_tile = document.querySelector('#show_tile');
 
 const main_menu = action_pane.querySelector('.button_holder.menu.extra');
+const main_row = action_pane.querySelector('.main_row');
+const secondary_row = action_pane.querySelector('.secondary_row');
 
 const menu_button = action_pane.querySelector('.menu_button');
 const flag_button = action_pane.querySelector('.flag');
 const restart_button = action_pane.querySelector('.restart');
-const save_button = action_pane.querySelector('.save');
-const load_button = action_pane.querySelector('.load');
 const center_button = action_pane.querySelector('.center');
 const move_button = action_pane.querySelector('.move');
 
 const zoom_bar = action_pane.querySelector('.slider input[type="range"]');
 const zoom_text = action_pane.querySelector('.slider span.zoom_level');
 const zoom_reset = action_pane.querySelector('.slider .reset');
+
+const save_holder = action_pane.querySelector('.save_buttons');
+const save_button = action_pane.querySelector('.save');
+const load_button = action_pane.querySelector('.load');
 
 const score_stat = score_pane.querySelector('.score');
 const tile_stat = score_pane.querySelector('.tiles');
@@ -556,10 +560,19 @@ function createImages() {
     }
 }
 
+function handleMobileUI() {
+    if (window.innerWidth >= 767) {
+        main_row.appendChild(save_holder);
+    } else {
+        secondary_row.appendChild(save_holder);
+    }
+}
+
 generateCanvas({ x: 0, y: 0 });
 createImages();
 initStats();
 updateZoom({target: zoom_reset});
+handleMobileUI();
 document.addEventListener('mousemove', handleMouseMove);
 document.addEventListener('keydown', handleKeyDown);
 document.addEventListener('keyup', handleKeyUp);
@@ -568,6 +581,7 @@ document.addEventListener('mouseup', handleMouseUp);
 document.addEventListener('contextmenu', handleContextMenu);
 window.addEventListener('load', handleLoad);
 window.addEventListener('beforeunload', handleSave);
+window.addEventListener('resize', handleMobileUI);
 menu_button.addEventListener('mouseup', handleMenuButton);
 flag_button.addEventListener('mouseup', toggleFlag);
 save_button.addEventListener('mouseup', handleSave);
