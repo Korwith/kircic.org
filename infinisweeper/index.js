@@ -10,6 +10,7 @@ const flag_button = action_pane.querySelector('.flag');
 const restart_button = action_pane.querySelector('.restart');
 const save_button = action_pane.querySelector('.save');
 const load_button = action_pane.querySelector('.load');
+const center_button = action_pane.querySelector('.center');
 
 const zoom_bar = action_pane.querySelector('.slider input[type="range"]');
 const zoom_text = action_pane.querySelector('.slider span.zoom_level');
@@ -362,6 +363,11 @@ function updateZoom(event, set) {
     document.body.style.backgroundPosition = (camera_position.x % tile_size) + 'px ' + (camera_position.y % tile_size) + 'px';
 }
 
+function centerGame() {
+    content.style.top = '0';
+    content.style.left = '0';
+}
+
 function initStats() {
     let special = ['mine_red', 'flag'];
     for (var i = 0; i <= 8; i++) {
@@ -423,8 +429,9 @@ function handleReset(event, force) {
     }
     initStats();
     updateStats();
-    generateCanvas({ x: 0, y: 0});
     updateZoom({target: zoom_reset});
+    centerGame();
+    generateCanvas({ x: 0, y: 0});
 }
 
 function handleSave(event) {
@@ -558,6 +565,7 @@ menu_button.addEventListener('mouseup', handleMenuButton);
 flag_button.addEventListener('mouseup', toggleFlag);
 save_button.addEventListener('mouseup', handleSave);
 load_button.addEventListener('mouseup', loadFromFile);
+center_button.addEventListener('mouseup', centerGame);
 zoom_bar.addEventListener('input', updateZoom);
 zoom_reset.addEventListener('mouseup', updateZoom);
 restart_button.addEventListener('mouseup', handleReset);
