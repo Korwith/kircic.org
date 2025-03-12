@@ -388,6 +388,10 @@ function centerGame() {
     content.style.left = (window.innerWidth / 2) + 'px';
     content.style.top = (window.innerHeight / 2) + 'px';
     document.body.style.backgroundPosition = window.innerWidth/2 % tile_size + 'px ' + window.innerHeight/2 % tile_size + 'px'
+    center_button.classList.add('no_filter');
+    setTimeout(function() {
+        center_button.classList.remove('no_filter');
+    }, 1000)
 }
 
 function toggleMovement() {

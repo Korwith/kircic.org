@@ -241,7 +241,8 @@ span.number_stat::before {
 
 .button_holder button.center {
     background-image: url(icon/center.svg);
-    background-size: 80%;
+    background-size: 81%;
+    filter: brightness(0) invert(1);
 }
 
 .button_holder button.save {
@@ -329,7 +330,7 @@ span.number_stat::before {
     }
 
     .game_buttons button.center {
-        background-size: 56%;
+        background-size: 57%;
     }
 
     .button_holder.menu.slider {
