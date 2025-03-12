@@ -48,7 +48,7 @@ const project_data = {
     'Infinisweeper': {
         description: 'An infinite minesweeper sandbox. Just like the original minesweeper, but with proceduraly generating terrain.',
         icon: { url: 'icon/infinisweeper.png', size: '75%' },
-        href: 'https://www.kircic.org/sub/infinisweeper.html',
+        href: 'https://www.kircic.org/infinisweeper',
         video: 'icon/infinite_preview.mp4',
         featured: 6,
         category: 'game'
