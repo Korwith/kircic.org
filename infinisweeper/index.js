@@ -46,14 +46,13 @@ let tile_size = 40 * zoom;
 
 function handleMouseMove(event) {
     setTilePosition(event);
-    
     if (action_pane.contains(event.target) || score_pane.contains(event.target)) {
         show_tile.style.display = 'none';
     } else {
         show_tile.style.display = 'block';
     }
 
-    if ((force_move || shift_down) && mouse_down) {
+    if (mouse_down) {
         moveContent(event);
         return;
     }
@@ -82,7 +81,10 @@ function handleMouseDown(event) {
 
 function handleMouseUp(event) {
     mouse_down = false;
-    starting_position = null;
+    if (starting_position != null) { 
+        starting_position = null;
+        return; 
+    }
     if (action_pane.contains(event.target) || shift_down || force_move) { return; }
     let canvas_info = getCanvasPosition(event, true);
     let canvas_string = chunkToPosition(canvas_info.chunk);
@@ -93,6 +95,25 @@ function handleMouseUp(event) {
     } else {
         chordTile(canvas_info.chunk, canvas_info.position);
     }
+}
+
+function handleTouchStart(event) {
+    mouse_down = true;
+}
+
+function handleTouchEnd(event) {
+    mouse_down = false;
+    starting_position = null;
+}
+
+function handleTouchMove(event) {
+    let first_point = event.touches[0];
+    let touch_event = {
+        x: first_point.clientX,
+        y: first_point.clientY,
+        target: first_point.target
+    };
+    handleMouseMove(touch_event);
 }
 
 function handleKeyDown(event) {
@@ -573,12 +594,15 @@ createImages();
 initStats();
 updateZoom({target: zoom_reset});
 handleMobileUI();
-document.addEventListener('mousemove', handleMouseMove);
 document.addEventListener('keydown', handleKeyDown);
 document.addEventListener('keyup', handleKeyUp);
+document.addEventListener('contextmenu', handleContextMenu);
 document.addEventListener('mousedown', handleMouseDown);
 document.addEventListener('mouseup', handleMouseUp);
-document.addEventListener('contextmenu', handleContextMenu);
+document.addEventListener('mousemove', handleMouseMove);
+document.addEventListener('touchstart', handleTouchStart);
+document.addEventListener('touchend', handleTouchEnd);
+document.addEventListener('touchmove', handleTouchMove)
 window.addEventListener('load', handleLoad);
 window.addEventListener('beforeunload', handleSave);
 window.addEventListener('resize', handleMobileUI);

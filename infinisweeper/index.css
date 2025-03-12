@@ -323,4 +323,8 @@ span.number_stat::before {
     .button_holder.menu.slider {
         width: calc(100% - 100px);
     }
+
+    #show_tile {
+        display: none !important;
+    }
 }
