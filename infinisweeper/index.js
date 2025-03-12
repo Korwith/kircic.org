@@ -385,8 +385,9 @@ function updateZoom(event, set) {
 }
 
 function centerGame() {
-    content.style.top = '0';
-    content.style.left = '0';
+    content.style.left = (window.innerWidth / 2) + 'px';
+    content.style.top = (window.innerHeight / 2) + 'px';
+    document.body.style.backgroundPosition = window.innerWidth/2 % tile_size + 'px ' + window.innerHeight/2 % tile_size + 'px'
 }
 
 function toggleMovement() {
