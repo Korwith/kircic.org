@@ -11,6 +11,7 @@ const restart_button = action_pane.querySelector('.restart');
 const save_button = action_pane.querySelector('.save');
 const load_button = action_pane.querySelector('.load');
 const center_button = action_pane.querySelector('.center');
+const move_button = action_pane.querySelector('.move');
 
 const zoom_bar = action_pane.querySelector('.slider input[type="range"]');
 const zoom_text = action_pane.querySelector('.slider span.zoom_level');
@@ -28,6 +29,7 @@ const search_array = [
 let shift_down = false;
 let mouse_down = false;
 let force_flag = false;
+let force_move = false;
 
 let image_info = {};
 let number_info = {};
@@ -47,7 +49,7 @@ function handleMouseMove(event) {
         show_tile.style.display = 'block';
     }
 
-    if (shift_down && mouse_down) {
+    if ((force_move || shift_down) && mouse_down) {
         moveContent(event);
         return;
     }
@@ -77,7 +79,7 @@ function handleMouseDown(event) {
 function handleMouseUp(event) {
     mouse_down = false;
     starting_position = null;
-    if (action_pane.contains(event.target) || shift_down) { return; }
+    if (action_pane.contains(event.target) || shift_down || force_move) { return; }
     let canvas_info = getCanvasPosition(event, true);
     let canvas_string = chunkToPosition(canvas_info.chunk);
     let position_string = getPositionString(canvas_info.position);
@@ -368,6 +370,11 @@ function centerGame() {
     content.style.left = '0';
 }
 
+function toggleMovement() {
+    force_move = !force_move;
+    move_button.classList.toggle('no_filter', force_move);
+}
+
 function initStats() {
     let special = ['mine_red', 'flag'];
     for (var i = 0; i <= 8; i++) {
@@ -566,6 +573,7 @@ flag_button.addEventListener('mouseup', toggleFlag);
 save_button.addEventListener('mouseup', handleSave);
 load_button.addEventListener('mouseup', loadFromFile);
 center_button.addEventListener('mouseup', centerGame);
+move_button.addEventListener('mouseup', toggleMovement);
 zoom_bar.addEventListener('input', updateZoom);
 zoom_reset.addEventListener('mouseup', updateZoom);
 restart_button.addEventListener('mouseup', handleReset);

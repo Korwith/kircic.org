@@ -1,9 +1,7 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <!-- Uploaded to: SVG Repo, www.svgrepo.com, Transformed by: SVG Repo Mixer Tools -->
-<svg fill="#ffffff" width="800px" height="800px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#00a7bd">
 <g id="SVGRepo_bgCarrier" stroke-width="0"/>
 <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
-<g id="SVGRepo_iconCarrier">
-<path d="M2.3,11.291l3-3A1,1,0,1,1,6.708,9.706L5.415,11H11V5.413L9.708,6.706A1,1,0,0,1,8.294,5.292l3-3a1,1,0,0,1,1.415,0l3,3a1,1,0,1,1-1.414,1.414L13,5.413V11h5.586L17.294,9.706a1,1,0,1,1,1.414-1.414l3,3a1,1,0,0,1,0,1.416l-3,3a1,1,0,1,1-1.414-1.414L18.587,13H13v5.586l1.293-1.293a1,1,0,0,1,1.414,1.414l-3,3a1,1,0,0,1-1.415,0l-3-3a1,1,0,0,1,1.414-1.414L11,18.585V13H5.415l1.293,1.293a1,1,0,1,1-1.414,1.414l-3-3A1,1,0,0,1,2.3,11.291Z"/>
-</g>
+<g id="SVGRepo_iconCarrier"> <path d="M12 3V21M12 3L9 6M12 3L15 6M12 21L15 18M12 21L9 18M3 12H21M3 12L6 15M3 12L6 9M21 12L18 9M21 12L18 15" stroke="#00a7bd" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/> </g>
 </svg>

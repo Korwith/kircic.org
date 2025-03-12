@@ -227,6 +227,7 @@ span.number_stat::before {
 .button_holder button.move {
     background-image: url(icon/move.svg);
     background-size: 78%;
+    filter: brightness(0) invert(1);
 }
 
 .button_holder button.center {
