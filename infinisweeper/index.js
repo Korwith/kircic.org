@@ -42,9 +42,12 @@ let game_stats = {current_score: 0};
 
 let zoom = 1;
 let tile_size = 40 * zoom;
+let last_mouse_event;
 
 function handleMouseMove(event) {
+    last_mouse_event = event;
     setTilePosition(event);
+
     if (action_pane.contains(event.target) || score_pane.contains(event.target)) {
         show_tile.style.display = 'none';
     } else {
@@ -118,7 +121,9 @@ function handleTouchMove(event) {
 }
 
 function handleKeyDown(event) {
-    if (event.which == 70) {
+    if (event.which == 32) {
+        handleMouseUp(last_mouse_event);
+    } else if (event.which == 70) {
         toggleFlag();
     } else if (event.which == 81) {
         toggleMovement();
