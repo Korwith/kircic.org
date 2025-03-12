@@ -30,7 +30,6 @@ const search_array = [
     { x: -1, y: 1 }, { x: 0, y: 1 }, { x: 1, y: 1 }
 ]
 
-let shift_down = false;
 let mouse_down = false;
 let force_flag = false;
 let force_move = false;
@@ -76,6 +75,7 @@ function moveContent(event) {
 }
 
 function handleMouseDown(event) {
+    if (action_pane.contains(event.target) || score_pane.contains(event.target)) { return; }
     mouse_down = true;
 }
 
@@ -85,7 +85,7 @@ function handleMouseUp(event) {
         starting_position = null;
         return; 
     }
-    if (action_pane.contains(event.target) || shift_down || force_move) { return; }
+    if (action_pane.contains(event.target) || force_move) { return; }
     let canvas_info = getCanvasPosition(event, true);
     let canvas_string = chunkToPosition(canvas_info.chunk);
     let position_string = getPositionString(canvas_info.position);
@@ -98,6 +98,7 @@ function handleMouseUp(event) {
 }
 
 function handleTouchStart(event) {
+    if (action_pane.contains(event.target) || score_pane.contains(event.target)) { return; }
     mouse_down = true;
 }
 
@@ -117,17 +118,10 @@ function handleTouchMove(event) {
 }
 
 function handleKeyDown(event) {
-    if (event.which == 16) {
-        shift_down = true;
-    }
     if (event.which == 70) {
         toggleFlag();
-    }
-}
-
-function handleKeyUp(event) {
-    if (event.which == 16) {
-        shift_down = false;
+    } else if (event.which == 81) {
+        toggleMovement()
     }
 }
 
@@ -595,7 +589,6 @@ initStats();
 updateZoom({target: zoom_reset});
 handleMobileUI();
 document.addEventListener('keydown', handleKeyDown);
-document.addEventListener('keyup', handleKeyUp);
 document.addEventListener('contextmenu', handleContextMenu);
 document.addEventListener('mousedown', handleMouseDown);
 document.addEventListener('mouseup', handleMouseUp);
