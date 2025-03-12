@@ -384,10 +384,12 @@ function updateZoom(event, set) {
     document.body.style.backgroundPosition = (camera_position.x % tile_size) + 'px ' + (camera_position.y % tile_size) + 'px';
 }
 
-function centerGame() {
+function centerGame(event, no_ui) {
     content.style.left = (window.innerWidth / 2) + 'px';
     content.style.top = (window.innerHeight / 2) + 'px';
     document.body.style.backgroundPosition = window.innerWidth/2 % tile_size + 'px ' + window.innerHeight/2 % tile_size + 'px'
+    
+    if (no_ui) { return; }
     center_button.classList.add('no_filter');
     setTimeout(function() {
         center_button.classList.remove('no_filter');
@@ -461,7 +463,7 @@ function handleReset(event, force) {
     initStats();
     updateStats();
     updateZoom({target: zoom_reset});
-    centerGame();
+    centerGame(false, true);
     generateCanvas({ x: 0, y: 0});
 }
 
