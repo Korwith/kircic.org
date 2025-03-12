@@ -122,13 +122,20 @@ function handleTouchMove(event) {
 
 function handleKeyDown(event) {
     if (event.which == 32) {
-        handleMouseUp(last_mouse_event);
+        handleMouseDown(event)
     } else if (event.which == 70) {
         toggleFlag();
     } else if (event.which == 81) {
         toggleMovement();
     } else if (event.which == 67) {
         centerGame();
+    }
+}
+
+function handleKeyUp(event) {
+    if (event.which == 32) {
+        handleMouseUp(last_mouse_event);
+        handleTouchEnd();
     }
 }
 
@@ -603,6 +610,7 @@ initStats();
 updateZoom({target: zoom_reset});
 handleMobileUI();
 document.addEventListener('keydown', handleKeyDown);
+document.addEventListener('keyup', handleKeyUp);
 document.addEventListener('contextmenu', handleContextMenu);
 document.addEventListener('mousedown', handleMouseDown);
 document.addEventListener('mouseup', handleMouseUp);
