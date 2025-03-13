@@ -122,7 +122,7 @@ function handleTouchMove(event) {
 
 function handleKeyDown(event) {
     if (event.which == 32) {
-        handleMouseDown(event)
+        //handleMouseDown(event)
     } else if (event.which == 70) {
         toggleFlag();
     } else if (event.which == 81) {
