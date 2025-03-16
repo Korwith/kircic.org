@@ -667,8 +667,8 @@ header.shift {
 }
 
 .linux {
-    background-image: url(icon/linux.svg);
-    background-size: 80%;
+    background-image: url(icon/linux.ico);
+    background-size: 76%;
 }
 
 .cert {
