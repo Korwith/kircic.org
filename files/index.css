@@ -455,7 +455,7 @@ nav.sidebar {
     font-size: 2rem;
 }
 
-.content:not([folders]) .no_view {
+.content:not([folders]):not([files]) .no_view {
     display: flex;
 }
 
