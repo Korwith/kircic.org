@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Explorer</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="node_modules/file-icons-js/css/style.css" />
+    <link rel="stylesheet" href="node_modules/highlight.js/styles/vs2015.css">
+</head>
+
+<body>
+    <header>
+        <button class="open">Open Folder</button>
+        <button class="square back">
+            <div class="icon"></div>
+        </button>
+        <button class="square next">
+            <div class="icon"></div>
+        </button>
+    </header>
+
+    <nav class="sidebar"></nav>
+
+    <div class="content">
+        <div class="content_header"></div>
+
+        <div class="icon_explorer">
+            <div class="segment folders">
+                <span class="type_header">Folders</span>
+            </div>
+            <div class="segment files">
+                <span class="type_header">Files</span>
+            </div>
+
+            <div class="no_view">
+                <span class="nv_title">No folder selected</span>
+                <span class="open_root">Open folder</span>
+                <span class="open_folder hide">Open folder</span>
+            </div>
+        </div>
+
+        <div class="file_viewer">
+            <div class="file_header">
+                <div class="icon"></div>
+                <span class="file_name"></span>
+                <div class="file_options">
+                    <button class="close square">
+                        <div class="icon"></div>
+                    </button>
+                </div>    
+            </div>
+
+            <pre><code class="text_content"></code></pre>
+        </div>
+    </div>
+
+    <div id="placeholder" class="large_file">
+        <div class="icon"></div>
+        <span></span>
+    </div>
+
+    <div id="placeholder" class="list_file">
+        <div class="icon"></div>
+        <span></span>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/file-icons-js/dist/file-icons.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+    <script src="textfiletypes.js"></script>
+    <script src="index.js"></script>
+</body>
+
+</html>

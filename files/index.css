@@ -1,0 +1,555 @@
+#placeholder {
+    display: none;
+}
+
+pre * {
+    color: unset;
+    font-family: unset;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #1E1E1E;
+}
+
+header {
+    position: fixed;
+    display: flex;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 50px;
+    background-color: #252525;
+    border-bottom: 1px solid #303030;
+    z-index: 2;
+}
+
+header button, .file_options button {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100% - 10px);
+    width: fit-content;
+    margin: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 8px;
+    background: linear-gradient(to bottom right, #222222, #181818);
+    border: 0;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.8);
+    transition: color 0.3s;
+}
+
+header button::before, .file_options button::before {
+    content: '';
+    aspect-ratio: 1/1;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    transform: translateX(-5px);
+    filter: brightness(80%);
+    transition: filter 0.3s;
+}
+
+header button::after, .file_options button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    box-sizing: border-box;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    transition: border 0.3s;
+}
+
+header button:hover, .file_options button:hover {
+    color: white;
+}
+
+header button:hover::before, .file_options button:hover::before {
+    filter: brightness(100%);
+}
+
+header button:hover::after, .file_options button:hover::after {
+    border: 2px solid white;
+}
+
+header button.square, .file_options button.square {
+    aspect-ratio: 1/1;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+header button.square .icon, .file_options button.square .icon {
+    pointer-events: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    filter: brightness(80%);
+    transition: filter 0.2s;
+}
+
+header button:hover .icon, .file_options button:hover .icon {
+    filter: brightness(100%);
+}
+
+header button.open::before {
+    background-image: url(icon/folder.svg);
+    background-size: 60%;
+}
+
+header button.back .icon {
+    background-image: url(icon/arrow.svg);
+    background-size: 80%;
+    transform: translateX(-1px);
+}
+
+header button.next .icon {
+    background-image: url(icon/arrow.svg);
+    background-size: 80%;
+    transform: rotate(180deg) translateX(-1px);
+}
+
+nav.sidebar {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    top: 50px;
+    left: 0;
+    width: 300px;
+    padding: 10px;
+    height: calc(100vh - 50px);
+    background-color: #1C1C1C;
+    box-sizing: border-box;
+    border-right: 1px solid #303030;
+    z-index: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: none;
+}
+
+.target_list {
+    position: relative;
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+}
+
+.target_list::after {
+    content: '';
+    position: absolute;
+    left: -17px;
+    top: 0;
+    width: 2px;
+    height: calc(100% - 13px);
+    background-color: #303030;
+}
+
+.list_file {
+    position: relative;
+    display: flex;
+    gap: 10px;
+    height: 30px;
+    width: 100%;
+}
+
+.target_list .list_file::after {
+    content: '';
+    position: absolute;
+    height: 2px;
+    width: 17px;
+    top: 50%;
+    left: -17px;
+    background-color: #303030;
+}
+
+.list_file * {
+    pointer-events: none;
+}
+
+.list_file .icon {
+    position: relative;
+    height: 30px;
+    width: 30px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+.list_file .icon:before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 24px;
+    height: 24px;
+    font-size: 24px;
+    transform: translate(-50%, -50%);
+    filter: brightness(80%);
+    transition: filter 0.2s;
+}
+
+.list_file .icon.unknown {
+    background-size: 75%;
+    background-image: url(icon/file.svg);
+    filter: brightness(80%);
+}
+
+.list_file[kind="directory"] .icon {
+    background-size: 80%;
+    background-image: url(icon/folder.svg);
+    filter: brightness(80%);
+    transition: filter 0.2s;
+}
+
+.list_file[kind="directory"] .icon:before {
+    content: unset;
+}
+
+.list_file span {
+    display: flex;
+    align-items: center;
+    height: 30px;
+    width: fit-content;
+    user-select: none;
+    color: rgba(255, 255, 255, 0.8);
+    transition: color 0.2s;
+}
+
+.list_file:hover .icon, .list_file:hover .icon:before {
+    filter: brightness(100%);
+}
+
+.list_file:hover span {
+    color: white;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 50px;
+    right: 0;
+    width: calc(100vw - 300px);
+    height: calc(100vh - 50px);
+    z-index: 0;
+}
+
+.content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* background-image: url(https://www.svgrepo.com/_next/static/media/dot.6429a523.svg); */
+    z-index: -1;
+    filter: brightness(0.3);
+}
+
+.content.shift .file_viewer {
+    transform: unset;
+}
+
+.content.shift .icon_explorer {
+    width: 50%;
+}
+
+.content_header {
+    display: flex;
+    background-color: #1C1C1C;
+    border-bottom: 1px solid #303030;
+    min-height: 40px;
+    width: 100%;
+    z-index: 2;
+}
+
+.path_entry {
+    display: flex;
+    align-items: center;
+    position: relative;
+    height: 100%;
+    width: fit-content;
+    padding-left: 10px;
+    padding-right: 22px;
+    color: rgba(255, 255, 255, 0.8);
+    user-select: none;
+    transition: color 0.2s, background-color 0.2s;
+}
+
+.path_entry::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20px;
+    height: 100%;
+    background-size: 100%;
+    background-image: url(icon/arrow.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    transform: rotate(180deg) translateY(-1px);
+    filter: brightness(80%);
+    transition: filter 0.2s;
+}
+
+.path_entry:hover {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.1)
+}
+
+.path_entry:hover::after {
+    filter: unset;
+}
+
+.icon_explorer {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    width: calc(100% - 20px);
+    overflow-y: auto;
+    transition: width 0.5s, height 0.5s;
+}
+
+.icon_explorer .segment {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.type_header {
+    display: flex;
+    align-items: center;
+    height: 30px;
+    width: 100%;
+    gap: 10px;
+    color: #808080;
+    user-select: none;
+}
+
+.type_header::after {
+    content: '';
+    display: block;
+    flex: 1;
+    height: 1px;
+    background-color: #303030;
+}
+
+.content:not([folders]) .segment.folders .type_header {
+    display: none;
+}
+
+.content:not([files]) .segment.files .type_header {
+    display: none;
+}
+
+.content.noshow .icon_explorer * {
+    display: none !important;
+}
+
+.large_file {
+    width: 100px;
+    height: 100px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.large_file * {
+    pointer-events: none;
+}
+
+.large_file .icon {
+    position: relative;
+    width: 75px;
+    height: 75px;
+    background-size: 90%;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: brightness(80%);
+    transition: filter 0.2s;
+}
+
+.large_file .icon:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    font-size: 75px;
+}
+
+.segment.folders .large_file .icon {
+    background-image: url(icon/folder.svg);
+}
+
+.segment.files .large_file .icon.unknown {
+    background-image: url(icon/file.svg);
+    background-size: 80%;
+}
+
+.segment.files .large_file .icon {
+    background-size: 60%;
+}
+
+.large_file span {
+    display: block;
+    width: 100%;
+    height: 25px;
+    text-align: center;
+    user-select: none;
+    overflow: hidden;
+    color: rgba(255, 255, 255, 0.8);
+    transition: color 0.2s;
+}
+
+.large_file:hover .icon {
+    filter: brightness(100%);
+}
+
+.large_file:hover span {
+    color: white;
+}
+
+.no_view {
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+    display: none;
+    width: 100%;
+    height: calc(100vw - 50px);
+    user-select: none;
+}
+
+.no_view span {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    color: rgba(255, 255, 255, 0.8);
+    transition: color 0.2s;
+}
+
+.no_view span.hide {
+    display: none;
+}
+
+.no_view span:not(.nv_title):hover {
+    color: white;
+}
+
+.no_view .nv_title {
+    font-weight: 900;
+    font-size: 2rem;
+}
+
+.content:not([folders]) .no_view {
+    display: flex;
+}
+
+.file_viewer {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 50%;
+    height: calc(100% - 40px);
+    border-left: 1px solid #303030;
+    transform: translateX(100%);
+    transition: transform 0.5s;
+}
+
+.file_header {
+    display: flex;
+    flex: 0 0 auto;
+    height: 40px;
+    width: 100%;
+    background-color: #1E1E1E;
+    border-bottom: 1px solid #303030;
+}
+
+.file_header .icon {
+    position: relative;
+    width: 40px;
+    height: 40px;
+}
+
+.file_header .icon:before {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 30px;
+    height: 30px;
+    transform: translate(-50%, -50%);
+    font-size: 30px;
+}
+
+.file_header .file_name {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    padding-left: 3px;
+    height: 100%;
+    width: fit-content;
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 900;
+    user-select: none;
+}
+
+.file_viewer pre {
+    flex: 1;
+    overflow-y: auto;
+    scrollbar-width: none;
+    margin: 0;
+    background-color: #1E1E1E;
+}
+
+.text_content {
+    display: block;
+    box-sizing: border-box;
+    background-color: #1C1C1C;
+    width: 100%;
+    height: fit-content;
+    overflow-y: auto;
+    scrollbar-width: none;
+    padding: 10px;
+}
+
+.file_options {
+    height: calc(100% - 10px);
+    width: fit-content;
+    display: flex;
+    gap: 5px;
+    margin: 5px;
+    transform: translateY(1px);
+}
+
+.file_options button {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.file_options button.close .icon {
+    background-size: 80%;
+    background-image: url(icon/close.svg);
+}
+
+* {
+    color: white;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
