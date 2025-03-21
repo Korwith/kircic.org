@@ -319,6 +319,7 @@ nav.sidebar {
     padding: 10px;
     width: calc(100% - 20px);
     overflow-y: auto;
+    scrollbar-width: none;
     transition: width 0.5s, height 0.5s;
 }
 
