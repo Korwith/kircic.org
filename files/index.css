@@ -431,7 +431,7 @@ nav.sidebar {
     flex-wrap: wrap;
     display: none;
     width: 100%;
-    height: calc(100vw - 50px);
+    height: calc(100vh - 50px);
     user-select: none;
 }
 
@@ -571,7 +571,12 @@ nav.sidebar {
         transform: translateY(100%);
     }
 
+    .file_header {
+        border-top: 1px solid #303030;
+    }
+
     .content.shift .icon_explorer {
         width: 100vw;
+        height: calc(50vh - 110px);
     }
 }
