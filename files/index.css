@@ -565,10 +565,6 @@ nav.sidebar {
         width: 100vw;
     }
 
-    .icon_explorer .segment {
-        justify-content: center;
-    }
-
     .file_viewer {
         height: 50vh;
         width: 100vw;
