@@ -5,6 +5,7 @@ const content = document.querySelector('.content');
 const open = header.querySelector('button.open');
 const path_back = header.querySelector('button.back');
 const path_next = header.querySelector('button.next');
+const sidebar_toggle = header.querySelector('.sidebar_toggle');
 
 const content_header = content.querySelector('.content_header');
 const file_explorer = content.querySelector('.icon_explorer');
@@ -12,6 +13,7 @@ const folders = file_explorer.querySelector('.segment.folders');
 const files = file_explorer.querySelector('.segment.files');
 const folder_header = folders.querySelector('.type_header');
 const file_header = files.querySelector('.type_header');
+
 const no_view_holder = content.querySelector('.no_view');
 const no_view_root = no_view_holder.querySelector('.open_root');
 const no_view_open_folder = no_view_holder.querySelector('.open_folder');
@@ -19,9 +21,14 @@ const no_view_open_folder = no_view_holder.querySelector('.open_folder');
 const file_viewer = content.querySelector('.file_viewer')
 const viewer_header = file_viewer.querySelector('.file_header');
 const viewer_icon = viewer_header.querySelector('.icon');
-const viewer_name = viewer_header.querySelector('span');
+const viewer_name = viewer_header.querySelector('span.file_name');
+const viewer_size = viewer_header.querySelector('span.file_size');
 const text_content = file_viewer.querySelector('.text_content');
+
+const text_edit = file_viewer.querySelector('.edit');
 const text_close = file_viewer.querySelector('.close');
+const text_discard = file_viewer.querySelector('.discard');
+const text_save = file_viewer.querySelector('.save');
 
 const list_placeholder = document.querySelector('#placeholder.list_file');
 const large_placeholder = document.querySelector('#placeholder.large_file');
@@ -34,6 +41,8 @@ let id_handle = [];
 let path_history = [];
 let saved_history = [];
 let block_action = false;
+let editing_text = false;
+let current_file_access;
 
 // FileSystem
 async function loadFolder(event, origin) {
@@ -43,9 +52,9 @@ async function loadFolder(event, origin) {
             id_handle[0] = handle;
             createListEntry(handle, 0, 0);
             updatePathHistory(0);
+            origin = 0;
             no_view_root.classList.add('hide');
             no_view_open_folder.classList.remove('hide');
-            origin = 0;
         }
 
         for await (let entry of handle.values()) {
@@ -66,13 +75,25 @@ async function fileAccess(handle) {
 
     let file = await handle.getFile();
     let text = await file.text();
+    current_file_access = handle;
+    document.body.classList.toggle('mobile_shift', false);
     content.classList.add('shift');
     assignIconImage(handle, viewer_icon);
     viewer_name.textContent = handle.name;
+    viewer_size.textContent = getFileSize(text.length);
     text_content.textContent = text;
-    text_content.classList = 'text_content';
-    text_content.removeAttribute('data-highlighted');
+    removeHighlightClasses();
     hljs.highlightElement(text_content);
+}
+
+async function updateFile() {
+    try {
+        let writable = await current_file_access.createWritable();
+        await writable.write(text_content.textContent);
+        await writable.close();
+    } catch(error) {
+        console.error(error);
+    }
 }
 
 // User Interface
@@ -312,6 +333,50 @@ function assignIconImage(entry, icon) {
     }
 }
 
+function assignTextEditable() { 
+    if (editing_text) {
+        removeTextEditable();
+        return;
+    }
+    editing_text = true;
+    removeHighlightClasses();
+    text_content.setAttribute('contenteditable', true);
+    text_content.textContent = text_content.textContent;
+    text_edit.classList.add('active');
+}
+
+async function removeTextEditable() {
+    editing_text = false;
+    let found_file = await current_file_access.getFile();
+    text_content.textContent = await found_file.text();
+    text_content.removeAttribute('contenteditable');
+    text_edit.classList.remove('active');
+    removeHighlightClasses();
+    hljs.highlightElement(text_content);
+    
+}
+
+function removeHighlightClasses() {
+    text_content.removeAttribute('contenteditable');
+    text_content.removeAttribute('data-highlighted');
+    text_content.classList = 'text_content';
+}
+
+function handleEditedText(event) {
+    file_viewer.setAttribute('editing', true);
+    viewer_size.textContent = getFileSize(text_content.textContent.length);
+}
+
+function hideCodeMenu() {
+    content.classList.remove('shift');
+    file_viewer.removeAttribute('editing');
+    removeTextEditable();
+}
+
+function handleSidebarToggle() {
+    document.body.classList.toggle('mobile_shift');
+}
+
 function updateCountAttributes() {
     let folder_count = folders.querySelectorAll('.large_file').length;
     let file_count = files.querySelectorAll('.large_file').length;
@@ -321,20 +386,32 @@ function updateCountAttributes() {
     file_header.textContent = `Files (${file_count})`;
 }
 
-function hideCodeMenu() {
-    content.classList.remove('shift');
-}
-
 function handleKeyDown(event) {
     if (event.which == 27) {
         hideCodeMenu();
     }
 }
 
+let all_types = [' Byes', 'KB', 'MB', 'GB', 'TB'];
+function getFileSize(bytes) {
+    let count = 0;
+    while (bytes >= 1024) {
+        bytes /= 1024;
+        count++;
+    }
+    let no_dec = bytes.toFixed(2).endsWith('.00');
+    return (no_dec ? Math.floor(bytes) : bytes.toFixed(2)) + all_types[count];
+}
+
 // Initialize
 open.addEventListener('mouseup', loadFolder);
-text_close.addEventListener('mouseup', hideCodeMenu);
 path_next.addEventListener('mouseup', pathHistoryNext);
 path_back.addEventListener('mouseup', pathHistoryBack);
 no_view_root.addEventListener('mouseup', loadFolder);
+sidebar_toggle.addEventListener('mouseup', handleSidebarToggle);
+text_close.addEventListener('mouseup', hideCodeMenu);
+text_edit.addEventListener('mouseup', assignTextEditable);
+text_discard.addEventListener('mouseup', removeTextEditable);
+text_save.addEventListener('mouseup', updateFile);;
+text_content.addEventListener('input', handleEditedText);
 document.addEventListener('keyup', handleKeyDown);

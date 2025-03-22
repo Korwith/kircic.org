@@ -10,6 +10,8 @@ pre * {
 body {
     margin: 0;
     padding: 0;
+    width: 100vw;
+    height: 100vh;
     background-color: #1E1E1E;
 }
 
@@ -67,15 +69,15 @@ header button::after, .file_options button::after {
     transition: border 0.3s;
 }
 
-header button:hover, .file_options button:hover {
+header button:hover, .file_options button:hover, .file_options button.active {
     color: white;
 }
 
-header button:hover::before, .file_options button:hover::before {
+header button:hover::before, .file_options button:hover::before, .file_options button.active::before {
     filter: brightness(100%);
 }
 
-header button:hover::after, .file_options button:hover::after {
+header button:hover::after, .file_options button:hover::after, .file_options button.active::after {
     border: 2px solid white;
 }
 
@@ -99,8 +101,17 @@ header button.square .icon, .file_options button.square .icon {
     transition: filter 0.2s;
 }
 
-header button:hover .icon, .file_options button:hover .icon {
+header button:hover .icon, .file_options button:hover .icon, .file_options button.active .icon {
     filter: brightness(100%);
+}
+
+header button.sidebar_toggle {
+    display: none;
+}
+
+header button.sidebar_toggle .icon {
+    background-image: url(icon/lines.svg);
+    background-size: 75%;
 }
 
 header button.open::before {
@@ -136,6 +147,7 @@ nav.sidebar {
     overflow-y: auto;
     overflow-x: hidden;
     scrollbar-width: none;
+    transition: transform 0.5s;
 }
 
 .target_list {
@@ -474,6 +486,7 @@ nav.sidebar {
 }
 
 .file_header {
+    position: relative;
     display: flex;
     flex: 0 0 auto;
     height: 40px;
@@ -498,17 +511,24 @@ nav.sidebar {
     font-size: 30px;
 }
 
-.file_header .file_name {
+.file_header span {
     display: flex;
-    flex: 1;
     align-items: center;
-    padding-left: 3px;
+    padding-left: 4px;
     height: 100%;
     width: fit-content;
-    font-size: 1.2rem;
     color: rgba(255, 255, 255, 0.8);
-    font-weight: 900;
     user-select: none;
+}
+
+.file_header span.file_name {
+    font-size: 1.2rem;
+    font-weight: 900;
+    padding-right: 4px;
+}
+
+.file_header span.file_size {
+    font-style: italic;
 }
 
 .file_viewer pre {
@@ -516,7 +536,7 @@ nav.sidebar {
     overflow-y: auto;
     scrollbar-width: none;
     margin: 0;
-    background-color: #1E1E1E;
+    background-color: #1C1C1C;
 }
 
 .text_content {
@@ -524,13 +544,17 @@ nav.sidebar {
     box-sizing: border-box;
     background-color: #1C1C1C;
     width: 100%;
+    min-height: 100%;
     height: fit-content;
     overflow-y: auto;
     scrollbar-width: none;
-    padding: 10px;
+    outline: none;
+    padding: 1em;
 }
 
 .file_options {
+    position: absolute;
+    right: 0;
     height: calc(100% - 10px);
     width: fit-content;
     display: flex;
@@ -545,9 +569,40 @@ nav.sidebar {
     height: 100%;
 }
 
+.file_options button.discard {
+    display: none;
+}
+
+.file_options button.discard::before {
+    background-size: 100%;
+    background-image: url(icon/discard.svg);
+}
+
+.file_options button.save {
+    display: none;
+}
+
+.file_options button.save::before {
+    background-size: 65%;
+    background-image: url(icon/save.svg);
+}
+
+.file_options button.edit .icon {
+    background-size: 55%;
+    background-image: url(icon/pencil.svg);
+}
+
 .file_options button.close .icon {
     background-size: 80%;
     background-image: url(icon/close.svg);
+}
+
+.file_viewer[editing] .file_options button.discard {
+    display: flex;
+}
+
+.file_viewer[editing] .file_options button.save {
+    display: flex;
 }
 
 * {
@@ -558,11 +613,27 @@ nav.sidebar {
 @media screen and (max-width: 767px) {
     nav.sidebar {
         transform: translateX(-100%);
+        width: 100vw;
+        height: calc(100vh - 90px);
+        top: 90px;
+        border-top: 1px solid #303030;
+    }
+
+    body.mobile_shift nav.sidebar {
+        transform: unset;
     }
 
     .content {
         left: 0;
         width: 100vw;
+    }
+
+    header button.sidebar_toggle {
+        display: flex;
+    }
+
+    header button.sidebar_toggle .icon {
+        display: block;
     }
 
     .file_viewer {
