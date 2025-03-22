@@ -91,6 +91,7 @@ async function updateFile() {
         let writable = await current_file_access.createWritable();
         await writable.write(text_content.textContent);
         await writable.close();
+        removeTextEditable();
     } catch(error) {
         console.error(error);
     }
