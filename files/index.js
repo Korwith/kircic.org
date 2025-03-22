@@ -349,6 +349,7 @@ function assignTextEditable() {
 async function removeTextEditable() {
     editing_text = false;
     let found_file = await current_file_access.getFile();
+    file_viewer.classList.remove('editing');
     text_content.textContent = await found_file.text();
     text_content.removeAttribute('contenteditable');
     text_edit.classList.remove('active');
