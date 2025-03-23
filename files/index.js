@@ -52,6 +52,9 @@ async function loadFolder(event, origin) {
     try {
         let handle = id_handle[origin] || await window.showDirectoryPicker();
         if (!origin) {
+            if (id_handle.length > 0) {
+                fullReset();
+            }
             id_handle[0] = handle;
             createListEntry(handle, 0, 0);
             updatePathHistory(0);
@@ -462,6 +465,23 @@ function fileNameAccept(name) {
     if (name.startsWith('.') || name.endsWith('.')) { return false; }
     if (unsafe.test(name)) { return false; }
     return true;
+}
+
+function fullReset() {
+    let all_remove = document.querySelectorAll('.list_file:not([id]), .large_file:not([id]), .target_list');
+    for (var i = 0; i < all_remove.length; i++) {
+        let this_remove = all_remove[i];
+        this_remove.remove();
+    }
+    file_id_directory = {};
+    id_handle = [];
+    path_history = [];
+    saved_history = [];
+    block_action = false;
+    editing_text = false;
+    current_file_access = null;
+    current_access = null;
+    hideCodeMenu();
 }
 
 // Initialize
