@@ -1,4 +1,6 @@
 body {
+    width: 100vw;
+    height: 100vh;
     background-color: #151515;
     background-size: 40px 40px;
     background-image: 
@@ -7,6 +9,14 @@ body {
     margin: 0;
     overflow: hidden;
     touch-action: manipulation;
+}
+
+body.movelock {
+    cursor: grab;
+}
+
+body.movelock.down {
+    cursor: grabbing;
 }
 
 #show_tile {
@@ -44,6 +54,7 @@ body {
 
 .action_pane *, .score_pane * {
     pointer-events: all;
+    cursor: pointer !important;
 }
 
 .main_row, .secondary_row {

@@ -80,10 +80,12 @@ function moveContent(event) {
 function handleMouseDown(event) {
     if (action_pane.contains(event.target) || score_pane.contains(event.target)) { return; }
     mouse_down = true;
+    document.body.classList.add('down');
 }
 
 function handleMouseUp(event) {
     mouse_down = false;
+    document.body.classList.remove('down');
     if (starting_position != null) { 
         starting_position = null;
         return; 
@@ -413,6 +415,7 @@ function centerGame(event, no_ui) {
 function toggleMovement() {
     force_move = !force_move;
     move_button.classList.toggle('no_filter', force_move);
+    document.body.classList.toggle('movelock', force_move);
 }
 
 function initStats() {
