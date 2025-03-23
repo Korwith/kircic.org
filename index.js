@@ -42,7 +42,7 @@ const project_data = {
         icon: { url: 'icon/wordle.png', size: '75%' },
         href: 'https://www.kircic.org/sub/wordle/game.html',
         video: 'icon/wordle_preview.mp4',
-        featured: 2,
+        featured: 3,
         category: 'game'
     },
     'Infinisweeper': {
@@ -50,7 +50,7 @@ const project_data = {
         icon: { url: 'icon/infinisweeper.png', size: '75%' },
         href: 'https://www.kircic.org/infinisweeper',
         video: 'icon/infinite_preview.mp4',
-        featured: 6,
+        featured: 2,
         category: 'game'
     },
     'Minesweeper': {
@@ -89,7 +89,7 @@ const project_data = {
         description: 'Collaboration with Ariel Araya, a web port of the iOS application Notilify.',
         icon: { url: 'icon/notilify.png', size: '90%' },
         href: 'https://arielaraya.xyz/notilifyPWA/index.html',
-        featured: 4,
+        featured: 3,
         background: 'icon/notilifyweb.jpg',
         category: 'app'
     },
@@ -117,7 +117,7 @@ const project_data = {
         description: 'Swipe the letters together to create words.',
         icon: { url: 'icon/wordhunt.png', size: '76%' },
         href: 'https://www.kircic.org/wordhunt',
-        featured: 3,
+        featured: 4,
         category: 'app',
     }
 }
