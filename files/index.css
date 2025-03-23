@@ -661,4 +661,12 @@ nav.sidebar {
         width: 100vw;
         height: calc(50vh - 110px);
     }
+
+    .no_view {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+    }
 }
