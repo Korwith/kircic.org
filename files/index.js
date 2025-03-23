@@ -135,10 +135,10 @@ async function renameFile() {
 // User Interface
 function iconSelect(event, force) {
     if (block_action && !force) { return; }
-    let found_access = parseInt(event.target.getAttribute('access'));
+    let found_access = event.target.getAttribute('access');
     let handle = id_handle[found_access];
     if (handle instanceof FileSystemDirectoryHandle != true) {
-        current_access = found_access;
+        current_access = parseInt(found_access);
         fileAccess(handle);
         return true;
     }
@@ -384,8 +384,10 @@ function assignTextEditable() {
 
 async function removeTextEditable() {
     editing_text = false;
-    let found_file = await current_file_access.getFile();
-    text_content.textContent = await found_file.text();
+    if (current_file_access) {
+        let found_file = await current_file_access.getFile();
+        text_content.textContent = await found_file.text();    
+    }
     text_content.removeAttribute('contenteditable');
     text_edit.classList.remove('active');
     removeHighlightClasses();
