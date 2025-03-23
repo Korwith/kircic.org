@@ -926,6 +926,18 @@ header.shift {
     box-shadow: 0 -2px 4px 0 rgba(0, 0, 0, 0.2);
 }
 
+.project_holder.stocktracker img {
+    filter: contrast(1.2);
+}
+
+.project_holder.fileexplorer video {
+    filter: contrast(1.3);
+}
+
+.project_holder.infinisweeper video {
+    filter: contrast(1.2);
+}
+
 .action a {
     aspect-ratio: 6/2;
     display: flex;

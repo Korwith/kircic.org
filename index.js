@@ -124,6 +124,7 @@ const project_data = {
         description: 'Uses the File System Access API to let you view and edit your local files.',
         icon: { url: 'icon/openfolder.svg', size: '77%'},
         href: 'https://www.kircic.org/files',
+        video: 'icon/files_preview.mp4',
         featured: 2,
         category: 'app'
     }
@@ -169,6 +170,7 @@ function makeProjectFrame(project) {
 
     project_clone.removeAttribute('id');
     project_clone.removeAttribute('href', this_data.href);
+    project_clone.classList.add(project.toLowerCase().replaceAll(' ', ''));
 
     if (this_data.video) {
         video.src = this_data.video;
