@@ -402,6 +402,7 @@ function checkSystemAccess() {
         no_view_error.classList.remove('hide');
         no_view_root.classList.add('hide');
         no_view_open_folder.classList.add('hide');
+        header.style.pointerEvents = 'none';
     }
 }
 
