@@ -3,21 +3,22 @@
 
 <head>
     <title>File Explorer</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="kircic">
-    <meta name="description" content="Local file explorer">
-    <meta property="og:title" content="kircic.org">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.kircic.org/files">
-    <meta property="og:image" content="https://www.kircic.org/icon/favicon.png">
-    <meta property="og:description" content="Local file explorer">
-    <meta name="theme-color" content="#252525">
-    <meta name="darkreader-lock">
-    <link rel="icon" type="image/x-icon" href="https://www.kircic.org/icon/favicon.png">
-    <link rel="stylesheet" href="index.css">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="author" content="kircic"/>
+    <meta name="description" content="Local file explorer"/>
+    <meta property="og:title" content="kircic.org"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="https://www.kircic.org/files"/>
+    <meta property="og:image" content="https://www.kircic.org/icon/favicon.png"/>
+    <meta property="og:description" content="Local file explorer"/>
+    <meta name="theme-color" content="#252525"/>
+    <meta name="darkreader-lock"/>
+    <link rel="icon" type="image/x-icon" href="https://www.kircic.org/icon/favicon.png"/>
+    <link rel="stylesheet" href="index.css"/>
     <link rel="stylesheet" href="node_modules/file-icons-js/css/style.css" />
-    <link rel="stylesheet" href="node_modules/highlight.js/styles/vs2015.css">
+    <link rel="stylesheet" href="node_modules/highlight.js/styles/vs2015.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pdfjs-dist@5.0.375/web/pdf_viewer.min.css"/>
 </head>
 
 <body>
@@ -51,6 +52,10 @@
                 <span class="nv_title">No folder selected</span>
                 <span class="open_root">Open folder</span>
                 <span class="open_folder hide">Open folder</span>
+                <span class="nv_error hide">
+                    This device does not support the File System Access API.
+                    <a href="https://developer.mozilla.org/en-US/docs/Web/API/File_System_API#browser_compatibility">Learn More</a>
+                </span>
             </div>
         </div>
 

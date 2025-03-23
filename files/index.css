@@ -450,6 +450,7 @@ nav.sidebar {
 .no_view span {
     display: flex;
     justify-content: center;
+    text-align: center;
     width: 100%;
     color: rgba(255, 255, 255, 0.8);
     transition: color 0.2s;
@@ -466,6 +467,16 @@ nav.sidebar {
 .no_view .nv_title {
     font-weight: 900;
     font-size: 2rem;
+}
+
+.no_view .nv_error {
+    font-weight: 100;
+    font-weight: 0.5rem;
+    flex-direction: column;
+}
+
+.no_view .nv_error a {
+    color: rgb(0, 127, 195);
 }
 
 .content:not([folders]):not([files]) .no_view {

@@ -18,6 +18,7 @@ const no_view_holder = content.querySelector('.no_view');
 const no_view_header = no_view_holder.querySelector('.nv_title');
 const no_view_root = no_view_holder.querySelector('.open_root');
 const no_view_open_folder = no_view_holder.querySelector('.open_folder');
+const no_view_error = no_view_holder.querySelector('.nv_error');
 
 const file_viewer = content.querySelector('.file_viewer')
 const viewer_header = file_viewer.querySelector('.file_header');
@@ -397,7 +398,8 @@ function handleKeyDown(event) {
 
 function checkSystemAccess() {
     if ('showOpenFilePicker' in window != true) {
-        no_view_header.textContent = 'API Not Available';
+        no_view_header.textContent = 'Error';
+        no_view_error.classList.remove('hide');
         no_view_root.classList.add('hide');
         no_view_open_folder.classList.add('hide');
     }
