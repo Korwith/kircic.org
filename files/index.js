@@ -45,6 +45,7 @@ let saved_history = [];
 let block_action = false;
 let editing_text = false;
 let current_file_access;
+let current_access;
 
 // FileSystem
 async function loadFolder(event, origin) {
@@ -72,11 +73,18 @@ async function loadFolder(event, origin) {
 
 async function fileAccess(handle) {
     if (!handle.name.includes('.')) { return; }
-    let format = handle.name.split('.').pop();
-    if (!supported_text.includes(format)) { return; }
-
     let file = await handle.getFile();
     let text = await file.text();
+
+    let blob = file.slice(0, 1024);
+    let buffer = await blob.arrayBuffer();
+    let decoder = new TextDecoder('utf-8', { fatal: true });
+    try {
+        decoder.decode(buffer);
+    } catch(error) {
+        return false;
+    }
+
     current_file_access = handle;
     document.body.classList.toggle('mobile_shift', false);
     content.classList.add('shift');
@@ -105,7 +113,14 @@ async function renameFile() {
         if (fileNameAccept(found_name)) {
             current_file_access.move(found_name);
             viewer_name.blur();
-            assignIconImage(current_file_access, viewer_icon);
+            assignIconImage({name: found_name}, viewer_icon);
+
+            let found_file_selectors = document.querySelectorAll(`nav.sidebar .list_file[access="${current_access}"], .icon_explorer .large_file[access="${current_access}"]`);
+            for (var i = 0; i < found_file_selectors.length; i++) {
+                let this_entry = found_file_selectors[i];
+                let this_icon = this_entry.querySelector('.icon');
+                assignIconImage({name: found_name}, this_icon);
+            }
         }
     } catch(error) {
         console.log(error);
@@ -115,9 +130,10 @@ async function renameFile() {
 // User Interface
 function iconSelect(event, force) {
     if (block_action && !force) { return; }
-    let found_access = event.target.getAttribute('access');
+    let found_access = parseInt(event.target.getAttribute('access'));
     let handle = id_handle[found_access];
     if (handle instanceof FileSystemDirectoryHandle != true) {
+        current_access = found_access;
         fileAccess(handle);
         return true;
     }
