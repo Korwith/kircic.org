@@ -105,6 +105,7 @@ async function renameFile() {
         if (fileNameAccept(found_name)) {
             current_file_access.move(found_name);
             viewer_name.blur();
+            assignIconImage(current_file_access, viewer_icon);
         }
     } catch(error) {
         console.log(error);
