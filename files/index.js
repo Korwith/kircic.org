@@ -99,6 +99,18 @@ async function updateFile() {
     }
 }
 
+async function renameFile() {
+    try {
+        let found_name = viewer_name.textContent;
+        if (fileNameAccept(found_name)) {
+            current_file_access.move(found_name);
+            viewer_name.blur();
+        }
+    } catch(error) {
+        console.log(error);
+    }
+}
+
 // User Interface
 function iconSelect(event, force) {
     if (block_action && !force) { return; }
@@ -371,6 +383,12 @@ function handleEditedText(event) {
     viewer_size.textContent = getFileSize(text_content.textContent.length);
 }
 
+function handleFileRename(event) {
+    if (event.inputType != 'insertParagraph') { return; }
+    event.preventDefault();
+    renameFile();
+}
+
 function hideCodeMenu() {
     content.classList.remove('shift');
     file_viewer.removeAttribute('editing');
@@ -417,6 +435,16 @@ function getFileSize(bytes) {
     return (no_dec ? Math.floor(bytes) : bytes.toFixed(2)) + all_types[count];
 }
 
+function fileNameAccept(name) {
+    const unsafe = /[\/\\:*?"<>|\x00-\x1F]/;
+    if (typeof name != 'string') { return false; }
+    if (name.length == 0 || name.length > 255) { return false; }
+    if (name.startsWith(' ') || name.endsWith(' ')) { return false; }
+    if (name.startsWith('.') || name.endsWith('.')) { return false; }
+    if (unsafe.test(name)) { return false; }
+    return true;
+}
+
 // Initialize
 checkSystemAccess();
 open.addEventListener('mouseup', loadFolder);
@@ -427,6 +455,7 @@ sidebar_toggle.addEventListener('mouseup', handleSidebarToggle);
 text_close.addEventListener('mouseup', hideCodeMenu);
 text_edit.addEventListener('mouseup', assignTextEditable);
 text_discard.addEventListener('mouseup', removeTextEditable);
-text_save.addEventListener('mouseup', updateFile);;
+text_save.addEventListener('mouseup', updateFile);
 text_content.addEventListener('input', handleEditedText);
+viewer_name.addEventListener('beforeinput', handleFileRename);
 document.addEventListener('keyup', handleKeyDown);

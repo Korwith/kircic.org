@@ -499,6 +499,7 @@ nav.sidebar {
 .file_header {
     position: relative;
     display: flex;
+    align-items: center;
     flex: 0 0 auto;
     height: 40px;
     width: 100%;
@@ -526,7 +527,7 @@ nav.sidebar {
     display: flex;
     align-items: center;
     padding-left: 4px;
-    height: 100%;
+    height: calc(100% - 8px);
     width: fit-content;
     color: rgba(255, 255, 255, 0.8);
     user-select: none;
@@ -535,7 +536,21 @@ nav.sidebar {
 .file_header span.file_name {
     font-size: 1.2rem;
     font-weight: 900;
-    padding-right: 4px;
+    box-sizing: border-box;
+    border: 3px solid rgba(0, 0, 0, 0);
+    border-radius: 6px;
+    cursor: text;
+    outline: none;
+    transform: translateX(-1px);
+    transition: border 0.2s;
+}
+
+.file_header span.file_name:hover {
+    border: 3px solid rgba(175, 0, 175, 0.5);
+}
+
+.file_header span.file_name:focus {
+    border: 3px solid rgb(175, 0, 175);
 }
 
 .file_header span.file_size {
