@@ -119,7 +119,9 @@ async function renameFile() {
             for (var i = 0; i < found_file_selectors.length; i++) {
                 let this_entry = found_file_selectors[i];
                 let this_icon = this_entry.querySelector('.icon');
+                let this_name = this_entry.querySelector('span');
                 assignIconImage({name: found_name}, this_icon);
+                this_name.textContent = found_name;
             }
         }
     } catch(error) {
