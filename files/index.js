@@ -15,6 +15,7 @@ const folder_header = folders.querySelector('.type_header');
 const file_header = files.querySelector('.type_header');
 
 const no_view_holder = content.querySelector('.no_view');
+const no_view_header = no_view_holder.querySelector('.nv_title');
 const no_view_root = no_view_holder.querySelector('.open_root');
 const no_view_open_folder = no_view_holder.querySelector('.open_folder');
 
@@ -394,6 +395,14 @@ function handleKeyDown(event) {
     }
 }
 
+function checkSystemAccess() {
+    if ('showOpenFilePicker' in window != true) {
+        no_view_header.textContent = 'API Not Available';
+        no_view_root.classList.add('hide');
+        no_view_open_folder.classList.add('hide');
+    }
+}
+
 let all_types = [' Byes', 'KB', 'MB', 'GB', 'TB'];
 function getFileSize(bytes) {
     let count = 0;
@@ -406,6 +415,7 @@ function getFileSize(bytes) {
 }
 
 // Initialize
+checkSystemAccess();
 open.addEventListener('mouseup', loadFolder);
 path_next.addEventListener('mouseup', pathHistoryNext);
 path_back.addEventListener('mouseup', pathHistoryBack);
