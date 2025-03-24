@@ -131,6 +131,11 @@ header button.next .icon {
     transform: rotate(180deg) translateX(-1px);
 }
 
+header button.add .icon {
+    background-image: url(icon/new_file.svg);
+    background-size: 72%;
+}
+
 nav.sidebar {
     position: fixed;
     display: flex;

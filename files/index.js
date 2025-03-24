@@ -5,6 +5,7 @@ const content = document.querySelector('.content');
 const open = header.querySelector('button.open');
 const path_back = header.querySelector('button.back');
 const path_next = header.querySelector('button.next');
+const file_new = header.querySelector('button.add');
 const sidebar_toggle = header.querySelector('.sidebar_toggle');
 
 const content_header = content.querySelector('.content_header');
@@ -44,6 +45,7 @@ let path_history = [];
 let saved_history = [];
 let block_action = false;
 let editing_text = false;
+let current_folder_access;
 let current_file_access;
 let current_access;
 
@@ -56,9 +58,10 @@ async function loadFolder(event, origin) {
                 fullReset();
             }
             id_handle[0] = handle;
+            origin = 0;
             createListEntry(handle, 0, 0);
             updatePathHistory(0);
-            origin = 0;
+            current_folder_access = handle;
             no_view_root.classList.add('hide');
             no_view_open_folder.classList.remove('hide');
         }
@@ -132,6 +135,13 @@ async function renameFile() {
     }
 }
 
+async function newEmptyFile() {
+    if (!current_folder_access) { return; }
+    let file_handle = current_folder_access.getFileHandle('newfile.txt', {create: true});
+    let writable = file_handle.createWritable();
+    writable.close();
+}
+
 // User Interface
 function iconSelect(event, force) {
     if (block_action && !force) { return; }
@@ -143,6 +153,7 @@ function iconSelect(event, force) {
         return true;
     }
 
+    current_folder_access = handle;
     clearMainIcons();
     updatePathHistory(found_access);
     if (event.target.classList.contains('list_file')) {
@@ -491,6 +502,7 @@ checkSystemAccess();
 open.addEventListener('mouseup', loadFolder);
 path_next.addEventListener('mouseup', pathHistoryNext);
 path_back.addEventListener('mouseup', pathHistoryBack);
+file_new.addEventListener('mouseup', newEmptyFile);
 no_view_root.addEventListener('mouseup', loadFolder);
 sidebar_toggle.addEventListener('mouseup', handleSidebarToggle);
 text_close.addEventListener('mouseup', hideCodeMenu);
