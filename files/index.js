@@ -152,7 +152,7 @@ async function deleteFile() {
     if (!current_folder_access || !current_file_access ) { return; }
     try {
         await current_folder_access.removeEntry(current_file_access.name);
-        loadFolder(false, 1, current_folder_access)
+        loadFolder(false, false, current_folder_access)
     } catch(error) {
         console.error(error);
     }
