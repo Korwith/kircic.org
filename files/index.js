@@ -50,9 +50,9 @@ let current_file_access;
 let current_access;
 
 // FileSystem
-async function loadFolder(event, origin, force) {
+async function loadFolder(event, origin) {
     try {
-        let handle = force || id_handle[origin] || await window.showDirectoryPicker();
+        let handle = id_handle[origin] || await window.showDirectoryPicker();
         if (!origin) {
             if (id_handle.length > 0) {
                 fullReset();
@@ -69,7 +69,7 @@ async function loadFolder(event, origin, force) {
         for await (let entry of handle.values()) {
             id_handle.push(entry);
             createListEntry(entry, id_handle.length - 1, origin);
-            createMainEntry(entry, id_handle.length - 1, force);
+            createMainEntry(entry, id_handle.length - 1);
         }
         updateCountAttributes();
     } catch(error) {
@@ -142,7 +142,7 @@ async function newEmptyFile() {
         let writable = await file_handle.createWritable();
         current_file_access = file_handle;
         writable.close();
-        loadFolder(false, false, current_folder_access);    
+        updatePathHistory({target: current_folder_access.name});
     } catch(error) {
         console.error(error);
     }
@@ -152,7 +152,7 @@ async function deleteFile() {
     if (!current_folder_access || !current_file_access ) { return; }
     try {
         await current_folder_access.removeEntry(current_file_access.name);
-        loadFolder(false, false, current_folder_access)
+        updatePathHistory({target: current_folder_access.name});
     } catch(error) {
         console.error(error);
     }
@@ -194,7 +194,7 @@ function iconSelect(event, force) {
     }
 }
 
-function createMainEntry(entry, access, force) {
+function createMainEntry(entry, access) {
     let large_clone = large_placeholder.cloneNode(true);
     let large_icon = large_clone.querySelector('.icon');
     let large_text = large_clone.querySelector('span');
@@ -210,10 +210,6 @@ function createMainEntry(entry, access, force) {
     } else {
         files.appendChild(large_clone);
         assignIconImage(entry, large_icon);
-    }
-
-    if (force && entry.name == 'text.txt') {
-        large_clone.classList.add('active');
     }
 }
 
