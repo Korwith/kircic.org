@@ -146,6 +146,12 @@ async function newEmptyFile() {
 // User Interface
 function iconSelect(event, force) {
     if (block_action && !force) { return; }
+    let previous_active = document.querySelectorAll(`.large_file.active`);
+    for (var i = 0; i < previous_active.length; i++) {
+        previous_active[i].classList.remove('active');
+    }
+    event.target.classList.add('active');
+
     let found_access = event.target.getAttribute('access');
     let handle = id_handle[found_access];
     if (handle instanceof FileSystemDirectoryHandle != true) {
