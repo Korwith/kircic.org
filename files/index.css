@@ -528,6 +528,15 @@ nav.sidebar {
     font-size: 30px;
 }
 
+.file_header .icon.unknown:before {
+    content: '';
+    background-image: url(icon/file.svg);
+    background-size: 80%;
+    background-repeat: no-repeat;
+    background-position: center;
+    filter: brightness(80%);
+}
+
 .file_header span {
     display: flex;
     align-items: center;
@@ -581,6 +590,12 @@ nav.sidebar {
     scrollbar-width: none;
     outline: none;
     padding: 1em;
+}
+
+.text_content:empty::after {
+    content: 'Empty text file';
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .file_options {
