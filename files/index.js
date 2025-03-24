@@ -69,7 +69,7 @@ async function loadFolder(event, origin, force) {
         for await (let entry of handle.values()) {
             id_handle.push(entry);
             createListEntry(entry, id_handle.length - 1, origin);
-            createMainEntry(entry, id_handle.length - 1);
+            createMainEntry(entry, id_handle.length - 1, force);
         }
         updateCountAttributes();
     } catch(error) {
@@ -140,6 +140,7 @@ async function newEmptyFile() {
     try {
         let file_handle = await current_folder_access.getFileHandle('text.txt', {create: true});
         let writable = await file_handle.createWritable();
+        current_file_access = file_handle;
         writable.close();
         loadFolder(false, false, current_folder_access);    
     } catch(error) {
@@ -151,7 +152,7 @@ async function deleteFile() {
     if (!current_folder_access || !current_file_access ) { return; }
     try {
         await current_folder_access.removeEntry(current_file_access.name);
-        loadFolder(false, false, current_folder_access)
+        loadFolder(false, 1, current_folder_access)
     } catch(error) {
         console.error(error);
     }
@@ -193,7 +194,7 @@ function iconSelect(event, force) {
     }
 }
 
-function createMainEntry(entry, access) {
+function createMainEntry(entry, access, force) {
     let large_clone = large_placeholder.cloneNode(true);
     let large_icon = large_clone.querySelector('.icon');
     let large_text = large_clone.querySelector('span');
@@ -209,6 +210,10 @@ function createMainEntry(entry, access) {
     } else {
         files.appendChild(large_clone);
         assignIconImage(entry, large_icon);
+    }
+
+    if (force && entry.name == 'text.txt') {
+        large_clone.classList.add('active');
     }
 }
 
