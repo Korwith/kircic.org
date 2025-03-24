@@ -142,7 +142,7 @@ async function newEmptyFile() {
         let writable = await file_handle.createWritable();
         current_file_access = file_handle;
         writable.close();
-        updatePathHistory({target: current_folder_access.name});
+        accessPathHistory(false, current_folder_access.name);
     } catch(error) {
         console.error(error);
     }
@@ -152,7 +152,7 @@ async function deleteFile() {
     if (!current_folder_access || !current_file_access ) { return; }
     try {
         await current_folder_access.removeEntry(current_file_access.name);
-        updatePathHistory({target: current_folder_access.name});
+        accessPathHistory(false, current_folder_access.name);
     } catch(error) {
         console.error(error);
     }
@@ -300,10 +300,10 @@ function createPathHistory() {
     }
 }
 
-function accessPathHistory(event) {
+function accessPathHistory(event, name) {
     if (block_action) { return; }
     let origin_element = sidebar.querySelector('.list_file[access="0"]');
-    let found_name = event.target.getAttribute('name');
+    let found_name = name || event.target.getAttribute('name');
     let end_index = path_history.indexOf(found_name);
     let access_history = path_history.slice(1, end_index + 1);
 
