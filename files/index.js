@@ -140,11 +140,8 @@ async function newEmptyFile() {
     let file_handle = await current_folder_access.getFileHandle('newfile.txt', {create: true});
     let writable = await file_handle.createWritable();
     writable.close();
-
-    let found_name = path_history[path_history - 1];
-    let found_button = sidebar.querySelector(`.list_file[name="${found_name}"]`);
-    iconSelect({target: found_button}, true);
-    iconSelect({target: found_button}, true);
+    
+    loadFolder(false, id_handle[id_handle.length - 1]);
 }
 
 // User Interface
