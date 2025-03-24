@@ -137,9 +137,14 @@ async function renameFile() {
 
 async function newEmptyFile() {
     if (!current_folder_access) { return; }
-    let file_handle = current_folder_access.getFileHandle('newfile.txt', {create: true});
-    let writable = file_handle.createWritable();
+    let file_handle = await current_folder_access.getFileHandle('newfile.txt', {create: true});
+    let writable = await file_handle.createWritable();
     writable.close();
+
+    let found_access = path_history[path_history - 1];
+    let found_button = sidebar.querySelector(`.list_file[access="${found_access}"]`);
+    iconSelect({target: found_button}, true);
+    iconSelect({target: found_button}, true);
 }
 
 // User Interface
