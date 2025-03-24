@@ -137,10 +137,9 @@ async function renameFile() {
 
 async function newEmptyFile() {
     if (!current_folder_access) { return; }
-    let file_handle = await current_folder_access.getFileHandle('newfile.txt', {create: true});
+    let file_handle = await current_folder_access.getFileHandle('text.txt', {create: true});
     let writable = await file_handle.createWritable();
     writable.close();
-    
     loadFolder(false, false, current_folder_access);
 }
 

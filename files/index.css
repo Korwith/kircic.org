@@ -132,8 +132,8 @@ header button.next .icon {
 }
 
 header button.add .icon {
-    background-image: url(icon/new_file.svg);
-    background-size: 72%;
+    background-image: url(icon/new.svg);
+    background-size: 77%;
 }
 
 nav.sidebar {
