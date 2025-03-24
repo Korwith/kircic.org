@@ -6,6 +6,7 @@ const open = header.querySelector('button.open');
 const path_back = header.querySelector('button.back');
 const path_next = header.querySelector('button.next');
 const file_new = header.querySelector('button.add');
+const file_delete = header.querySelector('button.delete');
 const sidebar_toggle = header.querySelector('.sidebar_toggle');
 
 const content_header = content.querySelector('.content_header');
@@ -39,7 +40,6 @@ const large_placeholder = document.querySelector('#placeholder.large_file');
 const icons = window.FileIcons;
 
 // Global Variables
-let file_id_directory = {};
 let id_handle = [];
 let path_history = [];
 let saved_history = [];
@@ -131,16 +131,30 @@ async function renameFile() {
             }
         }
     } catch(error) {
-        console.log(error);
+        console.error(error);
     }
 }
 
 async function newEmptyFile() {
     if (!current_folder_access) { return; }
-    let file_handle = await current_folder_access.getFileHandle('text.txt', {create: true});
-    let writable = await file_handle.createWritable();
-    writable.close();
-    loadFolder(false, false, current_folder_access);
+    try {
+        let file_handle = await current_folder_access.getFileHandle('text.txt', {create: true});
+        let writable = await file_handle.createWritable();
+        writable.close();
+        loadFolder(false, false, current_folder_access);    
+    } catch(error) {
+        console.error(error);
+    }
+}
+
+async function deleteFile() {
+    if (!current_folder_access || !current_file_access ) { return; }
+    try {
+        await current_folder_access.removeEntry(current_file_access.name);
+        loadFolder(false, false, current_folder_access)
+    } catch(error) {
+        console.error(error);
+    }
 }
 
 // User Interface
@@ -493,7 +507,6 @@ function fullReset() {
         let this_remove = all_remove[i];
         this_remove.remove();
     }
-    file_id_directory = {};
     id_handle = [];
     path_history = [];
     saved_history = [];
@@ -510,6 +523,7 @@ open.addEventListener('mouseup', loadFolder);
 path_next.addEventListener('mouseup', pathHistoryNext);
 path_back.addEventListener('mouseup', pathHistoryBack);
 file_new.addEventListener('mouseup', newEmptyFile);
+file_delete.addEventListener('mouseup', deleteFile);
 no_view_root.addEventListener('mouseup', loadFolder);
 sidebar_toggle.addEventListener('mouseup', handleSidebarToggle);
 text_close.addEventListener('mouseup', hideCodeMenu);

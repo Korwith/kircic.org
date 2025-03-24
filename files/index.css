@@ -136,6 +136,11 @@ header button.add .icon {
     background-size: 77%;
 }
 
+header button.delete .icon {
+    background-image: url(icon/trash.svg);
+    background-size: 74%;
+}
+
 nav.sidebar {
     position: fixed;
     display: flex;
