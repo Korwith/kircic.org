@@ -50,9 +50,9 @@ let current_file_access;
 let current_access;
 
 // FileSystem
-async function loadFolder(event, origin) {
+async function loadFolder(event, origin, force) {
     try {
-        let handle = id_handle[origin] || await window.showDirectoryPicker();
+        let handle = force || id_handle[origin] || await window.showDirectoryPicker();
         if (!origin) {
             if (id_handle.length > 0) {
                 fullReset();
@@ -141,7 +141,7 @@ async function newEmptyFile() {
     let writable = await file_handle.createWritable();
     writable.close();
     
-    loadFolder(false, id_handle[id_handle.length - 1]);
+    loadFolder(false, false, current_folder_access);
 }
 
 // User Interface
