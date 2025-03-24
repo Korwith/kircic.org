@@ -141,8 +141,8 @@ async function newEmptyFile() {
     let writable = await file_handle.createWritable();
     writable.close();
 
-    let found_access = path_history[path_history - 1];
-    let found_button = sidebar.querySelector(`.list_file[access="${found_access}"]`);
+    let found_name = path_history[path_history - 1];
+    let found_button = sidebar.querySelector(`.list_file[name="${found_name}"]`);
     iconSelect({target: found_button}, true);
     iconSelect({target: found_button}, true);
 }
