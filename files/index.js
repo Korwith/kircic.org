@@ -67,6 +67,7 @@ async function loadFolder(event, origin) {
         }
 
         for await (let entry of handle.values()) {
+            if (entry.name.endsWith('.crswap')) { continue; }
             id_handle.push(entry);
             createListEntry(entry, id_handle.length - 1, origin);
             createMainEntry(entry, id_handle.length - 1);
@@ -143,6 +144,8 @@ async function newEmptyFile() {
         current_file_access = file_handle;
         writable.close();
         accessPathHistory(false, current_folder_access.name);
+
+        fileAccess(current_file_access);
     } catch(error) {
         console.error(error);
     }
@@ -194,7 +197,7 @@ function iconSelect(event, force) {
     }
 }
 
-function createMainEntry(entry, access) {
+function createMainEntry(entry, access, newfile) {
     let large_clone = large_placeholder.cloneNode(true);
     let large_icon = large_clone.querySelector('.icon');
     let large_text = large_clone.querySelector('span');
@@ -410,7 +413,7 @@ function assignTextEditable() {
     }
     editing_text = true;
     removeHighlightClasses();
-    text_content.setAttribute('contenteditable', true);
+    text_content.setAttribute('contenteditable', 'plaintext-only');
     text_content.textContent = text_content.textContent;
     text_edit.classList.add('active');
 }
