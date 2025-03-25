@@ -111,7 +111,7 @@
 
             <div class="settings_switch" alter="hideTasks">
                 <span>Hide Tasks</span>
-                <button class="switch darkglass">
+                <button class="switch darkglass" aria-label="Hide Tasks">
                     <div class="shifter darkglass"></div>
                 </button>
             </div>
@@ -121,21 +121,21 @@
             <span class="category">Search</span>
             <div class="settings_switch" alter="hideBookmarks">
                 <span>Hide Bookmarks</span>
-                <button class="switch darkglass">
+                <button class="switch darkglass" aria-label="Hide Bookmarks">
                     <div class="shifter darkglass"></div>
                 </button>
             </div>
 
             <div class="settings_switch" alter="saveLastSearch">
                 <span>Save Last Search</span>
-                <button class="switch darkglass">
+                <button class="switch darkglass" aria-label="Save Last Search">
                     <div class="shifter darkglass"></div>
                 </button>
             </div>
 
             <div class="settings_switch" alter="searchNewTab">
                 <span>Open New Tab</span>
-                <button class="switch darkglass">
+                <button class="switch darkglass" aria-label="Open New Tab">
                     <div class="shifter darkglass"></div>
                 </button>
             </div>
@@ -152,12 +152,12 @@
         <div class="sidebar_footer">
             <span class="commit_count darkglass">commits</span>
             <span class="digital_size darkglass">MB</span>
-            <button class="reset_defaults darkglass hide">Reset Settings</button>
+            <button class="reset_defaults darkglass hide" aria-label="Reset Settings">Reset Settings</button>
         </div>
     </nav>
 
     <header class="glass">
-        <button class="sidebar_button"></button>
+        <button class="sidebar_button" aria-label="Sidebar"></button>
         <div class="clock">
             <span>Date</span>
             <span>Time</span>
@@ -222,8 +222,8 @@
                 <h1>Search</h1>
                 <span>Browser Homepage</span>
                 <div class="bookmarks">
-                    <button class="mark darkglass add"></button>
-                    <button class="mark darkglass delete"></button>
+                    <button class="mark darkglass add" aria-label="Add Bookmark"></button>
+                    <button class="mark darkglass delete" aria-label="Delete Driver"></button>
                 </div>
             </div>
         </div>
@@ -234,14 +234,14 @@
                 <span>Your personal to-do list</span>
                 <div class="tasklist_bar">
                     <span class="darkglass input empty" contenteditable="plaintext-only">&nbsp</span>
-                    <button class="darkglass mark add"></button>
-                    <button class="darkglass edit">Edit</button>
+                    <button class="darkglass mark add" aria-label="Add Task"></button>
+                    <button class="darkglass edit" aria-label="Edit Tasks">Edit</button>
                 </div>
             </div>
 
             <div class="action_row">
-                <button class="import glass">Import</button>
-                <button class="export glass">Export</button>
+                <button class="import glass" aria-label="Import Tasks">Import</button>
+                <button class="export glass" aria-label="Export Tasks">Export</button>
             </div>
 
             <div class="segment glass no_top_pad previous hide">
@@ -270,7 +270,7 @@
             <div class="icon"></div>
         </a>
         <input class="search_box darkglass" placeholder="Search">
-        <button class="search_go darkglass"></button>
+        <button class="search_go darkglass" aria-label="Search"></button>
     </div>
 
     <a id="last_search_placeholder" aria-label="Last Search">
@@ -283,9 +283,9 @@
     <div id="tasklist_entry_placeholder" class="tasklist_entry darkglass">
         <span></span>
         <div class="task_actions">
-            <button class="shift up"></button>
-            <button class="shift down"></button>
-            <button class="checkbox darkglass"></button>
+            <button class="shift up" aria-label="Shift Up"></button>
+            <button class="shift down" aria-label="Shift Down"></button>
+            <button class="checkbox darkglass" aria-label="Check"></button>
         </div>
     </div>
 
