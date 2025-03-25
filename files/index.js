@@ -117,6 +117,7 @@ async function updateFile() {
 async function renameFile() {
     try {
         let found_name = viewer_name.textContent;
+        if (found_name == current_file_access.name) { return; }
         if (fileNameAccept(found_name)) {
             current_file_access.move(found_name);
             viewer_name.blur();
@@ -156,6 +157,7 @@ async function deleteFile() {
     try {
         await current_folder_access.removeEntry(current_file_access.name);
         accessPathHistory(false, current_folder_access.name);
+        hideCodeMenu();
     } catch(error) {
         console.error(error);
     }
@@ -444,9 +446,17 @@ function handleEditedText(event) {
 }
 
 function handleFileRename(event) {
-    if (event.inputType != 'insertParagraph') { return; }
-    event.preventDefault();
-    renameFile();
+    let accept = ['insertText', 'insertParagraph', 'deleteContentBackward', 'deleteWordBackward'];
+    if (!accept.includes(event.inputType)) {
+        event.preventDefault();
+        return;
+    }
+
+    if (event.inputType == 'insertParagraph') {
+        event.preventDefault();
+        renameFile();
+        return;
+    }
 }
 
 function hideCodeMenu() {
