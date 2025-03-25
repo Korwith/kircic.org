@@ -1533,6 +1533,7 @@ header.shift {
 
     .content {
         width: calc(100% - 20px);
+        scrollbar-width: none;
     }
 
     .content.shift {
