@@ -458,6 +458,10 @@ function resetSettings() {
         let functionID = switch_parent.getAttribute('alter');
         this_switch.classList.toggle('toggle', defaults[functionID]);
     }
+
+    for (var i in defaults) {
+        localStorage.setItem(i, defaults[i]);
+    }
 }
 
 function handleLastSearch(url) {
