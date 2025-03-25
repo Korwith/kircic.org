@@ -3,84 +3,82 @@ body {
     margin: 0;
 }
 
+
 h1 {
-    padding: 0;
-    margin: 0;
-    margin-top: 20px;
-    padding-bottom: 20px;
-    margin-left: auto;
-    margin-right: auto;
     text-align: center;
-    font-family: Arial;
+    margin: 20px
 }
 
-.main {
-    aspect-ratio: 5/6;
-    height: calc(100vh - 30px);
-    margin-left: auto;
-    margin-right: auto;
-    padding-bottom: 30px;
+p {
+    text-align: center;
+    color: #f0f0f0;
 }
 
-.main a {
+button {
+    cursor: pointer;
+}
+
+.doc {
     text-decoration: none;
 }
 
-.option {
-    display: flex;
-    width: 380px;
-    height: 100px;
-    padding: 10px;
+.doc p {
+    color: #EE2E24;
+}
+
+.linkholder {
     margin-left: auto;
     margin-right: auto;
-    background-color: #202020;
-    border: 2px solid #252525;
+    width: fit-content;
+    height: fit-content;
+    display: block;
+    text-align: center;
+}
+
+.linkto {
+    aspect-ratio: 4/1;
     border-radius: 12px;
-    box-shadow: 6px 6px 16px 0 black;
-    cursor: pointer;
-    transition: border 0.2s, box-shadow 0.2s;
-}
-
-.option:hover {
-    border: 2px solid #EE2E24;
-    box-shadow: 6px 6px 16px 0 #EE2E24;
-}
-
-.option .icon {
-    aspect-ratio: 1/1;
-    height: 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-.option.general .icon {
-    background-image: url(icon/security.svg);
-    background-size: 80%;
-}
-
-.option .info {
-    flex: 1;
+    width: 400px;
+    border: 3px solid #252525;
+    background-color: #202020;
+    transition: border 0.2s;
     display: flex;
-    flex-direction: column;
+    box-shadow: black 10px 10px 10px;
 }
 
-.option .info span {
-    width: 100%;
+.linkto:hover {
+    border: 3px solid #EE2E24;
+}
+
+.linkto>* {
+    pointer-events: none;
+}
+
+.linkto img {
+    flex: 0 0 auto;
+    padding: 5%;
+    height: 90%;
+    aspect-ratio: 1/1;
+}
+
+.linkto p {
+    flex: 1;
+    height: 90%;
     display: flex;
     justify-content: center;
     align-items: center;
-    text-align: center;
-    font-family: Arial;
-    font-weight: 600;
-}
-
-.option .info span.name {
-    font-size: 1.3rem;
-    height: 40px;
-    flex: 0 0 auto;
+    font-size: 16px;
 }
 
 * {
-    text-shadow: 2px 2px 4px black;
+    font-family: Arial;
+    font-weight: 900;
     color: white;
+    text-shadow: 2px 2px 4px black;
+}
+
+@media screen and (max-width: 767px) {
+    .linkto {
+        width: 80vw;
+    }
 }
