@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Security+ Exam</title>
+        <link rel="stylesheet" href="index.css">
+        <meta name="title" content="CompTIA Security+">
+        <meta name="language" content="English">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Practice test for the Security+ certification">
+    </head>
+
+    <body>
+        <div class="main">
+            <div class="logo"></div>
+            <div class="header_pane">
+                <h1>CompTIA Security+ Practice Exam</h1>
+                <select name="Questions">
+                    <option value="15">15 Questions</option>
+                    <option value="30">30 Questions</option>
+                    <option value="45">45 Questions</option>
+                    <option value="60">60 Questions</option>
+                </select>
+                <button>Start Exam</button>
+            </div>
+
+            <button class="end">End Exam</button>
+        </div>
+
+        <div class="question" id="placeholder">
+            <span class="question_text"></span>
+            <div class="answer_holder"></div>
+            <span class="explain_text"></span>
+        </div>
+
+        <div class="answer" id="placeholder">
+            <div class="circle"></div>
+            <span class="answer_text"></span>
+        </div>
+
+        <script src="data/security.js"></script>
+        <script src="index.js"></script>
+    </body>
+</html>

@@ -1,0 +1,86 @@
+body {
+    background-color: #101010;
+    margin: 0;
+}
+
+h1 {
+    padding: 0;
+    margin: 0;
+    margin-top: 20px;
+    padding-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    font-family: Arial;
+}
+
+.main {
+    aspect-ratio: 5/6;
+    height: calc(100vh - 30px);
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 30px;
+}
+
+.main a {
+    text-decoration: none;
+}
+
+.option {
+    display: flex;
+    width: 380px;
+    height: 100px;
+    padding: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #202020;
+    border: 2px solid #252525;
+    border-radius: 12px;
+    box-shadow: 6px 6px 16px 0 black;
+    cursor: pointer;
+    transition: border 0.2s, box-shadow 0.2s;
+}
+
+.option:hover {
+    border: 2px solid #EE2E24;
+    box-shadow: 6px 6px 16px 0 #EE2E24;
+}
+
+.option .icon {
+    aspect-ratio: 1/1;
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.option.general .icon {
+    background-image: url(icon/security.svg);
+    background-size: 80%;
+}
+
+.option .info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.option .info span {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: Arial;
+    font-weight: 600;
+}
+
+.option .info span.name {
+    font-size: 1.3rem;
+    height: 40px;
+    flex: 0 0 auto;
+}
+
+* {
+    text-shadow: 2px 2px 4px black;
+    color: white;
+}

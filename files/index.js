@@ -455,7 +455,6 @@ function handleFileRename(event) {
     if (event.inputType == 'insertParagraph') {
         event.preventDefault();
         renameFile();
-        return;
     }
 }
 
