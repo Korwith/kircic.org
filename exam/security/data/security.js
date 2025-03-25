@@ -1748,15 +1748,6 @@ var a = [
         Explanation: 'ALE (Annual Loss Expectancy) calculates the total yearly cost of losses, like laptop replacements, based on frequency and cost per event.'
     },
     {
-        Question: 'A network administrator is viewing a log file from a web server showing an attempt to exploit "https://www.example.com/?s=/Index/think/app/invokefunction&function=call_user_func_array&vars[0]=md5&vars[1][0]=__HelloThinkPHP". Which of the following would be the BEST way to prevent this attack?',
-        A: 'Static code analyzer',
-        B: 'Input validation',
-        C: 'Allow list',
-        D: 'Secure cookies',
-        Correct: 'B',
-        Explanation: 'Input validation prevents malicious parameters from being processed, thwarting this code execution attack.'
-    },
-    {
         Question: 'Sam would like to send an email to Jack and have Jack verify that Sam was the sender of the email. Which of these should Sam use to provide this verification?',
         A: 'Digitally sign with Sam’s private key',
         B: 'Digitally sign with Sam’s public key',

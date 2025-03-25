@@ -67,10 +67,10 @@ const project_data = {
         href: 'https://www.kircic.org/3d/view.html',
         category: 'app'
     },
-    'A+ Study Tool': {
-        description: 'A simple study assistant for the A+ certification with a general practice test, a study quiz for ports, and a study quiz for the six troubleshooting steps.',
+    'CompTIA Study Tool': {
+        description: 'A simple study assistant for the A+ and Security+ exams with practice tests, a study quiz for ports, and a study quiz for the six troubleshooting steps.',
         icon: { url: 'icon/certification1.svg', size: '105%' },
-        href: 'https://www.kircic.org/sub/study/index.html',
+        href: 'https://www.kircic.org/exam',
         category: 'app'
     },
     'Connections': {
