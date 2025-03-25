@@ -166,6 +166,7 @@ function makeProjectFrame(project) {
     icon.style.backgroundImage = `url(${this_data.icon.url})`;
     icon.style.backgroundSize = this_data.icon.size;
     info.textContent = this_data.description;
+    icon.setAttribute('alt', project);
     link.setAttribute('href', this_data.href);
 
     project_clone.removeAttribute('id');
