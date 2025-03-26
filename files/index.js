@@ -38,6 +38,8 @@ const image_holder = file_viewer.querySelector('.image_holder');
 const image_element = image_holder.querySelector('img');
 const image_size = image_holder.querySelector('span.image_dimensions');
 
+const iframe_element = file_viewer.querySelector('iframe');
+
 const list_placeholder = document.querySelector('#placeholder.list_file');
 const large_placeholder = document.querySelector('#placeholder.large_file');
 
@@ -52,6 +54,7 @@ let editing_text = false;
 let current_folder_access;
 let current_file_access;
 let current_access;
+let active_content_url;
 
 // FileSystem
 async function loadFolder(event, origin) {
@@ -83,17 +86,24 @@ async function loadFolder(event, origin) {
 }
 
 let image_formats = ['jpg', 'jpeg', 'webp', 'gif', 'png', 'apng', 'tiff', 'svg', 'bmp', 'ico'];
+let blacklist = ['glb', 'obj', 'mtl'];
 async function fileAccess(handle) {
     if (!handle.name.includes('.')) { return; }
     let format = handle.name.split('.').pop();
+    if (blacklist.includes(format)) { return; }
+    active_content_url ? URL.revokeObjectURL(active_content_url) : undefined;
     let file = await handle.getFile();
     let text = await file.text();
 
     if (image_formats.includes(format)) {
-        image_element.src = URL.createObjectURL(file);    
+        active_content_url = URL.createObjectURL(file);
+        image_element.src = active_content_url;
         text_content.textContent = '';
-        file_viewer.classList.add('image');
-        file_viewer.classList.remove('text');
+        file_viewer.classList = 'file_viewer image'
+    } else if (format == 'pdf') {
+        active_content_url = URL.createObjectURL(file);
+        iframe_element.src = active_content_url;
+        file_viewer.classList = 'file_viewer pdf';
     } else {
         let blob = file.slice(0, 1024);
         let buffer = await blob.arrayBuffer();
@@ -101,14 +111,14 @@ async function fileAccess(handle) {
         try {
             decoder.decode(buffer);
         } catch (error) {
-            return false;
+            hideCodeMenu();
+            return;
         }
 
         text_content.textContent = text;
         removeHighlightClasses();
         hljs.highlightElement(text_content); 
-        file_viewer.classList.remove('image');
-        file_viewer.classList.add('text');   
+        file_viewer.classList = 'file_viewer text'; 
     }
 
     current_file_access = handle;
@@ -195,7 +205,7 @@ async function deleteFile() {
 }
 
 // User Interface
-function iconSelect(event, force) {
+function iconSelect(event, force, dontopen) {
     if (block_action && !force) { return; }
     handleActiveClass(event);
 
@@ -205,6 +215,10 @@ function iconSelect(event, force) {
         current_access = parseInt(found_access);
         fileAccess(handle);
         return true;
+    }
+    if (dontopen) { 
+        hideCodeMenu();
+        return; 
     }
 
     current_folder_access = handle;
@@ -522,10 +536,39 @@ function updateCountAttributes() {
     file_header.textContent = `Files (${file_count})`;
 }
 
+function handleHorizontalMove(event) {
+    let all_files = Array.from(file_explorer.querySelectorAll('.large_file'));
+    let target_file = file_explorer.querySelector('.large_file.active');
+    let current_index = all_files.indexOf(target_file);
+    event.which == 37 ? current_index-- : current_index++;
+    current_index < 0 ? current_index = 0 : undefined;
+    let new_target = all_files[current_index];
+    if (!new_target) { return; }
+    iconSelect({target: new_target}, true, true);
+}
+
+function keyboardFolderOpen() {
+    let target_file = file_explorer.querySelector('.large_file.active');
+    if (!target_file) { return; }
+    if (target_file.parentElement != folders) { return; }
+    iconSelect({target: target_file});
+}
+
+let keymap = {
+    37: handleHorizontalMove, 
+    39: handleHorizontalMove, 
+    27: hideCodeMenu,
+    13: keyboardFolderOpen
+}
 function handleKeyDown(event) {
-    if (event.which == 27) {
-        hideCodeMenu();
-    }
+    let found_function = keymap[event.which];
+    found_function ? found_function(event) : undefined;
+}
+
+function handleResize() {
+    let viewer_rect = file_viewer.getBoundingClientRect();
+    iframe_element.width = viewer_rect.width;
+    iframe_element.height = viewer_rect.height;
 }
 
 function checkSystemAccess() {
@@ -578,6 +621,7 @@ function fullReset() {
 // Initialize
 checkSystemAccess();
 handleImageEvents();
+handleResize();
 open.addEventListener('mouseup', loadFolder);
 path_next.addEventListener('mouseup', pathHistoryNext);
 path_back.addEventListener('mouseup', pathHistoryBack);
@@ -592,3 +636,4 @@ text_save.addEventListener('mouseup', updateFile);
 text_content.addEventListener('input', handleEditedText);
 viewer_name.addEventListener('beforeinput', handleFileRename);
 document.addEventListener('keyup', handleKeyDown);
+window.addEventListener('resize', handleResize);
