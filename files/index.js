@@ -172,8 +172,9 @@ async function deleteFile() {
     if (!current_folder_access || !current_file_access) { return; }
     try {
         await current_folder_access.removeEntry(current_file_access.name);
-        accessPathHistory(false, current_folder_access.name);
+        current_file_access = null;
         hideCodeMenu();
+        accessPathHistory(false, current_folder_access.name);
     } catch (error) {
         console.error(error);
     }
@@ -212,11 +213,18 @@ function iconSelect(event, force) {
 }
 
 function handleActiveClass(event) {
+    let found_name = event.target.getAttribute('name');
+    let is_large = event.target.classList.contains('large_file');
+    let found_target = is_large ? event.target : file_explorer.querySelector(`.large_file[name="${found_name}"]`);
+    
     let previous_active = document.querySelectorAll(`.large_file.active`);
     for (var i = 0; i < previous_active.length; i++) {
         previous_active[i].classList.remove('active');
     }
-    event.target.classList.add('active');
+
+    if (found_target) {
+        found_target.classList.add('active');
+    }
 }
 
 function createMainEntry(entry, access, newfile) {
@@ -331,7 +339,7 @@ function accessPathHistory(event, name) {
     let found_name = name || event.target.getAttribute('name');
     let end_index = path_history.indexOf(found_name);
     let access_history = path_history.slice(1, end_index + 1);
-
+    
     let current_index = 0;
     const callback = function (mutationsList, observer) {
         for (const mutation of mutationsList) {
@@ -443,7 +451,6 @@ async function removeTextEditable() {
     text_edit.classList.remove('active');
     removeHighlightClasses();
     hljs.highlightElement(text_content);
-
 }
 
 function removeHighlightClasses() {
