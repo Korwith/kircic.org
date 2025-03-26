@@ -73,7 +73,7 @@ async function loadFolder(event, origin) {
             createMainEntry(entry, id_handle.length - 1);
         }
         updateCountAttributes();
-    } catch(error) {
+    } catch (error) {
         console.error(error);
     }
 }
@@ -88,7 +88,7 @@ async function fileAccess(handle) {
     let decoder = new TextDecoder('utf-8', { fatal: true });
     try {
         decoder.decode(buffer);
-    } catch(error) {
+    } catch (error) {
         return false;
     }
 
@@ -109,7 +109,7 @@ async function updateFile() {
         await writable.write(text_content.textContent);
         await writable.close();
         removeTextEditable();
-    } catch(error) {
+    } catch (error) {
         console.error(error);
     }
 }
@@ -121,18 +121,18 @@ async function renameFile() {
         if (fileNameAccept(found_name)) {
             current_file_access.move(found_name);
             viewer_name.blur();
-            assignIconImage({name: found_name}, viewer_icon);
+            assignIconImage({ name: found_name }, viewer_icon);
 
             let found_file_selectors = document.querySelectorAll(`nav.sidebar .list_file[access="${current_access}"], .icon_explorer .large_file[access="${current_access}"]`);
             for (var i = 0; i < found_file_selectors.length; i++) {
                 let this_entry = found_file_selectors[i];
                 let this_icon = this_entry.querySelector('.icon');
                 let this_name = this_entry.querySelector('span');
-                assignIconImage({name: found_name}, this_icon);
+                assignIconImage({ name: found_name }, this_icon);
                 this_name.textContent = found_name;
             }
         }
-    } catch(error) {
+    } catch (error) {
         console.error(error);
     }
 }
@@ -140,25 +140,41 @@ async function renameFile() {
 async function newEmptyFile() {
     if (!current_folder_access) { return; }
     try {
-        let file_handle = await current_folder_access.getFileHandle('text.txt', {create: true});
+        let file_handle = await current_folder_access.getFileHandle('text.txt', { create: true });
         let writable = await file_handle.createWritable();
         current_file_access = file_handle;
         writable.close();
-        accessPathHistory(false, current_folder_access.name);
 
+        const callback = function (mutationsList, observer) {
+            for (const mutation of mutationsList) {
+                if (mutation.type != 'childList') { continue; }
+                let found_target = mutation.target.querySelector('.large_file');
+                if (!found_target) { continue; }
+                let found_name = found_target.getAttribute('name');
+                if (!found_name || found_name != 'text.txt') { continue; }
+                observer.disconnect();
+                handleActiveClass({ target: found_target });
+            }
+        }
+        const observe_config = { attributes: true, childList: true, subtree: false };
+        const observer = new MutationObserver(callback);
+        observer.observe(files, observe_config);
+
+        accessPathHistory(false, current_folder_access.name);
         fileAccess(current_file_access);
-    } catch(error) {
+
+    } catch (error) {
         console.error(error);
     }
 }
 
 async function deleteFile() {
-    if (!current_folder_access || !current_file_access ) { return; }
+    if (!current_folder_access || !current_file_access) { return; }
     try {
         await current_folder_access.removeEntry(current_file_access.name);
         accessPathHistory(false, current_folder_access.name);
         hideCodeMenu();
-    } catch(error) {
+    } catch (error) {
         console.error(error);
     }
 }
@@ -166,11 +182,7 @@ async function deleteFile() {
 // User Interface
 function iconSelect(event, force) {
     if (block_action && !force) { return; }
-    let previous_active = document.querySelectorAll(`.large_file.active`);
-    for (var i = 0; i < previous_active.length; i++) {
-        previous_active[i].classList.remove('active');
-    }
-    event.target.classList.add('active');
+    handleActiveClass(event);
 
     let found_access = event.target.getAttribute('access');
     let handle = id_handle[found_access];
@@ -191,12 +203,20 @@ function iconSelect(event, force) {
             clearTargetList(target_list);
             target_list.remove();
         }
-        event.target.classList.toggle('expand');    
+        event.target.classList.toggle('expand');
     } else {
         let found_list_entry = sidebar.querySelector(`.list_file[access="${found_access}"]`);
         loadFolder(false, found_access);
         found_list_entry.classList.add('expand');
     }
+}
+
+function handleActiveClass(event) {
+    let previous_active = document.querySelectorAll(`.large_file.active`);
+    for (var i = 0; i < previous_active.length; i++) {
+        previous_active[i].classList.remove('active');
+    }
+    event.target.classList.add('active');
 }
 
 function createMainEntry(entry, access, newfile) {
@@ -278,7 +298,7 @@ function clearMainIcons() {
 function updatePathHistory(access) {
     let found_entry = sidebar.querySelector(`.list_file[access="${access}"]`);
     let found_history = [];
-    
+
     while (found_entry != sidebar) {
         let found_id = found_entry.getAttribute('access') || found_entry.getAttribute('origin');
         let found_handle = id_handle[parseInt(found_id)];
@@ -313,40 +333,33 @@ function accessPathHistory(event, name) {
     let access_history = path_history.slice(1, end_index + 1);
 
     let current_index = 0;
-    const callback = function(mutationsList, observer) {
+    const callback = function (mutationsList, observer) {
         for (const mutation of mutationsList) {
-            if (mutation.type == 'childList') {
-                if (mutation.target.classList.contains('target_list')) {
-                    let found_button = mutation.target.querySelector(`.list_file[name="${access_history[current_index]}"]`);
-                    if (found_button) {
-                        current_index++;
-                        setTimeout(function() {
-                            iconSelect({target: found_button}, true);
-                        }, 1);
-                    }
-                }
-            }
+            if (mutation.type != 'childList') { continue; }
+            if (!mutation.target.classList.contains('target_list')) { continue; }
+            let found_button = mutation.target.querySelector(`.list_file[name="${access_history[current_index]}"]`);
+            if (!found_button) { continue; }
+            current_index++;
+            setTimeout(function () {
+                iconSelect({ target: found_button }, true);
+            }, 1);
         }
 
         if (current_index == access_history.length) {
-            endObserve();
+            observer.disconnect();
+            block_action = false;
+            content.classList.remove('noshow');    
         }
     }
 
     block_action = true;
     content.classList.add('noshow');
     origin_element.classList.add('expand');
-    iconSelect({target: origin_element}, true);
-    const observe_config = {attributes: true, childList: true, subtree: true};
+    iconSelect({ target: origin_element }, true);
+    const observe_config = { attributes: true, childList: true, subtree: true };
     const observer = new MutationObserver(callback);
     observer.observe(sidebar, observe_config);
-    iconSelect({target: origin_element}, true);
-
-    function endObserve() {
-        observer.disconnect();
-        block_action = false;
-        content.classList.remove('noshow');
-    }
+    iconSelect({ target: origin_element }, true);
 }
 
 function clearPathHistory() {
@@ -379,7 +392,7 @@ function pathHistoryNext() {
     if (!next_page) { return; }
 
     let page_element = sidebar.querySelector(`.list_file[name="${next_page}"]`);
-    iconSelect({target: page_element}, true);
+    iconSelect({ target: page_element }, true);
 }
 
 function pathHistoryBack() {
@@ -389,8 +402,8 @@ function pathHistoryBack() {
     if (!page_before) { return; }
 
     let page_element = sidebar.querySelector(`.list_file[name="${page_before}"]`);
-    iconSelect({target: page_element}, true);
-    iconSelect({target: page_element}, true);
+    iconSelect({ target: page_element }, true);
+    iconSelect({ target: page_element }, true);
 }
 
 function assignIconImage(entry, icon) {
@@ -408,7 +421,7 @@ function assignIconImage(entry, icon) {
     }
 }
 
-function assignTextEditable() { 
+function assignTextEditable() {
     if (editing_text) {
         removeTextEditable();
         return;
@@ -424,13 +437,13 @@ async function removeTextEditable() {
     editing_text = false;
     if (current_file_access) {
         let found_file = await current_file_access.getFile();
-        text_content.textContent = await found_file.text();    
+        text_content.textContent = await found_file.text();
     }
     text_content.removeAttribute('contenteditable');
     text_edit.classList.remove('active');
     removeHighlightClasses();
     hljs.highlightElement(text_content);
-    
+
 }
 
 function removeHighlightClasses() {
