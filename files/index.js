@@ -34,6 +34,9 @@ const text_close = file_viewer.querySelector('.close');
 const text_discard = file_viewer.querySelector('.discard');
 const text_save = file_viewer.querySelector('.save');
 
+const image_holder = file_viewer.querySelector('.image_holder');
+const image_element = image_holder.querySelector('img');
+
 const list_placeholder = document.querySelector('#placeholder.list_file');
 const large_placeholder = document.querySelector('#placeholder.large_file');
 
@@ -78,29 +81,41 @@ async function loadFolder(event, origin) {
     }
 }
 
+let image_formats = ['jpg', 'jpeg', 'webp', 'gif', 'png', 'apng', 'tiff', 'svg', 'bmp', 'ico'];
 async function fileAccess(handle) {
     if (!handle.name.includes('.')) { return; }
+    let format = handle.name.split('.').pop();
     let file = await handle.getFile();
     let text = await file.text();
 
-    let blob = file.slice(0, 1024);
-    let buffer = await blob.arrayBuffer();
-    let decoder = new TextDecoder('utf-8', { fatal: true });
-    try {
-        decoder.decode(buffer);
-    } catch (error) {
-        return false;
+    if (image_formats.includes(format)) {
+        image_element.src = URL.createObjectURL(file);    
+        text_content.textContent = '';
+        file_viewer.classList.add('image');
+        file_viewer.classList.remove('text');
+    } else {
+        let blob = file.slice(0, 1024);
+        let buffer = await blob.arrayBuffer();
+        let decoder = new TextDecoder('utf-8', { fatal: true });
+        try {
+            decoder.decode(buffer);
+        } catch (error) {
+            return false;
+        }
+
+        text_content.textContent = text;
+        removeHighlightClasses();
+        hljs.highlightElement(text_content); 
+        file_viewer.classList.remove('image');
+        file_viewer.classList.add('text');   
     }
 
     current_file_access = handle;
+    viewer_name.textContent = handle.name;
+    viewer_size.textContent = getFileSize(text.length);
     document.body.classList.toggle('mobile_shift', false);
     content.classList.add('shift');
     assignIconImage(handle, viewer_icon);
-    viewer_name.textContent = handle.name;
-    viewer_size.textContent = getFileSize(text.length);
-    text_content.textContent = text;
-    removeHighlightClasses();
-    hljs.highlightElement(text_content);
 }
 
 async function updateFile() {
@@ -214,7 +229,7 @@ function handleActiveClass(event) {
     let found_name = event.target.getAttribute('name');
     let is_large = event.target.classList.contains('large_file');
     let found_target = is_large ? event.target : file_explorer.querySelector(`.large_file[name="${found_name}"]`);
-    
+
     let previous_active = document.querySelectorAll(`.large_file.active`);
     for (var i = 0; i < previous_active.length; i++) {
         previous_active[i].classList.remove('active');
@@ -337,7 +352,7 @@ function accessPathHistory(event, name) {
     let found_name = name || event.target.getAttribute('name');
     let end_index = path_history.indexOf(found_name);
     let access_history = path_history.slice(1, end_index + 1);
-    
+
     let current_index = 0;
     const callback = function (mutationsList, observer) {
         for (const mutation of mutationsList) {
@@ -354,7 +369,7 @@ function accessPathHistory(event, name) {
         if (current_index == access_history.length) {
             observer.disconnect();
             block_action = false;
-            content.classList.remove('noshow');    
+            content.classList.remove('noshow');
         }
     }
 

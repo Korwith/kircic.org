@@ -664,6 +664,30 @@ nav.sidebar {
     display: flex;
 }
 
+.file_viewer.image pre {
+    display: none;
+}
+
+.file_viewer.text .image_holder {
+    display: none;
+}
+
+.image_holder {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.image_holder img {
+    aspect-ratio: 1/1;
+    max-width: 50%;
+    border-radius: 12px;
+    box-sizing: border-box;
+    border: 1px solid #303030;
+    padding: 10px;
+}
+
 * {
     color: white;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
