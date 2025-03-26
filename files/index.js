@@ -148,10 +148,8 @@ async function newEmptyFile() {
         const callback = function (mutationsList, observer) {
             for (const mutation of mutationsList) {
                 if (mutation.type != 'childList') { continue; }
-                let found_target = mutation.target.querySelector('.large_file');
+                let found_target = mutation.target.querySelector('.large_file[name="text.txt"]');
                 if (!found_target) { continue; }
-                let found_name = found_target.getAttribute('name');
-                if (!found_name || found_name != 'text.txt') { continue; }
                 observer.disconnect();
                 handleActiveClass({ target: found_target });
             }
