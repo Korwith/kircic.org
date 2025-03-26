@@ -674,7 +674,10 @@ nav.sidebar {
 
 .image_holder {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
     width: 100%;
     margin-top: 10px;
 }
@@ -686,6 +689,15 @@ nav.sidebar {
     box-sizing: border-box;
     border: 1px solid #303030;
     padding: 10px;
+}
+
+.image_holder span {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    color: rgba(255, 255, 255, 0.8);
+    user-select: none;
+    font-size: 1.2rem;
 }
 
 * {

@@ -36,6 +36,7 @@ const text_save = file_viewer.querySelector('.save');
 
 const image_holder = file_viewer.querySelector('.image_holder');
 const image_element = image_holder.querySelector('img');
+const image_size = image_holder.querySelector('span.image_dimensions');
 
 const list_placeholder = document.querySelector('#placeholder.list_file');
 const large_placeholder = document.querySelector('#placeholder.large_file');
@@ -491,6 +492,17 @@ function handleFileRename(event) {
     }
 }
 
+function handleImageEvents() {
+    image_element.onload = function() {
+        image_size.textContent = `${image_element.naturalWidth}x${image_element.naturalHeight}`;
+    }
+
+    image_element.onerror = function() {
+        image_element.src = 'icon/error.svg';
+        image_size.textContent = 'Error';
+    }
+}
+
 function hideCodeMenu() {
     content.classList.remove('shift');
     file_viewer.removeAttribute('editing');
@@ -565,6 +577,7 @@ function fullReset() {
 
 // Initialize
 checkSystemAccess();
+handleImageEvents();
 open.addEventListener('mouseup', loadFolder);
 path_next.addEventListener('mouseup', pathHistoryNext);
 path_back.addEventListener('mouseup', pathHistoryBack);
