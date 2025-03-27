@@ -483,7 +483,7 @@ nav.sidebar::after {
     display: flex;
     justify-content: center;
     text-align: center;
-    width: 100%;
+    width: calc(100% - 20px);
     color: rgba(255, 255, 255, 0.8);
     transition: color 0.2s;
 }
@@ -758,6 +758,10 @@ nav.sidebar::after {
 
     header button.sidebar_toggle .icon {
         display: block;
+    }
+
+    header button.add, header button.delete {
+        display: none;
     }
 
     .file_viewer {
