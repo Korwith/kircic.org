@@ -32,6 +32,7 @@ header button, .file_options button {
     display: flex;
     justify-content: center;
     align-items: center;
+    user-select: none;
     height: calc(100% - 10px);
     width: fit-content;
     margin: 5px;
@@ -747,7 +748,7 @@ nav.sidebar {
         width: 100vw;
         transform: translateY(100%);
     }
-    
+
     .file_header {
         border-top: 1px solid #303030;
     }

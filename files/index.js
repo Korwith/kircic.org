@@ -88,7 +88,6 @@ async function loadFolder(event, origin) {
 let image_formats = ['jpg', 'jpeg', 'webp', 'gif', 'png', 'apng', 'tiff', 'svg', 'bmp', 'ico'];
 let blacklist = ['glb', 'obj', 'mtl'];
 async function fileAccess(handle) {
-    if (!handle.name.includes('.')) { return; }
     let format = handle.name.split('.').pop();
     if (blacklist.includes(format)) { return; }
     active_content_url ? URL.revokeObjectURL(active_content_url) : undefined;
@@ -117,8 +116,8 @@ async function fileAccess(handle) {
 
         text_content.textContent = text;
         removeHighlightClasses();
-        hljs.highlightElement(text_content); 
-        file_viewer.classList = 'file_viewer text'; 
+        file_viewer.classList = 'file_viewer text';
+        text.length <= 51200 ? hljs.highlightElement(text_content) : undefined;
     }
 
     current_file_access = handle;
