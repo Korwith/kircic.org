@@ -550,6 +550,7 @@ function handleHorizontalMove(event) {
     let new_target = all_files[current_index];
     if (!new_target) { return; }
     iconSelect({target: new_target}, false, true);
+    shiftScroll(new_target);
 }
 
 function handleVerticalMove(event) {
@@ -579,8 +580,26 @@ function handleVerticalMove(event) {
         }
     }
 
-    if (next_file) {
-        iconSelect({target: next_file}, false, true);
+    if (!next_file) { return; }
+    iconSelect({target: next_file}, false, true);
+    shiftScroll(next_file);
+}
+
+function shiftScroll(next_file) {
+    let explorer_top = file_explorer.scrollTop;
+    let explorer_bottom = explorer_top + file_explorer.clientHeight;
+    let next_top = next_file.offsetTop;
+    let next_bottom = next_top + next_file.clientHeight;
+
+    let before_frame = next_top <= explorer_top;
+    let after_frame = next_bottom >= explorer_bottom;
+    
+    if (before_frame || after_frame) {
+        next_file.scrollIntoView({
+            behavior: 'smooth',
+            block: before_frame ? 'start' : 'end',
+            inline: 'start'
+        });
     }
 }
 
