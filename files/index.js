@@ -431,7 +431,13 @@ function pathHistoryNext() {
     iconSelect({ target: page_element }, true);
 }
 
-function pathHistoryBack() {
+function pathHistoryBack(event) {
+    if (event.which && event.which == 8) {
+        if (document.activeElement == text_content) {
+            return;
+        }
+    }
+
     let current_page = path_history[path_history.length - 1];
     let found_index = saved_history.indexOf(current_page);
     let page_before = saved_history[found_index - 1];
@@ -558,7 +564,8 @@ let keymap = {
     37: handleHorizontalMove, 
     39: handleHorizontalMove, 
     27: hideCodeMenu,
-    13: keyboardFolderOpen
+    13: keyboardFolderOpen,
+    8: pathHistoryBack
 }
 function handleKeyDown(event) {
     let found_function = keymap[event.which];
