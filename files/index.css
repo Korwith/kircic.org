@@ -451,7 +451,7 @@ nav.sidebar {
     filter: brightness(100%);
 }
 
-.large_file:hover span .large_file.active span {
+.large_file:hover span, .large_file.active span {
     color: white;
 }
 
