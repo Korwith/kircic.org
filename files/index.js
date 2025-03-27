@@ -108,7 +108,7 @@ async function fileAccess(handle) {
         let buffer = await response.arrayBuffer();
         let result = await mammoth.convertToHtml({ arrayBuffer: buffer });
         iframe_element.contentDocument.body.innerHTML = result.value;
-        iframe_element.contentDocument.body.style.overflowY = 'auto';
+        iframe_element.contentDocument.body.style.overflow = 'auto';
         iframe_element.contentDocument.body.style.backgroundColor = '#1E1E1E';
         iframe_element.contentDocument.body.style.color = 'white';
         file_viewer.classList = 'file_viewer docx';
