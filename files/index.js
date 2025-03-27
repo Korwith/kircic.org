@@ -549,7 +549,39 @@ function handleHorizontalMove(event) {
     current_index < 0 ? current_index = 0 : undefined;
     let new_target = all_files[current_index];
     if (!new_target) { return; }
-    iconSelect({target: new_target}, true, true);
+    iconSelect({target: new_target}, false, true);
+}
+
+function handleVerticalMove(event) {
+    let all_files = Array.from(file_explorer.querySelectorAll('.large_file'));
+    let target_file = file_explorer.querySelector('.large_file.active');
+    let target_rect = target_file.getBoundingClientRect();
+    let current_index = all_files.indexOf(target_file);
+
+    let next_file;
+    function checkIndex(i) {
+        let found_file = all_files[i];
+        let found_rect = found_file.getBoundingClientRect();
+        if (target_rect.x == found_rect.x) {
+            next_file = found_file;
+            return true;
+        }
+    }
+    if (event.which == 38) {
+        for (var i = current_index - 1; i > 0; i--) {
+            let check = checkIndex(i);
+            if (check) { break; }
+        }
+    } else if (event.which == 40) {
+        for (var i = current_index + 1; i < all_files.length; i++) {
+            let check = checkIndex(i);
+            if (check) { break; }
+        }
+    }
+
+    if (next_file) {
+        iconSelect({target: next_file}, false, true);
+    }
 }
 
 function keyboardFolderOpen() {
@@ -561,12 +593,19 @@ function keyboardFolderOpen() {
 
 let keymap = {
     37: handleHorizontalMove, 
-    39: handleHorizontalMove, 
+    39: handleHorizontalMove,
+    38: handleVerticalMove,
+    40: handleVerticalMove,
     27: hideCodeMenu,
     13: keyboardFolderOpen,
     8: pathHistoryBack
 }
+let prevent = [37, 38, 39, 40];
 function handleKeyDown(event) {
+    if (prevent.includes(event.which)) {
+        event.preventDefault();
+    }
+
     let found_function = keymap[event.which];
     found_function ? found_function(event) : undefined;
 }
@@ -641,5 +680,5 @@ text_discard.addEventListener('mouseup', removeTextEditable);
 text_save.addEventListener('mouseup', updateFile);
 text_content.addEventListener('input', handleEditedText);
 viewer_name.addEventListener('beforeinput', handleFileRename);
-document.addEventListener('keyup', handleKeyDown);
+document.addEventListener('keydown', handleKeyDown);
 window.addEventListener('resize', handleResize);
