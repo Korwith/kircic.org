@@ -161,6 +161,16 @@ nav.sidebar {
     transition: transform 0.5s;
 }
 
+nav.sidebar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 10px;
+    height: 100%;
+    background-color: #1C1C1C;
+}
+
 .target_list {
     position: relative;
     width: 100%;
@@ -246,6 +256,9 @@ nav.sidebar {
     height: 30px;
     width: fit-content;
     user-select: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: none;
     color: rgba(255, 255, 255, 0.8);
     transition: color 0.2s;
 }
