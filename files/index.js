@@ -90,19 +90,28 @@ let blacklist = ['glb', 'obj', 'mtl'];
 async function fileAccess(handle) {
     let format = handle.name.split('.').pop();
     if (blacklist.includes(format)) { return; }
-    active_content_url ? URL.revokeObjectURL(active_content_url) : undefined;
     let file = await handle.getFile();
     let text = await file.text();
+    active_content_url ? URL.revokeObjectURL(active_content_url) : undefined;
+    active_content_url = URL.createObjectURL(file);
 
     if (image_formats.includes(format)) {
-        active_content_url = URL.createObjectURL(file);
         image_element.src = active_content_url;
         text_content.textContent = '';
         file_viewer.classList = 'file_viewer image'
     } else if (format == 'pdf') {
-        active_content_url = URL.createObjectURL(file);
         iframe_element.src = active_content_url;
+        text_content.textContent = '';
         file_viewer.classList = 'file_viewer pdf';
+    } else if (format == 'docx') {
+        let response = await fetch(active_content_url);
+        let buffer = await response.arrayBuffer();
+        let result = await mammoth.convertToHtml({ arrayBuffer: buffer });
+        iframe_element.contentDocument.body.innerHTML = result.value;
+        iframe_element.contentDocument.body.style.overflowY = 'auto';
+        iframe_element.contentDocument.body.style.backgroundColor = '#1E1E1E';
+        iframe_element.contentDocument.body.style.color = 'white';
+        file_viewer.classList = 'file_viewer docx';
     } else {
         let blob = file.slice(0, 1024);
         let buffer = await blob.arrayBuffer();

@@ -673,7 +673,7 @@ nav.sidebar {
     display: none;
 }
 
-.file_viewer:not(.pdf) iframe {
+.file_viewer:not(.pdf):not(.docx) iframe {
     display: none;
 }
 
