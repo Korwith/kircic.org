@@ -665,6 +665,10 @@ nav.sidebar {
     display: flex;
 }
 
+.file_viewer:not(.text) .edit {
+    display: none;
+}
+
 .file_viewer:not(.text) pre {
     display: none;
 }
