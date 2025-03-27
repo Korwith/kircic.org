@@ -556,6 +556,7 @@ function handleHorizontalMove(event) {
 function handleVerticalMove(event) {
     let all_files = Array.from(file_explorer.querySelectorAll('.large_file'));
     let target_file = file_explorer.querySelector('.large_file.active');
+    if (!target_file) { return; }
     let target_rect = target_file.getBoundingClientRect();
     let current_index = all_files.indexOf(target_file);
 
@@ -569,7 +570,7 @@ function handleVerticalMove(event) {
         }
     }
     if (event.which == 38) {
-        for (var i = current_index - 1; i > 0; i--) {
+        for (var i = current_index - 1; i >= 0; i--) {
             let check = checkIndex(i);
             if (check) { break; }
         }
@@ -593,7 +594,7 @@ function shiftScroll(next_file) {
 
     let before_frame = next_top <= explorer_top;
     let after_frame = next_bottom >= explorer_bottom;
-    
+
     if (before_frame || after_frame) {
         next_file.scrollIntoView({
             behavior: 'smooth',
