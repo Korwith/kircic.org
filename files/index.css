@@ -690,11 +690,15 @@ nav.sidebar::after {
     display: none;
 }
 
+.file_viewer:not(.video) .video_holder {
+    display: none;
+}
+
 .file_viewer:not(.pdf):not(.docx) iframe {
     display: none;
 }
 
-.image_holder {
+.image_holder, .video_holder {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -714,7 +718,16 @@ nav.sidebar::after {
     padding: 10px;
 }
 
-.image_holder span {
+.video_holder video {
+    max-width: calc(100% - 20px);
+    min-width: 18%;
+    border-radius: 12px;
+    box-sizing: border-box;
+    border: 1px solid #303030;
+    padding: 10px;
+}
+
+.image_holder span, .video_holder span {
     display: flex;
     justify-content: center;
     width: 100%;

@@ -38,6 +38,10 @@ const image_holder = file_viewer.querySelector('.image_holder');
 const image_element = image_holder.querySelector('img');
 const image_size = image_holder.querySelector('span.image_dimensions');
 
+const video_holder = file_viewer.querySelector('.video_holder');
+const video_element = video_holder.querySelector('video');
+const video_size = video_holder.querySelector('span.video_dimensions');
+
 const iframe_element = file_viewer.querySelector('iframe');
 
 const list_placeholder = document.querySelector('#placeholder.list_file');
@@ -86,9 +90,10 @@ async function loadFolder(event, origin) {
 }
 
 let image_formats = ['jpg', 'jpeg', 'webp', 'gif', 'png', 'apng', 'tiff', 'svg', 'bmp', 'ico'];
+let video_formats = ['mp4', 'mov', 'ogg', 'webm', 'flv', 'avi', 'wmv', 'asf'];
 let blacklist = ['glb', 'obj', 'mtl'];
 async function fileAccess(handle) {
-    let format = handle.name.split('.').pop();
+    let format = handle.name.split('.').pop().toLowerCase();
     if (blacklist.includes(format)) { return; }
     let file = await handle.getFile();
     let text = await file.text();
@@ -99,6 +104,10 @@ async function fileAccess(handle) {
         image_element.src = active_content_url;
         text_content.textContent = '';
         file_viewer.classList = 'file_viewer image'
+    } else if (video_formats.includes(format)) {
+        video_element.src = active_content_url;
+        text_content.textContent = '';
+        file_viewer.classList = 'file_viewer video';
     } else if (format == 'pdf') {
         iframe_element.src = active_content_url;
         text_content.textContent = '';
@@ -520,7 +529,7 @@ function handleFileRename(event) {
     }
 }
 
-function handleImageEvents() {
+function handleMediaEvents() {
     image_element.onload = function() {
         image_size.textContent = `${image_element.naturalWidth}x${image_element.naturalHeight}`;
     }
@@ -528,6 +537,15 @@ function handleImageEvents() {
     image_element.onerror = function() {
         image_element.src = 'icon/error.svg';
         image_size.textContent = 'Error';
+    }
+
+    video_element.onloadeddata = function() {
+        video_size.textContent = `${video_element.videoWidth}x${video_element.videoHeight}`;
+    }
+
+    video_element.onerror = function() {
+        video_element.src = 'icon/error.svg';
+        video_size.textContent = 'Error';
     }
 }
 
@@ -694,7 +712,7 @@ function fullReset() {
 
 // Initialize
 checkSystemAccess();
-handleImageEvents();
+handleMediaEvents();
 handleResize();
 open.addEventListener('mouseup', loadFolder);
 path_next.addEventListener('mouseup', pathHistoryNext);
