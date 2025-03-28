@@ -99,20 +99,24 @@ async function fileAccess(handle) {
     let text = await file.text();
     active_content_url ? URL.revokeObjectURL(active_content_url) : undefined;
     active_content_url = URL.createObjectURL(file);
+    text_content.textContent = '';
 
-    if (image_formats.includes(format)) {
+    async function loadImage() {
         image_element.src = active_content_url;
-        text_content.textContent = '';
         file_viewer.classList = 'file_viewer image'
-    } else if (video_formats.includes(format)) {
+    }
+
+    async function loadVideo() {
         video_element.src = active_content_url;
-        text_content.textContent = '';
         file_viewer.classList = 'file_viewer video';
-    } else if (format == 'pdf') {
+    }
+
+    async function loadPDF() {
         iframe_element.src = active_content_url;
-        text_content.textContent = '';
         file_viewer.classList = 'file_viewer pdf';
-    } else if (format == 'docx') {
+    }
+
+    async function loadDOCX() {
         let response = await fetch(active_content_url);
         let buffer = await response.arrayBuffer();
         let result = await mammoth.convertToHtml({ arrayBuffer: buffer });
@@ -121,7 +125,9 @@ async function fileAccess(handle) {
         iframe_element.contentDocument.body.style.backgroundColor = '#1E1E1E';
         iframe_element.contentDocument.body.style.color = 'white';
         file_viewer.classList = 'file_viewer docx';
-    } else {
+    }
+
+    async function loadText() {
         let blob = file.slice(0, 1024);
         let buffer = await blob.arrayBuffer();
         let decoder = new TextDecoder('utf-8', { fatal: true });
@@ -136,6 +142,18 @@ async function fileAccess(handle) {
         removeHighlightClasses();
         file_viewer.classList = 'file_viewer text';
         text.length <= 51200 ? hljs.highlightElement(text_content) : undefined;
+    }
+    
+    if (image_formats.includes(format)) {
+        loadImage();
+    } else if (video_formats.includes(format)) {
+        loadVideo();
+    } else if (format == 'pdf') {
+        loadPDF();
+    } else if (format == 'docx') {
+        loadDOCX();
+    } else {
+        loadText();
     }
 
     current_file_access = handle;
