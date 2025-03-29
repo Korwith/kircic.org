@@ -11,13 +11,14 @@ let letters = 'ABCDEFG';
 
 function getRandomQuestion() {
     let random_index = Math.floor(Math.random() * a.length);
-    return a[random_index];
+    return a.splice([random_index], 1)[0];
 }
 
 function startExam(event) {
     for (var i = 0; i < parseInt(count_select.value); i++) {
         let question_data = getRandomQuestion();
-
+        if (question_data === undefined) break
+        
         let clone = question_placeholder.cloneNode(true);
         let question_text = clone.querySelector('.question_text');
         let answer_holder = clone.querySelector('.answer_holder');
