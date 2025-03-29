@@ -8,6 +8,7 @@ const question_placeholder = document.querySelector('#placeholder.question');
 const answer_placeholder = document.querySelector('#placeholder.answer');
 
 let letters = 'ABCDEFG';
+let used = [];
 
 function getRandomQuestion() {
     let random_index = Math.floor(Math.random() * a.length);
