@@ -975,15 +975,6 @@ var a = [
         Explanation: 'Disconnecting the servers (containment) is the next step to prevent further exploitation after identifying unusual log entries indicating a breach.'
     },
     {
-        Question: 'A security administrator is viewing logs on a laptop in the shipping and receiving department that show file quarantine statuses. Which of the following would BEST describe the circumstances surrounding these events?',
-        A: 'The antivirus application identified three viruses and quarantined two viruses',
-        B: 'The host-based firewall blocked two traffic flows',
-        C: 'A host-based allow list has blocked two applications from executing',
-        D: 'A network-based IPS has identified two known vulnerabilities',
-        Correct: 'A',
-        Explanation: 'The logs indicate an antivirus quarantining files, with two successes and one failure, suggesting virus detection and isolation on the laptop.'
-    },
-    {
         Question: 'In the past, an organization has relied on the curated Apple App Store to avoid issues associated with malware and insecure applications. However, the IT department has discovered an iPhone in the shipping department with applications not available on the Apple App Store. How did the shipping department user install these apps on their mobile device?',
         A: 'Side loading',
         B: 'Malicious update',
