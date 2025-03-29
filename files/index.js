@@ -41,6 +41,11 @@ const image_size = image_holder.querySelector('span.image_dimensions');
 const video_holder = file_viewer.querySelector('.video_holder');
 const video_element = video_holder.querySelector('video');
 const video_size = video_holder.querySelector('span.video_dimensions');
+const video_duration = video_holder.querySelector('.video_duration');
+
+const audio_holder = file_viewer.querySelector('.audio_holder');
+const audio_element = audio_holder.querySelector('video');
+const audio_message = file_viewer.querySelector('.audio_message');
 
 const iframe_element = file_viewer.querySelector('iframe');
 
@@ -90,11 +95,12 @@ async function loadFolder(event, origin) {
 }
 
 let image_formats = ['jpg', 'jpeg', 'webp', 'gif', 'png', 'apng', 'tiff', 'svg', 'bmp', 'ico'];
-let video_formats = ['mp4', 'mov', 'ogg', 'webm', 'flv', 'avi', 'wmv', 'asf'];
-let blacklist = ['glb', 'obj', 'mtl'];
+let video_formats = ['mp4', 'mov', 'webm', 'flv', 'avi', 'wmv', 'asf'];
+let audio_formats = ['mp3', 'wav', 'ogg'];
+let blacklist_formats = ['glb', 'obj', 'mtl'];
 async function fileAccess(handle) {
     let format = handle.name.split('.').pop().toLowerCase();
-    if (blacklist.includes(format)) { return; }
+    if (blacklist_formats.includes(format)) { return; }
     let file = await handle.getFile();
     let text = await file.text();
     active_content_url ? URL.revokeObjectURL(active_content_url) : undefined;
@@ -109,6 +115,11 @@ async function fileAccess(handle) {
     async function loadVideo() {
         video_element.src = active_content_url;
         file_viewer.classList = 'file_viewer video';
+    }
+
+    async function loadAudio() {
+        audio_element.src = active_content_url;
+        file_viewer.classList = 'file_viewer audio';
     }
 
     async function loadPDF() {
@@ -143,11 +154,13 @@ async function fileAccess(handle) {
         file_viewer.classList = 'file_viewer text';
         text.length <= 51200 ? hljs.highlightElement(text_content) : undefined;
     }
-    
+
     if (image_formats.includes(format)) {
         loadImage();
     } else if (video_formats.includes(format)) {
         loadVideo();
+    } else if (audio_formats.includes(format)) {
+        loadAudio();
     } else if (format == 'pdf') {
         loadPDF();
     } else if (format == 'docx') {
@@ -559,6 +572,7 @@ function handleMediaEvents() {
 
     video_element.onloadeddata = function() {
         video_size.textContent = `${video_element.videoWidth}x${video_element.videoHeight}`;
+        video_duration.textContent = video_element.duration + 's';
     }
 
     video_element.onerror = function() {
