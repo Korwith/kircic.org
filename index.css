@@ -524,6 +524,7 @@ header.shift {
     right: 0;
     bottom: 0;
     overflow-y: auto;
+    outline: none;
     transition: width 0.3s, transform 0.3s;
 }
 
