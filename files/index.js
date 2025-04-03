@@ -97,7 +97,7 @@ async function loadFolder(event, origin) {
 let image_formats = ['jpg', 'jpeg', 'webp', 'gif', 'png', 'apng', 'tiff', 'svg', 'bmp', 'ico'];
 let video_formats = ['mp4', 'mov', 'webm', 'flv', 'avi', 'wmv', 'asf'];
 let audio_formats = ['mp3', 'wav', 'ogg'];
-let blacklist_formats = ['glb', 'obj', 'mtl', 'dll'];
+let blacklist_formats = ['glb', 'obj', 'mtl', 'dll', 'so', 'a'];
 async function fileAccess(handle) {
     let format = handle.name.split('.').pop().toLowerCase();
     if (blacklist_formats.includes(format)) { return; }
