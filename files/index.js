@@ -97,7 +97,7 @@ async function loadFolder(event, origin) {
 let image_formats = ['jpg', 'jpeg', 'webp', 'gif', 'png', 'apng', 'tiff', 'svg', 'bmp', 'ico'];
 let video_formats = ['mp4', 'mov', 'webm', 'flv', 'avi', 'wmv', 'asf'];
 let audio_formats = ['mp3', 'wav', 'ogg'];
-let blacklist_formats = ['glb', 'obj', 'mtl'];
+let blacklist_formats = ['glb', 'obj', 'mtl', 'dll'];
 async function fileAccess(handle) {
     let format = handle.name.split('.').pop().toLowerCase();
     if (blacklist_formats.includes(format)) { return; }
@@ -149,10 +149,15 @@ async function fileAccess(handle) {
             return;
         }
 
-        text_content.textContent = text;
+        if (text.length > 1024 * 50) {
+            text_content.textContent = 'File too large to preview.';
+        } else {
+            text_content.textContent = text;
+        }
+
         removeHighlightClasses();
         file_viewer.classList = 'file_viewer text';
-        text.length <= 51200 ? hljs.highlightElement(text_content) : undefined;
+        hljs.highlightElement(text_content);
     }
 
     if (image_formats.includes(format)) {
