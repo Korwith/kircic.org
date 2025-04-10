@@ -1,122 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+    <head>
+        <title>Files</title>
+        <link rel="stylesheet" href="index.css">
+        <link rel="stylesheet" href="node_modules/file-icons-js/css/style.css">
+    </head>
 
-<head>
-    <title>File Explorer</title>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta name="author" content="kircic"/>
-    <meta name="description" content="Local file explorer"/>
-    <meta property="og:title" content="kircic.org"/>
-    <meta property="og:type" content="website"/>
-    <meta property="og:url" content="https://www.kircic.org/files"/>
-    <meta property="og:image" content="https://www.kircic.org/icon/favicon.png"/>
-    <meta property="og:description" content="Local file explorer"/>
-    <meta name="theme-color" content="#252525"/>
-    <meta name="darkreader-lock"/>
-    <link rel="icon" type="image/x-icon" href="https://www.kircic.org/icon/favicon.png"/>
-    <link rel="stylesheet" href="index.css"/>
-    <link rel="stylesheet" href="node_modules/file-icons-js/css/style.css" />
-    <link rel="stylesheet" href="node_modules/highlight.js/styles/vs2015.css"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pdfjs-dist@5.0.375/web/pdf_viewer.min.css"/>
-</head>
+    <body>
+        <header>
+            <button class="open">Open Folder</button>
+            <button class="square back"></button>
+            <button class="square next"></button>
+            <button class="delete">Delete Files</button>
+            <button class="new">Create File</button>
+        </header>
 
-<body>
-    <header>
-        <button class="square sidebar_toggle">
-            <div class="icon"></div>
-        </button>
-        <button class="open">Open Folder</button>
-        <button class="square back">
-            <div class="icon"></div>
-        </button>
-        <button class="square next">
-            <div class="icon"></div>
-        </button>
-        <button class="square add">
-            <div class="icon"></div>
-        </button>
-        <button class="square delete">
-            <div class="icon"></div>
-        </button>
-    </header>
+        <nav class="sidebar">
+        </nav>
 
-    <nav class="sidebar"></nav>
-
-    <div class="content">
-        <div class="content_header"></div>
-
-        <div class="icon_explorer">
-            <div class="segment folders">
-                <span class="type_header">Folders</span>
-            </div>
-            <div class="segment files">
-                <span class="type_header">Files</span>
+        <div class="content">
+            <div class="content_header"></div>
+            <div class="file_explorer">
+                <div class="segment folders">
+                    <span class="segment_header">Folders</span>
+                </div>
+                <div class="segment files">
+                    <span class="segment_header">Files</span>
+                </div>
             </div>
 
-            <div class="no_view">
-                <span class="nv_title">No folder selected</span>
-                <span class="open_root">Open folder</span>
-                <span class="open_folder hide">Open folder</span>
-                <span class="nv_error hide">
-                    This device does not support the File System Access API.
-                    <a href="https://developer.mozilla.org/en-US/docs/Web/API/File_System_API#browser_compatibility">Learn More</a>
-                </span>
+            <div class="file_viewer">
+                <div class="viewer_header">
+                    <div class="file_icon"></div>
+                    <div class="file_name" contenteditable="true" spellcheck="false">test name</div>
+                    <div class="file_size"></div>
+                    <div class="file_actions">
+                        <button class="save">Save</button>
+                        <button class="discard">Discard</button>
+                        <button class="square edit"></button>
+                        <button class="square close"></button>
+                    </div>
+                </div>
+
+                <div class="viewer_content">
+                    <div id="editor" class="readonly"></div>
+                    <iframe class="document"></iframe>
+                    <div class="resize"></div>
+                </div>
             </div>
         </div>
 
-        <div class="file_viewer">
-            <div class="file_header">
-                <div class="icon"></div>
-                <span class="file_name" contenteditable spellcheck="false"></span>
-                <span class="file_size"></span>
-                <div class="file_options">
-                    <button class="discard">Discard</button>
-                    <button class="save">Save</button>
-                    <button class="edit square">
-                        <div class="icon"></div>
-                    </button>
-                    <button class="close square">
-                        <div class="icon"></div>
-                    </button>
-                </div>    
-            </div>
-
-            <div class="image_holder">
-                <img></img>
-                <span class="image_dimensions"></span>
-            </div>
-
-            <div class="video_holder">
-                <video disablepictureinpicture disableremoteplayback loop muted playsinline autoplay></video>
-                <span class="video_dimensions"></span>
-                <span class="video_duration"></span>
-            </div>
-
-            <div class="audio_holder">
-                <video controls></video>
-                <span class="audio_message"></span>
-            </div>
-
-            <iframe class="document_viewer"></iframe>
-            <pre><code class="text_content"></code></pre>
+        <div class="select"></div>
+        <!-- Placeholder -->
+        <div class="placeholder list_file">
+            <div class="icon"></div>
+            <span></span>
         </div>
-    </div>
 
-    <div id="placeholder" class="large_file">
-        <div class="icon"></div>
-        <span></span>
-    </div>
+        <div class="placeholder large_file">
+            <div class="icon"></div>
+            <span></span>
+        </div>
 
-    <div id="placeholder" class="list_file">
-        <div class="icon"></div>
-        <span></span>
-    </div>
-
-    <script src="node_modules/file-icons-js/dist/file-icons.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
-    <script src="https://unpkg.com/mammoth@1.4.2/mammoth.browser.min.js"></script>
-    <script src="index.js"></script>
-</body>
-
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.34.2/ace.js"></script>
+        <script src="node_modules/file-icons-js/dist/file-icons.js"></script>
+        <script src="accept.js"></script>
+        <script src="index.js"></script>
+    </body>
 </html>

@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "file-icons-js": "^1.1.0",
-    "highlight.js": "^11.11.1"
+    "file-icons-js": "github:websemantics/file-icons-js"
   }
 }

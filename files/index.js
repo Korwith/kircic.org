@@ -1,142 +1,102 @@
 const header = document.querySelector('header');
+const open_button = header.querySelector('button.open');
+const path_back = header.querySelector('.back');
+const path_next = header.querySelector('.next');
+const delete_button = header.querySelector('.delete');
+const new_button = header.querySelector('.new');
+
 const sidebar = document.querySelector('nav.sidebar');
+
 const content = document.querySelector('.content');
-
-const open = header.querySelector('button.open');
-const path_back = header.querySelector('button.back');
-const path_next = header.querySelector('button.next');
-const file_new = header.querySelector('button.add');
-const file_delete = header.querySelector('button.delete');
-const sidebar_toggle = header.querySelector('.sidebar_toggle');
-
 const content_header = content.querySelector('.content_header');
-const file_explorer = content.querySelector('.icon_explorer');
+const file_explorer = content.querySelector('.file_explorer');
 const folders = file_explorer.querySelector('.segment.folders');
 const files = file_explorer.querySelector('.segment.files');
-const folder_header = folders.querySelector('.type_header');
-const file_header = files.querySelector('.type_header');
-
-const no_view_holder = content.querySelector('.no_view');
-const no_view_header = no_view_holder.querySelector('.nv_title');
-const no_view_root = no_view_holder.querySelector('.open_root');
-const no_view_open_folder = no_view_holder.querySelector('.open_folder');
-const no_view_error = no_view_holder.querySelector('.nv_error');
 
 const file_viewer = content.querySelector('.file_viewer')
-const viewer_header = file_viewer.querySelector('.file_header');
-const viewer_icon = viewer_header.querySelector('.icon');
-const viewer_name = viewer_header.querySelector('span.file_name');
-const viewer_size = viewer_header.querySelector('span.file_size');
-const text_content = file_viewer.querySelector('.text_content');
+const viewer_content = content.querySelector('.viewer_content');
+const viewer_iframe = content.querySelector('iframe');
 
-const text_edit = file_viewer.querySelector('.edit');
-const text_close = file_viewer.querySelector('.close');
-const text_discard = file_viewer.querySelector('.discard');
-const text_save = file_viewer.querySelector('.save');
+const file_icon = file_viewer.querySelector('.file_icon');
+const file_name = file_viewer.querySelector('.file_name');
+const file_size = file_viewer.querySelector('.file_size');
+const file_edit = file_viewer.querySelector('.edit');
+const file_close = file_viewer.querySelector('.close');
+const edit_discard = file_viewer.querySelector('.discard');
+const edit_save = file_viewer.querySelector('.save');
+const editor_frame = file_viewer.querySelector('#editor');
 
-const image_holder = file_viewer.querySelector('.image_holder');
-const image_element = image_holder.querySelector('img');
-const image_size = image_holder.querySelector('span.image_dimensions');
+const resize = file_viewer.querySelector('.resize');
+const select = document.querySelector('.select');
 
-const video_holder = file_viewer.querySelector('.video_holder');
-const video_element = video_holder.querySelector('video');
-const video_size = video_holder.querySelector('span.video_dimensions');
-const video_duration = video_holder.querySelector('.video_duration');
+const list_placeholder = document.querySelector('.placeholder.list_file');
+const large_placeholder = document.querySelector('.placeholder.large_file');
 
-const audio_holder = file_viewer.querySelector('.audio_holder');
-const audio_element = audio_holder.querySelector('video');
-const audio_message = file_viewer.querySelector('.audio_message');
-
-const iframe_element = file_viewer.querySelector('iframe');
-
-const list_placeholder = document.querySelector('#placeholder.list_file');
-const large_placeholder = document.querySelector('#placeholder.large_file');
-
-const icons = window.FileIcons;
-
-// Global Variables
-let id_handle = [];
-let path_history = [];
-let saved_history = [];
-let block_action = false;
-let editing_text = false;
-let current_folder_access;
-let current_file_access;
-let current_access;
+let handle_directory = {};
+let folder_directory = {};
+let current_path = [];
+let saved_path = [];
+let image_url = [];
+let selected_path;
+let selected_file;
 let active_content_url;
 
-// FileSystem
-async function loadFolder(event, origin) {
+const icons = window.FileIcons;
+const editor = ace.edit('editor');
+editor.setTheme('ace/theme/dracula');
+editor.setOptions({
+    fontSize: '14px',
+    showPrintMargin: false,
+    enableBasicAutocompletion: true,
+    enableLiveAutocompletion: true,
+});
+editor.setReadOnly(true);
+
+async function handleFiles(origin, access, current_path) {
+    if (origin instanceof FileSystemDirectoryHandle != true) { origin = null; }
+
     try {
-        let handle = id_handle[origin] || await window.showDirectoryPicker();
-        if (!origin) {
-            if (id_handle.length > 0) {
-                fullReset();
-            }
-            id_handle[0] = handle;
-            origin = 0;
-            createListEntry(handle, 0, 0);
-            updatePathHistory(0);
-            current_folder_access = handle;
-            no_view_root.classList.add('hide');
-            no_view_open_folder.classList.remove('hide');
+        let handle = origin || await window.showDirectoryPicker();
+        if (!access) {
+            handle_directory[handle.name] = {};
+            access = handle_directory[handle.name];
+            current_path = handle.name;
+            folder_directory[handle.name] = handle;
         }
 
         for await (let entry of handle.values()) {
-            if (entry.name.endsWith('.crswap')) { continue; }
-            id_handle.push(entry);
-            createListEntry(entry, id_handle.length - 1, origin);
-            createMainEntry(entry, id_handle.length - 1);
+            if (entry.kind == 'directory') {
+                let new_path = `${current_path}/${entry.name}`;
+                access[entry.name] = {};
+                folder_directory[new_path] = entry;
+                await handleFiles(entry, access[entry.name], new_path);
+            } else {
+                access[entry.name] = entry;
+            }
         }
-        updateCountAttributes();
     } catch (error) {
         console.error(error);
     }
 }
 
-let image_formats = ['jpg', 'jpeg', 'webp', 'gif', 'png', 'apng', 'tiff', 'svg', 'bmp', 'ico'];
-let video_formats = ['mp4', 'mov', 'webm', 'flv', 'avi', 'wmv', 'asf'];
-let audio_formats = ['mp3', 'wav', 'ogg'];
-let blacklist_formats = ['glb', 'obj', 'mtl', 'dll', 'so', 'a'];
-async function fileAccess(handle) {
-    let format = handle.name.split('.').pop().toLowerCase();
-    if (blacklist_formats.includes(format)) { return; }
+async function startLoad() {
+    await handleFiles();
+    let handle_keys = Object.keys(handle_directory);
+    let origin_key = handle_keys[0];
+    let folder = handle_directory[origin_key].constructor == Object;
+    let entry = createListEntry(origin_key, folder, 0);
+    iconSelect({ target: entry });
+}
+
+async function openFile(path) {
+    let handle = stringToObject(path);
+    handleFileIcon(file_icon, handle.name);
+
     let file = await handle.getFile();
     let text = await file.text();
+    let format = handle.name.includes('.') ? handle.name.split('.').pop().toLowerCase() : handle.name.toLowerCase();
     active_content_url ? URL.revokeObjectURL(active_content_url) : undefined;
     active_content_url = URL.createObjectURL(file);
-    text_content.textContent = '';
-
-    async function loadImage() {
-        image_element.src = active_content_url;
-        file_viewer.classList = 'file_viewer image'
-    }
-
-    async function loadVideo() {
-        video_element.src = active_content_url;
-        file_viewer.classList = 'file_viewer video';
-    }
-
-    async function loadAudio() {
-        audio_element.src = active_content_url;
-        file_viewer.classList = 'file_viewer audio';
-    }
-
-    async function loadPDF() {
-        iframe_element.src = active_content_url;
-        file_viewer.classList = 'file_viewer pdf';
-    }
-
-    async function loadDOCX() {
-        let response = await fetch(active_content_url);
-        let buffer = await response.arrayBuffer();
-        let result = await mammoth.convertToHtml({ arrayBuffer: buffer });
-        iframe_element.contentDocument.body.innerHTML = result.value;
-        iframe_element.contentDocument.body.style.overflow = 'auto';
-        iframe_element.contentDocument.body.style.backgroundColor = '#1E1E1E';
-        iframe_element.contentDocument.body.style.color = 'white';
-        file_viewer.classList = 'file_viewer docx';
-    }
 
     async function loadText() {
         let blob = file.slice(0, 1024);
@@ -145,411 +105,338 @@ async function fileAccess(handle) {
         try {
             decoder.decode(buffer);
         } catch (error) {
-            hideCodeMenu();
-            return;
+            handleFileClose();
+            return false;
         }
 
-        if (text.length > 1024 * 50) {
-            text_content.textContent = 'File too large to preview.';
+        let key = accept[format.toLowerCase()];
+        if (key) {
+            editor.session.setMode('ace/mode/' + key.toLowerCase());
         } else {
-            text_content.textContent = text;
+            editor.session.setMode('ace/mode/plain_text');
         }
-
-        removeHighlightClasses();
-        file_viewer.classList = 'file_viewer text';
-        hljs.highlightElement(text_content);
+        editor.setValue(text, -1);
+        viewer_content.classList = 'viewer_content text';
+        file_viewer.classList.add('canedit');
+        return true;
     }
 
-    if (image_formats.includes(format)) {
-        loadImage();
-    } else if (video_formats.includes(format)) {
-        loadVideo();
-    } else if (audio_formats.includes(format)) {
-        loadAudio();
-    } else if (format == 'pdf') {
+    async function loadPDF() {
+        content.classList.add('shift');
+        viewer_iframe.src = active_content_url;
+        viewer_content.classList = 'viewer_content document';
+        file_viewer.classList.remove('canedit');
+    }
+
+    selected_path = path;
+    selected_file = handle;
+    file_name.textContent = handle.name;
+    file_size.textContent = getFileSize(text.length);
+    file_viewer.classList.remove('editing');
+    if (format == 'pdf') {
         loadPDF();
-    } else if (format == 'docx') {
-        loadDOCX();
     } else {
-        loadText();
-    }
-
-    current_file_access = handle;
-    viewer_name.textContent = handle.name;
-    viewer_size.textContent = getFileSize(text.length);
-    document.body.classList.toggle('mobile_shift', false);
-    content.classList.add('shift');
-    assignIconImage(handle, viewer_icon);
-}
-
-async function updateFile() {
-    try {
-        let writable = await current_file_access.createWritable();
-        await writable.write(text_content.textContent);
-        await writable.close();
-        removeTextEditable();
-    } catch (error) {
-        console.error(error);
+        let istext = await loadText();
+        if (!istext) { return; }
+        content.classList.add('shift');
     }
 }
 
 async function renameFile() {
-    try {
-        let found_name = viewer_name.textContent;
-        if (found_name == current_file_access.name) { return; }
-        if (fileNameAccept(found_name)) {
-            current_file_access.move(found_name);
-            viewer_name.blur();
-            assignIconImage({ name: found_name }, viewer_icon);
+    let new_name = file_name.textContent;
+    if (!fileNameAccept(new_name)) { return; }
 
-            let found_file_selectors = document.querySelectorAll(`nav.sidebar .list_file[access="${current_access}"], .icon_explorer .large_file[access="${current_access}"]`);
-            for (var i = 0; i < found_file_selectors.length; i++) {
-                let this_entry = found_file_selectors[i];
-                let this_icon = this_entry.querySelector('.icon');
-                let this_name = this_entry.querySelector('span');
-                assignIconImage({ name: found_name }, this_icon);
-                this_name.textContent = found_name;
-            }
-        }
-    } catch (error) {
-        console.error(error);
+    let directory_path = getPreviousPath(selected_path);
+    let directory_object = stringToObject(directory_path);
+    delete directory_object[selected_file.name];
+    directory_object[new_name] = selected_file;
+
+    await selected_file.move(new_name);
+    file_name.blur();
+    updatePath(directory_path, true);
+}
+
+async function deleteFile(path) {
+    let directory_path = getPreviousPath(path);
+    let parent_directory = stringToObject(directory_path);
+    let directory_object = folder_directory[directory_path];
+    let file_object = stringToObject(path);
+    delete parent_directory[file_object.name];
+
+    await directory_object.removeEntry(file_object.name);
+    updatePath(directory_path, true);
+
+    if (file_object == selected_file) {
+        handleFileClose();
     }
 }
 
-async function newEmptyFile() {
-    if (!current_folder_access) { return; }
-    try {
-        let file_handle = await current_folder_access.getFileHandle('text.txt', { create: true });
-        let writable = await file_handle.createWritable();
-        current_file_access = file_handle;
-        writable.close();
-
-        const callback = function (mutationsList, observer) {
-            for (const mutation of mutationsList) {
-                if (mutation.type != 'childList') { continue; }
-                let found_target = mutation.target.querySelector('.large_file[name="text.txt"]');
-                if (!found_target) { continue; }
-                observer.disconnect();
-                handleActiveClass({ target: found_target });
-            }
-        }
-        const observe_config = { attributes: true, childList: true, subtree: false };
-        const observer = new MutationObserver(callback);
-        observer.observe(files, observe_config);
-
-        accessPathHistory(false, current_folder_access.name);
-        fileAccess(current_file_access);
-
-    } catch (error) {
-        console.error(error);
-    }
+async function editFile() {
+    if (!selected_file) { return; }
+    let writable = await selected_file.createWritable();
+    let found_text = editor.getValue();
+    await writable.write(found_text);
+    file_size.textContent = getFileSize(found_text.length);
+    writable.close();
+    handleFileEdit();
 }
 
-async function deleteFile() {
-    if (!current_folder_access || !current_file_access) { return; }
-    try {
-        await current_folder_access.removeEntry(current_file_access.name);
-        current_file_access = null;
-        hideCodeMenu();
-        accessPathHistory(false, current_folder_access.name);
-    } catch (error) {
-        console.error(error);
-    }
+async function handleNewFile() {
+    if (current_path.length == 0) { return; }
+    let found_path = current_path.join('/');
+    let directory_object = stringToObject(found_path);
+    let directory_access = folder_directory[found_path];
+    
+    let file_handle = await directory_access.getFileHandle('text.txt', { create: true });
+    selected_file = file_handle;
+    directory_object['text.txt'] = file_handle;
+
+    updatePath(found_path, true);
+    let new_path = `${found_path}/text.txt`;
+    let found_button = file_explorer.querySelector(`.large_file[path="${new_path}"]`);
+    iconSelect({ target: found_button });
 }
 
-// User Interface
-function iconSelect(event, force, dontopen) {
-    if (block_action && !force) { return; }
-    handleActiveClass(event);
+// Gui
+function loadFolder(path) {
+    let object = stringToObject(path);
+    let sorted_list = getSortedList(path);
+    if (sorted_list.length == 0) { return; }
 
-    let found_access = event.target.getAttribute('access');
-    let handle = id_handle[found_access];
-    if (handle instanceof FileSystemDirectoryHandle != true) {
-        current_access = parseInt(found_access);
-        fileAccess(handle);
-        return true;
+    clearLargeIcons();
+    for (var i in sorted_list) {
+        let key = sorted_list[i];
+        let value = object[key];
+        let folder = value.constructor == Object;
+        createListEntry(path, folder, key);
+        createLargeEntry(path, folder, key);
     }
-    if (dontopen) { 
-        hideCodeMenu();
-        return; 
-    }
+    updatePath(path);
 
-    current_folder_access = handle;
-    clearMainIcons();
-    updatePathHistory(found_access);
-    if (event.target.classList.contains('list_file')) {
-        if (!event.target.classList.contains('expand')) {
-            loadFolder(false, found_access);
-        } else {
-            let target_list = findTargetList(found_access);
-            clearTargetList(target_list);
-            target_list.remove();
-        }
-        event.target.classList.toggle('expand');
-    } else {
-        let found_list_entry = sidebar.querySelector(`.list_file[access="${found_access}"]`);
-        loadFolder(false, found_access);
-        found_list_entry.classList.add('expand');
-    }
 }
 
-function handleActiveClass(event) {
-    let found_name = event.target.getAttribute('name');
-    let is_large = event.target.classList.contains('large_file');
-    let found_target = is_large ? event.target : file_explorer.querySelector(`.large_file[name="${found_name}"]`);
+function createListEntry(path, folder, next) {
+    let new_path = next ? `${path}/${next}` : path;
+    let clone = list_placeholder.cloneNode(true);
+    let clone_name = clone.querySelector('span');
+    let clone_icon = clone.querySelector('.icon');
+    clone_name.textContent = new_path.split('/').pop();
+    clone.classList.remove('placeholder');
+    clone.classList.add(folder ? 'folder' : 'file');
+    clone.setAttribute('path', new_path);
+    clone.addEventListener('click', iconSelect);
+    handleFileIcon(clone_icon, next);
 
-    let previous_active = document.querySelectorAll(`.large_file.active`);
-    for (var i = 0; i < previous_active.length; i++) {
-        previous_active[i].classList.remove('active');
+    if (next == 0) {
+        clone.classList.add('root');
     }
 
-    if (found_target) {
-        found_target.classList.add('active');
-    }
+    let target_list = sidebar.querySelector(`.target_list[path="${path}"]`) || sidebar;
+    target_list.appendChild(clone);
+    return clone;
 }
 
-function createMainEntry(entry, access, newfile) {
-    let large_clone = large_placeholder.cloneNode(true);
-    let large_icon = large_clone.querySelector('.icon');
-    let large_text = large_clone.querySelector('span');
-    large_text.textContent = entry.name;
-    large_clone.setAttribute('access', access);
-    large_clone.setAttribute('kind', entry.kind);
-    large_clone.setAttribute('name', entry.name);
-    large_clone.removeAttribute('id');
-    large_clone.addEventListener('mouseup', iconSelect);
-
-    if (entry.kind == 'directory') {
-        folders.appendChild(large_clone);
-    } else {
-        files.appendChild(large_clone);
-        assignIconImage(entry, large_icon);
-    }
-}
-
-function createListEntry(entry, access, origin) {
-    let list_clone = list_placeholder.cloneNode(true);
-    let list_icon = list_clone.querySelector('.icon');
-    let list_text = list_clone.querySelector('span');
-    list_text.textContent = entry.name;
-    entry.kind == 'directory' ? list_clone.style.order = 0 : list_clone.style.order = access;
-    list_clone.setAttribute('access', access);
-    list_clone.setAttribute('kind', entry.kind);
-    list_clone.setAttribute('name', entry.name);
-    list_clone.removeAttribute('id');
-    list_clone.addEventListener('mouseup', iconSelect);
-    assignIconImage(entry, list_icon);
-
-    if (access) {
-        let found_list = findTargetList(origin);
-        found_list.appendChild(list_clone);
-    } else {
-        sidebar.appendChild(list_clone);
-        list_clone.classList.add('expand');
-    }
-}
-
-function findTargetList(origin) {
-    let found_target = sidebar.querySelector(`.target_list[origin="${origin}"]`);
-    if (found_target) {
-        return found_target;
+function createLargeEntry(path, folder, next) {
+    let new_path = next ? `${path}/${next}` : path;
+    let clone = large_placeholder.cloneNode(true);
+    let clone_name = clone.querySelector('span');
+    let clone_icon = clone.querySelector('.icon');
+    clone_name.textContent = new_path.split('/').pop();
+    clone.classList.remove('placeholder');
+    clone.classList.add(folder ? 'folder' : 'file');
+    clone.setAttribute('path', new_path);
+    clone.addEventListener('click', iconSelect);
+    handleFileIcon(clone_icon, next);
+    if (!folder) {
+        createImagePreview(clone, new_path);
     }
 
-    let found_entry = sidebar.querySelector(`.list_file[access="${origin}"]`);
-    let new_target = document.createElement('div');
-    new_target.classList.add('target_list');
-    new_target.setAttribute('origin', origin);
-    found_entry.parentElement.insertBefore(new_target, found_entry.nextElementSibling);
-    return new_target;
+    folder ? folders.appendChild(clone) : files.appendChild(clone);
 }
 
-function clearTargetList(target_list) {
-    let all_entry = target_list.querySelectorAll('.list_file');
-    let handle_clone = [...id_handle];
-    for (var i = 0; i < all_entry.length; i++) {
-        let this_entry = all_entry[i];
-        let this_access = parseInt(this_entry.getAttribute('access'));
-        handle_clone.splice(this_access);
+let supported = ['jpg', 'jpeg', 'png', 'apng', 'svg', 'ico', 'gif', 'avif', 'webp'];
+async function createImagePreview(element, path) {
+    let found_span = element.querySelector('span');
+    let found_handle = stringToObject(path);
+    let file = await found_handle.getFile();
+    let format = found_handle.name.includes('.') ? found_handle.name.split('.').pop() : undefined;
+    if (!format) { return; }
+    if (!supported.includes(format)) { return; }
+    
+    let pic = new Image();
+    let url = URL.createObjectURL(file);
+    let canvas = document.createElement('canvas');
+    let ctx = canvas.getContext('2d');
+    image_url.push(url);
+
+    pic.onload = function() {
+        let new_height = (75 * pic.naturalHeight) / pic.naturalWidth;
+        canvas.width = '75';
+        canvas.height = `${new_height}`;
+        ctx.drawImage(pic, 0, 0, 75, new_height);
+
+        pic.remove();
+        element.insertBefore(canvas, found_span);
+        element.classList.add('loaded_image');
     }
-    id_handle = [...handle_clone];
-    content.removeAttribute('folders');
-    content.removeAttribute('files');
-}
-
-function clearMainIcons() {
-    let all_main = file_explorer.querySelectorAll('.large_file');
-    for (var i = 0; i < all_main.length; i++) {
-        let this_entry = all_main[i];
-        this_entry.remove();
+    pic.onerror = function() {
+        pic.remove();
+        canvas.remove();
     }
+    pic.src = url;
 }
 
-function updatePathHistory(access) {
-    let found_entry = sidebar.querySelector(`.list_file[access="${access}"]`);
-    let found_history = [];
-
-    while (found_entry != sidebar) {
-        let found_id = found_entry.getAttribute('access') || found_entry.getAttribute('origin');
-        let found_handle = id_handle[parseInt(found_id)];
-        found_history.push(found_handle.name);
-        found_entry = found_entry.parentElement;
-    }
-
-    path_history = found_history.reverse();
-    updateSavedHistory();
-    clearPathHistory();
-    createPathHistory();
-}
-
-function createPathHistory() {
-    clearPathHistory();
-    for (var i = 0; i < path_history.length; i++) {
-        let this_name = path_history[i];
-        let new_entry = document.createElement('div');
-        new_entry.textContent = this_name;
-        new_entry.classList.add('path_entry');
-        new_entry.setAttribute('name', this_name);
-        new_entry.addEventListener('mouseup', accessPathHistory);
-        content_header.appendChild(new_entry);
-    }
-}
-
-function accessPathHistory(event, name) {
-    if (block_action) { return; }
-    let origin_element = sidebar.querySelector('.list_file[access="0"]');
-    let found_name = name || event.target.getAttribute('name');
-    let end_index = path_history.indexOf(found_name);
-    let access_history = path_history.slice(1, end_index + 1);
-
-    let current_index = 0;
-    const callback = function (mutationsList, observer) {
-        for (const mutation of mutationsList) {
-            if (mutation.type != 'childList') { continue; }
-            if (!mutation.target.classList.contains('target_list')) { continue; }
-            let found_button = mutation.target.querySelector(`.list_file[name="${access_history[current_index]}"]`);
-            if (!found_button) { continue; }
-            current_index++;
-            setTimeout(function () {
-                iconSelect({ target: found_button }, true);
-            }, 1);
-        }
-
-        if (current_index == access_history.length) {
-            observer.disconnect();
-            block_action = false;
-            content.classList.remove('noshow');
-        }
+function clearLargeIcons() {
+    let all_large = file_explorer.querySelectorAll('.large_file');
+    for (var i = 0; i < all_large.length; i++) {
+        let this_icon = all_large[i];
+        this_icon.remove();
     }
 
-    block_action = true;
-    content.classList.add('noshow');
-    origin_element.classList.add('expand');
-    iconSelect({ target: origin_element }, true);
-    const observe_config = { attributes: true, childList: true, subtree: true };
-    const observer = new MutationObserver(callback);
-    observer.observe(sidebar, observe_config);
-    iconSelect({ target: origin_element }, true);
-}
-
-function clearPathHistory() {
-    let all_entry = content_header.querySelectorAll('.path_entry');
-
-    for (var i = 0; i < all_entry.length; i++) {
-        let this_entry = all_entry[i];
-        this_entry.remove();
+    for (var i = 0; i < image_url; i++) {
+        let found_url = image_url[i];
+        URL.revokeObjectURL(found_url);
     }
+    image_url = [];
 }
 
-function updateSavedHistory() {
-    if (path_history.length >= saved_history.length) {
-        saved_history = [...path_history];
+function iconSelect(event) {
+    if (!event.target) { return; }
+    let path = event.target.getAttribute('path');
+    handleActiveClass(path);
+    let sidebar_button = event.target;
+    let force_open = false;
+
+    if (!event.target.classList.contains('list_file')) {
+        sidebar_button = sidebar.querySelector(`.list_file[path="${path}"]`);
+        force_open = true;
     }
 
-    for (var i = 0; i < path_history.length; i++) {
-        let this_path = path_history[i];
-        let this_saved = saved_history[i];
-        if (this_path != this_saved) {
-            saved_history = [...path_history];
-            break;
-        }
-    }
-}
-
-function pathHistoryNext() {
-    let current_page = path_history[path_history.length - 1];
-    let next_page = saved_history[path_history.length];
-    if (!next_page) { return; }
-
-    let page_element = sidebar.querySelector(`.list_file[name="${next_page}"]`);
-    iconSelect({ target: page_element }, true);
-}
-
-function pathHistoryBack(event) {
-    if (event.which && event.which == 8) {
-        if (document.activeElement == text_content) {
-            return;
-        }
-    }
-
-    let current_page = path_history[path_history.length - 1];
-    let found_index = saved_history.indexOf(current_page);
-    let page_before = saved_history[found_index - 1];
-    if (!page_before) { return; }
-
-    let page_element = sidebar.querySelector(`.list_file[name="${page_before}"]`);
-    iconSelect({ target: page_element }, true);
-    iconSelect({ target: page_element }, true);
-}
-
-function assignIconImage(entry, icon) {
-    let classes = icons.getClassWithColor(entry.name);
-    icon.classList = 'icon';
-    if (!classes) {
-        icon.classList.add('unknown');
+    if (sidebar_button.classList.contains('file')) {
+        openFile(path);
         return;
     }
 
-    let split = classes.split(' ');
-    for (var i = 0; i < split.length; i++) {
-        let this_entry = split[i];
-        icon.classList.add(this_entry);
+    let target_list = sidebar_button.parentElement.querySelector(`.target_list[path="${path}"]`);
+    if (force_open && target_list) {
+        target_list.remove();
+    }
+    if (!target_list || force_open) {
+        target_list = document.createElement('div');
+        target_list.classList.add('target_list');
+        target_list.setAttribute('path', path);
+        sidebar_button.parentElement.insertBefore(target_list, sidebar_button.nextElementSibling);
+        loadFolder(path);
+    } else {
+        target_list.remove();
     }
 }
 
-function assignTextEditable() {
-    if (editing_text) {
-        removeTextEditable();
+function handleFileIcon(icon, name) {
+    if (!name) { return; }
+    let icon_parent = icon.parentElement;
+    if (icon_parent.classList.contains('folder')) { return; }
+    icon.classList = Array.from(icon.classList).shift();
+    let class_name = icons.getClassWithColor(name) || 'unknown';
+
+    if (!class_name.includes(' ')) {
+        icon.classList.add(class_name);
         return;
     }
-    editing_text = true;
-    removeHighlightClasses();
-    text_content.setAttribute('contenteditable', 'plaintext-only');
-    text_content.textContent = text_content.textContent;
-    text_edit.classList.add('active');
-}
 
-async function removeTextEditable() {
-    editing_text = false;
-    if (current_file_access) {
-        let found_file = await current_file_access.getFile();
-        text_content.textContent = await found_file.text();
+    let class_split = class_name.split(' ');
+    for (var i = 0; i < class_split.length; i++) {
+        let this_class = class_split[i];
+        icon.classList.add(this_class)
     }
-    text_content.removeAttribute('contenteditable');
-    text_edit.classList.remove('active');
-    removeHighlightClasses();
-    hljs.highlightElement(text_content);
 }
 
-function removeHighlightClasses() {
-    file_viewer.removeAttribute('editing');
-    text_content.removeAttribute('contenteditable');
-    text_content.removeAttribute('data-highlighted');
-    text_content.classList = 'text_content';
+function handleActiveClass(path) {
+    let found_button = document.querySelectorAll(`[path="${path}"]`);
+    let previous_select = document.querySelectorAll('.active');
+
+    for (var i = 0; i < previous_select.length; i++) {
+        let this_button = previous_select[i];
+        this_button.classList.remove('active');
+    }
+
+    for (var i = 0; i < found_button.length; i++) {
+        let this_button = found_button[i];
+        this_button.classList.add('active');
+    }
 }
 
-function handleEditedText(event) {
-    file_viewer.setAttribute('editing', true);
-    viewer_size.textContent = getFileSize(text_content.textContent.length);
+function handleFileClose() {
+    content.classList.remove('shift');
+    file_explorer.style.width = "";
+}
+
+function clearPath() {
+    let all_path_button = content_header.querySelectorAll('.path_button');
+    current_path = [];
+    for (var i = 0; i < all_path_button.length; i++) {
+        let this_button = all_path_button[i];
+        this_button.remove();
+    }
+}
+
+function updatePath(path, clicklast) {
+    let path_split = path.includes('/') ? path.split('/') : [path];
+    clearPath();
+    updatePathHistory();
+    for (var i = 0; i < path_split.length; i++) {
+        let this_value = path_split[i];
+        let path_button = document.createElement('div');
+        path_button.setAttribute('path', path_split.slice(0, i + 1).join('/'));
+        path_button.classList.add('path_button');
+        path_button.textContent = this_value;
+        path_button.addEventListener('mouseup', iconSelect);
+        content_header.appendChild(path_button);
+
+        current_path.push(this_value);
+        if (current_path.length > saved_path.length) {
+            saved_path = [...current_path];
+        }
+
+        if (i == path_split.length - 1 && clicklast) {
+            iconSelect({ target: path_button });
+        }
+    }
+}
+
+function updatePathHistory() {
+    for (var i = 0; i < current_path.length; i++) {
+        if (saved_path[i] != current_path[i]) {
+            saved_path = [...current_path];
+        }
+    }
+}
+
+function handlePathBack() {
+    if (current_path.length == 1) { return; }
+    current_path.splice(current_path.length - 1, 1);
+    updatePath(current_path.join('/'), true);
+    handleFileClose();
+}
+
+function handlePathNext() {
+    let next_path = saved_path[current_path.length];
+    if (!next_path) { return; }
+    current_path.push(next_path);
+    updatePath(current_path.join('/'), true);
+    handleFileClose();
+}
+
+function handleFileEdit() {
+    let editing = file_viewer.classList.contains('editing');
+    if (!editing) {
+        editor.setReadOnly(false);
+        editor_frame.classList.remove('readonly');
+    } else {
+        editor.setReadOnly(true);
+        editor_frame.classList.add('readonly');
+    }
+    file_viewer.classList.toggle('editing', !editing);
 }
 
 function handleFileRename(event) {
@@ -565,102 +452,123 @@ function handleFileRename(event) {
     }
 }
 
-function handleMediaEvents() {
-    image_element.onload = function() {
-        image_size.textContent = `${image_element.naturalWidth}x${image_element.naturalHeight}`;
+function handleDelete() {
+    let found_select = file_explorer.querySelectorAll('.active');
+    if (found_select.length == 0) { 
+        alert('No files selected.');
+        return; 
     }
+    let check = confirm(`Delete ${found_select.length} file${found_select.length != 1 ? 's' : ''}?`);
+    if (!check) { return; }
 
-    image_element.onerror = function() {
-        image_element.src = 'icon/error.svg';
-        image_size.textContent = 'Error';
-    }
-
-    video_element.onloadeddata = function() {
-        video_size.textContent = `${video_element.videoWidth}x${video_element.videoHeight}`;
-        video_duration.textContent = video_element.duration + 's';
-    }
-
-    video_element.onerror = function() {
-        video_element.src = 'icon/error.svg';
-        video_size.textContent = 'Error';
+    for (var i = 0; i < found_select.length; i++) {
+        let found_button = found_select[i];
+        let path = found_button.getAttribute('path');
+        deleteFile(path);
     }
 }
 
-function hideCodeMenu() {
-    content.classList.remove('shift');
-    file_viewer.removeAttribute('editing');
-    removeTextEditable();
+function updateFileIcons() {
+    let viewer_bounds = file_viewer.getBoundingClientRect();
+    file_viewer.classList.toggle('shrink', viewer_bounds.width < 525);
 }
 
-function handleSidebarToggle() {
-    document.body.classList.toggle('mobile_shift');
+function moveTransitionEnd() {
+    let viewer_bounds = file_viewer.getBoundingClientRect();
+    let frame_width = window.innerWidth - 300;
+    let bounds_px = viewer_bounds.width;
+    let target_px = frame_width - bounds_px;
+    file_explorer.style.width = content.classList.contains('shift') ? ((target_px - 20) / frame_width) * 100 + '%' : '100%';
 }
 
-function updateCountAttributes() {
-    let folder_count = folders.querySelectorAll('.large_file').length;
-    let file_count = files.querySelectorAll('.large_file').length;
-    folder_count > 0 ? content.setAttribute('folders', folder_count) : content.removeAttribute('folders');
-    file_count > 0 ? content.setAttribute('files', file_count) : content.removeAttribute('files');
-    folder_header.textContent = `Folders (${folder_count})`;
-    file_header.textContent = `Files (${file_count})`;
+function resizeMove(event) {
+    let new_width = window.innerWidth - event.x;
+    let max = window.innerWidth - 300;
+    let min = 400;
+    new_width = new_width > max ? max : new_width;
+    new_width = new_width < min ? min : new_width;
+
+    file_viewer.style.width = 100 * (new_width / max) + '%';
+    file_explorer.style.width = 100 * (max - new_width - 20) / max + '%';
+    file_explorer.classList.toggle('hide_scroll', max - new_width - 20 <= 230);
+    updateFileIcons();
 }
 
-function handleHorizontalMove(event) {
-    let all_files = Array.from(file_explorer.querySelectorAll('.large_file'));
-    let target_file = file_explorer.querySelector('.large_file.active');
-    let current_index = all_files.indexOf(target_file);
-    event.which == 37 ? current_index-- : current_index++;
-    current_index < 0 ? current_index = 0 : undefined;
-    let new_target = all_files[current_index];
-    if (!new_target) { return; }
-    iconSelect({target: new_target}, false, true);
-    shiftScroll(new_target);
+function startResize() {
+    file_viewer.classList.add('dragging');
+    document.addEventListener('mousemove', resizeMove);
+    document.addEventListener('mouseup', stopResize);
 }
 
-function handleVerticalMove(event) {
-    let all_files = Array.from(file_explorer.querySelectorAll('.large_file'));
-    let target_file = file_explorer.querySelector('.large_file.active');
-    if (!target_file) { return; }
-    let target_rect = target_file.getBoundingClientRect();
-    let current_index = all_files.indexOf(target_file);
+function stopResize() {
+    file_viewer.classList.remove('dragging');
+    document.removeEventListener('mousemove', resizeMove);
+    document.removeEventListener('mouseup', stopResize);
+}
 
-    let next_file;
-    function checkIndex(i) {
-        let found_file = all_files[i];
-        let found_rect = found_file.getBoundingClientRect();
-        if (target_rect.x == found_rect.x) {
-            next_file = found_file;
-            return true;
+function findSelected() {
+    let bounds = select.getBoundingClientRect();
+    let all_button = file_explorer.querySelectorAll('.large_file');
+
+    for (var i = 0; i < all_button.length; i++) {
+        let this_button = all_button[i];
+        let this_bounds = this_button.getBoundingClientRect();
+        if (
+            bounds.left < this_bounds.right &&
+            bounds.right > this_bounds.left &&
+            bounds.top < this_bounds.bottom &&
+            bounds.bottom > this_bounds.top
+        ) {
+            this_button.classList.add('active');
+        } else {
+            this_button.classList.remove('active');
         }
     }
-    if (event.which == 38) {
-        for (var i = current_index - 1; i >= 0; i--) {
-            let check = checkIndex(i);
-            if (check) { break; }
-        }
-    } else if (event.which == 40) {
-        for (var i = current_index + 1; i < all_files.length; i++) {
-            let check = checkIndex(i);
-            if (check) { break; }
-        }
-    }
-
-    if (!next_file) { return; }
-    iconSelect({target: next_file}, false, true);
-    shiftScroll(next_file);
 }
 
-function shiftScroll(next_file) {
+let start_position;
+function selectMove(event) {
+    let set_position = {
+        x: event.x - start_position.x,
+        y: event.y - start_position.y
+    }
+    select.classList.toggle('tx', set_position.x < 0);
+    select.classList.toggle('ty', set_position.y < 0);
+    select.style.width = Math.abs(set_position.x) + 'px';
+    select.style.height = Math.abs(set_position.y) + 'px';
+    findSelected();
+}
+
+function startSelect(event) {
+    if (!start_position) {
+        start_position = { x: event.x, y: event.y };
+        select.style.left = event.x + 'px';
+        select.style.top = event.y + 'px';
+        findSelected();
+    }
+
+    document.addEventListener('mousemove', selectMove);
+    document.addEventListener('mouseup', stopSelect);
+}
+
+function stopSelect() {
+    document.removeEventListener('mousemove', selectMove);
+    document.removeEventListener('mouseup', stopSelect);
+    select.style = "";
+    start_position = false;
+}
+
+function shiftScroll(next) {
     let explorer_top = file_explorer.scrollTop;
     let explorer_bottom = explorer_top + file_explorer.clientHeight;
-    let next_top = next_file.offsetTop;
-    let next_bottom = next_top + next_file.clientHeight;
+    let next_top = next.offsetTop;
+    let next_bottom = next_top + next.clientHeight;
 
     let before_frame = next_top <= explorer_top;
     let after_frame = next_bottom >= explorer_bottom;
 
     if (before_frame || after_frame) {
-        next_file.scrollIntoView({
+        next.scrollIntoView({
             behavior: 'smooth',
             block: before_frame ? 'start' : 'end',
             inline: 'start'
@@ -668,46 +576,143 @@ function shiftScroll(next_file) {
     }
 }
 
-function keyboardFolderOpen() {
-    let target_file = file_explorer.querySelector('.large_file.active');
-    if (!target_file) { return; }
-    if (target_file.parentElement != folders) { return; }
-    iconSelect({target: target_file});
+function handleHorizontalMove(event) {
+    if (document.activeElement == file_name) { return; }
+    event.preventDefault();
+
+    let all_list = Array.from(file_explorer.querySelectorAll('.large_file'));
+    let selected_list = file_explorer.querySelectorAll('.active');
+    if (selected_list.length != 1) {
+        handleActiveClass(all_list[0].getAttribute('path'));
+        return;
+    }
+    let selected = selected_list[0];
+    let found_index = all_list.indexOf(selected);
+    found_index = event.which == 37 ? found_index - 1 : found_index + 1;
+    let next = all_list[found_index];
+    if (!next) { return; }
+    let path = next.getAttribute('path');
+    shiftScroll(next);
+    handleActiveClass(path);
+}
+
+function handleVerticalMove(event) {
+    if (document.activeElement == file_name) { return; }
+    event.preventDefault();
+
+    let all_list = Array.from(file_explorer.querySelectorAll('.large_file'));
+    let selected_list = file_explorer.querySelectorAll('.active');
+    if (selected_list.length != 1) {
+        handleActiveClass(all_list[0].getAttribute('path'));
+        return;
+    }
+    let selected = selected_list[0];
+    let selected_bounds = selected.getBoundingClientRect();
+    let found_index = all_list.indexOf(selected);
+
+    function checkIndex(i) {
+        let found_element = all_list[i];
+        let found_path = found_element.getAttribute('path');
+        let found_bounds = found_element.getBoundingClientRect();
+        if (selected_bounds.x == found_bounds.x) {
+            handleActiveClass(found_path);
+            shiftScroll(found_element);
+            return true;
+        }
+    }
+
+    if (event.which == 40) {
+        for (var i = found_index + 1; i < all_list.length; i++) {
+            if (checkIndex(i)) { break; }
+        }
+    } else {
+        for (var i = found_index - 1; i >= 0; i--) {
+            if (checkIndex(i)) { break; }
+        }
+    }
+}
+
+function handleBackspace() {
+    if (document.activeElement == file_name) { return; }
+    let file_open = content.classList.contains('shift');
+    if (file_open) {
+        handleFileClose();
+    } else {
+        handlePathBack();
+    }
+}
+
+function handleEnterKey() {
+    let selected_list = file_explorer.querySelectorAll('.active');
+    if (selected_list.length != 1) { return; }
+    iconSelect({ target: selected_list[0] });
+}
+
+function handleSelectAll(event) {
+    if (!event.ctrlKey) { return; }
+    let all_button = file_explorer.querySelectorAll('.large_file');
+    for (var i = 0; i < all_button.length; i++) {
+        let this_button = all_button[i];
+        this_button.classList.add('active');
+    }
 }
 
 let keymap = {
-    37: handleHorizontalMove, 
+    8: handleBackspace,
+    13: handleEnterKey,
+    32: handleEnterKey,
+    27: handleFileClose,
+    37: handleHorizontalMove,
     39: handleHorizontalMove,
     38: handleVerticalMove,
     40: handleVerticalMove,
-    27: hideCodeMenu,
-    13: keyboardFolderOpen,
-    8: pathHistoryBack
+    46: handleDelete,
+    65: handleSelectAll
 }
-let prevent = [37, 38, 39, 40];
-function handleKeyDown(event) {
-    if (prevent.includes(event.which)) {
-        event.preventDefault();
+
+function handleKeyMap(event) {
+    let found = keymap[event.which];
+    found ? found(event) : undefined;
+}
+
+// Fetch
+function stringToObject(path_string) {
+    if (!path_string) { return; }
+    if (path_string.includes('/')) {
+        let path_split = path_string.split('/');
+        let path_object = handle_directory[path_split[0]];
+        for (var i = 1; i < path_split.length; i++) {
+            path_object = path_object[path_split[i]];
+        }
+        return path_object;
+    } else {
+        return handle_directory[path_string];
     }
-
-    let found_function = keymap[event.which];
-    found_function ? found_function(event) : undefined;
 }
 
-function handleResize() {
-    let viewer_rect = file_viewer.getBoundingClientRect();
-    iframe_element.width = viewer_rect.width;
-    iframe_element.height = viewer_rect.height;
+function getPreviousPath(path_string) {
+    let path_split = path_string.split('/');
+    path_split.pop();
+    return path_split.join('/');
 }
 
-function checkSystemAccess() {
-    if ('showOpenFilePicker' in window != true) {
-        no_view_header.textContent = 'Error';
-        no_view_error.classList.remove('hide');
-        no_view_root.classList.add('hide');
-        no_view_open_folder.classList.add('hide');
-        header.style.pointerEvents = 'none';
+function getSortedList(path_string) {
+    let object = stringToObject(path_string);
+    let folder_keys = [];
+    let file_keys = [];
+
+    for (var i in object) {
+        let value = object[i];
+        if (value.constructor == Object) {
+            folder_keys.push(i);
+        } else {
+            file_keys.push(i);
+        }
     }
+    folder_keys.sort();
+    file_keys.sort();
+
+    return [...folder_keys, ...file_keys];
 }
 
 let all_types = [' Byes', 'KB', 'MB', 'GB', 'TB'];
@@ -731,38 +736,20 @@ function fileNameAccept(name) {
     return true;
 }
 
-function fullReset() {
-    let all_remove = document.querySelectorAll('.list_file:not([id]), .large_file:not([id]), .target_list');
-    for (var i = 0; i < all_remove.length; i++) {
-        let this_remove = all_remove[i];
-        this_remove.remove();
-    }
-    id_handle = [];
-    path_history = [];
-    saved_history = [];
-    block_action = false;
-    editing_text = false;
-    current_file_access = null;
-    current_access = null;
-    hideCodeMenu();
-}
-
-// Initialize
-checkSystemAccess();
-handleMediaEvents();
-handleResize();
-open.addEventListener('mouseup', loadFolder);
-path_next.addEventListener('mouseup', pathHistoryNext);
-path_back.addEventListener('mouseup', pathHistoryBack);
-file_new.addEventListener('mouseup', newEmptyFile);
-file_delete.addEventListener('mouseup', deleteFile);
-no_view_root.addEventListener('mouseup', loadFolder);
-sidebar_toggle.addEventListener('mouseup', handleSidebarToggle);
-text_close.addEventListener('mouseup', hideCodeMenu);
-text_edit.addEventListener('mouseup', assignTextEditable);
-text_discard.addEventListener('mouseup', removeTextEditable);
-text_save.addEventListener('mouseup', updateFile);
-text_content.addEventListener('input', handleEditedText);
-viewer_name.addEventListener('beforeinput', handleFileRename);
-document.addEventListener('keydown', handleKeyDown);
-window.addEventListener('resize', handleResize);
+updateFileIcons();
+open_button.addEventListener('mouseup', startLoad);
+path_back.addEventListener('mouseup', handlePathBack);
+path_next.addEventListener('mouseup', handlePathNext);
+delete_button.addEventListener('mouseup', handleDelete);
+new_button.addEventListener('mouseup', handleNewFile);
+file_name.addEventListener('beforeinput', handleFileRename);
+file_close.addEventListener('mouseup', handleFileClose);
+file_edit.addEventListener('mouseup', handleFileEdit);
+edit_discard.addEventListener('mouseup', handleFileEdit);
+edit_save.addEventListener('mouseup', editFile);
+resize.addEventListener('mousedown', startResize);
+file_explorer.addEventListener('mousedown', startSelect);
+file_viewer.addEventListener('transitionend', moveTransitionEnd);
+document.addEventListener('keydown', handleKeyMap);
+window.addEventListener('onresize', updateFileIcons);
+window.addEventListener('onresize', moveTransitionEnd);
