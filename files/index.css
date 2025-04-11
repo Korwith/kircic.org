@@ -677,6 +677,11 @@ iframe.document {
     color: rgba(255, 255, 255, 0.8);
 }
 
+.info_page span.select_error {
+    font-size: 1.3rem;
+    font-weight: 900;
+}
+
 .info_page span.hide {
     display: none;
 }
@@ -710,7 +715,7 @@ iframe.document {
         width: 100%;
     }
 
-    .segment {
-        display: none;
+    .file_explorer {
+        left: 0;
     }
 }
