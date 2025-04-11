@@ -13,6 +13,10 @@ const file_explorer = content.querySelector('.file_explorer');
 const folders = file_explorer.querySelector('.segment.folders');
 const files = file_explorer.querySelector('.segment.files');
 
+const info_page = content.querySelector('.info_page');
+const support_error = info_page.querySelector('.support_error');
+const select_error = info_page.querySelector('.select_error');
+
 const file_viewer = content.querySelector('.file_viewer')
 const viewer_content = content.querySelector('.viewer_content');
 const viewer_iframe = content.querySelector('iframe');
@@ -122,10 +126,8 @@ async function openFile(path) {
     }
 
     async function loadPDF() {
-        content.classList.add('shift');
         viewer_iframe.src = active_content_url;
         viewer_content.classList = 'viewer_content document';
-        file_viewer.classList.remove('canedit');
     }
 
     selected_path = path;
@@ -137,9 +139,12 @@ async function openFile(path) {
         loadPDF();
     } else {
         let istext = await loadText();
-        if (!istext) { return; }
-        content.classList.add('shift');
+        if (!istext) { 
+            file_viewer.classList.remove('canedit');
+            return; 
+        }
     }
+    content.classList.add('shift');
 }
 
 async function renameFile() {
@@ -201,6 +206,7 @@ async function handleNewFile() {
 function loadFolder(path) {
     let object = stringToObject(path);
     let sorted_list = getSortedList(path);
+    select_error.classList.add('hide');
     if (sorted_list.length == 0) { return; }
 
     clearLargeIcons();
@@ -736,6 +742,15 @@ function fileNameAccept(name) {
     return true;
 }
 
+function checkSupport() {
+    let support = 'showOpenFilePicker' in self;
+    if (support) { return; }
+    support_error.classList.remove('hide');
+    select_error.classList.add('hide');
+    document.body.style.pointerEvents = 'none';
+}
+
+checkSupport();
 updateFileIcons();
 open_button.addEventListener('mouseup', startLoad);
 path_back.addEventListener('mouseup', handlePathBack);

@@ -658,6 +658,34 @@ iframe.document {
     transform: translateY(-100%);
 }
 
+.info_page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 50px);
+}
+
+.info_page span {
+    display: block;
+    width: fit-content;
+    height: fit-content;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.info_page span.hide {
+    display: none;
+}
+
+.info_page a {
+    color: rgb(0, 135, 135);
+    pointer-events: all !important;
+}
+
 .select.tx.ty {
     transform: translate(-100%, -100%);
 }
@@ -666,4 +694,23 @@ iframe.document {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     color: white;
     user-select: none;
+}
+
+@media screen and (max-width: 767px) {
+    header button.new, header button.delete {
+        display: none;
+    }
+
+    nav.sidebar {
+        transform: translateX(-100%);
+    }
+
+    .content {
+        left: 0;
+        width: 100%;
+    }
+
+    .segment {
+        display: none;
+    }
 }
