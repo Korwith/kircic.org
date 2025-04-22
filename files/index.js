@@ -530,6 +530,13 @@ function findSelected() {
             this_button.classList.remove('active');
         }
     }
+
+    let all_select = file_explorer.querySelector('.active');
+    if (all_select) {
+        delete_button.classList.remove('hide');
+    } else {
+        delete_button.classList.add('hide');
+    }
 }
 
 let start_position;

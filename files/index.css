@@ -125,6 +125,10 @@ header button.new::before {
     background-image: url(icon/new.svg);
 }
 
+header button.hide {
+    display: none;
+}
+
 nav.sidebar {
     position: fixed;
     left: 0;
