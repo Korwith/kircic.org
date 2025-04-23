@@ -699,6 +699,113 @@ iframe.document {
     transform: translate(-100%, -100%);
 }
 
+.right_menu {
+    opacity: 0;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    width: 200px;
+    height: fit-content;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 12px;
+    background-color: #151515;
+    z-index: 5;
+    transform: translateY(-100%);
+    transition: opacity 0.2s;
+}
+
+.right_menu.show {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.right_menu button {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 40px;
+    width: calc(100% - 10px);
+    border-radius: 8px;
+    border: 0;
+    background-color: rgba(255, 255, 255, 0);
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 900;
+    color: rgba(255, 255, 255, 0.8);
+    transition: background-color 0.2s;
+}
+
+.right_menu button::before {
+    content: '';
+    aspect-ratio: 1/1;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.8;
+}
+
+.right_menu button:after {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    width: fit-content;
+    padding-right: 15px;
+    height: 100%;
+    right: 0;
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.8);
+    transition: color 0.2s;
+}
+
+.right_menu button.cut::before {
+    background-image: url(icon/scissors.svg);
+    background-size: 60%;
+}
+
+.right_menu button.copy::before {
+    background-image: url(icon/copy.svg);
+    background-size: 60%;
+}
+
+.right_menu button.paste::before {
+    background-image: url(icon/paste.svg);
+    background-size: 60%;
+}
+
+.right_menu button.delete::before {
+    background-image: url(icon/trash.svg);
+    background-size: 70%;
+}
+
+.right_menu button.cut::after {
+    content: 'CTRL-X';
+}
+
+.right_menu button.copy::after {
+    content: 'CTRL-C';
+}
+
+.right_menu button.paste::after {
+    content: 'CTRL-V';
+}
+
+.right_menu button.delete::after {
+    content: 'Del';
+}
+
+.right_menu button:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.right_menu button::before:hover {
+    opacity: 1;
+}
+
 * {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     color: white;

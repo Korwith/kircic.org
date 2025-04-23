@@ -33,6 +33,12 @@ const editor_frame = file_viewer.querySelector('#editor');
 const resize = file_viewer.querySelector('.resize');
 const select = document.querySelector('.select');
 
+const right_menu = document.querySelector('.right_menu');
+const right_cut = right_menu.querySelector('button.cut');
+const right_copy = right_menu.querySelector('button.copy');
+const right_paste = right_menu.querySelector('button.paste');
+const right_delete = right_menu.querySelector('button.delete');
+
 const list_placeholder = document.querySelector('.placeholder.list_file');
 const large_placeholder = document.querySelector('.placeholder.large_file');
 
@@ -515,7 +521,7 @@ function stopResize() {
 function findSelected() {
     let bounds = select.getBoundingClientRect();
     let all_button = file_explorer.querySelectorAll('.large_file');
-
+    
     for (var i = 0; i < all_button.length; i++) {
         let this_button = all_button[i];
         let this_bounds = this_button.getBoundingClientRect();
@@ -553,6 +559,7 @@ function selectMove(event) {
 }
 
 function startSelect(event) {
+    if (event.which == 3) { return; }
     if (!start_position) {
         start_position = { x: event.x, y: event.y };
         select.style.left = event.x + 'px';
@@ -670,6 +677,18 @@ function handleSelectAll(event) {
     }
 }
 
+function handleRightClick(event) {
+    event.preventDefault();
+    right_menu.classList.toggle('show');
+    right_menu.style.left = event.x + 'px';
+    right_menu.style.top = event.y + 'px';
+}
+
+function forceCloseRightClick(event) {
+    if (right_menu == event.target || right_menu.contains(event.target)) { return; }
+    right_menu.classList.remove('show');
+}
+
 let keymap = {
     8: handleBackspace,
     13: handleEnterKey,
@@ -772,6 +791,9 @@ edit_save.addEventListener('mouseup', editFile);
 resize.addEventListener('mousedown', startResize);
 file_explorer.addEventListener('mousedown', startSelect);
 file_viewer.addEventListener('transitionend', moveTransitionEnd);
+right_delete.addEventListener('mouseup', handleDelete);
 document.addEventListener('keydown', handleKeyMap);
+document.addEventListener('contextmenu', handleRightClick);
+document.addEventListener('mousedown', forceCloseRightClick);
 window.addEventListener('onresize', updateFileIcons);
 window.addEventListener('onresize', moveTransitionEnd);
