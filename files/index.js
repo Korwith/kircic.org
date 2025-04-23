@@ -208,6 +208,47 @@ async function handleNewFile() {
     iconSelect({ target: found_button });
 }
 
+let copied_data = {};
+async function copyFiles() {
+    let all_selected = file_explorer.querySelectorAll('.active');
+    let found_path = current_path.join('/');
+    let directory_object = stringToObject(found_path);
+    
+    copied_data = {};
+    for (var i = 0; i < all_selected.length; i++) {
+        let found_button = all_selected[i];
+        let handle_name = found_button.getAttribute('path').split('/').pop();
+        let handle = directory_object[handle_name];
+        copied_data[handle_name] = handle;
+    }
+}
+
+async function pasteFiles(inner_path = []) {
+    let found_directory = copied_data;
+    let directory_now = folder_directory[current_path.join('/')];
+
+    for (var i = 0; i < inner_path.length; i++) {
+        let folder_name = inner_path[i];
+        found_directory = found_directory[folder_name];
+    }
+
+    for (var i in found_directory) {
+        let entry = found_directory[i];
+        if (entry.kind == 'directory') {
+            await directory_now.getDirectoryHandle(entry.name, { create: true });
+            inner_path.push(inner_path);
+            await pasteFiles(inner_path);
+        } else {
+            let file = await entry.getFile();
+            let buffer = await file.arrayBuffer();
+            let new_handle = await directory_now.getFileHandle(entry.name, { create: true });
+            let writable = await new_handle.createWritable();
+            await writable.write(buffer);
+            await writable.close();
+        }
+    }
+}
+
 // Gui
 function loadFolder(path) {
     let object = stringToObject(path);
