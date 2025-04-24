@@ -47,6 +47,11 @@ let folder_directory = {};
 let current_path = [];
 let saved_path = [];
 let image_url = [];
+
+let copied_directory = [];
+let copied_data = {};
+let cutting = false;
+
 let selected_path;
 let selected_file;
 let active_content_url;
@@ -167,19 +172,23 @@ async function renameFile() {
     updatePath(directory_path, true);
 }
 
-async function deleteFile(path) {
-    let directory_path = getPreviousPath(path);
-    let parent_directory = stringToObject(directory_path);
-    let directory_object = folder_directory[directory_path];
+async function deleteFile(path, dontupdate) {
+    let parent_directory = getPreviousPath(path);
+    let parent_object = stringToObject(parent_directory);
+    let file_name = path.includes('/') ? path.split('/').pop() : path;
     let file_object = stringToObject(path);
-    delete parent_directory[file_object.name];
 
-    await directory_object.removeEntry(file_object.name);
-    updatePath(directory_path, true);
-
-    if (file_object == selected_file) {
-        handleFileClose();
+    if (file_object.constructor == Object) {
+        file_object = folder_directory[path];
+        await file_object.remove({ recursive: true });
+        delete folder_directory[path];
+    } else {
+        await file_object.remove();
     }
+    delete parent_object[file_name];
+    
+    if (dontupdate) { return; }
+    updatePath(parent_directory, true);
 }
 
 async function editFile() {
@@ -208,16 +217,17 @@ async function handleNewFile() {
     iconSelect({ target: found_button });
 }
 
-let copied_data = {};
 async function copyFiles() {
     let all_selected = file_explorer.querySelectorAll('.active');
     let found_path = current_path.join('/');
     let directory_object = stringToObject(found_path);
     
     copied_data = {};
+    copied_directory = [...current_path];
     for (var i = 0; i < all_selected.length; i++) {
         let found_button = all_selected[i];
-        let handle_name = found_button.getAttribute('path').split('/').pop();
+        let handle_path = found_button.getAttribute('path');
+        let handle_name = handle_path.includes('/') ? handle_path.split('/').pop() : handle_path;
         let handle = directory_object[handle_name];
         copied_data[handle_name] = handle;
     }
@@ -225,8 +235,11 @@ async function copyFiles() {
 
 async function pasteFiles(inner_path = []) {
     let found_directory = copied_data;
-    let directory_now = folder_directory[current_path.join('/')];
+    let updated_path = [...current_path, ...inner_path].join('/');
+    let directory_now = folder_directory[updated_path];
+    let directory_now_object = stringToObject(updated_path);
 
+    // finds the target subfolder from the root directory
     for (var i = 0; i < inner_path.length; i++) {
         let folder_name = inner_path[i];
         found_directory = found_directory[folder_name];
@@ -234,10 +247,16 @@ async function pasteFiles(inner_path = []) {
 
     for (var i in found_directory) {
         let entry = found_directory[i];
-        if (entry.kind == 'directory') {
-            await directory_now.getDirectoryHandle(entry.name, { create: true });
-            inner_path.push(inner_path);
-            await pasteFiles(inner_path);
+        // check if the entry is a file or folder
+        if (entry.constructor == Object) {
+            let create_directory = await directory_now.getDirectoryHandle(i, { create: true });
+            let added_path = [...inner_path, i];
+            let outer_path = [...current_path, ...inner_path, i];
+            folder_directory[outer_path.join('/')] = create_directory;
+            directory_now_object[i] = {};
+            await pasteFiles(added_path);
+            // call the function itself again to fill the newly created subfolder
+            // sends back the new subfolder as paramater
         } else {
             let file = await entry.getFile();
             let buffer = await file.arrayBuffer();
@@ -245,7 +264,33 @@ async function pasteFiles(inner_path = []) {
             let writable = await new_handle.createWritable();
             await writable.write(buffer);
             await writable.close();
+            directory_now_object[i] = new_handle;
         }
+    }
+
+    // refresh directory when top level call finishes
+    if (inner_path.length == 0) {
+        if (cutting) {
+            await deleteCopyDirectory();
+        }
+        updatePath(current_path.join('/'), true);
+    }
+}
+
+async function deleteCopyDirectory() {
+    try {
+        for (const name in copied_data) {
+            const file_path = [...copied_directory, name].join('/');
+            await deleteFile(file_path, true); // Pass true to skip UI update
+            const previous_button = sidebar.querySelector(`[path="${file_path}"]`);
+            if (previous_button) {
+                previous_button.remove();
+            }
+        }
+        copied_data = {};
+        cutting = false;
+    } catch (e) {
+        console.error('Failed to delete copied directory:', e);
     }
 }
 
@@ -311,8 +356,18 @@ let supported = ['jpg', 'jpeg', 'png', 'apng', 'svg', 'ico', 'gif', 'avif', 'web
 async function createImagePreview(element, path) {
     let found_span = element.querySelector('span');
     let found_handle = stringToObject(path);
+
+    if (!(found_handle instanceof FileSystemFileHandle)) {
+        console.warn(`Invalid handle for ${path}:`, found_handle?.constructor.name);
+        return;
+    }
+
+    let format = found_handle.name.includes('.') ? found_handle.name.split('.').pop().toLowerCase() : undefined;
+    if (!format || !supported.includes(format)) {
+        return;
+    }
+
     let file = await found_handle.getFile();
-    let format = found_handle.name.includes('.') ? found_handle.name.split('.').pop() : undefined;
     if (!format) { return; }
     if (!supported.includes(format)) { return; }
     
@@ -519,6 +574,7 @@ function handleDelete() {
         let path = found_button.getAttribute('path');
         deleteFile(path);
     }
+    forceCloseRightClick();
 }
 
 function updateFileIcons() {
@@ -718,6 +774,38 @@ function handleSelectAll(event) {
     }
 }
 
+function handleCopy(event) {
+    if (!event.ctrlKey && event.target != right_copy) { return; }
+    copyFiles();
+    forceCloseRightClick();
+}
+
+function handlePaste(event) {
+    if (!event.ctrlKey && event.target != right_paste) { return; }
+    pasteFiles();
+    forceCloseRightClick();
+}
+
+function handleCut(event) {
+    if (!event.ctrlKey && event.target != right_cut) { return; }
+    cutting = true;
+    copyFiles();
+    forceCloseRightClick();
+
+    let all_select = file_explorer.querySelectorAll('.active');
+    let all_previous_cut = file_explorer.querySelectorAll('.cut');
+
+    for (var i = 0; i < all_previous_cut.length; i++) {
+        let this_icon = all_previous_cut[i];
+        this_icon.classList.remove('cut');
+    }
+
+    for (var i = 0; i < all_select.length; i++) {
+        let this_icon = all_select[i];
+        this_icon.classList.add('cut');
+    }
+}
+
 function handleRightClick(event) {
     event.preventDefault();
     right_menu.classList.toggle('show');
@@ -726,7 +814,7 @@ function handleRightClick(event) {
 }
 
 function forceCloseRightClick(event) {
-    if (right_menu == event.target || right_menu.contains(event.target)) { return; }
+    if (event && (right_menu == event.target || right_menu.contains(event.target))) { return; }
     right_menu.classList.remove('show');
 }
 
@@ -740,7 +828,10 @@ let keymap = {
     38: handleVerticalMove,
     40: handleVerticalMove,
     46: handleDelete,
-    65: handleSelectAll
+    65: handleSelectAll,
+    67: handleCopy,
+    86: handlePaste,
+    88: handleCut
 }
 
 function handleKeyMap(event) {
@@ -832,6 +923,8 @@ edit_save.addEventListener('mouseup', editFile);
 resize.addEventListener('mousedown', startResize);
 file_explorer.addEventListener('mousedown', startSelect);
 file_viewer.addEventListener('transitionend', moveTransitionEnd);
+right_copy.addEventListener('mouseup', handleCopy);
+right_paste.addEventListener('mouseup', handlePaste);
 right_delete.addEventListener('mouseup', handleDelete);
 document.addEventListener('keydown', handleKeyMap);
 document.addEventListener('contextmenu', handleRightClick);
