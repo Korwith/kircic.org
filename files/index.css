@@ -909,6 +909,11 @@ iframe.document {
     background-image: url(icon/trash.svg);
 }
 
+.notify.rename::before {
+    content: '';
+    background-image: url(icon/rename.svg);
+}
+
 @keyframes spin {
     0% {
         transform: rotate(0deg);

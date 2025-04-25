@@ -593,6 +593,7 @@ function handleFileRename(event) {
     if (event.inputType == 'insertParagraph') {
         event.preventDefault();
         renameFile();
+        sendNotification(3000, 'Renamed file', 'rename');
     }
 }
 
@@ -807,6 +808,7 @@ function handleEnterKey() {
 }
 
 function handleSelectAll(event) {
+    if (file_viewer.contains(document.activeElement)) { return; }
     if (!event.ctrlKey) { return; }
     let all_button = file_explorer.querySelectorAll('.large_file');
     for (var i = 0; i < all_button.length; i++) {
