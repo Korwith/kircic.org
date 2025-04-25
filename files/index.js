@@ -563,7 +563,7 @@ function updatePathHistory() {
 }
 
 function handlePathBack() {
-    if (current_path.length == 1) { return; }
+    if (current_path.length <= 1) { return; }
     current_path.splice(current_path.length - 1, 1);
     updatePath(current_path.join('/'), true);
     handleFileClose();
