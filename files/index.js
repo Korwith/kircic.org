@@ -599,11 +599,11 @@ function handleFileRename(event) {
     if (event.inputType == 'insertParagraph') {
         event.preventDefault();
         renameFile();
-        sendNotification(3000, 'Renamed file', 'rename');
+        sendNotification(2000, 'Renamed file', 'rename');
     }
 }
 
-function handleDelete() {
+async function handleDelete() {
     let found_select = file_explorer.querySelectorAll('.active');
     if (found_select.length == 0) {
         alert('No files selected.');
@@ -617,7 +617,9 @@ function handleDelete() {
         let path = found_button.getAttribute('path');
         deleteFile(path);
     }
-    sendNotification(3000, `Deleting ${found_select.length} file${found_select.length != 1 ? 's' : ''}...`, 'delete');
+
+    let batch_file_size = await getBatchFileCount(found_select);
+    sendNotification(2000, `Deleting ${batch_file_size} file${batch_file_size != 1 ? 's' : ''}...`, 'delete');
     forceCloseRightClick();
 }
 
@@ -988,6 +990,10 @@ function getSortedList(path_string) {
 async function getFileCount(path_string) {
     let count = 0;
     let path_object = stringToObject(path_string);
+    if (path_object.constructor != Object) {
+        return 1;
+    }
+
     for (var i in path_object) {
         let directory_handle = path_object[i];
         if (directory_handle.constructor == Object) {
@@ -997,6 +1003,16 @@ async function getFileCount(path_string) {
         }
     }
 
+    return count;
+}
+
+async function getBatchFileCount(array) {
+    let count = 0;
+    for (var i = 0; i < array.length; i++) {
+        let this_element = array[i];
+        let this_path = this_element.getAttribute('path');
+        count += await getFileCount(this_path);
+    }
     return count;
 }
 
