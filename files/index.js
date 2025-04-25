@@ -98,7 +98,7 @@ async function handleFiles(origin, access, current_path) {
             } else {
                 access[entry.name] = entry;
                 load_count++;
-                updateLoadNotification();
+                updateLoadNotification(load_count);
             }
         }
     } catch (error) {
@@ -165,9 +165,9 @@ async function openFile(path) {
         loadPDF();
     } else {
         let istext = await loadText();
-        if (!istext) { 
+        if (!istext) {
             file_viewer.classList.remove('canedit');
-            return; 
+            return;
         }
     }
     content.classList.add('shift');
@@ -201,7 +201,7 @@ async function deleteFile(path, dontupdate) {
         await file_object.remove();
     }
     delete parent_object[file_name];
-    
+
     if (dontupdate) { return; }
     updatePath(parent_directory, true);
 }
@@ -234,7 +234,7 @@ async function handleNewFile() {
     let found_path = current_path.join('/');
     let directory_object = stringToObject(found_path);
     let directory_access = folder_directory[found_path];
-    
+
     let file_handle = await directory_access.getFileHandle('text.txt', { create: true });
     selected_file = file_handle;
     directory_object['text.txt'] = file_handle;
@@ -249,7 +249,7 @@ async function copyFiles() {
     let all_selected = file_explorer.querySelectorAll('.active');
     let found_path = current_path.join('/');
     let directory_object = stringToObject(found_path);
-    
+
     copied_data = {};
     copied_directory = [...current_path];
     for (var i = 0; i < all_selected.length; i++) {
@@ -261,6 +261,7 @@ async function copyFiles() {
     }
 }
 
+let pasted_count = 0;
 async function pasteFiles(inner_path = []) {
     let found_directory = copied_data;
     let updated_path = [...current_path, ...inner_path].join('/');
@@ -293,15 +294,9 @@ async function pasteFiles(inner_path = []) {
             await writable.write(buffer);
             await writable.close();
             directory_now_object[i] = new_handle;
+            pasted_count++;
+            updateLoadNotification(pasted_count);
         }
-    }
-
-    // refresh directory when top level call finishes
-    if (inner_path.length == 0) {
-        if (cutting) {
-            await deleteCopyDirectory();
-        }
-        updatePath(current_path.join('/'), true);
     }
 }
 
@@ -405,14 +400,14 @@ async function createImagePreview(element, path) {
     let file = await found_handle.getFile();
     if (!format) { return; }
     if (!supported.includes(format)) { return; }
-    
+
     let pic = new Image();
     let url = URL.createObjectURL(file);
     let canvas = document.createElement('canvas');
     let ctx = canvas.getContext('2d');
     image_url.push(url);
 
-    pic.onload = function() {
+    pic.onload = function () {
         let new_height = (75 * pic.naturalHeight) / pic.naturalWidth;
         canvas.width = '75';
         canvas.height = `${new_height}`;
@@ -422,7 +417,7 @@ async function createImagePreview(element, path) {
         element.insertBefore(canvas, found_span);
         element.classList.add('loaded_image');
     }
-    pic.onerror = function() {
+    pic.onerror = function () {
         pic.remove();
         canvas.remove();
     }
@@ -601,9 +596,9 @@ function handleFileRename(event) {
 
 function handleDelete() {
     let found_select = file_explorer.querySelectorAll('.active');
-    if (found_select.length == 0) { 
+    if (found_select.length == 0) {
         alert('No files selected.');
-        return; 
+        return;
     }
     let check = confirm(`Delete ${found_select.length} file${found_select.length != 1 ? 's' : ''}?`);
     if (!check) { return; }
@@ -657,7 +652,7 @@ function stopResize() {
 function findSelected() {
     let bounds = select.getBoundingClientRect();
     let all_button = file_explorer.querySelectorAll('.large_file');
-    
+
     for (var i = 0; i < all_button.length; i++) {
         let this_button = all_button[i];
         let this_bounds = this_button.getBoundingClientRect();
@@ -825,11 +820,20 @@ function handleCopy(event) {
     forceCloseRightClick();
 }
 
-function handlePaste(event) {
+async function handlePaste(event) {
     let accept_button = [paste_button, right_paste];
     if (!event.ctrlKey && !accept_button.includes(event.target)) { return; }
-    pasteFiles();
     forceCloseRightClick();
+    startLoadNotification();
+    updateLoadNotification(0);
+    await pasteFiles();
+    stopLoadNotification();
+    pasted_count = 0;
+
+    if (cutting) {
+        await deleteCopyDirectory();
+    }
+    updatePath(current_path.join('/'), true);
 }
 
 function handleCut(event) {
@@ -894,19 +898,22 @@ function sendNotification() {
 }
 
 function startLoadNotification() {
-    let notify = sendNotification();
+    let notify = notification_holder.querySelector('.notify.loader') || sendNotification();
     notify.classList.add('loader');
+    notify.classList.remove('hide');
 }
 
-function updateLoadNotification() {
+function updateLoadNotification(value) {
     let notify = notification_holder.querySelector('.notify.loader');
     let notify_text = notify.querySelector('span.text');
-    notify_text.textContent = `${load_count} files loaded`;
+    let ending = value == load_count ? 'loaded' : 'copied';
+    ending = cutting ? 'moved' : ending;
+    notify_text.textContent = `${value} files ${ending}`;
 }
 
 function stopLoadNotification() {
     let notify = notification_holder.querySelector('.notify.loader');
-    notify.remove();
+    notify.classList.add('hide');
 }
 
 // Fetch

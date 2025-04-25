@@ -872,6 +872,10 @@ iframe.document {
     background-color: #151515;
 }
 
+.notify.hide {
+    display: none;
+}
+
 .notify span.text {
     flex: 1;
     display: flex;
