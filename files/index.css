@@ -116,13 +116,33 @@ header button.next::before {
 }
 
 header button.delete::before {
-    background-size: 96%;
-    background-image: url(icon/discard.svg);
+    background-size: 70%;
+    background-image: url(icon/trash.svg);
 }
 
-header button.new::before {
+header button.new_folder::before {
+    background-size: 86%;
+    background-image: url(icon/new_folder.svg);
+}
+
+header button.new_file::before {
     background-size: 80%;
     background-image: url(icon/new.svg);
+}
+
+header button.cut::before {
+    background-size: 60%;
+    background-image: url(icon/scissors.svg);
+}
+
+header button.copy::before {
+    background-size: 60%;
+    background-image: url(icon/copy.svg);
+}
+
+header button.paste::before {
+    background-size: 60%;
+    background-image: url(icon/paste.svg);
 }
 
 header button.hide {
@@ -716,9 +736,20 @@ iframe.document {
     padding-bottom: 5px;
     border-radius: 12px;
     background-color: #151515;
+    border: 1px solid #303030;
     z-index: 5;
     transform: translateY(-100%);
     transition: opacity 0.2s;
+}
+
+.right_menu hr {
+    border: 0;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 0;
+    height: 1px;
+    width: 100%;
+    background-color: #303030;
 }
 
 .right_menu.show {
@@ -764,6 +795,16 @@ iframe.document {
     font-size: 1.1rem;
     color: rgba(255, 255, 255, 0.8);
     transition: color 0.2s;
+}
+
+.right_menu button.new_folder::before {
+    background-image: url(icon/new_folder.svg);
+    background-size: 80%;
+}
+
+.right_menu button.new_file::before {
+    background-image: url(icon/new.svg);
+    background-size: 74%;
 }
 
 .right_menu button.cut::before {
@@ -817,7 +858,7 @@ iframe.document {
 }
 
 @media screen and (max-width: 767px) {
-    header button.new, header button.delete {
+    header button.new_folder, header button.delete {
         display: none;
     }
 

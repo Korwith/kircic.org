@@ -2,8 +2,12 @@ const header = document.querySelector('header');
 const open_button = header.querySelector('button.open');
 const path_back = header.querySelector('.back');
 const path_next = header.querySelector('.next');
+const cut_button = header.querySelector('.cut');
+const copy_button = header.querySelector('.copy');
+const paste_button = header.querySelector('.paste');
 const delete_button = header.querySelector('.delete');
-const new_button = header.querySelector('.new');
+const new_folder = header.querySelector('.new_folder');
+const new_file = header.querySelector('.new_file');
 
 const sidebar = document.querySelector('nav.sidebar');
 
@@ -34,6 +38,8 @@ const resize = file_viewer.querySelector('.resize');
 const select = document.querySelector('.select');
 
 const right_menu = document.querySelector('.right_menu');
+const right_new_folder = right_menu.querySelector('.new_folder');
+const right_new_file = right_menu.querySelector('.new_file');
 const right_cut = right_menu.querySelector('button.cut');
 const right_copy = right_menu.querySelector('button.copy');
 const right_paste = right_menu.querySelector('button.paste');
@@ -201,7 +207,13 @@ async function editFile() {
     handleFileEdit();
 }
 
+async function handleNewFolder() {
+    forceCloseRightClick();
+    if (current_path.length == 0) { return; }
+}
+
 async function handleNewFile() {
+    forceCloseRightClick();
     if (current_path.length == 0) { return; }
     let found_path = current_path.join('/');
     let directory_object = stringToObject(found_path);
@@ -478,11 +490,13 @@ function handleActiveClass(path) {
         let this_button = found_button[i];
         this_button.classList.add('active');
     }
+    updateHeaderClasses();
 }
 
 function handleFileClose() {
     content.classList.remove('shift');
     file_explorer.style.width = "";
+    updateHeaderClasses();
 }
 
 function clearPath() {
@@ -515,6 +529,7 @@ function updatePath(path, clicklast) {
         if (i == path_split.length - 1 && clicklast) {
             iconSelect({ target: path_button });
         }
+        updateHeaderClasses();
     }
 }
 
@@ -639,13 +654,7 @@ function findSelected() {
             this_button.classList.remove('active');
         }
     }
-
-    let all_select = file_explorer.querySelector('.active');
-    if (all_select) {
-        delete_button.classList.remove('hide');
-    } else {
-        delete_button.classList.add('hide');
-    }
+    updateHeaderClasses();
 }
 
 let start_position;
@@ -679,6 +688,15 @@ function stopSelect() {
     document.removeEventListener('mouseup', stopSelect);
     select.style = "";
     start_position = false;
+}
+
+function updateHeaderClasses() {
+    let select_bool = file_explorer.querySelectorAll('.active').length > 0;
+    let select_hide = [cut_button, copy_button, paste_button, delete_button];
+    for (var i = 0; i < select_hide.length; i++) {
+        let this_button = select_hide[i];
+        this_button.classList.toggle('hide', !select_bool);
+    }
 }
 
 function shiftScroll(next) {
@@ -753,6 +771,7 @@ function handleVerticalMove(event) {
             if (checkIndex(i)) { break; }
         }
     }
+    updateHeaderClasses();
 }
 
 function handleBackspace() {
@@ -781,19 +800,22 @@ function handleSelectAll(event) {
 }
 
 function handleCopy(event) {
-    if (!event.ctrlKey && event.target != right_copy) { return; }
+    let accept_button = [copy_button, right_copy];
+    if (!event.ctrlKey && !accept_button.includes(event.target)) { return; }
     copyFiles();
     forceCloseRightClick();
 }
 
 function handlePaste(event) {
-    if (!event.ctrlKey && event.target != right_paste) { return; }
+    let accept_button = [paste_button, right_paste];
+    if (!event.ctrlKey && !accept_button.includes(event.target)) { return; }
     pasteFiles();
     forceCloseRightClick();
 }
 
 function handleCut(event) {
-    if (!event.ctrlKey && event.target != right_cut) { return; }
+    let accept_button = [cut_button, right_cut];
+    if (!event.ctrlKey && !accept_button.includes(event.target)) { return; }
     cutting = true;
     copyFiles();
     forceCloseRightClick();
@@ -885,6 +907,21 @@ function getSortedList(path_string) {
     return [...folder_keys, ...file_keys];
 }
 
+async function getFileCount(path_string) {
+    let count = 0;
+    let path_object = stringToObject(path_string);
+    for (var i in path_object) {
+        let directory_handle = path_object[i];
+        if (directory_handle.constructor == Object) {
+            count += await getFileCount(`${path_string}/${i}`);
+        } else {
+            count++;
+        }
+    }
+
+    return count;
+}
+
 let all_types = [' Byes', 'KB', 'MB', 'GB', 'TB'];
 function getFileSize(bytes) {
     let count = 0;
@@ -919,8 +956,12 @@ updateFileIcons();
 open_button.addEventListener('mouseup', startLoad);
 path_back.addEventListener('mouseup', handlePathBack);
 path_next.addEventListener('mouseup', handlePathNext);
+cut_button.addEventListener('mouseup', handleCut);
+copy_button.addEventListener('mouseup', handleCopy);
+paste_button.addEventListener('mouseup', handlePaste);
 delete_button.addEventListener('mouseup', handleDelete);
-new_button.addEventListener('mouseup', handleNewFile);
+new_folder.addEventListener('mouseup', handleNewFolder);
+new_file.addEventListener('mouseup', handleNewFile);
 file_name.addEventListener('beforeinput', handleFileRename);
 file_close.addEventListener('mouseup', handleFileClose);
 file_edit.addEventListener('mouseup', handleFileEdit);
@@ -929,6 +970,9 @@ edit_save.addEventListener('mouseup', editFile);
 resize.addEventListener('mousedown', startResize);
 file_explorer.addEventListener('mousedown', startSelect);
 file_viewer.addEventListener('transitionend', moveTransitionEnd);
+right_new_folder.addEventListener('mouseup', handleNewFolder);
+right_new_file.addEventListener('mouseup', handleNewFile);
+right_cut.addEventListener('mouseup', handleCut);
 right_copy.addEventListener('mouseup', handleCopy);
 right_paste.addEventListener('mouseup', handlePaste);
 right_delete.addEventListener('mouseup', handleDelete);
