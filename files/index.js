@@ -348,8 +348,13 @@ function createLargeEntry(path, folder, next) {
     if (!folder) {
         createImagePreview(clone, new_path);
     }
-
     folder ? folders.appendChild(clone) : files.appendChild(clone);
+
+    if (cutting && path == copied_directory.join('/')) {
+        if (copied_data[next]) {
+            clone.classList.add('cut');
+        }
+    }
 }
 
 let supported = ['jpg', 'jpeg', 'png', 'apng', 'svg', 'ico', 'gif', 'avif', 'webp'];
@@ -411,6 +416,7 @@ function clearLargeIcons() {
 function iconSelect(event) {
     if (!event.target) { return; }
     let path = event.target.getAttribute('path');
+    if (path == selected_path) { return; }
     handleActiveClass(path);
     let sidebar_button = event.target;
     let force_open = false;
@@ -535,7 +541,7 @@ function handlePathNext() {
     handleFileClose();
 }
 
-function handleFileEdit() {
+function handleFileEdit(event) {
     let editing = file_viewer.classList.contains('editing');
     if (!editing) {
         editor.setReadOnly(false);
