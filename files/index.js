@@ -48,6 +48,9 @@ const right_delete = right_menu.querySelector('button.delete');
 const list_placeholder = document.querySelector('.placeholder.list_file');
 const large_placeholder = document.querySelector('.placeholder.large_file');
 
+const notification_holder = document.querySelector('.notification_holder');
+const notify_placeholder = document.querySelector('.placeholder.notify');
+
 let handle_directory = {};
 let folder_directory = {};
 let current_path = [];
@@ -73,6 +76,7 @@ editor.setOptions({
 });
 editor.setReadOnly(true);
 
+let load_count = 0;
 async function handleFiles(origin, access, current_path) {
     if (origin instanceof FileSystemDirectoryHandle != true) { origin = null; }
 
@@ -93,6 +97,8 @@ async function handleFiles(origin, access, current_path) {
                 await handleFiles(entry, access[entry.name], new_path);
             } else {
                 access[entry.name] = entry;
+                load_count++;
+                updateLoadNotification();
             }
         }
     } catch (error) {
@@ -101,7 +107,10 @@ async function handleFiles(origin, access, current_path) {
 }
 
 async function startLoad() {
+    startLoadNotification();
     await handleFiles();
+    stopLoadNotification();
+    load_count = 0;
     let handle_keys = Object.keys(handle_directory);
     let origin_key = handle_keys[0];
     let folder = handle_directory[origin_key].constructor == Object;
@@ -314,6 +323,7 @@ async function deleteCopyDirectory() {
 }
 
 // Gui
+let root_folder_blacklist = ['System Volume Information', 'Recovery', '$RECYCLE.BIN', '.Trash-1000'];
 function loadFolder(path) {
     let object = stringToObject(path);
     let sorted_list = getSortedList(path);
@@ -324,6 +334,8 @@ function loadFolder(path) {
         let key = sorted_list[i];
         let value = object[key];
         let folder = value.constructor == Object;
+        if (!path.includes('/') && root_folder_blacklist.includes(key)) { continue; }
+        if (key[0] == '.') { continue; }
         createListEntry(path, folder, key);
         createLargeEntry(path, folder, key);
     }
@@ -872,6 +884,29 @@ let keymap = {
 function handleKeyMap(event) {
     let found = keymap[event.which];
     found ? found(event) : undefined;
+}
+
+function sendNotification() {
+    let notify = notify_placeholder.cloneNode(true);
+    notify.classList.remove('placeholder');
+    notification_holder.appendChild(notify);
+    return notify;
+}
+
+function startLoadNotification() {
+    let notify = sendNotification();
+    notify.classList.add('loader');
+}
+
+function updateLoadNotification() {
+    let notify = notification_holder.querySelector('.notify.loader');
+    let notify_text = notify.querySelector('span.text');
+    notify_text.textContent = `${load_count} files loaded`;
+}
+
+function stopLoadNotification() {
+    let notify = notification_holder.querySelector('.notify.loader');
+    notify.remove();
 }
 
 // Fetch
