@@ -223,9 +223,13 @@ async function handleNewFolder() {
     let parent_object = stringToObject(found_path);
     let parent_handle = folder_directory[found_path];
     let new_handle = await parent_handle.getDirectoryHandle('New Folder', { create: true });
+    let new_path = `${found_path}/${'New Folder'}`;
     parent_object['New Folder'] = {};
-    folder_directory[`${found_path}/${'New Folder'}`] = await new_handle;
+    folder_directory[new_path] = await new_handle;
+
     updatePath(found_path, true)
+    let found_button = file_explorer.querySelector(`.large_file[path="${new_path}"]`);
+    handleActiveClass({ target: found_button });
 }
 
 async function handleNewFile() {
@@ -259,6 +263,8 @@ async function copyFiles() {
         let handle = directory_object[handle_name];
         copied_data[handle_name] = handle;
     }
+
+    header.classList.toggle('showpaste', all_selected.length > 0);
 }
 
 let pasted_count = 0;
@@ -867,6 +873,13 @@ function handleRightClick(event) {
     right_menu.classList.toggle('show');
     right_menu.style.left = event.x + 'px';
     right_menu.style.top = event.y + 'px';
+
+    if (event.target.classList.contains('large_file')) {
+        if (!event.target.classList.contains('active')) {
+            let target_path = event.target.getAttribute('path');
+            handleActiveClass(target_path);
+        }
+    }
 }
 
 function forceCloseRightClick(event) {

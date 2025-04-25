@@ -149,6 +149,10 @@ header button.hide {
     display: none;
 }
 
+header.showpaste button.paste {
+    display: block;
+}
+
 nav.sidebar {
     position: fixed;
     left: 0;
@@ -889,6 +893,7 @@ iframe.document {
 }
 
 .notify::before {
+    content: '';
     display: block;
     width: 40px;
     height: 40px;
@@ -899,18 +904,15 @@ iframe.document {
 }
 
 .notify.loader::before {
-    content: '';
     background-image: url(icon/spin.svg);
     animation: spin 1.5s linear infinite;
 }
 
 .notify.delete::before {
-    content: '';
     background-image: url(icon/trash.svg);
 }
 
 .notify.rename::before {
-    content: '';
     background-image: url(icon/rename.svg);
 }
 
