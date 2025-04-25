@@ -852,6 +852,9 @@ iframe.document {
 }
 
 .notification_holder {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     position: fixed;
     z-index: 6;
     bottom: 0;
@@ -899,6 +902,11 @@ iframe.document {
     content: '';
     background-image: url(icon/spin.svg);
     animation: spin 1.5s linear infinite;
+}
+
+.notify.delete::before {
+    content: '';
+    background-image: url(icon/trash.svg);
 }
 
 @keyframes spin {

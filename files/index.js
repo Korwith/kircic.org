@@ -507,6 +507,8 @@ function handleActiveClass(path) {
 }
 
 function handleFileClose() {
+    selected_file = null;
+    selected_path = null;
     content.classList.remove('shift');
     file_explorer.style.width = "";
     updateHeaderClasses();
@@ -608,6 +610,7 @@ function handleDelete() {
         let path = found_button.getAttribute('path');
         deleteFile(path);
     }
+    sendNotification(3000, `Deleting ${found_select.length} file${found_select.length != 1 ? 's' : ''}...`, 'delete');
     forceCloseRightClick();
 }
 
@@ -890,10 +893,21 @@ function handleKeyMap(event) {
     found ? found(event) : undefined;
 }
 
-function sendNotification() {
+function sendNotification(ms, text, addclass) {
     let notify = notify_placeholder.cloneNode(true);
+    let span = notify.querySelector('span.text');
     notify.classList.remove('placeholder');
     notification_holder.appendChild(notify);
+
+    if (ms && text) {
+        span.textContent = text;
+        setTimeout(function() {
+            notify.remove();
+        }, ms);
+    }
+    if (addclass) {
+        notify.classList.add(addclass);
+    }
     return notify;
 }
 
