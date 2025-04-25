@@ -803,6 +803,7 @@ function handleSelectAll(event) {
         let this_button = all_button[i];
         this_button.classList.add('active');
     }
+    updateHeaderClasses();
 }
 
 function handleCopy(event) {
