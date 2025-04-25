@@ -210,6 +210,13 @@ async function editFile() {
 async function handleNewFolder() {
     forceCloseRightClick();
     if (current_path.length == 0) { return; }
+    let found_path = current_path.join('/');
+    let parent_object = stringToObject(found_path);
+    let parent_handle = folder_directory[found_path];
+    let new_handle = await parent_handle.getDirectoryHandle('New Folder', { create: true });
+    parent_object['New Folder'] = {};
+    folder_directory[`${found_path}/${'New Folder'}`] = await new_handle;
+    updatePath(found_path, true)
 }
 
 async function handleNewFile() {
@@ -272,7 +279,7 @@ async function pasteFiles(inner_path = []) {
         } else {
             let file = await entry.getFile();
             let buffer = await file.arrayBuffer();
-            let new_handle = await directory_now.getFileHandle(entry.name, { create: true });
+            let new_handle = await directory_now.getFileHandle(i, { create: true });
             let writable = await new_handle.createWritable();
             await writable.write(buffer);
             await writable.close();
@@ -311,7 +318,6 @@ function loadFolder(path) {
     let object = stringToObject(path);
     let sorted_list = getSortedList(path);
     select_error.classList.add('hide');
-    if (sorted_list.length == 0) { return; }
 
     clearLargeIcons();
     for (var i in sorted_list) {
