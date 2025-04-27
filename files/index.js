@@ -409,7 +409,7 @@ async function createImagePreview(element, path) {
 
     let pic = new Image();
     let url;
-    if (format == "heic" || format == "heic") {
+    if (format == "heic" || format == "heif") {
         let convert = await heic2any({ blob: file });
         url = URL.createObjectURL(convert);
     } else {
