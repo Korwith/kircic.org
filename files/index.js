@@ -408,7 +408,13 @@ async function createImagePreview(element, path) {
     if (!supported.includes(format)) { return; }
 
     let pic = new Image();
-    let url = URL.createObjectURL(file);
+    let url;
+    if (format == "heic" || format == "heic") {
+        let convert = await heic2any({ blob: file });
+        url = URL.createObjectURL(convert);
+    } else {
+        url = URL.createObjectURL(file);
+    }
     let canvas = document.createElement('canvas');
     let ctx = canvas.getContext('2d');
     image_url.push(url);
