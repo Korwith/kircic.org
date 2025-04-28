@@ -24,6 +24,8 @@ const select_error = info_page.querySelector('.select_error');
 const file_viewer = content.querySelector('.file_viewer')
 const viewer_content = content.querySelector('.viewer_content');
 const viewer_iframe = content.querySelector('iframe');
+const media_holder = content.querySelector('.media .media_holder');
+const media_info = content.querySelector('.media .media_info');
 
 const file_icon = file_viewer.querySelector('.file_icon');
 const file_name = file_viewer.querySelector('.file_name');
@@ -64,6 +66,11 @@ let cutting = false;
 let selected_path;
 let selected_file;
 let active_content_url;
+
+// Media
+let supported = ['jpg', 'jpeg', 'png', 'apng', 'svg', 'ico', 'gif', 'avif', 'webp', 'heic', 'heif', 'mp4', 'mov', 'mkv'];
+let heic = ['heic', 'heif'];
+let video = ['mp4', 'mov', 'mkv'];
 
 const icons = window.FileIcons;
 const editor = ace.edit('editor');
@@ -151,9 +158,53 @@ async function openFile(path) {
         return true;
     }
 
-    async function loadPDF() {
+    function loadPDF() {
         viewer_iframe.src = active_content_url;
         viewer_content.classList = 'viewer_content document';
+    }
+
+    function loadMedia() {
+        let properties = ['width', 'height', 'naturalWidth', 'naturalHeight', 'videoWidth', 'videoHeight', 'duration'];
+
+        let is_video = video.includes(format);
+        let new_media = document.createElement(is_video ? 'video' : 'img');
+        let previous_media = media_holder.querySelector('img, video');
+        if (previous_media) {
+            previous_media.remove();
+        }
+        if (is_video) {
+            new_media.muted = true;
+            new_media.playsInline = false;
+            new_media.autoplay = true;
+        }
+
+        function mediaLoaded() {
+            let new_width = is_video ? new_media.videoWidth : new_media.naturalWidth;
+            let new_height = is_video ? new_media.videoHeight : new_media.naturalHeight;
+            new_media.aspectRatio = new_width / new_height;
+
+            let all_properties = media_info.querySelectorAll('span');
+            for (var i = 0; i < all_properties.length; i++) {
+                let this_span = all_properties[i];
+                this_span.remove();
+            }
+
+            for (var i = 0; i < properties.length; i++) {
+                let this_property = properties[i];
+                let found_value = new_media[this_property];
+                if (!found_value) { continue; }
+                let entry = document.createElement('span');
+                entry.textContent = `${this_property}: ${found_value}`;
+                media_info.appendChild(entry);
+            }
+
+            media_holder.appendChild(new_media);
+        }
+
+        new_media.addEventListener('loadeddata', mediaLoaded);
+        new_media.addEventListener('load', mediaLoaded);
+        new_media.src = active_content_url;
+        viewer_content.classList = 'viewer_content media';
     }
 
     selected_path = path;
@@ -163,6 +214,8 @@ async function openFile(path) {
     file_viewer.classList.remove('editing');
     if (format == 'pdf') {
         loadPDF();
+    } else if (supported.includes(format)) {
+        loadMedia();
     } else {
         let istext = await loadText();
         if (!istext) {
@@ -388,9 +441,6 @@ function createLargeEntry(path, folder, next) {
     }
 }
 
-let supported = ['jpg', 'jpeg', 'png', 'apng', 'svg', 'ico', 'gif', 'avif', 'webp', 'heic', 'heif', 'mp4', 'mov', 'mkv'];
-let heic = ['heic', 'heif'];
-let video = ['mp4', 'mov', 'mkv'];
 async function createImagePreview(element, path) {
     let found_span = element.querySelector('span');
     let found_handle = stringToObject(path);
