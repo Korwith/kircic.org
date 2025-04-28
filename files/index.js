@@ -475,9 +475,7 @@ function videoPreviewFallback(element, canvas, blob) {
             element.insertBefore(canvas, found_span);
             element.classList.add('loaded_image');
             video.remove();
-            console.log('test2')
         }
-        console.log('test')
     }
 
     video.onerror = function() {
