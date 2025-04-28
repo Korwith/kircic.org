@@ -296,6 +296,16 @@ nav.sidebar::after {
     display: none;
 }
 
+.large_file.loading .icon::before {
+    content: '';
+    background-size: 80%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url(icon/spin.svg);
+    opacity: 0.8;
+    animation: spin 1.5s linear infinite;
+}
+
 .large_file .icon.unknown {
     background-image: url(icon/file.svg);
     background-size: 80%;
