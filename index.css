@@ -673,9 +673,14 @@ header.shift {
     background-size: 76%;
 }
 
-.cert {
-    background-image: url(icon/certification1.svg);
-    background-size: 110%;
+.cert.aplus {
+    background-image: url(icon/certification1.png);
+    background-size: 88%;
+}
+
+.cert.security {
+    background-image: url(icon/certification2.png);
+    background-size: 88%;
 }
 
 .social_holder {
