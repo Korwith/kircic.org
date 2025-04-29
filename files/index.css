@@ -145,6 +145,11 @@ header button.paste::before {
     background-image: url(icon/paste.svg);
 }
 
+header button.settings::before {
+    background-size: 54%;
+    background-image: url(icon/cog.svg);
+}
+
 header button.hide {
     display: none;
 }
@@ -257,6 +262,8 @@ nav.sidebar::after {
 .large_file {
     width: 100px;
     height: 100px;
+    min-width: 100px;
+    min-height: 100px;
     position: relative;
     overflow: hidden;
     display: flex;
@@ -290,6 +297,18 @@ nav.sidebar::after {
     background-position: center;
     filter: brightness(80%);
     transition: filter 0.2s;
+}
+
+.large_file .play_icon {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    background-size: 60%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url(icon/play.svg);
+    opacity: 0.4;
 }
 
 .large_file.loaded_image .icon {
@@ -384,7 +403,6 @@ nav.sidebar::after {
 
 .file_explorer {
     flex: 1;
-    min-width: 230px;
     padding: 10px;
     z-index: 4;
     overflow-y: auto;

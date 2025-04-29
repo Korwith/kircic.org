@@ -70,7 +70,8 @@ let active_content_url;
 // Media
 let supported = ['jpg', 'jpeg', 'png', 'apng', 'svg', 'ico', 'gif', 'avif', 'webp', 'heic', 'heif', 'mp4', 'mov', 'mkv'];
 let heic = ['heic', 'heif'];
-let video = ['mp4', 'mov', 'mkv'];
+let video = ['mp4', 'mov', 'mkv', 'avi', 'webm', 'ogv', 'flv', '3gp'];
+let keyframe = ['mp4', 'mov', 'webm', 'flv', '3pg'];
 
 const icons = window.FileIcons;
 const editor = ace.edit('editor');
@@ -164,17 +165,13 @@ async function openFile(path) {
     }
 
     function loadMedia() {
-        let properties = ['width', 'height', 'naturalWidth', 'naturalHeight', 'videoWidth', 'videoHeight', 'duration'];
+        let properties = ['naturalWidth', 'naturalHeight', 'videoWidth', 'videoHeight', 'duration'];
 
         let is_video = video.includes(format);
         let new_media = document.createElement(is_video ? 'video' : 'img');
-        let previous_media = media_holder.querySelector('img, video');
-        if (previous_media) {
-            previous_media.remove();
-        }
+        media_holder.querySelector('img, video')?.remove();
         if (is_video) {
             new_media.muted = true;
-            new_media.playsInline = false;
             new_media.autoplay = true;
         }
 
@@ -394,6 +391,7 @@ function loadFolder(path) {
         createLargeEntry(path, folder, key);
     }
     updatePath(path);
+    handleImagePreviews();
 
 }
 
@@ -429,9 +427,6 @@ function createLargeEntry(path, folder, next) {
     clone.setAttribute('path', new_path);
     clone.addEventListener('click', iconSelect);
     handleFileIcon(clone_icon, next);
-    if (!folder) {
-        createImagePreview(clone, new_path);
-    }
     folder ? folders.appendChild(clone) : files.appendChild(clone);
 
     if (cutting && path == copied_directory.join('/')) {
@@ -441,13 +436,28 @@ function createLargeEntry(path, folder, next) {
     }
 }
 
+async function handleImagePreviews() {
+    let current_elements = file_explorer.querySelectorAll('.large_file');
+    let original_path = [...current_path];
+    for (var i = 0; i < current_elements.length; i++) {
+        if (JSON.stringify(original_path) != JSON.stringify(current_path)) {
+            handleCacheURL();
+            break;
+        }
+        let this_element = current_elements[i];
+        let this_path = this_element.getAttribute('path');
+        createImagePreview(this_element, this_path);
+        // use await to slow this down
+    }
+}
+
 async function createImagePreview(element, path) {
     let found_span = element.querySelector('span');
     let found_handle = stringToObject(path);
     if (found_handle.constructor == Object) { return; }
 
-    let format = found_handle.name.includes('.') 
-        ? found_handle.name.split('.').pop().toLowerCase() 
+    let format = found_handle.name.includes('.')
+        ? found_handle.name.split('.').pop().toLowerCase()
         : undefined;
 
     if (!format || !supported.includes(format)) { return; }
@@ -457,23 +467,24 @@ async function createImagePreview(element, path) {
     let ctx = canvas.getContext('2d');
     let file = await found_handle.getFile();
 
-    let blob = !heic.includes(format) 
-        ? file 
-        : await heic2any({ blob: file, toType: 'image/jpeg', quality: 0.2});
+    let blob = !heic.includes(format)
+        ? file
+        : await heic2any({ blob: file, toType: 'image/jpeg', quality: 0.2 });
 
     try {
         let bitmap = await createImageBitmap(blob);
-        let target_size = {width: 75, height: Math.round((bitmap.height / bitmap.width) * 75)};
+        let target_size = { width: 75, height: Math.round((bitmap.height / bitmap.width) * 75) };
         canvas.width = target_size.width;
         canvas.height = target_size.height;
         ctx.drawImage(bitmap, 0, 0, target_size.width, target_size.height);
         bitmap.close();
         element.insertBefore(canvas, found_span);
-        element.classList.add('loaded_image');   
-    } catch(error) {
+        element.classList.add('loaded_image');
+    } catch (error) {
         !video.includes(format)
             ? imagePreviewFallback(element, canvas, blob)
-            : videoPreviewFallback(element, canvas, blob);
+            : videoPreviewFallback(element, canvas, file, format);
+        delete blob;
     } finally {
         element.classList.remove('loading');
     }
@@ -484,58 +495,29 @@ function imagePreviewFallback(element, canvas, blob) {
     let ctx = canvas.getContext('2d');
     let img = new Image();
 
-    img.onload = function() {
-        let target_size = {width: 75, height: Math.round((img.naturalHeight / img.naturalWidth) * 75)};
+    img.onload = function () {
+        let target_size = { width: 75, height: Math.round((img.naturalHeight / img.naturalWidth) * 75) };
         canvas.width = target_size.width;
         canvas.height = target_size.height;
         ctx.drawImage(img, 0, 0, target_size.width, target_size.height);
-        element.insertBefore(canvas, found_span);
+        element.insertBefore(canvas, found_span); // is this oops
         element.classList.add('loaded_image');
         img.remove();
     }
 
-    img.onerror = function() {
+    img.onerror = function () {
         canvas.remove();
         img.remove();
     }
-    
+
     let object_url = URL.createObjectURL(blob);
     image_url.push(object_url);
     img.src = object_url;
 }
 
-function videoPreviewFallback(element, canvas, blob) {
-    let found_span = element.querySelector('span');
-    let ctx = canvas.getContext('2d');
-    let video = document.createElement('video');
-    video.muted = true;
-    video.playsInline = true;
-    video.autoplay = true;
-
-    video.onloadeddata = function() {
-        let target_size = {width: 75, height: (Math.round((video.videoHeight / video.videoWidth) * 75))};
-        canvas.width = target_size.width;
-        canvas.height = target_size.height;
-        canvas.style.width = target_size.width + 'px';
-        canvas.style.height = target_size.height + 'px';
-        video.currentTime = 0;
-
-        video.onseeked = function() {
-            ctx.drawImage(video, 0, 0, target_size.width, target_size.height);
-            element.insertBefore(canvas, found_span);
-            element.classList.add('loaded_image');
-            video.remove();
-        }
-    }
-
-    video.onerror = function() {
-        canvas.remove();
-        video.remove();
-    }
-
-    let object_url = URL.createObjectURL(blob);
-    image_url.push(object_url);
-    video.src = object_url;
+async function videoPreviewFallback(element, canvas, file, format) {
+    // COMPLETE THIS FUNCTION
+    return true;
 }
 
 function clearLargeIcons() {
@@ -544,7 +526,10 @@ function clearLargeIcons() {
         let this_icon = all_large[i];
         this_icon.remove();
     }
+    handleCacheURL();
+}
 
+function handleCacheURL() {
     for (var i = 0; i < image_url; i++) {
         let found_url = image_url[i];
         URL.revokeObjectURL(found_url);
@@ -623,6 +608,7 @@ function handleActiveClass(path) {
 function handleFileClose() {
     selected_file = null;
     selected_path = null;
+    media_holder.querySelector('img, video')?.remove();
     content.classList.remove('shift');
     file_explorer.style.width = "";
     updateHeaderClasses();
@@ -1026,7 +1012,7 @@ function sendNotification(ms, text, addclass) {
 
     if (ms && text) {
         span.textContent = text;
-        setTimeout(function() {
+        setTimeout(function () {
             notify.remove();
         }, ms);
     }
