@@ -127,6 +127,9 @@ async function startLoad() {
 }
 
 async function openFile(path) {
+    let target_button = file_explorer.querySelector(`.large_file[path="${path}"]`);
+    target_button.classList.add('loading');
+
     let handle = stringToObject(path);
     handleFileIcon(file_icon, handle.name);
 
@@ -165,8 +168,7 @@ async function openFile(path) {
     }
 
     function loadMedia() {
-        let properties = ['naturalWidth', 'naturalHeight', 'videoWidth', 'videoHeight', 'duration'];
-
+        let properties = ['duration', 'videoWidth', 'videoHeight', 'naturalWidth', 'naturalHeight'];
         let is_video = video.includes(format);
         let new_media = document.createElement(is_video ? 'video' : 'img');
         media_holder.querySelector('img, video')?.remove();
@@ -175,7 +177,7 @@ async function openFile(path) {
             new_media.autoplay = true;
         }
 
-        function mediaLoaded() {
+        async function mediaLoaded() {
             let new_width = is_video ? new_media.videoWidth : new_media.naturalWidth;
             let new_height = is_video ? new_media.videoHeight : new_media.naturalHeight;
             new_media.aspectRatio = new_width / new_height;
@@ -196,10 +198,11 @@ async function openFile(path) {
             }
 
             media_holder.appendChild(new_media);
+            await createImagePreview(target_button, true);
+            target_button.classList.remove('loading');
         }
 
-        new_media.addEventListener('loadeddata', mediaLoaded);
-        new_media.addEventListener('load', mediaLoaded);
+        new_media.addEventListener('loadeddata', mediaLoaded, {once: true});
         new_media.src = active_content_url;
         viewer_content.classList = 'viewer_content media';
     }
@@ -210,9 +213,9 @@ async function openFile(path) {
     file_size.textContent = getFileSize(text.length);
     file_viewer.classList.remove('editing');
     if (format == 'pdf') {
-        loadPDF();
+        await loadPDF();
     } else if (supported.includes(format)) {
-        loadMedia();
+        await loadMedia();
     } else {
         let istext = await loadText();
         if (!istext) {
@@ -220,6 +223,7 @@ async function openFile(path) {
             return;
         }
     }
+    target_button.classList.remove('loading');
     content.classList.add('shift');
 }
 
@@ -446,12 +450,13 @@ async function handleImagePreviews() {
         }
         let this_element = current_elements[i];
         let this_path = this_element.getAttribute('path');
-        createImagePreview(this_element, this_path);
+        await createImagePreview(this_element);
         // use await to slow this down
     }
 }
 
-async function createImagePreview(element, path) {
+async function createImagePreview(element, force) {
+    let path = element.getAttribute('path');
     let found_span = element.querySelector('span');
     let found_handle = stringToObject(path);
     if (found_handle.constructor == Object) { return; }
@@ -462,7 +467,6 @@ async function createImagePreview(element, path) {
 
     if (!format || !supported.includes(format)) { return; }
     if (!supported.includes(format)) { return; }
-    element.classList.add('loading');
     let canvas = document.createElement('canvas');
     let ctx = canvas.getContext('2d');
     let file = await found_handle.getFile();
@@ -470,6 +474,12 @@ async function createImagePreview(element, path) {
     let blob = !heic.includes(format)
         ? file
         : await heic2any({ blob: file, toType: 'image/jpeg', quality: 0.2 });
+
+    if (!force && blob.size > 5 * 1024 * 1024) { 
+        return; 
+    } else {
+        element.classList.add('loading');
+    }
 
     try {
         let bitmap = await createImageBitmap(blob);
@@ -515,9 +525,46 @@ function imagePreviewFallback(element, canvas, blob) {
     img.src = object_url;
 }
 
-async function videoPreviewFallback(element, canvas, file, format) {
-    // COMPLETE THIS FUNCTION
-    return true;
+async function videoPreviewFallback(element, canvas, blob) {
+    let ctx = canvas.getContext('2d');
+    let found_span = element.querySelector('span');
+    let video_element = document.createElement('video');
+    let target_url = URL.createObjectURL(blob);
+    let target_size = {width: 100, height: 100};
+    video_element.preload = 'metadata';
+    image_url.push(target_url);
+
+    function loadedMetadata() {
+        target_size = {width: 100, height: (video_element.videoHeight / video_element.videoWidth) * 100}
+        canvas.width = target_size.width * 2;
+        canvas.height = target_size.height * 2;
+        canvas.style.width = target_size.width + 'px';
+        canvas.style.height = target_size.height + 'px';
+        canvas.style.aspectRatio = target_size.width / target_size.height;
+        video_element.currentTime = video_element.duration / 2;
+        video_element.requestVideoFrameCallback(frameLoaded);
+    }
+
+    function frameLoaded() {
+        if (!video_element) { return; }
+        ctx.drawImage(video_element, 0, 0, target_size.width * 2, target_size.height * 2);
+        element.insertBefore(canvas, found_span);
+        element.classList.add('loaded_image');
+        cleanup();
+    }
+
+    function videoError() {
+        cleanup();
+    }
+
+    function cleanup() {
+        URL.revokeObjectURL(target_url);
+        video_element.remove();
+    }
+
+    video_element.addEventListener('loadedmetadata', loadedMetadata, {once: true});
+    video_element.addEventListener('error', videoError, {once: true});
+    video_element.src = target_url;
 }
 
 function clearLargeIcons() {
