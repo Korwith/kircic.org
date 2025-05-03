@@ -345,6 +345,30 @@ nav.sidebar::after {
     background-size: 80%;
 }
 
+.large_file.nes .icon, .list_file.nes .icon {
+    background-image: url(icon/nes.ico) !important;
+    background-size: 100% !important;
+}
+
+.large_file.nes .icon::after, .list_file.nes .icon::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(icon/play.svg);
+    background-size: 38%;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.large_file.nes:hover .icon::after, .list_icon.nes:hover .icon::after {
+    opacity: 0.8;
+}
+
 .large_file .icon:before {
     font-size: 75px;
     text-align: center;
@@ -679,6 +703,19 @@ iframe.document {
     border: 0;
 }
 
+.nes_emulator {
+    width: 100%;
+    height: 100%;
+}
+
+.nes_canvas {
+    aspect-ratio: 256/240;
+    width: calc(100% - 20px);
+    margin: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
 .file_viewer.dragging iframe.document {
     pointer-events: none;
 }
@@ -696,6 +733,10 @@ iframe.document {
 }
 
 .viewer_content:not(.media) div.media {
+    display: none;
+}
+
+.viewer_content:not(.nes) .nes_emulator {
     display: none;
 }
 
@@ -1012,6 +1053,11 @@ iframe.document {
 
 .notify.rename::before {
     background-image: url(icon/rename.svg);
+}
+
+.notify.error::before {
+    background-image: url(icon/error.svg);
+    filter: brightness(0) invert(1);
 }
 
 @keyframes spin {

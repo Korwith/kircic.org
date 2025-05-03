@@ -27,6 +27,9 @@ const viewer_iframe = content.querySelector('iframe');
 const media_holder = content.querySelector('.media .media_holder');
 const media_info = content.querySelector('.media .media_info');
 
+const nes_holder = content.querySelector('.nes_emulator');
+const nes_canvas = nes_holder.querySelector('canvas');
+
 const file_icon = file_viewer.querySelector('.file_icon');
 const file_name = file_viewer.querySelector('.file_name');
 const file_size = file_viewer.querySelector('.file_size');
@@ -66,6 +69,7 @@ let cutting = false;
 let selected_path;
 let selected_file;
 let active_content_url;
+let active_emulator;
 
 // Media
 let supported = ['jpg', 'jpeg', 'png', 'apng', 'svg', 'ico', 'gif', 'avif', 'webp', 'heic', 'heif', 'mp4', 'mov', 'mkv'];
@@ -134,12 +138,12 @@ async function openFile(path) {
     handleFileIcon(file_icon, handle.name);
 
     let file = await handle.getFile();
-    let text = await file.text();
     let format = handle.name.includes('.') ? handle.name.split('.').pop().toLowerCase() : handle.name.toLowerCase();
     active_content_url ? URL.revokeObjectURL(active_content_url) : undefined;
     active_content_url = URL.createObjectURL(file);
 
     async function loadText() {
+        let text = await file.text();
         let blob = file.slice(0, 1024);
         let buffer = await blob.arrayBuffer();
         let decoder = new TextDecoder('utf-8', { fatal: true });
@@ -165,6 +169,52 @@ async function openFile(path) {
     function loadPDF() {
         viewer_iframe.src = active_content_url;
         viewer_content.classList = 'viewer_content document';
+    }
+
+    async function loadNES() {
+        let buffer = await file.arrayBuffer();
+        try {
+            if (active_emulator) { nesCleanup(active_emulator); }
+            let nes = new NesJs.Nes();
+            nes.setRom(new NesJs.Rom(buffer));
+            nes.setDisplay(new NesJs.Display(nes_canvas));
+            nes.setAudio(new NesJs.Audio());
+            active_emulator = nes;
+
+            function nesKeyDown(event) {
+                nes.handleKeyDown(event);
+                nesCleanup(nes);
+            }
+
+            function nesKeyUp(event) {
+                nes.handleKeyUp(event);
+                nesCleanup(nes);
+            }
+
+            function nesCleanup(nes_object) {
+                if (selected_file != handle) {
+                    document.removeEventListener('keydown', nesKeyDown);
+                    document.removeEventListener('keyup', nesKeyUp);
+                    nes_object.setDisplay(null);
+                    nes_object.setAudio(null);
+                    nes_object = null;
+                }
+            }
+
+            document.addEventListener('keydown', nesKeyDown);
+            document.addEventListener('keyup', nesKeyUp);
+            nes.bootup();
+            nes.run();
+            nes_canvas.focus();
+            viewer_content.classList = 'viewer_content nes';
+            
+            return true;
+        } catch (error) {
+            sendNotification(3000, error + ' (Unsupported NES format)', 'error');
+            handleFileClose();
+            target_button.classList.remove('loading');
+            return false;
+        }
     }
 
     function loadMedia() {
@@ -202,20 +252,21 @@ async function openFile(path) {
             target_button.classList.remove('loading');
         }
 
-        new_media.addEventListener('loadeddata', mediaLoaded, {once: true});
+        new_media.addEventListener(is_video ? 'loadeddata' : 'load', mediaLoaded, { once: true });
         new_media.src = active_content_url;
         viewer_content.classList = 'viewer_content media';
     }
 
     selected_path = path;
     selected_file = handle;
-    file_name.textContent = handle.name;
-    file_size.textContent = getFileSize(text.length);
     file_viewer.classList.remove('editing');
     if (format == 'pdf') {
         await loadPDF();
     } else if (supported.includes(format)) {
         await loadMedia();
+    } else if (format == 'nes') {
+        let loaded_rom = await loadNES();
+        if (!loaded_rom) { return; }
     } else {
         let istext = await loadText();
         if (!istext) {
@@ -223,8 +274,11 @@ async function openFile(path) {
             return;
         }
     }
+    let text = await file.text();
     target_button.classList.remove('loading');
     content.classList.add('shift');
+    file_name.textContent = handle.name;
+    file_size.textContent = getFileSize(text.length);
 }
 
 async function renameFile() {
@@ -411,6 +465,10 @@ function createListEntry(path, folder, next) {
     clone.addEventListener('click', iconSelect);
     handleFileIcon(clone_icon, next);
 
+    if (next && next.includes('.')) {
+        clone.classList.add(next.split('.').pop());
+    }
+
     if (next == 0) {
         clone.classList.add('root');
     }
@@ -432,6 +490,10 @@ function createLargeEntry(path, folder, next) {
     clone.addEventListener('click', iconSelect);
     handleFileIcon(clone_icon, next);
     folder ? folders.appendChild(clone) : files.appendChild(clone);
+
+    if (next && next.includes('.')) {
+        clone.classList.add(next.split('.').pop());
+    }
 
     if (cutting && path == copied_directory.join('/')) {
         if (copied_data[next]) {
@@ -456,6 +518,7 @@ async function handleImagePreviews() {
 }
 
 async function createImagePreview(element, force) {
+    if (element.classList.contains('loaded_image')) { return; }
     let path = element.getAttribute('path');
     let found_span = element.querySelector('span');
     let found_handle = stringToObject(path);
@@ -475,8 +538,8 @@ async function createImagePreview(element, force) {
         ? file
         : await heic2any({ blob: file, toType: 'image/jpeg', quality: 0.2 });
 
-    if (!force && blob.size > 5 * 1024 * 1024) { 
-        return; 
+    if (!force && blob.size > 5 * 1024 * 1024) {
+        return;
     } else {
         element.classList.add('loading');
     }
@@ -530,12 +593,12 @@ async function videoPreviewFallback(element, canvas, blob) {
     let found_span = element.querySelector('span');
     let video_element = document.createElement('video');
     let target_url = URL.createObjectURL(blob);
-    let target_size = {width: 100, height: 100};
+    let target_size = { width: 100, height: 100 };
     video_element.preload = 'metadata';
     image_url.push(target_url);
 
     function loadedMetadata() {
-        target_size = {width: 100, height: (video_element.videoHeight / video_element.videoWidth) * 100}
+        target_size = { width: 100, height: (video_element.videoHeight / video_element.videoWidth) * 100 }
         canvas.width = target_size.width * 2;
         canvas.height = target_size.height * 2;
         canvas.style.width = target_size.width + 'px';
@@ -553,17 +616,13 @@ async function videoPreviewFallback(element, canvas, blob) {
         cleanup();
     }
 
-    function videoError() {
-        cleanup();
-    }
-
     function cleanup() {
         URL.revokeObjectURL(target_url);
         video_element.remove();
     }
 
-    video_element.addEventListener('loadedmetadata', loadedMetadata, {once: true});
-    video_element.addEventListener('error', videoError, {once: true});
+    video_element.addEventListener('loadedmetadata', loadedMetadata, { once: true });
+    video_element.addEventListener('error', cleanup, { once: true });
     video_element.src = target_url;
 }
 
@@ -621,6 +680,7 @@ function handleFileIcon(icon, name) {
     if (!name) { return; }
     let icon_parent = icon.parentElement;
     if (icon_parent.classList.contains('folder')) { return; }
+
     icon.classList = Array.from(icon.classList).shift();
     let class_name = icons.getClassWithColor(name) || 'unknown';
 
@@ -1047,6 +1107,7 @@ let keymap = {
 }
 
 function handleKeyMap(event) {
+    if (document.activeElement == file_viewer || file_viewer.contains(document.activeElement)) { return; }
     let found = keymap[event.which];
     found ? found(event) : undefined;
 }
@@ -1086,6 +1147,14 @@ function updateLoadNotification(value) {
 function stopLoadNotification() {
     let notify = notification_holder.querySelector('.notify.loader');
     notify.classList.add('hide');
+}
+
+function focusViewer() {
+    if (viewer_content.classList.contains('nes')) {
+        nes_canvas.focus();
+        return;
+    }
+    file_viewer.focus();
 }
 
 // Fetch
@@ -1205,6 +1274,7 @@ edit_save.addEventListener('mouseup', editFile);
 resize.addEventListener('mousedown', startResize);
 file_explorer.addEventListener('mousedown', startSelect);
 file_viewer.addEventListener('transitionend', moveTransitionEnd);
+file_viewer.addEventListener('mousedown', focusViewer);
 right_new_folder.addEventListener('mouseup', handleNewFolder);
 right_new_file.addEventListener('mouseup', handleNewFile);
 right_cut.addEventListener('mouseup', handleCut);

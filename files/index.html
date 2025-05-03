@@ -46,7 +46,7 @@
                 </div>
             </div>
 
-            <div class="file_viewer">
+            <div class="file_viewer" tabindex="0">
                 <div class="viewer_header">
                     <div class="file_icon"></div>
                     <div class="file_name" contenteditable="true" spellcheck="false">test name</div>
@@ -64,6 +64,9 @@
                     <div class="media">
                         <div class="media_holder"></div>
                         <div class="media_info"></div>
+                    </div>
+                    <div class="nes_emulator">
+                        <canvas class="nes_canvas" width="256" height="240" tabindex="1"></canvas>
                     </div>
                     <iframe class="document"></iframe>
                     <div class="resize"></div>
@@ -110,7 +113,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.34.2/ace.js"></script>
         <script src="node_modules/file-icons-js/dist/file-icons.js"></script>
         <script src="https://unpkg.com/heic2any"></script>
-        <script src="https://unpkg.com/mp4box/dist/mp4box.all.min.js"></script>
+        <script type="text/javascript" src="https://cdn.rawgit.com/takahirox/nes-js/v0.0.1/build/nes.min.js"></script>
         <script src="accept.js"></script>
         <script src="index.js"></script>
     </body>
