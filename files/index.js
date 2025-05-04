@@ -201,6 +201,7 @@ async function openFile(path) {
                     document.removeEventListener('keyup', nesKeyUp);
                     nes_object.setDisplay(null);
                     nes_object.setAudio(null);
+                    nes_object.remove();
                     nes_object = null;
                 }
             }
