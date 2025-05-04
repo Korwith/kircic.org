@@ -750,6 +750,8 @@ function handleFileClose() {
     active_emulator.setAudio(null);
     active_emulator.remove();
     active_emulator = null;
+    let ctx = nes_canvas.getContext('2d');
+    ctx.clearRect(0, 0, 256, 240);
 }
 
 function clearPath() {
