@@ -217,6 +217,7 @@ nav.sidebar::after {
 }
 
 .list_file .icon {
+    position: relative;
     min-width: 30px;
     min-height: 30px;
     background-repeat: no-repeat;
