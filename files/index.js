@@ -137,8 +137,12 @@ async function openFile(path) {
     let handle = stringToObject(path);
     handleFileIcon(file_icon, handle.name);
 
-    let file = await handle.getFile();
     let format = handle.name.includes('.') ? handle.name.split('.').pop().toLowerCase() : handle.name.toLowerCase();
+    let file = await handle.getFile();
+    if (heic.includes(format)) {
+        file = await heic2any({blob: file, toType: 'image/jpeg', quality: 1});
+    }
+
     active_content_url ? URL.revokeObjectURL(active_content_url) : undefined;
     active_content_url = URL.createObjectURL(file);
 
@@ -218,13 +222,23 @@ async function openFile(path) {
     }
 
     function loadMedia() {
+        let property_names = {
+            'duration': 'Length',
+            'videoWidth': 'Width',
+            'videoHeight': 'Height',
+            'naturalWidth': 'Width',
+            'naturalHeight': 'Height',
+        }
+
         let properties = ['duration', 'videoWidth', 'videoHeight', 'naturalWidth', 'naturalHeight'];
         let is_video = video.includes(format);
         let new_media = document.createElement(is_video ? 'video' : 'img');
         media_holder.querySelector('img, video')?.remove();
+        new_media.setAttribute('tabindex', 0);
         if (is_video) {
             new_media.muted = true;
             new_media.autoplay = true;
+            new_media.controls = true;
         }
 
         async function mediaLoaded() {
@@ -238,17 +252,22 @@ async function openFile(path) {
                 this_span.remove();
             }
 
-            for (var i = 0; i < properties.length; i++) {
-                let this_property = properties[i];
-                let found_value = new_media[this_property];
+            for (var i in property_names) {
+                let converted_name = property_names[i];
+                let found_value = new_media[i];
                 if (!found_value) { continue; }
+                if (typeof found_value == 'number') {
+                    let fixed = found_value.toFixed(2);
+                    found_value = fixed.endsWith('.00') ? found_value : fixed;
+                }
+
                 let entry = document.createElement('span');
-                entry.textContent = `${this_property}: ${found_value}`;
+                entry.textContent = `${converted_name}: ${found_value} second${found_value != 1 ? 's' : ''}`;
                 media_info.appendChild(entry);
             }
 
             media_holder.appendChild(new_media);
-            await createImagePreview(target_button, true);
+            await createImagePreview(target_button, file);
             target_button.classList.remove('loading');
         }
 
@@ -517,7 +536,7 @@ async function handleImagePreviews() {
     }
 }
 
-async function createImagePreview(element, force) {
+async function createImagePreview(element, force_file) {
     if (element.classList.contains('loaded_image')) { return; }
     let path = element.getAttribute('path');
     let found_span = element.querySelector('span');
@@ -527,22 +546,23 @@ async function createImagePreview(element, force) {
     let format = found_handle.name.includes('.')
         ? found_handle.name.split('.').pop().toLowerCase()
         : undefined;
+    
+    if (!force_file) {
+        if (!format) { return; }
+        if (!supported.includes(format)) { return; }
+        if (heic.includes(format)) { return; }
+    }
 
-    if (!format || !supported.includes(format)) { return; }
-    if (!supported.includes(format)) { return; }
     let canvas = document.createElement('canvas');
     let ctx = canvas.getContext('2d');
     let file = await found_handle.getFile();
+    if (!force_file && file.size > 5 * 1024 * 1024) { return; }
 
-    let blob = !heic.includes(format)
+    let blob = force_file
+    ? force_file
+    : !heic.includes(format)
         ? file
         : await heic2any({ blob: file, toType: 'image/jpeg', quality: 0.2 });
-
-    if (!force && blob.size > 5 * 1024 * 1024) {
-        return;
-    } else {
-        element.classList.add('loading');
-    }
 
     try {
         let bitmap = await createImageBitmap(blob);
@@ -556,7 +576,7 @@ async function createImagePreview(element, force) {
     } catch (error) {
         !video.includes(format)
             ? imagePreviewFallback(element, canvas, blob)
-            : videoPreviewFallback(element, canvas, file, format);
+            : videoPreviewFallback(element, canvas, blob, format);
         delete blob;
     } finally {
         element.classList.remove('loading');
@@ -1149,9 +1169,13 @@ function stopLoadNotification() {
     notify.classList.add('hide');
 }
 
-function focusViewer() {
+function focusViewer(event) {
     if (viewer_content.classList.contains('nes')) {
         nes_canvas.focus();
+        return;
+    }
+    if (viewer_content.classList.contains('media') && event.target.nodeName.toLowerCase() == 'video') {
+        media_holder.querySelector('video')?.focus();
         return;
     }
     file_viewer.focus();

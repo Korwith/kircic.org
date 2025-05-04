@@ -345,12 +345,14 @@ nav.sidebar::after {
     background-size: 80%;
 }
 
-.large_file.nes .icon, .list_file.nes .icon {
+.large_file.nes .icon,
+.list_file.nes .icon {
     background-image: url(icon/nes.ico) !important;
     background-size: 100% !important;
 }
 
-.large_file.nes .icon::after, .list_file.nes .icon::after {
+.large_file.nes .icon::after,
+.list_file.nes .icon::after {
     content: '';
     position: absolute;
     top: 0;
@@ -365,7 +367,9 @@ nav.sidebar::after {
     transition: opacity 0.2s;
 }
 
-.large_file.nes:hover .icon::after, .list_icon.nes:hover .icon::after {
+.large_file.nes:hover .icon::after,
+.list_file.nes:hover .icon::after,
+.large_file.nes.active .icon::after {
     opacity: 0.8;
 }
 
@@ -619,6 +623,7 @@ nav.sidebar::after {
 
 .viewer_content {
     flex: 1;
+    overflow-y: auto;
 }
 
 #editor {
@@ -676,7 +681,8 @@ nav.sidebar::after {
     max-width: 60%;
 }
 
-.media_holder img, .media_holder video {
+.media_holder img,
+.media_holder video {
     max-width: 100%;
 }
 
@@ -706,6 +712,7 @@ iframe.document {
 .nes_emulator {
     width: 100%;
     height: 100%;
+    position: relative;
 }
 
 .nes_canvas {
@@ -714,6 +721,48 @@ iframe.document {
     margin: 10px;
     margin-left: 10px;
     margin-right: 10px;
+}
+
+.controls_table {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.controls_table th {
+    position: relative;
+}
+
+.controls_table th::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translateX(calc(100% + 5px));
+    width: 20px;
+    height: 20px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: brightness(45%);
+}
+
+.controls_table th.nesicon::after {
+    background-image: url(icon/nes.ico);
+    background-size: 110%;
+}
+
+.controls_table th.dpad::after {
+    background-image: url(icon/d-pad.svg);
+    background-size: 110%;
+}
+
+.controls_table th.line::after {
+    background-image: url(icon/linebutton.svg);
+    background-size: 103%;
+}
+
+.controls_table th.circle::after {
+    background-image: url(icon/circle.svg);
 }
 
 .file_viewer.dragging iframe.document {
@@ -1060,10 +1109,19 @@ iframe.document {
     filter: brightness(0) invert(1);
 }
 
+::-webkit-scrollbar {
+    border-left: 1px solid #303030;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
 @keyframes spin {
     0% {
         transform: rotate(0deg);
     }
+
     100% {
         transform: rotate(360deg);
     }
@@ -1077,7 +1135,9 @@ iframe.document {
 }
 
 @media screen and (max-width: 767px) {
-    header button.new_folder, header button.delete {
+
+    header button.new_folder,
+    header button.delete {
         display: none;
     }
 
