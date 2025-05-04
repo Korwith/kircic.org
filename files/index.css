@@ -1109,6 +1109,10 @@ iframe.document {
     filter: brightness(0) invert(1);
 }
 
+.notify.success::before {
+    background-image: url(icon/check.svg);
+}
+
 ::-webkit-scrollbar {
     border-left: 1px solid #303030;
 }

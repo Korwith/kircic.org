@@ -114,6 +114,7 @@ async function handleFiles(origin, access, current_path) {
             }
         }
     } catch (error) {
+        sendNotification(3000, error, 'error');
         console.error(error);
     }
 }
@@ -155,6 +156,7 @@ async function openFile(path) {
             decoder.decode(buffer);
         } catch (error) {
             handleFileClose();
+            sendNotification('3000', 'File is not supported.', 3000);
             return false;
         }
 
@@ -211,13 +213,13 @@ async function openFile(path) {
             nes.bootup();
             nes.run();
             nes_canvas.focus();
+            sendNotification(3000, 'Successfully loaded NES rom.', 'success');
             viewer_content.classList = 'viewer_content nes';
             
             return true;
         } catch (error) {
             sendNotification(3000, error + ' (Unsupported NES format)', 'error');
             handleFileClose();
-            target_button.classList.remove('loading');
             return false;
         }
     }
@@ -230,8 +232,6 @@ async function openFile(path) {
             'naturalWidth': 'Width',
             'naturalHeight': 'Height',
         }
-
-        let properties = ['duration', 'videoWidth', 'videoHeight', 'naturalWidth', 'naturalHeight'];
         let is_video = video.includes(format);
         let new_media = document.createElement(is_video ? 'video' : 'img');
         media_holder.querySelector('img, video')?.remove();
@@ -263,7 +263,8 @@ async function openFile(path) {
                 }
 
                 let entry = document.createElement('span');
-                entry.textContent = `${converted_name}: ${found_value} second${found_value != 1 ? 's' : ''}`;
+                entry.textContent = `${converted_name}: ${found_value}`;
+                if (i == 'duration') { entry.textContent += ` second${found_value != 1 ? 's' : ''}`; }
                 media_info.appendChild(entry);
             }
 
@@ -286,7 +287,10 @@ async function openFile(path) {
         await loadMedia();
     } else if (format == 'nes') {
         let loaded_rom = await loadNES();
-        if (!loaded_rom) { return; }
+        if (!loaded_rom) { 
+            target_button.classList.remove('loading');
+            return; 
+        }
     } else {
         let istext = await loadText();
         if (!istext) {
@@ -740,6 +744,12 @@ function handleFileClose() {
     content.classList.remove('shift');
     file_explorer.style.width = "";
     updateHeaderClasses();
+
+    if (!active_emulator) { return; }
+    active_emulator.setDisplay(null);
+    active_emulator.setAudio(null);
+    active_emulator.remove();
+    active_emulator = null;
 }
 
 function clearPath() {
