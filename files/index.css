@@ -361,7 +361,7 @@ nav.sidebar::after {
     width: 100%;
     height: 100%;
     background-image: url(icon/play.svg);
-    background-size: 38%;
+    background-size: 33%;
     background-position: center;
     background-repeat: no-repeat;
     opacity: 0;
@@ -499,6 +499,17 @@ nav.sidebar::after {
     align-items: center;
 }
 
+.file_icon::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.8;
+}
+
 .file_icon.unknown::before {
     content: '';
     width: 100%;
@@ -552,16 +563,8 @@ nav.sidebar::after {
     animation: spin 6s linear infinite;
 }
 
-
 .content.settings_open .viewer_header .file_icon::after {
     content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-position: center;
-    background-repeat: no-repeat;
     background-size: 64%;
     background-image: url(icon/cog.svg);
     opacity: 0.8;

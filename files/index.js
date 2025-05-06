@@ -511,7 +511,6 @@ async function handleImagePreviews() {
 
 async function createImagePreview(element, force_file) {
     if (element.classList.contains('loaded_image')) { return; }
-    element.querySelector('canvas')?.remove();
     let path = element.getAttribute('path');
     let found_span = element.querySelector('span');
     let found_handle = stringToObject(path);
@@ -527,7 +526,7 @@ async function createImagePreview(element, force_file) {
         if (heic.includes(format)) { return; }
     }
 
-    let canvas = document.createElement('canvas');
+    let canvas = element.querySelector('canvas') || document.createElement('canvas');
     let ctx = canvas.getContext('2d');
     let file = await found_handle.getFile();
     if (!force_file && file.size > 5 * 1024 * 1024) { return; }
