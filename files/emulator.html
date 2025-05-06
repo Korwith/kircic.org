@@ -45,15 +45,23 @@
                         nes.run();
 
                         window.top.postMessage('NES Loaded');
-                    } catch(error) {
+                        setTimeout(sendFrame, 1000);
+                        setInterval(sendFrame, 3000);
+                    } catch (error) {
                         window.top.postMessage(`NES Error ${error}`);
                     }
 
                     return true;
                 })
                 .catch(function (error) {
-                    console.error(error);
+                    window.top.postMessage(`NES Error ${error}`);
                 })
+
+            function sendFrame() {
+                let frame_url = canvas.toDataURL();
+                window.top.postMessage(`NES Frame ${frame_url}`);
+                console.log(frame_url)
+            }
         }
         loadRom();
     </script>

@@ -24,7 +24,8 @@ const select_error = info_page.querySelector('.select_error');
 
 const file_viewer = content.querySelector('.file_viewer')
 const viewer_content = content.querySelector('.viewer_content');
-const viewer_iframe = content.querySelector('iframe');
+const viewer_iframe = document.querySelector('iframe.document');
+
 const media_holder = content.querySelector('.media .media_holder');
 const media_info = content.querySelector('.media .media_info');
 
@@ -183,6 +184,7 @@ async function openFile(path) {
 
         let nes_iframe = nes_iframe_wrapper.querySelector('iframe');
         nes_iframe.src = `emulator.html#${active_content_url}`;
+        nes_iframe.setAttribute('file', handle.name);
 
         return true;
     }
@@ -509,6 +511,7 @@ async function handleImagePreviews() {
 
 async function createImagePreview(element, force_file) {
     if (element.classList.contains('loaded_image')) { return; }
+    element.querySelector('canvas')?.remove();
     let path = element.getAttribute('path');
     let found_span = element.querySelector('span');
     let found_handle = stringToObject(path);
@@ -715,16 +718,6 @@ function handleFileClose() {
     if (!active_emulator) { return; }
     active_emulator.destroy();
     active_emulator = null;
-    /* try {
-        active_emulator.setDisplay(null);
-        active_emulator.setAudio(null);
-        active_emulator.remove();
-        active_emulator = null;
-        let ctx = nes_canvas.getContext('2d');
-        ctx.clearRect(0, 0, 256, 240);    
-    } catch(error) {
-        console.log('Stopping the emulator with this library tweaks out');
-    } */
 }
 
 function clearPath() {
@@ -890,11 +883,29 @@ function findSelected() {
 }
 
 let start_position;
-function selectMove(event) {
-    let set_position = {
-        x: event.x - start_position.x,
-        y: event.y - start_position.y
+function startSelect(event) {
+    if (event.which === 3) return;
+    if (!start_position) {
+        const container = select.parentElement;
+        const rect = container.getBoundingClientRect();
+        start_position = {
+            x: event.clientX - rect.left,
+            y: event.clientY - rect.top
+        };
+        select.style.left = start_position.x + 'px';
+        select.style.top = start_position.y + 'px';
     }
+    document.addEventListener('mousemove', selectMove);
+    document.addEventListener('mouseup', stopSelect);
+}
+
+function selectMove(event) {
+    const container = select.parentElement;
+    const rect = container.getBoundingClientRect();
+    let set_position = {
+        x: event.clientX - rect.left - start_position.x,
+        y: event.clientY - rect.top - start_position.y
+    };
     select.classList.toggle('tx', set_position.x < 0);
     select.classList.toggle('ty', set_position.y < 0);
     select.style.width = Math.abs(set_position.x) + 'px';
@@ -902,24 +913,11 @@ function selectMove(event) {
     findSelected();
 }
 
-function startSelect(event) {
-    if (event.which == 3) { return; }
-    if (!start_position) {
-        start_position = { x: event.x, y: event.y };
-        select.style.left = event.x + 'px';
-        select.style.top = event.y + 'px';
-        findSelected();
-    }
-
-    document.addEventListener('mousemove', selectMove);
-    document.addEventListener('mouseup', stopSelect);
-}
-
 function stopSelect() {
     document.removeEventListener('mousemove', selectMove);
     document.removeEventListener('mouseup', stopSelect);
-    select.style = "";
-    start_position = false;
+    select.style = '';
+    start_position = null;
 }
 
 function updateHeaderClasses() {
@@ -1174,15 +1172,29 @@ function handleSettingsPage() {
     content.classList.toggle('settings_open', !settings_open);
 }
 
-function handleWindowMessage(event) {
+async function handleWindowMessage(event) {
+    if (typeof event.data != 'string') { return; }
     if (event.data.includes('NES')) {
         if (event.data.includes('Error')) {
             sendNotification(3000, event.data, 'error')
             return;
         }
-        sendNotification(3000, 'Successfully loaded NES file.', 'success');
-        viewer_content.classList = 'viewer_content nes';
-        content.classList.add('shift');
+
+        if (event.data.includes('Loaded')) {
+            sendNotification(3000, 'Successfully loaded NES file', 'success');
+            viewer_content.classList = 'viewer_content nes';
+            content.classList.add('shift');
+            return;
+        }
+
+        if (event.data.includes('Frame')) {
+            if (!selected_file) { return; }
+            let found_button = file_explorer.querySelector(`.large_file[path="${current_path.join('/')}/${selected_file.name}"]`);
+            let found_url = event.data.split('Frame ').pop();
+            let found_blob = await blobFromURL(found_url);
+            found_button.classList.remove('loaded_image');
+            createImagePreview(found_button, found_blob);
+        }
     }
 }
 
@@ -1274,6 +1286,12 @@ function fileNameAccept(name) {
     if (name.startsWith('.') || name.endsWith('.')) { return false; }
     if (unsafe.test(name)) { return false; }
     return true;
+}
+
+async function blobFromURL(url) {
+    let response = await fetch(url);
+    if (!response.ok) { throw new Error(`HTTP Error ${response.status}`)};
+    return await response.blob();
 }
 
 function checkSupport() {
