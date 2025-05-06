@@ -180,7 +180,7 @@ async function openFile(path) {
     }
 
     async function loadNES() {
-        nes_iframe_wrapper.innerHTML = `<iframe class="nes_iframe" width="256" height="240" tabindex="0"></canvas>`;
+        nes_iframe_wrapper.innerHTML = `<iframe class="nes_iframe" width="256" height="240" tabindex="0"></iframe>`;
 
         let nes_iframe = nes_iframe_wrapper.querySelector('iframe');
         nes_iframe.src = `emulator.html#${active_content_url}`;

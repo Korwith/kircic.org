@@ -786,6 +786,7 @@ iframe.document {
 
 .controls_table th {
     position: relative;
+    font-size: 0.8rem;
 }
 
 .controls_table th::after {
