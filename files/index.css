@@ -514,7 +514,8 @@ nav.sidebar::after {
     font-size: 32px !important;
 }
 
-.file_name {
+.file_name, .settings_name {
+    position: relative;
     display: flex;
     align-items: center;
     width: fit-content;
@@ -529,6 +530,37 @@ nav.sidebar::after {
     font-size: 1.2rem;
     outline: none;
     transition: border 0.2s;
+}
+
+.settings_name {
+    display: none;
+}
+
+.content.settings_open .viewer_header .file_name {
+    display: none;
+}
+
+.content.settings_open .viewer_header .file_size {
+    display: none;
+}
+
+.content.settings_open .viewer_header .file_actions {
+    display: none;
+}
+
+.content.settings_open .viewer_header .file_icon {
+    animation: spin 6s linear infinite;
+}
+
+
+.content.settings_open .viewer_header .file_icon::before {
+    background-image: url(icon/cog.svg);
+    background-size: 64%;
+}
+
+.content.settings_open .viewer_header .settings_name {
+    display: flex;
+    transform: translateX(-8px);
 }
 
 .file_name:hover {
@@ -716,12 +748,18 @@ iframe.document {
     position: relative;
 }
 
-.nes_canvas {
+.nes_iframe_wrapper {
     aspect-ratio: 256/240;
     width: calc(100% - 20px);
     margin: 10px;
-    margin-left: 10px;
-    margin-right: 10px;
+}
+
+.nes_iframe {
+    width: 100%;
+    height: 100%;
+    outline: 0;
+    border: 0;
+    overflow: hidden;
 }
 
 .controls_table {
@@ -787,6 +825,10 @@ iframe.document {
 }
 
 .viewer_content:not(.nes) .nes_emulator {
+    display: none;
+}
+
+.content:not(.settings) .settings_page {
     display: none;
 }
 
@@ -888,6 +930,7 @@ iframe.document {
     left: 0;
     width: 100%;
     height: calc(100% - 50px);
+    pointer-events: none;
 }
 
 .info_page span {
@@ -1113,6 +1156,7 @@ iframe.document {
 .notify.success::before {
     background-image: url(icon/check.svg);
 }
+
 
 ::-webkit-scrollbar {
     border-left: 1px solid #303030;

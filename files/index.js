@@ -8,6 +8,7 @@ const paste_button = header.querySelector('.paste');
 const delete_button = header.querySelector('.delete');
 const new_folder = header.querySelector('.new_folder');
 const new_file = header.querySelector('.new_file');
+const settings_button = header.querySelector('.settings');
 
 const sidebar = document.querySelector('nav.sidebar');
 
@@ -28,7 +29,7 @@ const media_holder = content.querySelector('.media .media_holder');
 const media_info = content.querySelector('.media .media_info');
 
 const nes_holder = content.querySelector('.nes_emulator');
-const nes_canvas = nes_holder.querySelector('canvas');
+const nes_iframe_wrapper = nes_holder.querySelector('.nes_iframe_wrapper');
 
 const file_icon = file_viewer.querySelector('.file_icon');
 const file_name = file_viewer.querySelector('.file_name');
@@ -141,7 +142,7 @@ async function openFile(path) {
     let format = handle.name.includes('.') ? handle.name.split('.').pop().toLowerCase() : handle.name.toLowerCase();
     let file = await handle.getFile();
     if (heic.includes(format)) {
-        file = await heic2any({blob: file, toType: 'image/jpeg', quality: 1});
+        file = await heic2any({ blob: file, toType: 'image/jpeg', quality: 1 });
     }
 
     active_content_url ? URL.revokeObjectURL(active_content_url) : undefined;
@@ -178,50 +179,12 @@ async function openFile(path) {
     }
 
     async function loadNES() {
-        let buffer = await file.arrayBuffer();
-        try {
-            if (active_emulator) { nesCleanup(active_emulator); }
-            let nes = new NesJs.Nes();
-            nes.setRom(new NesJs.Rom(buffer));
-            nes.setDisplay(new NesJs.Display(nes_canvas));
-            nes.setAudio(new NesJs.Audio());
-            active_emulator = nes;
+        nes_iframe_wrapper.innerHTML = `<iframe class="nes_iframe" width="256" height="240" tabindex="0"></canvas>`;
 
-            function nesKeyDown(event) {
-                nes.handleKeyDown(event);
-                nesCleanup(nes);
-            }
+        let nes_iframe = nes_iframe_wrapper.querySelector('iframe');
+        nes_iframe.src = `emulator.html#${active_content_url}`;
 
-            function nesKeyUp(event) {
-                nes.handleKeyUp(event);
-                nesCleanup(nes);
-            }
-
-            function nesCleanup(nes_object) {
-                if (selected_file != handle) {
-                    document.removeEventListener('keydown', nesKeyDown);
-                    document.removeEventListener('keyup', nesKeyUp);
-                    nes_object.setDisplay(null);
-                    nes_object.setAudio(null);
-                    nes_object.remove();
-                    nes_object = null;
-                }
-            }
-
-            document.addEventListener('keydown', nesKeyDown);
-            document.addEventListener('keyup', nesKeyUp);
-            nes.bootup();
-            nes.run();
-            nes_canvas.focus();
-            sendNotification(3000, 'Successfully loaded NES rom.', 'success');
-            viewer_content.classList = 'viewer_content nes';
-            
-            return true;
-        } catch (error) {
-            sendNotification(3000, error + ' (Unsupported NES format)', 'error');
-            handleFileClose();
-            return false;
-        }
+        return true;
     }
 
     function loadMedia() {
@@ -278,6 +241,7 @@ async function openFile(path) {
         viewer_content.classList = 'viewer_content media';
     }
 
+    let no_shift = false;
     selected_path = path;
     selected_file = handle;
     file_viewer.classList.remove('editing');
@@ -286,10 +250,11 @@ async function openFile(path) {
     } else if (supported.includes(format)) {
         await loadMedia();
     } else if (format == 'nes') {
-        let loaded_rom = await loadNES();
-        if (!loaded_rom) { 
+        let loaded_rom = loadNES();
+        no_shift = true;
+        if (!loaded_rom) {
             target_button.classList.remove('loading');
-            return; 
+            return;
         }
     } else {
         let istext = await loadText();
@@ -300,7 +265,8 @@ async function openFile(path) {
     }
     let text = await file.text();
     target_button.classList.remove('loading');
-    content.classList.add('shift');
+    content.classList.toggle('shift', !content.classList.contains('shift') && !no_shift);
+    content.classList.remove('settings_open');
     file_name.textContent = handle.name;
     file_size.textContent = getFileSize(text.length);
 }
@@ -551,7 +517,7 @@ async function createImagePreview(element, force_file) {
     let format = found_handle.name.includes('.')
         ? found_handle.name.split('.').pop().toLowerCase()
         : undefined;
-    
+
     if (!force_file) {
         if (!format) { return; }
         if (!supported.includes(format)) { return; }
@@ -564,10 +530,10 @@ async function createImagePreview(element, force_file) {
     if (!force_file && file.size > 5 * 1024 * 1024) { return; }
 
     let blob = force_file
-    ? force_file
-    : !heic.includes(format)
-        ? file
-        : await heic2any({ blob: file, toType: 'image/jpeg', quality: 0.2 });
+        ? force_file
+        : !heic.includes(format)
+            ? file
+            : await heic2any({ blob: file, toType: 'image/jpeg', quality: 0.2 });
 
     try {
         let bitmap = await createImageBitmap(blob);
@@ -742,16 +708,23 @@ function handleFileClose() {
     selected_path = null;
     media_holder.querySelector('img, video')?.remove();
     content.classList.remove('shift');
+    content.classList.remove('settings_open');
     file_explorer.style.width = "";
     updateHeaderClasses();
 
     if (!active_emulator) { return; }
-    active_emulator.setDisplay(null);
-    active_emulator.setAudio(null);
-    active_emulator.remove();
+    active_emulator.destroy();
     active_emulator = null;
-    let ctx = nes_canvas.getContext('2d');
-    ctx.clearRect(0, 0, 256, 240);
+    /* try {
+        active_emulator.setDisplay(null);
+        active_emulator.setAudio(null);
+        active_emulator.remove();
+        active_emulator = null;
+        let ctx = nes_canvas.getContext('2d');
+        ctx.clearRect(0, 0, 256, 240);    
+    } catch(error) {
+        console.log('Stopping the emulator with this library tweaks out');
+    } */
 }
 
 function clearPath() {
@@ -1184,7 +1157,7 @@ function stopLoadNotification() {
 
 function focusViewer(event) {
     if (viewer_content.classList.contains('nes')) {
-        nes_canvas.focus();
+        nes_iframe_wrapper.querySelector('iframe')?.focus();
         return;
     }
     if (viewer_content.classList.contains('media') && event.target.nodeName.toLowerCase() == 'video') {
@@ -1192,6 +1165,25 @@ function focusViewer(event) {
         return;
     }
     file_viewer.focus();
+}
+
+function handleSettingsPage() {
+    let settings_open = viewer_content.classList.contains('settings');
+    viewer_content.classList = `viewer_content ${settings_open ? '' : 'settings'}`;
+    content.classList.toggle('shift', !settings_open);
+    content.classList.toggle('settings_open', !settings_open);
+}
+
+function handleWindowMessage(event) {
+    if (event.data.includes('NES')) {
+        if (event.data.includes('Error')) {
+            sendNotification(3000, event.data, 'error')
+            return;
+        }
+        sendNotification(3000, 'Successfully loaded NES file.', 'success');
+        viewer_content.classList = 'viewer_content nes';
+        content.classList.add('shift');
+    }
 }
 
 // Fetch
@@ -1303,12 +1295,13 @@ paste_button.addEventListener('mouseup', handlePaste);
 delete_button.addEventListener('mouseup', handleDelete);
 new_folder.addEventListener('mouseup', handleNewFolder);
 new_file.addEventListener('mouseup', handleNewFile);
+resize.addEventListener('mousedown', startResize);
 file_name.addEventListener('beforeinput', handleFileRename);
 file_close.addEventListener('mouseup', handleFileClose);
 file_edit.addEventListener('mouseup', handleFileEdit);
 edit_discard.addEventListener('mouseup', handleFileEdit);
 edit_save.addEventListener('mouseup', editFile);
-resize.addEventListener('mousedown', startResize);
+settings_button.addEventListener('mouseup', handleSettingsPage);
 file_explorer.addEventListener('mousedown', startSelect);
 file_viewer.addEventListener('transitionend', moveTransitionEnd);
 file_viewer.addEventListener('mousedown', focusViewer);
@@ -1323,3 +1316,4 @@ document.addEventListener('contextmenu', handleRightClick);
 document.addEventListener('mousedown', forceCloseRightClick);
 window.addEventListener('onresize', updateFileIcons);
 window.addEventListener('onresize', moveTransitionEnd);
+window.addEventListener('message', handleWindowMessage);
