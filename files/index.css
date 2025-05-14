@@ -1175,6 +1175,99 @@ iframe.document {
     background-image: url(icon/check.svg);
 }
 
+.audio_player {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    position: fixed;
+    margin: 10px;
+    padding: 5px;
+    left: 300px;
+    bottom: 0;
+    height: 50px;
+    width: fit-content;
+    background-color: #1C1C1C;
+    box-sizing: border-box;
+    border: 1px solid #303030;
+    border-radius: 12px;
+    transform: translateY(calc(100% + 10px));
+    transition: transform 0.2s;
+    z-index: 6;
+}
+
+.audio_player.show {
+    transform: unset;
+}
+
+.audio_player .icon {
+    aspect-ratio: 1/1;
+    height: 100%;
+    outline: none;
+    border-radius: 8px;
+    box-sizing: border-box;
+    border: 1px solid #303030;
+}
+
+.audio_player .title {
+    display: flex;
+    padding-left: 7px;
+    padding-right: 7px;
+    width: fit-content;
+    max-width: 200px;
+    height: 100%;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: 900;
+    text-wrap: nowrap;
+    overflow: hidden;
+    opacity: 0.8;
+}
+
+.audio_player .square {
+    aspect-ratio: 1/1;
+    height: 100%;
+    position: relative;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+}
+
+.audio_player .square:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.audio_player .square::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    transform: translate(-50%, -50%);
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.audio_player .square.before::after {
+    background-image: url(icon/musicdouble.svg);
+    background-size: 65%;
+    transform: translate(-50%, -50%) rotate(180deg);
+}
+
+.audio_player .square.after::after {
+    background-image: url(icon/musicdouble.svg);
+    background-size: 65%;
+}
+
+.audio_player .square.pause::after {
+    background-image: url(icon/musicpause.svg);
+    background-size: 70%;
+}
+
+.audio_player .square.pause.play::after {
+    background-image: url(icon/musicplay.svg);
+    background-size: 70%;
+}
 
 ::-webkit-scrollbar {
     border-left: 1px solid #303030;

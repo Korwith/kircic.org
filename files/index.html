@@ -112,9 +112,7 @@
 
                     <iframe class="document"></iframe>
 
-                    <div class="settings_page">
-
-                    </div>
+                    <div class="settings_page"></div> <!-- Add Settings -->
 
                     <div class="resize"></div>
                 </div>
@@ -124,6 +122,14 @@
                 <span class="support_error hide">Your device does not support the File System Access API.<br><a href="https://developer.mozilla.org/en-US/docs/Web/API/File_System_API">Learn More</a></span>
                 <span class="select_error">No folder selected</span>
             </div>
+        </div>
+
+        <div class="audio_player">
+            <div class="icon"></div>
+            <span class="title">Audio Test</span>
+            <div class="square before"></div>
+            <div class="square pause"></div>
+            <div class="square after"></div>
         </div>
 
         <div class="select"></div>
@@ -139,8 +145,7 @@
             <button class="delete">Delete</button>
         </div>
 
-        <div class="notification_holder">
-        </div>
+        <div class="notification_holder"></div>
 
         <!-- Placeholder -->
         <div class="placeholder list_file">
@@ -161,6 +166,6 @@
         <script src="node_modules/file-icons-js/dist/file-icons.js"></script>
         <script src="https://unpkg.com/heic2any"></script>
         <script src="accept.js"></script>
-        <script src="index.js"></script>
+        <script type="module" src="index.js"></script>
     </body>
 </html>

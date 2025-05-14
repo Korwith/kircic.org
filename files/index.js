@@ -32,6 +32,12 @@ const media_info = content.querySelector('.media .media_info');
 const nes_holder = content.querySelector('.nes_emulator');
 const nes_iframe_wrapper = nes_holder.querySelector('.nes_iframe_wrapper');
 
+const audio_player = document.querySelector('.audio_player');
+const audio_title = audio_player.querySelector('.title');
+const audio_back = audio_player.querySelector('.before');
+const audio_next = audio_player.querySelector('.after');
+const audio_pause = audio_player.querySelector('.pause');
+
 const file_icon = file_viewer.querySelector('.file_icon');
 const file_name = file_viewer.querySelector('.file_name');
 const file_size = file_viewer.querySelector('.file_size');
@@ -58,6 +64,8 @@ const large_placeholder = document.querySelector('.placeholder.large_file');
 const notification_holder = document.querySelector('.notification_holder');
 const notify_placeholder = document.querySelector('.placeholder.notify');
 
+import musicMetadata from 'https://cdn.jsdelivr.net/npm/music-metadata@11.2.1/+esm'
+
 let handle_directory = {};
 let folder_directory = {};
 let current_path = [];
@@ -72,12 +80,14 @@ let selected_path;
 let selected_file;
 let active_content_url;
 let active_emulator;
+let active_audio;
 
 // Media
-let supported = ['jpg', 'jpeg', 'png', 'apng', 'svg', 'ico', 'gif', 'avif', 'webp', 'heic', 'heif', 'mp4', 'mov', 'mkv'];
-let heic = ['heic', 'heif'];
-let video = ['mp4', 'mov', 'mkv', 'avi', 'webm', 'ogv', 'flv', '3gp'];
-let keyframe = ['mp4', 'mov', 'webm', 'flv', '3pg'];
+let heic_format = ['heic', 'heif'];
+let image_format = ['jpg', 'jpeg', 'png', 'apng', 'svg', 'ico', 'gif', 'avif', 'webp'];
+let video_format = ['mp4', 'mov', 'mkv', 'avi', 'webm', 'ogv', 'flv', '3gp'];
+let audio_format = ['mp3', 'wav', 'ogg'];
+let supported = [...image_format, ...heic_format, ...video_format];
 
 const icons = window.FileIcons;
 const editor = ace.edit('editor');
@@ -135,14 +145,14 @@ async function startLoad() {
 
 async function openFile(path) {
     let target_button = file_explorer.querySelector(`.large_file[path="${path}"]`);
-    target_button.classList.add('loading');
+    target_button?.classList.add('loading');
 
     let handle = stringToObject(path);
     handleFileIcon(file_icon, handle.name);
 
     let format = handle.name.includes('.') ? handle.name.split('.').pop().toLowerCase() : handle.name.toLowerCase();
     let file = await handle.getFile();
-    if (heic.includes(format)) {
+    if (heic_format.includes(format)) {
         file = await heic2any({ blob: file, toType: 'image/jpeg', quality: 1 });
     }
 
@@ -197,7 +207,7 @@ async function openFile(path) {
             'naturalWidth': 'Width',
             'naturalHeight': 'Height',
         }
-        let is_video = video.includes(format);
+        let is_video = video_format.includes(format);
         let new_media = document.createElement(is_video ? 'video' : 'img');
         media_holder.querySelector('img, video')?.remove();
         new_media.setAttribute('tabindex', 0);
@@ -235,7 +245,7 @@ async function openFile(path) {
 
             media_holder.appendChild(new_media);
             await createImagePreview(target_button, file);
-            target_button.classList.remove('loading');
+            target_button?.classList.remove('loading');
         }
 
         new_media.addEventListener(is_video ? 'loadeddata' : 'load', mediaLoaded, { once: true });
@@ -243,31 +253,58 @@ async function openFile(path) {
         viewer_content.classList = 'viewer_content media';
     }
 
+    async function loadAudio() {
+        audio_player.classList.add('show');
+        audio_title.textContent = handle.name.substring(0, handle.name.length - format.length - 1);
+
+        if (active_audio) {
+            active_audio.pause();
+            active_audio.remove();
+            active_audio = null;
+        }
+        active_audio = new Audio();
+        active_audio.src = active_content_url;
+        active_audio.play();
+    }
+
     let no_shift = false;
     selected_path = path;
     selected_file = handle;
     file_viewer.classList.remove('editing');
-    if (format == 'pdf') {
-        await loadPDF();
-    } else if (supported.includes(format)) {
-        await loadMedia();
-    } else if (format == 'nes') {
-        let loaded_rom = loadNES();
-        no_shift = true;
-        if (!loaded_rom) {
-            target_button.classList.remove('loading');
-            return;
-        }
-    } else {
-        let istext = await loadText();
-        if (!istext) {
-            file_viewer.classList.remove('canedit');
-            return;
-        }
+    switch(format) {
+        case 'pdf':
+            loadPDF();
+            break;
+        case 'nes':
+            let loaded_rom = loadNES();
+            no_shift = true;
+            if (!loaded_rom) {
+                target_button?.classList.remove('loading');
+                return;
+            }
+            break;
+        default:
+            if (supported.includes(format)) {
+                await loadMedia();
+                return;
+            } else if (audio_format.includes(format)) {
+                await loadAudio();
+                no_shift = true;
+                target_button?.classList.remove('loading');
+                return;
+            }
+            let is_text = await file.text();
+            await loadText();
+            if (!is_text) {
+                file_viewer.classList.remove('canedit');
+                return;
+            }
+            break;
     }
+
     let text = await file.text();
-    target_button.classList.remove('loading');
-    content.classList.toggle('shift', !content.classList.contains('shift') && !no_shift);
+    target_button?.classList.remove('loading');
+    content.classList.toggle('shift', !no_shift);
     content.classList.remove('settings_open');
     file_name.textContent = handle.name;
     file_size.textContent = getFileSize(text.length);
@@ -487,6 +524,10 @@ function createLargeEntry(path, folder, next) {
         clone.classList.add(next.split('.').pop());
     }
 
+    if (selected_path == new_path) {
+        handleActiveClass(new_path);
+    }
+
     if (cutting && path == copied_directory.join('/')) {
         if (copied_data[next]) {
             clone.classList.add('cut');
@@ -510,6 +551,7 @@ async function handleImagePreviews() {
 }
 
 async function createImagePreview(element, force_file) {
+    if (!element) { return; }
     if (element.classList.contains('loaded_image')) { return; }
     let path = element.getAttribute('path');
     let found_span = element.querySelector('span');
@@ -523,7 +565,8 @@ async function createImagePreview(element, force_file) {
     if (!force_file) {
         if (!format) { return; }
         if (!supported.includes(format)) { return; }
-        if (heic.includes(format)) { return; }
+        if (heic_format.includes(format)) { return; }
+        if (!audio_format.includes(format)) { return; }
     }
 
     let canvas = element.querySelector('canvas') || document.createElement('canvas');
@@ -531,9 +574,10 @@ async function createImagePreview(element, force_file) {
     let file = await found_handle.getFile();
     if (!force_file && file.size > 5 * 1024 * 1024) { return; }
 
+
     let blob = force_file
         ? force_file
-        : !heic.includes(format)
+        : !heic_format.includes(format)
             ? file
             : await heic2any({ blob: file, toType: 'image/jpeg', quality: 0.2 });
 
@@ -547,10 +591,13 @@ async function createImagePreview(element, force_file) {
         element.insertBefore(canvas, found_span);
         element.classList.add('loaded_image');
     } catch (error) {
-        !video.includes(format)
-            ? imagePreviewFallback(element, canvas, blob)
-            : videoPreviewFallback(element, canvas, blob, format);
-        delete blob;
+        if (image_format.includes(format)) {
+            imagePreviewFallback(element, canvas, blob);
+        } else if (video_format.includes(format)) {
+            videoPreviewFallback(element, canvas, blob, format);
+        } else if (audio_format.includes(format)) {
+            audioPreviewFallback(element, canvas, blob);
+        }
     } finally {
         element.classList.remove('loading');
     }
@@ -617,6 +664,53 @@ async function videoPreviewFallback(element, canvas, blob) {
     video_element.addEventListener('loadedmetadata', loadedMetadata, { once: true });
     video_element.addEventListener('error', cleanup, { once: true });
     video_element.src = target_url;
+}
+
+function audioPreviewFallback(element, canvas, blob) {
+    let target_url = URL.createObjectURL(blob);
+    // add
+}
+
+function handleAudioPause() {
+    if (!active_audio) { return; }
+    active_audio.paused ? active_audio.play() : active_audio.pause();
+    audio_pause.classList.toggle('play', active_audio.paused);
+}
+
+function handleAudioBack() {
+    if (!active_audio) { return; }
+    handleAudioShift(-1);
+}
+
+function handleAudioNext() {
+    if (!active_audio) { return; }
+    handleAudioShift(1);
+}
+
+function handleAudioShift(shift) {
+    if (!active_audio) { return; }
+    let audio_directory = selected_path.split('/');
+    let audio_name = audio_directory.pop();
+    let directory_info = stringToObject(audio_directory.join('/'));
+    
+    let directory_keys = Object.keys(directory_info).sort();
+    for (let i = directory_keys.length - 1; i >= 0; i--) {
+        let this_key = directory_keys[i];
+        let this_format = this_key.includes('.') ? this_key.split('.').pop() : this_key;
+        if (!audio_format.includes(this_format) || !this_key.includes('.')) {
+            directory_keys.splice(i, 1);
+        }
+    }
+
+    let current_index = directory_keys.indexOf(audio_name);
+    let new_index = current_index + shift;
+
+    if (new_index < 0 || new_index >= directory_keys.length) { return; }
+    let new_name = directory_keys[new_index];
+    let new_directory = [...audio_directory, new_name].join('/');
+    
+    handleActiveClass(new_directory);
+    openFile(new_directory);
 }
 
 function clearLargeIcons() {
@@ -692,6 +786,7 @@ function handleFileIcon(icon, name) {
 function handleActiveClass(path) {
     let found_button = document.querySelectorAll(`[path="${path}"]`);
     let previous_select = document.querySelectorAll('.active');
+    if (found_button.length == 0) { return; }
 
     for (var i = 0; i < previous_select.length; i++) {
         let this_button = previous_select[i];
@@ -1328,6 +1423,9 @@ right_cut.addEventListener('mouseup', handleCut);
 right_copy.addEventListener('mouseup', handleCopy);
 right_paste.addEventListener('mouseup', handlePaste);
 right_delete.addEventListener('mouseup', handleDelete);
+audio_pause.addEventListener('mouseup', handleAudioPause);
+audio_back.addEventListener('mouseup', handleAudioBack);
+audio_next.addEventListener('mouseup', handleAudioNext);
 document.addEventListener('keydown', handleKeyMap);
 document.addEventListener('contextmenu', handleRightClick);
 document.addEventListener('mousedown', forceCloseRightClick);
