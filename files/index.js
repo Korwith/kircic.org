@@ -729,6 +729,8 @@ function handleAudioDrag(event) {
     let percentage = (offset_mouse / seek_bounds.width) * 100;
     percentage = percentage > 100 ? 100 : percentage;
     audio_track_player.style.width = percentage + '%';
+    if (!active_audio.duration) return;
+    audio_duration.textContent = formatTime(active_audio.duration * (percentage / 100)) + ' / ' + formatTime(active_audio.duration);
 }
 
 function handleAudioTime() {
