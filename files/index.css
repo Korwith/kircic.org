@@ -1297,6 +1297,10 @@ iframe.document {
     background-size: 68%;
 }
 
+.audio_player .square.volume {
+    position: relative;
+}
+
 .audio_player .track {
     height: 3px;
     width: calc(100% - 64px);
@@ -1330,6 +1334,45 @@ iframe.document {
 
 .audio_player .track:hover .track_player::after, .audio_player .track.seeking .track_player::after {
     opacity: 1;
+}
+
+.audio_player .volume .volume_holder {
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    transform: translateY(calc(-100%));
+    width: 100%;
+    height: 100px;
+    background-color: #1C1C1C;
+    border: 1px solid #303030;
+    box-sizing: border-box;
+    cursor: default;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.audio_player .volume:hover .volume_holder {
+    opacity: 1;
+}
+
+.audio_player .volume .volume_holder .volume_bar {
+    display: flex;
+    align-items: flex-end;
+    background-color: #303030;
+    width: 3px;
+    height: calc(100% - 10px);
+    overflow: hidden;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.audio_player .volume .volume_holder .volume_seek {
+    width: 100%;
+    height: 80%;
+    background-color: rgb(68, 143, 255);
+    pointer-events: none;
 }
 
 ::-webkit-scrollbar {

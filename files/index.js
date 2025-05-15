@@ -283,6 +283,8 @@ async function openFile(path) {
         }
         active_audio = new Audio();
         active_audio.src = active_content_url;
+        active_audio.addEventListener('pause', updateAudioPause);
+        active_audio.addEventListener('play', updateAudioPause);
         handleAudioTime();
         handleAudioPause();
     }
@@ -747,13 +749,16 @@ function handleAudioPause() {
     if (!active_audio) return;
     if (audio_track.classList.contains('seeking')) return;
     active_audio.paused ? active_audio.play() : active_audio.pause();
-    audio_pause.classList.toggle('play', active_audio.paused);
 
     if (!active_audio.paused) {
         interval_id = setInterval(handleAudioTime, 1000);
     } else {
         clearInterval(interval_id);
     }
+}
+
+function updateAudioPause() {
+    audio_pause.classList.toggle('play', active_audio.paused);
 }
 
 function handleAudioBack() {
