@@ -64,7 +64,7 @@ const large_placeholder = document.querySelector('.placeholder.large_file');
 const notification_holder = document.querySelector('.notification_holder');
 const notify_placeholder = document.querySelector('.placeholder.notify');
 
-import musicMetadata from 'https://cdn.jsdelivr.net/npm/music-metadata@11.2.1/+esm'
+import { parseBlob } from 'https://cdn.jsdelivr.net/npm/music-metadata@11.2.1/+esm';
 
 let handle_directory = {};
 let folder_directory = {};
@@ -87,7 +87,7 @@ let heic_format = ['heic', 'heif'];
 let image_format = ['jpg', 'jpeg', 'png', 'apng', 'svg', 'ico', 'gif', 'avif', 'webp'];
 let video_format = ['mp4', 'mov', 'mkv', 'avi', 'webm', 'ogv', 'flv', '3gp'];
 let audio_format = ['mp3', 'wav', 'ogg'];
-let supported = [...image_format, ...heic_format, ...video_format];
+let supported = [...image_format, ...heic_format, ...video_format, ...audio_format];
 
 const icons = window.FileIcons;
 const editor = ace.edit('editor');
@@ -479,7 +479,6 @@ function loadFolder(path) {
     }
     updatePath(path);
     handleImagePreviews();
-
 }
 
 function createListEntry(path, folder, next) {
@@ -566,7 +565,6 @@ async function createImagePreview(element, force_file) {
         if (!format) { return; }
         if (!supported.includes(format)) { return; }
         if (heic_format.includes(format)) { return; }
-        if (!audio_format.includes(format)) { return; }
     }
 
     let canvas = element.querySelector('canvas') || document.createElement('canvas');
@@ -666,9 +664,25 @@ async function videoPreviewFallback(element, canvas, blob) {
     video_element.src = target_url;
 }
 
-function audioPreviewFallback(element, canvas, blob) {
-    let target_url = URL.createObjectURL(blob);
-    // add
+async function audioPreviewFallback(element, canvas, blob) {
+    try {
+        let metadata = await parseBlob(blob);
+        let picture = metadata.common.picture?.[0];
+        let image_blob = new Blob([picture.data], { type: picture.format} );
+        let bitmap = await createImageBitmap(image_blob);
+        let ctx = canvas.getContext('2d');
+        canvas.width = '75';
+        canvas.height = '75';
+        canvas.aspectRatio = '1/1';
+        ctx.drawImage(bitmap, 0, 0, 75, 75);
+        bitmap.close();
+
+        let found_span = element.querySelector('span');
+        element.insertBefore(canvas, found_span);
+        element.classList.add('loaded_image', 'audio');
+    } catch(error) {
+        console.error(error);
+    }
 }
 
 function handleAudioPause() {
