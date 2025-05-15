@@ -33,7 +33,8 @@ const nes_holder = content.querySelector('.nes_emulator');
 const nes_iframe_wrapper = nes_holder.querySelector('.nes_iframe_wrapper');
 
 const audio_player = document.querySelector('.audio_player');
-const audio_icon = audio_player.querySelector('.icon');
+const audio_icon_holder = audio_player.querySelector('.canvas_holder');
+const audio_icon = audio_player.querySelector('.icon canvas');
 const audio_title = audio_player.querySelector('.title');
 const audio_duration = audio_player.querySelector('.duration');
 const audio_back = audio_player.querySelector('.before');
@@ -90,7 +91,7 @@ let active_audio;
 let heic_format = ['heic', 'heif'];
 let image_format = ['jpg', 'jpeg', 'png', 'apng', 'svg', 'ico', 'gif', 'avif', 'webp'];
 let video_format = ['mp4', 'mov', 'mkv', 'avi', 'webm', 'ogv', 'flv', '3gp'];
-let audio_format = ['mp3', 'wav', 'ogg'];
+let audio_format = ['mp3', 'wav', 'ogg', 'm4a'];
 let supported = [...image_format, ...heic_format, ...video_format, ...audio_format];
 
 const icons = window.FileIcons;
@@ -269,8 +270,10 @@ async function openFile(path) {
             let ctx = audio_icon.getContext('2d');
             ctx.drawImage(bitmap, 0, 0, 128, 128);
             bitmap.close();
+            audio_icon_holder.classList.add('loaded');
         } catch (error) {
             console.error(error);
+            audio_icon_holder.classList.remove('loaded');
         }
         
         if (active_audio) {
@@ -297,7 +300,6 @@ async function openFile(path) {
             no_shift = true;
             if (!loaded_rom) {
                 target_button?.classList.remove('loading');
-                return;
             }
             break;
         default:
@@ -305,17 +307,14 @@ async function openFile(path) {
                 await loadAudio();
                 no_shift = true;
                 target_button?.classList.remove('loading');
-                return;
             } else if (supported.includes(format)) {
                 await loadMedia();
-                return;
-            }
-
-            let is_text = await file.text();
-            await loadText();
-            if (!is_text) {
-                file_viewer.classList.remove('canedit');
-                return;
+            } else {
+                let is_text = await file.text();
+                await loadText();
+                if (!is_text) {
+                    file_viewer.classList.remove('canedit');
+                }
             }
             break;
     }
