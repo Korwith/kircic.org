@@ -1200,7 +1200,7 @@ iframe.document {
     transform: unset;
 }
 
-.audio_player .icon {
+.audio_player .canvas_holder {
     aspect-ratio: 1/1;
     height: calc(100% + 10px);
     transform: translateX(-5px);
@@ -1208,6 +1208,23 @@ iframe.document {
     box-sizing: border-box;
     border-top-left-radius: 11px;
     border-bottom-left-radius: 11px;
+    overflow: hidden;
+}
+
+.audio_player .canvas_holder canvas, .audio_player .canvas_holder::before {
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.audio_player .canvas_holder::before {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 55px;
 }
 
 .audio_player .title {
@@ -1226,7 +1243,7 @@ iframe.document {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: fit-content;
+    width: 80px;
     height: 100%;
     font-size: 1.0rem;
     font-weight: 900;
@@ -1287,7 +1304,6 @@ iframe.document {
     position: absolute;
     bottom: 0;
     right: 0;
-    cursor: pointer;
 }
 
 .audio_player .track .track_player {

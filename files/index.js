@@ -34,7 +34,7 @@ const nes_iframe_wrapper = nes_holder.querySelector('.nes_iframe_wrapper');
 
 const audio_player = document.querySelector('.audio_player');
 const audio_icon_holder = audio_player.querySelector('.canvas_holder');
-const audio_icon = audio_player.querySelector('.icon canvas');
+const audio_icon = audio_icon_holder.querySelector('canvas');
 const audio_title = audio_player.querySelector('.title');
 const audio_duration = audio_player.querySelector('.duration');
 const audio_back = audio_player.querySelector('.before');
@@ -259,6 +259,7 @@ async function openFile(path) {
     }
 
     async function loadAudio() {
+        let ctx = audio_icon.getContext('2d');
         audio_player.classList.add('show');
         audio_title.textContent = handle.name.substring(0, handle.name.length - format.length - 1);
         
@@ -267,13 +268,12 @@ async function openFile(path) {
             let picture = metadata.common.picture?.[0];
             let image_blob = new Blob([picture.data], { type: picture.format });
             let bitmap = await createImageBitmap(image_blob);
-            let ctx = audio_icon.getContext('2d');
             ctx.drawImage(bitmap, 0, 0, 128, 128);
             bitmap.close();
-            audio_icon_holder.classList.add('loaded');
+            audio_icon_holder.classList = 'canvas_holder';
         } catch (error) {
-            console.error(error);
-            audio_icon_holder.classList.remove('loaded');
+            handleFileIcon(audio_icon_holder, handle.name);
+            ctx.clearRect(0, 0, 128, 128);
         }
         
         if (active_audio) {
@@ -727,6 +727,7 @@ function handleAudioDrag(event) {
     let offset_mouse = event.x - seek_bounds.x;
     let percentage = (offset_mouse / seek_bounds.width) * 100;
     percentage = percentage > 100 ? 100 : percentage;
+    percentage = percentage < 0 ? 0 : percentage;
     audio_track_player.style.width = percentage + '%';
     if (!active_audio.duration) return;
     audio_duration.textContent = formatTime(active_audio.duration * (percentage / 100)) + ' / ' + formatTime(active_audio.duration);
