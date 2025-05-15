@@ -736,6 +736,7 @@ function handleAudioTime() {
     if (audio_track.classList.contains('seeking')) return;
     let perctange = (active_audio.currentTime / active_audio.duration) * 100;
     audio_track_player.style.width = perctange + '%';
+    if (!active_audio.currentTime || !active_audio.duration) return;
     audio_duration.textContent = formatTime(active_audio.currentTime) + ' / ' + formatTime(active_audio.duration);
 }
 
