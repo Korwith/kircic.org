@@ -1190,10 +1190,10 @@ iframe.document {
     box-sizing: border-box;
     border: 1px solid #303030;
     border-radius: 12px;
+    border-bottom-right-radius: 0;
     transform: translateY(calc(100% + 10px));
     transition: transform 0.2s;
     z-index: 6;
-    overflow: hidden;
 }
 
 .audio_player.show {
@@ -1206,12 +1206,12 @@ iframe.document {
     transform: translateX(-5px);
     outline: none;
     box-sizing: border-box;
+    border-top-left-radius: 11px;
+    border-bottom-left-radius: 11px;
 }
 
 .audio_player .title {
     display: flex;
-    padding-left: 7px;
-    padding-right: 7px;
     width: 200px;
     height: 100%;
     align-items: center;
@@ -1222,9 +1222,21 @@ iframe.document {
     opacity: 0.8;
 }
 
+.audio_player .duration {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    height: 100%;
+    font-size: 1.0rem;
+    font-weight: 900;
+    text-wrap: nowrap;
+    opacity: 0.8;
+}
+
 .audio_player .square {
     aspect-ratio: 1/1;
-    height: 100%;
+    height: 60%;
     position: relative;
     cursor: pointer;
     border-radius: 6px;
@@ -1265,7 +1277,43 @@ iframe.document {
 
 .audio_player .square.pause.play::after {
     background-image: url(icon/musicplay.svg);
-    background-size: 70%;
+    background-size: 68%;
+}
+
+.audio_player .track {
+    height: 3px;
+    width: calc(100% - 64px);
+    background-color: #303030;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    cursor: pointer;
+}
+
+.audio_player .track .track_player {
+    position: relative;
+    background-color: rgb(68, 143, 255);
+    width: 30px;
+    height: 100%;
+    pointer-events: none;
+}
+
+.audio_player .track .track_player::after {
+    content: '';
+    position: absolute;
+    background-color: rgb(68, 143, 255);
+    transform: translate(50%, -50%);
+    right: 0;
+    top: 50%;
+    height: 9px;
+    width: 9px;
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.audio_player .track:hover .track_player::after, .audio_player .track.seeking .track_player::after {
+    opacity: 1;
 }
 
 ::-webkit-scrollbar {

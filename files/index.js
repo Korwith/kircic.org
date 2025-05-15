@@ -33,11 +33,14 @@ const nes_holder = content.querySelector('.nes_emulator');
 const nes_iframe_wrapper = nes_holder.querySelector('.nes_iframe_wrapper');
 
 const audio_player = document.querySelector('.audio_player');
-const audio_title = audio_player.querySelector('.title');
 const audio_icon = audio_player.querySelector('.icon');
+const audio_title = audio_player.querySelector('.title');
+const audio_duration = audio_player.querySelector('.duration');
 const audio_back = audio_player.querySelector('.before');
 const audio_next = audio_player.querySelector('.after');
 const audio_pause = audio_player.querySelector('.pause');
+const audio_track = audio_player.querySelector('.track');
+const audio_track_player = audio_track.querySelector('.track_player');
 
 const file_icon = file_viewer.querySelector('.file_icon');
 const file_name = file_viewer.querySelector('.file_name');
@@ -277,7 +280,8 @@ async function openFile(path) {
         }
         active_audio = new Audio();
         active_audio.src = active_content_url;
-        active_audio.play();
+        handleAudioTime();
+        handleAudioPause();
     }
 
     let no_shift = false;
@@ -326,7 +330,7 @@ async function openFile(path) {
 
 async function renameFile() {
     let new_name = file_name.textContent;
-    if (!fileNameAccept(new_name)) { return; }
+    if (!fileNameAccept(new_name)) return;
 
     let directory_path = getPreviousPath(selected_path);
     let directory_object = stringToObject(directory_path);
@@ -353,12 +357,12 @@ async function deleteFile(path, dontupdate) {
     }
     delete parent_object[file_name];
 
-    if (dontupdate) { return; }
+    if (dontupdate) return;
     updatePath(parent_directory, true);
 }
 
 async function editFile() {
-    if (!selected_file) { return; }
+    if (!selected_file) return;
     let writable = await selected_file.createWritable();
     let found_text = editor.getValue();
     await writable.write(found_text);
@@ -369,7 +373,7 @@ async function editFile() {
 
 async function handleNewFolder() {
     forceCloseRightClick();
-    if (current_path.length == 0) { return; }
+    if (current_path.length == 0) return;
     let found_path = current_path.join('/');
     let parent_object = stringToObject(found_path);
     let parent_handle = folder_directory[found_path];
@@ -385,7 +389,7 @@ async function handleNewFolder() {
 
 async function handleNewFile() {
     forceCloseRightClick();
-    if (current_path.length == 0) { return; }
+    if (current_path.length == 0) return;
     let found_path = current_path.join('/');
     let directory_object = stringToObject(found_path);
     let directory_access = folder_directory[found_path];
@@ -564,27 +568,27 @@ async function handleImagePreviews() {
 }
 
 async function createImagePreview(element, force_file) {
-    if (!element) { return; }
-    if (element.classList.contains('loaded_image')) { return; }
+    if (!element) return;
+    if (element.classList.contains('loaded_image')) return;
     let path = element.getAttribute('path');
     let found_span = element.querySelector('span');
     let found_handle = stringToObject(path);
-    if (found_handle.constructor == Object) { return; }
+    if (found_handle.constructor == Object) return;
 
     let format = found_handle.name.includes('.')
         ? found_handle.name.split('.').pop().toLowerCase()
         : undefined;
 
     if (!force_file) {
-        if (!format) { return; }
-        if (!supported.includes(format)) { return; }
-        if (heic_format.includes(format)) { return; }
+        if (!format) return;
+        if (!supported.includes(format)) return;
+        if (heic_format.includes(format)) return;
     }
 
     let canvas = element.querySelector('canvas') || document.createElement('canvas');
     let ctx = canvas.getContext('2d');
     let file = await found_handle.getFile();
-    if (!force_file && file.size > (audio_format.includes(format) ? 15 : 5) * 1024 * 1024) { return; }
+    if (!force_file && file.size > (audio_format.includes(format) ? 15 : 5) * 1024 * 1024) return;
 
 
     let blob = force_file
@@ -661,7 +665,7 @@ async function videoPreviewFallback(element, canvas, blob) {
     }
 
     function frameLoaded() {
-        if (!video_element) { return; }
+        if (!video_element) return;
         ctx.drawImage(video_element, 0, 0, target_size.width * 2, target_size.height * 2);
         element.insertBefore(canvas, found_span);
         element.classList.add('loaded_image');
@@ -699,24 +703,69 @@ async function audioPreviewFallback(element, canvas, blob) {
     }
 }
 
+function handleAudioSeek(event) {
+    audio_track.classList.add('seeking');
+    handleAudioDrag(event);
+    document.addEventListener('mousemove', handleAudioDrag);
+    document.addEventListener('mouseup', handleSeekOver);
+}
+
+function handleSeekOver() {
+    let found_percentage = parseFloat(audio_track_player.style.width);
+    found_percentage ??= 0;
+    let new_time = active_audio.duration * (found_percentage / 100);
+    active_audio.currentTime = new_time;
+
+    audio_track.classList.remove('seeking');
+    handleAudioTime();
+    
+    document.removeEventListener('mousemove', handleAudioDrag);
+    document.removeEventListener('mouseup', handleSeekOver);
+}
+
+function handleAudioDrag(event) {
+    let seek_bounds = audio_track.getBoundingClientRect();
+    let offset_mouse = event.x - seek_bounds.x;
+    let percentage = (offset_mouse / seek_bounds.width) * 100;
+    percentage = percentage > 100 ? 100 : percentage;
+    audio_track_player.style.width = percentage + '%';
+}
+
+function handleAudioTime() {
+    if (!active_audio) return;
+    if (audio_track.classList.contains('seeking')) return;
+    let perctange = (active_audio.currentTime / active_audio.duration) * 100;
+    audio_track_player.style.width = perctange + '%';
+    audio_duration.textContent = formatTime(active_audio.currentTime) + ' / ' + formatTime(active_audio.duration);
+}
+
+let interval_id;
 function handleAudioPause() {
-    if (!active_audio) { return; }
+    if (!active_audio) return;
+    if (audio_track.classList.contains('seeking')) return;
     active_audio.paused ? active_audio.play() : active_audio.pause();
     audio_pause.classList.toggle('play', active_audio.paused);
+
+    if (!active_audio.paused) {
+        interval_id = setInterval(handleAudioTime, 1000);
+    } else {
+        clearInterval(interval_id);
+    }
 }
 
 function handleAudioBack() {
-    if (!active_audio) { return; }
+    if (!active_audio) return;
     handleAudioShift(-1);
 }
 
 function handleAudioNext() {
-    if (!active_audio) { return; }
+    if (!active_audio) return;
     handleAudioShift(1);
 }
 
 function handleAudioShift(shift) {
-    if (!active_audio) { return; }
+    if (!active_audio) return;
+    audio_track_player.style.width = '0';
     let audio_directory = selected_path.split('/');
     let audio_name = audio_directory.pop();
     let directory_info = stringToObject(audio_directory.join('/'));
@@ -733,7 +782,7 @@ function handleAudioShift(shift) {
     let current_index = directory_keys.indexOf(audio_name);
     let new_index = current_index + shift;
 
-    if (new_index < 0 || new_index >= directory_keys.length) { return; }
+    if (new_index < 0 || new_index >= directory_keys.length) return;
     let new_name = directory_keys[new_index];
     let new_directory = [...audio_directory, new_name].join('/');
 
@@ -759,9 +808,9 @@ function handleCacheURL() {
 }
 
 function iconSelect(event) {
-    if (!event.target) { return; }
+    if (!event.target) return;
     let path = event.target.getAttribute('path');
-    if (path == selected_path) { return; }
+    if (path == selected_path) return;
     handleActiveClass(path);
     let sidebar_button = event.target;
     let force_open = false;
@@ -792,9 +841,9 @@ function iconSelect(event) {
 }
 
 function handleFileIcon(icon, name) {
-    if (!name) { return; }
+    if (!name) return;
     let icon_parent = icon.parentElement;
-    if (icon_parent.classList.contains('folder')) { return; }
+    if (icon_parent.classList.contains('folder')) return;
 
     icon.classList = Array.from(icon.classList).shift();
     let class_name = icons.getClassWithColor(name) || 'unknown';
@@ -814,7 +863,7 @@ function handleFileIcon(icon, name) {
 function handleActiveClass(path) {
     let found_button = document.querySelectorAll(`[path="${path}"]`);
     let previous_select = document.querySelectorAll('.active');
-    if (found_button.length == 0) { return; }
+    if (found_button.length == 0) return;
 
     for (var i = 0; i < previous_select.length; i++) {
         let this_button = previous_select[i];
@@ -837,7 +886,7 @@ function handleFileClose() {
     file_explorer.style.width = "";
     updateHeaderClasses();
 
-    if (!active_emulator) { return; }
+    if (!active_emulator) return;
     active_emulator.destroy();
     active_emulator = null;
 }
@@ -885,7 +934,7 @@ function updatePathHistory() {
 }
 
 function handlePathBack() {
-    if (current_path.length <= 1) { return; }
+    if (current_path.length <= 1) return;
     current_path.splice(current_path.length - 1, 1);
     updatePath(current_path.join('/'), true);
     handleFileClose();
@@ -893,7 +942,7 @@ function handlePathBack() {
 
 function handlePathNext() {
     let next_path = saved_path[current_path.length];
-    if (!next_path) { return; }
+    if (!next_path) return;
     current_path.push(next_path);
     updatePath(current_path.join('/'), true);
     handleFileClose();
@@ -932,7 +981,7 @@ async function handleDelete() {
         return;
     }
     let check = confirm(`Delete ${found_select.length} file${found_select.length != 1 ? 's' : ''}?`);
-    if (!check) { return; }
+    if (!check) return;
 
     for (var i = 0; i < found_select.length; i++) {
         let found_button = found_select[i];
@@ -1070,7 +1119,7 @@ function shiftScroll(next) {
 }
 
 function handleHorizontalMove(event) {
-    if (document.activeElement == file_name) { return; }
+    if (document.activeElement == file_name) return;
     event.preventDefault();
 
     let all_list = Array.from(file_explorer.querySelectorAll('.large_file'));
@@ -1083,14 +1132,14 @@ function handleHorizontalMove(event) {
     let found_index = all_list.indexOf(selected);
     found_index = event.which == 37 ? found_index - 1 : found_index + 1;
     let next = all_list[found_index];
-    if (!next) { return; }
+    if (!next) return;
     let path = next.getAttribute('path');
     shiftScroll(next);
     handleActiveClass(path);
 }
 
 function handleVerticalMove(event) {
-    if (document.activeElement == file_name) { return; }
+    if (document.activeElement == file_name) return;
     event.preventDefault();
 
     let all_list = Array.from(file_explorer.querySelectorAll('.large_file'));
@@ -1127,7 +1176,7 @@ function handleVerticalMove(event) {
 }
 
 function handleBackspace() {
-    if (document.activeElement == file_name) { return; }
+    if (document.activeElement == file_name) return;
     let file_open = content.classList.contains('shift');
     if (file_open) {
         handleFileClose();
@@ -1138,13 +1187,13 @@ function handleBackspace() {
 
 function handleEnterKey() {
     let selected_list = file_explorer.querySelectorAll('.active');
-    if (selected_list.length != 1) { return; }
+    if (selected_list.length != 1) return;
     iconSelect({ target: selected_list[0] });
 }
 
 function handleSelectAll(event) {
-    if (file_viewer.contains(document.activeElement)) { return; }
-    if (!event.ctrlKey) { return; }
+    if (file_viewer.contains(document.activeElement)) return;
+    if (!event.ctrlKey) return;
     let all_button = file_explorer.querySelectorAll('.large_file');
     for (var i = 0; i < all_button.length; i++) {
         let this_button = all_button[i];
@@ -1155,14 +1204,14 @@ function handleSelectAll(event) {
 
 function handleCopy(event) {
     let accept_button = [copy_button, right_copy];
-    if (!event.ctrlKey && !accept_button.includes(event.target)) { return; }
+    if (!event.ctrlKey && !accept_button.includes(event.target)) return;
     copyFiles();
     forceCloseRightClick();
 }
 
 async function handlePaste(event) {
     let accept_button = [paste_button, right_paste];
-    if (!event.ctrlKey && !accept_button.includes(event.target)) { return; }
+    if (!event.ctrlKey && !accept_button.includes(event.target)) return;
     forceCloseRightClick();
     startLoadNotification();
     updateLoadNotification(0);
@@ -1178,7 +1227,7 @@ async function handlePaste(event) {
 
 function handleCut(event) {
     let accept_button = [cut_button, right_cut];
-    if (!event.ctrlKey && !accept_button.includes(event.target)) { return; }
+    if (!event.ctrlKey && !accept_button.includes(event.target)) return;
     cutting = true;
     copyFiles();
     forceCloseRightClick();
@@ -1212,7 +1261,7 @@ function handleRightClick(event) {
 }
 
 function forceCloseRightClick(event) {
-    if (event && (right_menu == event.target || right_menu.contains(event.target))) { return; }
+    if (event && (right_menu == event.target || right_menu.contains(event.target))) return;
     right_menu.classList.remove('show');
 }
 
@@ -1233,7 +1282,7 @@ let keymap = {
 }
 
 function handleKeyMap(event) {
-    if (document.activeElement == file_viewer || file_viewer.contains(document.activeElement)) { return; }
+    if (document.activeElement == file_viewer || file_viewer.contains(document.activeElement)) return;
     let found = keymap[event.which];
     found ? found(event) : undefined;
 }
@@ -1295,7 +1344,7 @@ function handleSettingsPage() {
 }
 
 async function handleWindowMessage(event) {
-    if (typeof event.data != 'string') { return; }
+    if (typeof event.data != 'string') return;
     if (event.data.includes('NES')) {
         if (event.data.includes('Error')) {
             sendNotification(3000, event.data, 'error')
@@ -1310,7 +1359,7 @@ async function handleWindowMessage(event) {
         }
 
         if (event.data.includes('Frame')) {
-            if (!selected_file) { return; }
+            if (!selected_file) return;
             let found_button = file_explorer.querySelector(`.large_file[path="${current_path.join('/')}/${selected_file.name}"]`);
             let found_url = event.data.split('Frame ').pop();
             let found_blob = await blobFromURL(found_url);
@@ -1322,7 +1371,7 @@ async function handleWindowMessage(event) {
 
 // Fetch
 function stringToObject(path_string) {
-    if (!path_string) { return; }
+    if (!path_string) return;
     if (path_string.includes('/')) {
         let path_split = path_string.split('/');
         let path_object = handle_directory[path_split[0]];
@@ -1416,9 +1465,17 @@ async function blobFromURL(url) {
     return await response.blob();
 }
 
+function formatTime(seconds) {
+    seconds = Math.floor(seconds);
+    let minutes = Math.floor(seconds / 60);
+    let remainder = seconds % 60;
+    let paddedSeconds = remainder.toString().padStart(2, '0');
+    return minutes + ':' + paddedSeconds;
+}
+
 function checkSupport() {
     let support = 'showOpenFilePicker' in self;
-    if (support) { return; }
+    if (support) return;
     support_error.classList.remove('hide');
     select_error.classList.add('hide');
     document.body.style.pointerEvents = 'none';
@@ -1454,6 +1511,7 @@ right_delete.addEventListener('mouseup', handleDelete);
 audio_pause.addEventListener('mouseup', handleAudioPause);
 audio_back.addEventListener('mouseup', handleAudioBack);
 audio_next.addEventListener('mouseup', handleAudioNext);
+audio_track.addEventListener('mousedown', handleAudioSeek);
 document.addEventListener('keydown', handleKeyMap);
 document.addEventListener('contextmenu', handleRightClick);
 document.addEventListener('mousedown', forceCloseRightClick);
