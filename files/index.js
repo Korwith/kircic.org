@@ -34,6 +34,7 @@ const nes_iframe_wrapper = nes_holder.querySelector('.nes_iframe_wrapper');
 
 const audio_player = document.querySelector('.audio_player');
 const audio_title = audio_player.querySelector('.title');
+const audio_icon = audio_player.querySelector('.icon');
 const audio_back = audio_player.querySelector('.before');
 const audio_next = audio_player.querySelector('.after');
 const audio_pause = audio_player.querySelector('.pause');
@@ -256,7 +257,19 @@ async function openFile(path) {
     async function loadAudio() {
         audio_player.classList.add('show');
         audio_title.textContent = handle.name.substring(0, handle.name.length - format.length - 1);
-
+        
+        try {
+            let metadata = await parseBlob(file);
+            let picture = metadata.common.picture?.[0];
+            let image_blob = new Blob([picture.data], { type: picture.format });
+            let bitmap = await createImageBitmap(image_blob);
+            let ctx = audio_icon.getContext('2d');
+            ctx.drawImage(bitmap, 0, 0, 128, 128);
+            bitmap.close();
+        } catch (error) {
+            console.error(error);
+        }
+        
         if (active_audio) {
             active_audio.pause();
             active_audio.remove();
@@ -271,7 +284,7 @@ async function openFile(path) {
     selected_path = path;
     selected_file = handle;
     file_viewer.classList.remove('editing');
-    switch(format) {
+    switch (format) {
         case 'pdf':
             loadPDF();
             break;
@@ -284,15 +297,16 @@ async function openFile(path) {
             }
             break;
         default:
-            if (supported.includes(format)) {
-                await loadMedia();
-                return;
-            } else if (audio_format.includes(format)) {
+            if (audio_format.includes(format)) {
                 await loadAudio();
                 no_shift = true;
                 target_button?.classList.remove('loading');
                 return;
+            } else if (supported.includes(format)) {
+                await loadMedia();
+                return;
             }
+
             let is_text = await file.text();
             await loadText();
             if (!is_text) {
@@ -570,7 +584,7 @@ async function createImagePreview(element, force_file) {
     let canvas = element.querySelector('canvas') || document.createElement('canvas');
     let ctx = canvas.getContext('2d');
     let file = await found_handle.getFile();
-    if (!force_file && file.size > 5 * 1024 * 1024) { return; }
+    if (!force_file && file.size > (audio_format.includes(format) ? 15 : 5) * 1024 * 1024) { return; }
 
 
     let blob = force_file
@@ -590,11 +604,11 @@ async function createImagePreview(element, force_file) {
         element.classList.add('loaded_image');
     } catch (error) {
         if (image_format.includes(format)) {
-            imagePreviewFallback(element, canvas, blob);
+            await imagePreviewFallback(element, canvas, blob);
         } else if (video_format.includes(format)) {
-            videoPreviewFallback(element, canvas, blob, format);
+            await videoPreviewFallback(element, canvas, blob, format);
         } else if (audio_format.includes(format)) {
-            audioPreviewFallback(element, canvas, blob);
+            await audioPreviewFallback(element, canvas, blob);
         }
     } finally {
         element.classList.remove('loading');
@@ -668,19 +682,19 @@ async function audioPreviewFallback(element, canvas, blob) {
     try {
         let metadata = await parseBlob(blob);
         let picture = metadata.common.picture?.[0];
-        let image_blob = new Blob([picture.data], { type: picture.format} );
+        let image_blob = new Blob([picture.data], { type: picture.format });
         let bitmap = await createImageBitmap(image_blob);
         let ctx = canvas.getContext('2d');
-        canvas.width = '75';
-        canvas.height = '75';
+        canvas.width = '128';
+        canvas.height = '128';
         canvas.aspectRatio = '1/1';
-        ctx.drawImage(bitmap, 0, 0, 75, 75);
+        ctx.drawImage(bitmap, 0, 0, 128, 128);
         bitmap.close();
 
         let found_span = element.querySelector('span');
         element.insertBefore(canvas, found_span);
         element.classList.add('loaded_image', 'audio');
-    } catch(error) {
+    } catch (error) {
         console.error(error);
     }
 }
@@ -706,7 +720,7 @@ function handleAudioShift(shift) {
     let audio_directory = selected_path.split('/');
     let audio_name = audio_directory.pop();
     let directory_info = stringToObject(audio_directory.join('/'));
-    
+
     let directory_keys = Object.keys(directory_info).sort();
     for (let i = directory_keys.length - 1; i >= 0; i--) {
         let this_key = directory_keys[i];
@@ -722,7 +736,7 @@ function handleAudioShift(shift) {
     if (new_index < 0 || new_index >= directory_keys.length) { return; }
     let new_name = directory_keys[new_index];
     let new_directory = [...audio_directory, new_name].join('/');
-    
+
     handleActiveClass(new_directory);
     openFile(new_directory);
 }
@@ -851,7 +865,7 @@ function updatePath(path, clicklast) {
         content_header.appendChild(path_button);
 
         current_path.push(this_value);
-        if (current_path.length > saved_path.length) {
+        if (current_path.length >= saved_path.length) {
             saved_path = [...current_path];
         }
 
@@ -1398,7 +1412,7 @@ function fileNameAccept(name) {
 
 async function blobFromURL(url) {
     let response = await fetch(url);
-    if (!response.ok) { throw new Error(`HTTP Error ${response.status}`)};
+    if (!response.ok) { throw new Error(`HTTP Error ${response.status}`) };
     return await response.blob();
 }
 

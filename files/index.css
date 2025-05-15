@@ -1184,7 +1184,7 @@ iframe.document {
     padding: 5px;
     left: 300px;
     bottom: 0;
-    height: 50px;
+    height: 65px;
     width: fit-content;
     background-color: #1C1C1C;
     box-sizing: border-box;
@@ -1193,6 +1193,7 @@ iframe.document {
     transform: translateY(calc(100% + 10px));
     transition: transform 0.2s;
     z-index: 6;
+    overflow: hidden;
 }
 
 .audio_player.show {
@@ -1201,19 +1202,17 @@ iframe.document {
 
 .audio_player .icon {
     aspect-ratio: 1/1;
-    height: 100%;
+    height: calc(100% + 10px);
+    transform: translateX(-5px);
     outline: none;
-    border-radius: 8px;
     box-sizing: border-box;
-    border: 1px solid #303030;
 }
 
 .audio_player .title {
     display: flex;
     padding-left: 7px;
     padding-right: 7px;
-    width: fit-content;
-    max-width: 200px;
+    width: 200px;
     height: 100%;
     align-items: center;
     font-size: 1.2rem;
