@@ -596,6 +596,18 @@ header.shift {
     background-size: 85px 100%;
 }
 
+.linux_span {
+    display: flex;
+    gap: 7px;
+}
+
+.about span div {
+    aspect-ratio: 1/1;
+    height: 100%;
+    display: inline-block;
+    background-size: cover;
+}
+
 .content h1 {
     user-select: none;
     text-align: center;
@@ -671,6 +683,21 @@ header.shift {
 .linux {
     background-image: url(icon/linux.ico);
     background-size: 76%;
+}
+
+.kubuntu {
+    background-image: url(icon/kubuntu.svg);
+    background-size: 88%;
+}
+
+.ubuntu {
+    background-image: url(icon/ubuntu.svg);
+    background-size: 100%;
+}
+
+.debian {
+    background-image: url(icon/debian.svg);
+    background-size: 88%;
 }
 
 .cert.aplus {
