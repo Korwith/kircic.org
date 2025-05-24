@@ -692,11 +692,21 @@ header.shift {
 
 .ubuntu {
     background-image: url(icon/ubuntu.svg);
-    background-size: 100%;
+    background-size: 88%;
 }
 
 .debian {
     background-image: url(icon/debian.svg);
+    background-size: 88%;
+}
+
+.opensuse {
+    background-image: url(icon/opensuse.svg);
+    background-size: 88%;
+}
+
+.fedora {
+    background-image: url(icon/fedora.svg);
     background-size: 88%;
 }
 
