@@ -93,6 +93,7 @@ let image_format = ['jpg', 'jpeg', 'png', 'apng', 'svg', 'ico', 'gif', 'avif', '
 let video_format = ['mp4', 'mov', 'mkv', 'avi', 'webm', 'ogv', 'flv', '3gp'];
 let audio_format = ['mp3', 'wav', 'ogg', 'm4a'];
 let supported = [...image_format, ...heic_format, ...video_format, ...audio_format];
+let forbidden = ['iso', 'exe'];
 
 const icons = window.FileIcons;
 const editor = ace.edit('editor');
@@ -173,7 +174,7 @@ async function openFile(path) {
             decoder.decode(buffer);
         } catch (error) {
             handleFileClose();
-            sendNotification('3000', 'File is not supported.', 3000);
+            sendNotification(3000, 'This file type is not supported.', 'error');
             return false;
         }
 
@@ -262,7 +263,7 @@ async function openFile(path) {
         let ctx = audio_icon.getContext('2d');
         audio_player.classList.add('show');
         audio_title.textContent = handle.name.substring(0, handle.name.length - format.length - 1);
-        
+
         try {
             let metadata = await parseBlob(file);
             let picture = metadata.common.picture?.[0];
@@ -275,7 +276,7 @@ async function openFile(path) {
             handleFileIcon(audio_icon_holder, handle.name);
             ctx.clearRect(0, 0, 128, 128);
         }
-        
+
         if (active_audio) {
             active_audio.pause();
             active_audio.remove();
@@ -293,17 +294,22 @@ async function openFile(path) {
     selected_path = path;
     selected_file = handle;
     file_viewer.classList.remove('editing');
+    let text = null;
+    let dont;
+
     switch (format) {
         case 'pdf':
             loadPDF();
             break;
+
         case 'nes':
-            let loaded_rom = loadNES();
+            const loaded_rom = loadNES();
             no_shift = true;
             if (!loaded_rom) {
                 target_button?.classList.remove('loading');
             }
             break;
+
         default:
             if (audio_format.includes(format)) {
                 await loadAudio();
@@ -311,17 +317,25 @@ async function openFile(path) {
                 target_button?.classList.remove('loading');
             } else if (supported.includes(format)) {
                 await loadMedia();
-            } else {
-                let is_text = await file.text();
+            } else if (!forbidden.includes(format)) {
+                text = await file.text();
                 await loadText();
-                if (!is_text) {
+                if (!text) {
                     file_viewer.classList.remove('canedit');
                 }
+            } else {
+                target_button.classList.remove('loading');
+                dont = true;
+                sendNotification(3000, 'This file type is not supported.', 'error');
             }
             break;
     }
 
-    let text = await file.text();
+    if (dont) return;
+    if (text === null) {
+        text = await file.text();
+    }
+
     target_button?.classList.remove('loading');
     content.classList.toggle('shift', !no_shift);
     content.classList.remove('settings_open');
@@ -719,7 +733,7 @@ function handleSeekOver() {
 
     audio_track.classList.remove('seeking');
     handleAudioTime();
-    
+
     document.removeEventListener('mousemove', handleAudioDrag);
     document.removeEventListener('mouseup', handleSeekOver);
 }
@@ -850,6 +864,8 @@ function iconSelect(event) {
 
 function handleFileIcon(icon, name) {
     if (!name) return;
+    let found = handlePresetIcon(icon, name);
+    if (found) return;
     let icon_parent = icon.parentElement;
     if (icon_parent.classList.contains('folder')) return;
 
@@ -866,6 +882,49 @@ function handleFileIcon(icon, name) {
         let this_class = class_split[i];
         icon.classList.add(this_class)
     }
+}
+
+let preset_icons = {
+    'Extras': 'folder-crash.svg',
+    'Old Videos': 'folder-crash.svg',
+    'Software': 'folder-podcast.svg',
+    'Scripts': 'folder-rpm.svg',
+    'School': 'folder-yellow.svg',
+    'Roms': 'folder-android.svg',
+    'Music Backup': 'folder-violet.svg',
+    'Movies & TV': 'folder-deb.svg',
+    'Minecraft Backup': 'folder-java.svg',
+    'Legacy Cameras': 'folder-orange.svg',
+    'ISO files': 'start-here-kde.svg',
+    'iPhone files': 'folder-magenta.svg',
+    'Friends': 'folder-brown.svg',
+    'Edited Videos': 'folder-decrypted.svg'
+}
+
+let root_icons = {
+    'Media Backup': 'folder-encrypted.svg',
+    'Other': 'folder-encrypted.svg',
+}
+
+function handlePresetIcon(icon, name) {
+    console.log(name);
+    if (name.includes('.')) return;
+    let absolute_path = icon.parentElement.getAttribute('path');
+    let path_array = absolute_path.includes('/') ? absolute_path.split('/') : [absolute_path];
+    let set_icon = (path_array.length == 2 && root_icons[name]) ? root_icons[name] : preset_icons[name];
+
+    if (!set_icon) {
+        for (var i = 0; i < path_array.length; i++) {
+            let this_entry = path_array[i];
+            if (parseFloat(this_entry) && this_entry.length == 4 && this_entry.startsWith('20')) {
+                set_icon = 'folder-deb.svg';
+                break;
+            }
+        }
+    }
+
+    icon.style.backgroundImage = set_icon ? `url(icon/preset/${set_icon})` : undefined;
+    return set_icon;
 }
 
 function handleActiveClass(path) {

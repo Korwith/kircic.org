@@ -596,6 +596,18 @@ header.shift {
     background-size: 85px 100%;
 }
 
+.linux_span {
+    display: flex;
+    gap: 7px;
+}
+
+.about span div {
+    aspect-ratio: 1/1;
+    height: 100%;
+    display: inline-block;
+    background-size: cover;
+}
+
 .content h1 {
     user-select: none;
     text-align: center;
@@ -673,6 +685,31 @@ header.shift {
     background-size: 76%;
 }
 
+.kubuntu {
+    background-image: url(icon/kubuntu.svg);
+    background-size: 88%;
+}
+
+.ubuntu {
+    background-image: url(icon/ubuntu.svg);
+    background-size: 88%;
+}
+
+.debian {
+    background-image: url(icon/debian.svg);
+    background-size: 88%;
+}
+
+.opensuse {
+    background-image: url(icon/opensuse.svg);
+    background-size: 88%;
+}
+
+.fedora {
+    background-image: url(icon/fedora.svg);
+    background-size: 88%;
+}
+
 .cert.aplus {
     background-image: url(icon/certification1.png);
     background-size: 88%;
@@ -680,6 +717,16 @@ header.shift {
 
 .cert.security {
     background-image: url(icon/certification2.png);
+    background-size: 88%;
+}
+
+.cert.html {
+    background-image: url(icon/certification3.png);
+    background-size: 88%;
+}
+
+.cert.java {
+    background-image: url(icon/certification4.png);
     background-size: 88%;
 }
 
