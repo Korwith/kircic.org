@@ -575,8 +575,11 @@ header.shift {
 }
 
 .about {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
     padding-top: 10px;
-    padding-bottom: 40px;
+    padding-bottom: 20px;
 
     animation-name: breathe;
     animation-duration: 60s;
@@ -608,14 +611,105 @@ header.shift {
     background-size: cover;
 }
 
+.content span.view_cert {
+    width: fit-content !important;
+    height: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: rgba(0, 0, 0, 0);
+    border: 1px solid rgba(0, 0, 0, 0);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.2s, border 0.2s;
+}
+
+.content span.view_cert:hover {
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+@keyframes fadeBack {
+    0% {
+        opacity: 1;
+        max-height: 350px;
+    }
+    99% {
+        opacity: 0;
+        max-height: 0;
+    }
+    100% {
+        opacity: 0;
+        max-height: 0;
+        display: none;
+    }
+}
+
+@keyframes fadeExpand {
+  0% {
+    opacity: 0;
+    max-height: 0;
+  }
+  100% {
+    opacity: 1;
+    max-height: 350px;
+  }
+}
+
+
+.certs {
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    user-select: none;
+}
+
+.certs.show {
+    animation: fadeExpand 0.5s ease forwards;
+}
+
+.certs.hide {
+    animation: fadeBack 0.5s ease forwards;
+}
+
+.certs.forcehide {
+    display: none;
+}
+
+.cert_list {
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: 600;
+    line-height: 1.5em;
+}
+
+.cert_list ul {
+    margin-bottom: 10px;
+}
+
+.cert_list li {
+    display: flex;
+    gap: 7px;
+}
+
+.cert_list li div.cert {
+    width: 24px;
+    height: 24px;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
 .content h1 {
+    margin: 0;
+    padding-top: 15px;
+    padding-bottom: 15px;
     user-select: none;
     text-align: center;
 }
 
 .content .about span {
-    padding-top: 30px;
-    padding-bottom: 0;
     text-align: center;
 }
 

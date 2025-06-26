@@ -11,6 +11,8 @@ const featured = home.querySelector('.horizontal_pane');
 const bookmarks = search_page.querySelector('.bookmarks');
 const add_bookmark = bookmarks.querySelector('.mark.add');
 const delete_bookmark = bookmarks.querySelector('.mark.delete');
+const view_cert = home.querySelector('.view_cert');
+const cert_menu = home.querySelector('.certs');
 
 const header = document.querySelector('header');
 const sidebar = document.querySelector('nav.sidebar');
@@ -122,7 +124,7 @@ const project_data = {
     },
     'File Explorer': {
         description: 'Uses the File System Access API to let you view and edit your local files.',
-        icon: { url: 'icon/openfolder.svg', size: '77%'},
+        icon: { url: 'icon/openfolder.svg', size: '77%' },
         href: 'https://www.kircic.org/files',
         video: 'icon/files_preview.mp4',
         featured: 2,
@@ -219,6 +221,19 @@ function loadSearches() {
         search_button.onclick = searchClick;
         search_segment.appendChild(search_clone);
     }
+}
+
+function handleViewCerts() {
+    cert_menu.classList.remove('forcehide');
+    if (cert_menu.classList.contains('hide') || !cert_menu.classList.contains('show')) {
+        cert_menu.classList.remove('hide');
+        cert_menu.classList.add('show');
+    } else {
+        cert_menu.classList.remove('show');
+        cert_menu.classList.add('hide');
+    }
+
+    view_cert.textContent = cert_menu.classList.contains('hide') ? 'View Certifications' : 'Close Certifications';
 }
 
 function handleSidebar() {
@@ -433,7 +448,7 @@ function updateSwitch(event) {
     if (!event.target) { return false };
     let switch_parent = event.target.parentElement;
     let functionID = switch_parent.getAttribute('alter');
-    
+
     if (!functionID) { return false };
     event.target.classList.toggle('toggle');
     localStorage.setItem(functionID, event.target.classList.contains('toggle'));
@@ -488,9 +503,9 @@ function loadLastSearch(url) {
     } else {
         term.textContent = query;
     }
-    
+
     bookmarks.appendChild(clone);
-    
+
     for (var i in search_data) {
         let this_url = search_data[i];
         if (!url.includes(this_url)) { continue };
@@ -588,8 +603,8 @@ function runConsole(event) {
     if (event.key == 'Enter') {
         if (!event.shiftKey) {
             try {
-                eval(console_box.value); 
-            } catch(error) {
+                eval(console_box.value);
+            } catch (error) {
                 alert(error);
             }
             event.preventDefault();
@@ -606,6 +621,7 @@ updateScrollClass();
 handlePushState();
 loadSettings();
 loadSettingsSwitch();
+view_cert.addEventListener('mouseup', handleViewCerts);
 sidebar_button.addEventListener('mouseup', handleSidebar);
 yellow_button.addEventListener('mouseup', handleSidebar);
 green_button.addEventListener('mouseup', fullscreen);
