@@ -119,7 +119,6 @@ const project_data = {
         description: 'Swipe the letters together to create words.',
         icon: { url: 'icon/wordhunt.png', size: '76%' },
         href: 'https://www.kircic.org/wordhunt',
-        featured: 5,
         category: 'app',
     },
     'File Explorer': {
