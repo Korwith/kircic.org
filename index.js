@@ -326,6 +326,20 @@ function handleKeyDown(event) {
             runSearch(engine);
         }
     }
+
+    if (event.which == 9) {
+        let open_page = document.querySelector('.page.show');
+        if (!open_page) return;
+        event.preventDefault();
+
+        if (open_page.classList.contains('search')) {
+            let all_search_boxes = Array.from(open_page.querySelectorAll('.search_box'));
+            let selected_index = all_search_boxes.indexOf(document.activeElement);
+            let next_index = selected_index + 1 >= all_search_boxes.length ? 0 : selected_index + 1;
+            selected_index = selected_index == -1 ? 0 : next_index;
+            all_search_boxes[selected_index].focus();
+        }
+    }
 }
 
 function fullscreen() {
