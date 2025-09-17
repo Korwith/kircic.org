@@ -203,6 +203,19 @@ function loadProjects() {
     }
 }
 
+function handleViewCerts() {
+    cert_menu.classList.remove('forcehide');
+    if (cert_menu.classList.contains('hide') || !cert_menu.classList.contains('show')) {
+        cert_menu.classList.remove('hide');
+        cert_menu.classList.add('show');
+    } else {
+        cert_menu.classList.remove('show');
+        cert_menu.classList.add('hide');
+    }
+
+    view_cert.textContent = cert_menu.classList.contains('hide') ? 'View Certifications' : 'Close Certifications';
+}
+
 function loadSearches() {
     for (var i in search_data) {
         let this_info = search_data[i];
@@ -220,19 +233,6 @@ function loadSearches() {
         search_button.onclick = searchClick;
         search_segment.appendChild(search_clone);
     }
-}
-
-function handleViewCerts() {
-    cert_menu.classList.remove('forcehide');
-    if (cert_menu.classList.contains('hide') || !cert_menu.classList.contains('show')) {
-        cert_menu.classList.remove('hide');
-        cert_menu.classList.add('show');
-    } else {
-        cert_menu.classList.remove('show');
-        cert_menu.classList.add('hide');
-    }
-
-    view_cert.textContent = cert_menu.classList.contains('hide') ? 'View Certifications' : 'Close Certifications';
 }
 
 function handleSidebar() {
