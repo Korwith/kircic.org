@@ -356,7 +356,7 @@ let defaults = {
     'hideBookmarks': false,
     'saveLastSearch': false,
     'searchNewTab': false,
-    'hideTasks': false,
+    'showTasks': false,
 }
 
 let current_settings = {
@@ -364,13 +364,13 @@ let current_settings = {
     'hideBookmarks': false,
     'saveLastSearch': false,
     'searchNewTab': false,
-    'hideTasks': false
+    'showTasks': false
 }
 
 let functionMap = {
     'hideBookmarks': bookmarksVisible,
     'saveLastSearch': saveSearchVisible,
-    'hideTasks': tasksPageVisible
+    'showTasks': tasksPageVisible
 }
 
 let skip = ['changePageHue'];
@@ -425,7 +425,7 @@ function saveSearchVisible() {
 }
 
 function tasksPageVisible() {
-    let hidden = current_settings.hideTasks;
+    let hidden = !current_settings.showTasks;
     tasks_button.classList.toggle('hide', hidden);
 
     if (window.location.href.includes('#tasks')) {
@@ -634,6 +634,7 @@ updateScrollClass();
 handlePushState();
 loadSettings();
 loadSettingsSwitch();
+tasksPageVisible();
 view_cert.addEventListener('mouseup', handleViewCerts);
 sidebar_button.addEventListener('mouseup', handleSidebar);
 yellow_button.addEventListener('mouseup', handleSidebar);
