@@ -1,0 +1,475 @@
+body {
+    margin: 0;
+}
+
+iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.placeholder {
+    display: none !important;
+}
+
+.background {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: linear-gradient(to bottom, #151515, #101010);
+}
+
+header {
+    height: 55px;
+    width: 100vw;
+    border-bottom: 1px solid #252525;
+    box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.header_left {
+    height: 100%;
+    width: fit-content;
+    display: flex;
+    gap: 5px;
+}
+
+.icon.logo {
+    aspect-ratio: 1/1;
+    height: 100%;
+    background-size: 80%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url(icon/logo.svg);
+    cursor: pointer;
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    font-size: 1.4rem;
+    font-weight: 600;
+    user-select: none;
+}
+
+nav.sidebar {
+    height: calc(100vh - 55px);
+    width: 300px;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0);
+    border-right: 1px solid #252525;
+    transition: transform 0.2s;
+}
+
+.page_list {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.button_holder {
+    flex: 0 0 auto;
+    width: calc(100% - 20px);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.page_button {
+    width: calc(50% - 5px);
+    height: 45px;
+    cursor: pointer;
+    display: flex;
+    gap: 10px;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.1);
+    user-select: none;
+    box-sizing: border-box;
+    border: 1px solid #252525;
+    transition: background-color 0.2s;
+}
+
+.page_button:hover {
+    background-color: rgba(255, 255, 255, 0.025);
+}
+
+.page_button * {
+    pointer-events: none;
+}
+
+.stock_holder {
+    width: 100%;
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.stock_holder .search_pane {
+    display: none;
+    width: 100%;
+    height: 100%;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.frame_list {
+    width: 100%;
+    height: fit-content;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+}
+
+.search_header {
+    display: flex;
+    height: 25px;
+    width: 100%;
+    font-weight: 700;
+    justify-content: center;
+    align-items: center;
+    order: 0;
+    user-select: none;
+}
+
+.stock_holder.searching .stock {
+    display: none;
+}
+
+.stock_holder.searching .search_pane {
+    display: flex;
+}
+
+.stock_holder.searching .search_pane .stock {
+    display: flex;
+}
+
+.stock_holder.searching .search_header {
+    display: none;
+}
+
+.stock_holder.searching .search_pane .search_header {
+    display: flex;
+}
+
+.search {
+    display: block;
+    width: calc(100% - 42px);
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    height: 30px;
+    border: 0;
+    background-color: #101010;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 1rem;
+    outline: none;
+    border: 1px solid #252525;
+    border-radius: 8px;
+    transition: border 0.2s;
+}
+
+.search:focus {
+    border: 1px solid white;
+}
+
+.stock {
+    width: calc(100% - 20px);
+    margin-left: 10px;
+    margin-right: 10px;
+    height: 40px;
+    min-height: 40px;
+    display: flex;
+    gap: 1px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+}
+
+.stock * {
+    pointer-events: none;
+}
+
+.stock:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.stock_icon {
+    position: relative;
+    aspect-ratio: 1/1;
+    height: calc(100% - 10px);
+    margin: 5px;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    user-select: none;
+}
+
+.stock_icon.loadfail {
+    background: linear-gradient(to bottom right, lime, darkgreen)
+}
+
+.stock_info {
+    flex: 1;
+    overflow-x: hidden;
+    display: flex;
+    position: relative;
+    user-select: none;
+}
+
+.stock_info span {
+    display: flex;
+    align-items: center;
+}
+
+.stock_info span.stock_name {
+    white-space: nowrap;
+    flex: 1;
+    max-width: 80%;
+    overflow-x: hidden;
+    font-size: 1.1rem;
+    font-size: 400;
+}
+
+.stock_info span.stock_ticker {
+    flex: 0 0 auto;
+    color: rgba(255, 255, 255, 0.8);
+    width: fit-content;
+    height: 100%;
+    padding-left: 6px;
+    padding-right: 6px;
+    font-size: 1.2rem;
+    text-align: right;
+    font-weight: 600;
+}
+
+.page_button .icon {
+    aspect-ratio: 1/1;
+    height: 100%;
+    flex: 0 0 auto;
+    background-repeat: no-repeat;
+    background-position: center;
+    box-sizing: border-box;
+}
+
+.icon.home {
+    background-size: 62%;
+    background-image: url(icon/home.svg);
+}
+
+.icon.news {
+    background-size: 70%;
+    background-image: url(icon/news.svg);
+}
+
+.icon.crypto {
+    background-size: 88%;
+    background-image: url(icon/bitcoin.svg);
+}
+
+.icon.tracker {
+    background-size: 60%;
+    background-image: url(icon/graph.svg);
+}
+
+.page_button span {
+    display: flex;
+    align-items: center;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.info_holder {
+    transform: translateY(-50%);
+    width: 250px;
+    height: 100px;
+    background-color: #151515;
+    box-sizing: border-box;
+    border: 1px solid #252525;
+    border-radius: 12px;
+    position: fixed;
+    left: 300px;
+    z-index: 999;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s, top 0.2s;
+}
+
+.info_holder.show {
+    opacity: 1;
+}
+
+.content {
+    width: calc(100vw - 300px);
+    height: calc(100vh - 55px);
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    user-select: none;
+    transition: transform 0.2s;
+}
+
+.page {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+}
+
+.page.tracker {
+    filter: invert(0.94) brightness(1.1) hue-rotate(180deg);
+}
+
+.page.show {
+    display: block;
+}
+
+.page h1 {
+    text-align: center;
+}
+
+.company_info {
+    width: 100vw;
+    height: 150px;
+}
+
+.banner {
+    width: 100%;
+    height: 72px;
+    border-bottom: 1px solid #252525;
+    pointer-events: none;
+}
+
+.horizontal {
+    width: 100%;
+    height: calc(100% - 72px);
+    min-height: fit-content;
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+.horizontal::after {
+    content: '';
+    position: absolute;
+    width: 1px;
+    height: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #252525;
+}
+
+.overview {
+    height: 100%;
+    width: 50%;
+}
+
+.most_active {
+    height: 100%;
+    width: 50%;
+}
+
+.tab_select {
+    display: none;
+    height: 30px;
+    width: fit-content;
+    min-width: 60px;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #151515;
+    border-radius: 999px;
+    gap: 3px;
+    padding: 3px;
+}
+
+.tab_select button {
+    display: block;
+    border-radius: 999px;
+    width: fit-content;
+    padding-left: 10px;
+    padding-right: 10px;
+    border: 0;
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0);
+    transition: background-color 0.2s;
+}
+
+.tab_select button.active {
+    background-color: #202020 !important;
+}
+
+.tab_select button:hover {
+    background-color: #181818;
+}
+
+* {
+    color: white;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+@media screen and (max-width: 767px) {
+    nav.sidebar {
+        width: 100%;
+        height: calc(100dvh - 55px);
+        top: 55px;
+        position: fixed;
+        transform: translateX(-100%);
+    }
+
+    nav.sidebar.show {
+        transform: unset;
+    }
+
+    .content {
+        width: 100vw;
+        height: calc(100dvh - 55px);
+        position: fixed;
+        top: 55px;
+    }
+
+    .content.hide {
+        transform: translate(100%);
+    }
+
+    .horizontal::after {
+        content: unset;
+    }
+
+
+    .horizontal div {
+        display: none;
+        width: 100%;
+    }
+
+    .horizontal div.show {
+        display: block;
+    }
+
+    .tab_select {
+        display: flex;
+    }
+
+    .info_holder {
+        display: none;
+    }
+}

@@ -1,0 +1,25 @@
+Ticker,Name,Exchange
+VOO,Vanguard S&P 500 ETF,AMEX
+VTI,Vanguard Total Stock Market ETF,AMEX
+VUG,Vanguard Growth ETF,AMEX
+VEA,Vanguard FTSE Developed Markets ETF,AMEX
+VTV,Vanguard Value ETF,AMEX
+BND,Vanguard Total Bond Market ETF,NASDAQ
+VIG,Vanguard Dividend Appreciation ETF,AMEX
+VGT,Vanguard Information Technology ETF,AMEX
+VWO,Vanguard FTSE Emerging Markets ETF,AMEX
+VXUS,Vanguard Total International Stock ETF,NASDAQ
+VO,Vanguard Mid-Cap ETF,AMEX
+IVV,iShares Core S&P 500 ETF,AMEX
+IEFA,iShares Core MSCI EAFE ETF,AMEX
+AGG,iShares Core U.S. Aggregate Bond ETF,AMEX
+IWF,iShares Russell 1000 Growth ETF,IWF
+IJH,iShares Core S&P Mid-Cap ETF,AMEX
+IJR,iShares Core S&P Small-Cap ETF,AMEX
+IWM,iShares Russell 2000 ETF,AMEX
+IEMG,iShares Core MSCI Emerging Markets ETF,AMEX
+QQQ,Invesco QQQ Trust Series I,NASDAQ
+GLD,SPDR Gold Shares,AMEX
+RSP,Invesco S&P 500 Equal Weight ETF,RSP
+XLK,Technology Select Sector SPDR ETF,AMEX
+SCHD,Schwab US Dividend Equity ETF,AMEX

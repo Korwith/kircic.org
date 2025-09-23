@@ -1,0 +1,585 @@
+Ticker,Name,Exchange
+AA,Alcoa Inc.,NYSE
+AB,Alliance Capital Management L.P.,NYSE
+ABB,Abb Ltd,NYSE
+ABBV,Abbvie Inc. Common Stock,NYSE
+ABC,Amerisourcebergen Corporation,NYSE
+ABR,Arbor Realty Trust,NYSE
+ABT,Abbot Laboratories,NYSE
+ACI,Arch Coal,NYSE
+ACN,Accenture Plc.,NYSE
+ADC,Agree Realty Corp.,NYSE
+ADM,Archer-Daniels-Midland Company,NYSE
+AEM,Agnico-Eagle Mines Limited,NYSE
+AFL,Aflac Incorporated,NYSE
+AG,First Majestic Silver,NYSE
+AGCO,Agco Corp.,NYSE
+ALB,Albemarle Corp.,NYSE
+ALSN,Allison Transmission Holdings,NYSE
+AMD,Advanced Micro Devices,NYSE
+AMH,American Homes 4 Rent,NYSE
+AMRC,Ameresco Inc,NYSE
+AMT,American Tower Corp.,NYSE
+ANF,Abercrombie & Fitch Company,NYSE
+AOS,Smith [A.O.] Corp.,NYSE
+APH,Amphenol Corp.,NYSE
+ARE,Alexandria Real Estate Equities,NYSE
+ARR,Armour Residential R,NYSE
+ASC,Ardmore Shipping Corporation,NYSE
+ATR,Aptargroup,NYSE
+AUY,Yamana Gold,NYSE
+AVD,American Vanguard Corp.,NYSE
+AWK,American Water Works,NYSE
+AWR,American States Water Company,NYSE
+AXP,American Express Company,NYSE
+BCC,Boise Cascade L.L.C. Common ST,NYSE
+BCX,Blackrock Resources Common Shar,NYSE
+BDJ,Blackrock Enhanced Dividend Achievers,NYSE
+BDN,Brandywine Realty Trust,NYSE
+BDX,Becton Dickinson And Company,NYSE
+BEAM,Beam Inc,NYSE
+BEP,Brookfield Renewable,NYSE
+BERY,Berry Plastics Group Inc.,NYSE
+BFK,Blackrock Florida Muni 2020 Trust,NYSE
+BFZ,Blackrock California Muni Trust,NYSE
+BG,Bunge Limited,NYSE
+BGR,Blackrock Energy And Resources Trust,NYSE
+BGS,B&G Foods Holdings,NYSE
+BGT,Blackrock Global,NYSE
+BGY,Blackrock International,NYSE
+BHK,Blackrock Core Trust,NYSE
+BIO,Bio-Rad Laboratories,NYSE
+BIT,Blackrock Multi-Sector Income T,NYSE
+BKH,Black Hills Corp.,NYSE
+BKN,Blackrock Investment Quality Municipal,NYSE
+BKT,Blackrock Income Trust Inc.,NYSE
+BLK,Blackrock,NYSE
+BLL,Ball Corp.,NYSE
+BLW,Blackrock Limited Duration Income Trust,NYSE
+BME,Blackrock Health Sciences Trust,NYSE
+BMY,Bristol-Myers Squibb Company,NYSE
+BNS,Bank Of Nova Scotia,NYSE
+BNY,Blackrock New York Muni Trust Inc.,NYSE
+BOE,Blackrock Global,NYSE
+BTA,Blackrock Long-Term Muni Advantage Trust,NYSE
+BTZ,Blackrock Preferred,NYSE
+BUD,Anheuser-Busch Inbev Sa,NYSE
+BUI,Blackrock Utility And Infrastr,NYSE
+BWA,Borgwarner Inc.,NYSE
+BYM,Blackrock Muni Income Quality Trust,NYSE
+C,Citigroup Inc.,NYSE
+CAH,Cardinal Health,NYSE
+CAT,Caterpillar,NYSE
+CCI,Crown Castle International Corp.,NYSE
+CCJ,Cameco Corp.,NYSE
+CCL,Carnival Corp.,NYSE
+CE,Celanese Corp.,NYSE
+CHD,Church & Dwight Company,NYSE
+CI,Cigna Corp.,NYSE
+CL,Colgate-Palmolive Company,NYSE
+CLF,Cliffs Natual Resources Inc.,NYSE
+CLH,Clean Harbors,NYSE
+CLX,Clorox Company,NYSE
+CMG,Chipotle Mexican Grill,NYSE
+CMI,Cummmins Inc.,NYSE
+CNC,Centene Corp.,NYSE
+CNI,Canadian National Railway Company,NYSE
+COF,Capital One Financial Corp.,NYSE
+COTY,Coty Inc,NYSE
+CP,Canadian Pacific Railway,NYSE
+CRL,Charles River Laboratories Intl,NYSE
+CRM,Salesforce.Com Inc,NYSE
+CRY,Cryolife,NYSE
+CS,Credit Suisse Group,NYSE
+CSL,Carlisle Companies Inc.,NYSE
+CVS,Cvs Corp.,NYSE
+CVX,Chevron Corp.,NYSE
+CW,Curtiss-Wright Corp.,NYSE
+CWH,Commonwealth REIT,NYSE
+DAL,Delta Air Lines Inc.,NYSE
+DB,Deutsche Bank Ag,NYSE
+DCI,Donaldson Company,NYSE
+DDD,3D Systems Corp.,NYSE
+DE,Deere & Company,NYSE
+DFS,Discover Financial Services,NYSE
+DG,Dollar General Corp.,NYSE
+DHR,Danaher Corp.,NYSE
+DHT,Dht Holdings,NYSE
+DIS,Walt Disney Company,NYSE
+DLR,Digital Realty Trust,NYSE
+DOV,Dover Corp.,NYSE
+DOW,DOW Chemical Company,NYSE
+DPZ,Domino's Pizza Inc,NYSE
+DQ,Daqq New Energy,NYSE
+DSU,Blackrock Debt Strategies Fund,NYSE
+ECL,Ecolab Inc.,NYSE
+ECOM,Channeladvisor Corporation,NYSE
+EDF,Stone Harbor Emerging Markets,NYSE
+EDI,Stone Harbor Emerging Markets,NYSE
+EFC,Ellington Financial Llc,NYSE
+EGP,Eastgroup Properties,NYSE
+EL,Estee Lauder Companies,NYSE
+ELS,Equity Lifestyle Properties,NYSE
+ELY,Callaway Golf Company,NYSE
+EMN,Eastman Chemical Company,NYSE
+EMR,Emerson Electric Company,NYSE
+ENB,Enbridge Inc,NYSE
+EPAM,Epam Systems Inc.,NYSE
+EPR,Entertainment Properties Trust,NYSE
+EQR,Equity Residential,NYSE
+ESS,Essex Property Trust,NYSE
+EW,Edwards Lifesciences Corp.,NYSE
+EXK,Endeavour Silver Corp.,NYSE
+EXPR,Express,NYSE
+EXR,Extra Space Storage Inc,NYSE
+F,Ford Motor Company,NYSE
+FAM,First Trust/Aberdeen Global Opportunity,NYSE
+FBHS,Fortune Brands Home & Security,NYSE
+FC,Franklin Covey Company,NYSE
+FCX,Freeport-Mcmoran Copper & Gold,NYSE
+FDS,Factset Research Systems Inc.,NYSE
+FDX,Fedex Corp.,NYSE
+FGB,Ferrellgas-Partners L.P.,NYSE
+FLT,Fleetcor Technologies,NYSE
+FMC,Fmc Corp.,NYSE
+FMY,First Trust/Fidac Mortgage Income Fund,NYSE
+FNF,Fidelity National Financial,NYSE
+FRC,First Republic Bank,NYSE
+GCI,Gannet Co.,NYSE
+GD,General Dynamics Corp.,NYSE
+GE,General Electric Company,NYSE
+GEO,Geo Group Inc,NYSE
+GES,Guess,NYSE
+GGG,Graco Inc.,NYSE
+GIB,Cgi Group,NYSE
+GIS,General Mills,NYSE
+GM,General Motors Company,NYSE
+GME,Gamestop Corp.,NYSE
+GNRC,Generac Holdings Inc.,NYSE
+GPC,Genuine Parts Company,NYSE
+GS,Goldman Sachs Group,NYSE
+HD,Home Depot,NYSE
+HEI,Heico Corp.,NYSE
+HII,Huntington Ingalls Industries,NYSE
+HL,Hecla Mining Company,NYSE
+HPQ,Hewlett-Packard Company,NYSE
+HRL,Hormel Foods Corp.,NYSE
+HSY,Hershey Foods Corp.,NYSE
+HTGC,Hercules Technology Growth Capital,NYSE
+HYT,Blackrock High Yield Fund Vi Inc,NYSE
+IBM,International Business Machines Corp.,NYSE
+IBN,Icici Bank Limited,NYSE
+ICE,Intercontinentalexchange,NYSE
+IEX,Idex Corp.,NYSE
+IFN,India Fund,NYSE
+IIM,Invesco Insured Muni Income Trust,NYSE
+ING,ING Group N.V.,NYSE
+INGR,Ingredion Inc,NYSE
+IQI,Invesco Quality Muni Income Trust,NYSE
+IRM,Iron Mountain Inc.,NYSE
+ITW,Illinois Tool Works Inc.,NYSE
+IVR,Invesco Mortgage Capital Inc,NYSE
+IVZ,Invesco Plc,NYSE
+JBL,Jabil Circuit,NYSE
+JKS,Jinkosolar Holding Company Limited,NYSE
+JNJ,Johnson & Johnson,NYSE
+JPM,J P Morgan Chase & Co,NYSE
+K,Kellogg Company,NYSE
+KMB,Kimberly-Clark Corp.,NYSE
+KMI,Kinder Morgan,NYSE
+KO,Coca-Cola Company,NYSE
+KR,Kroger Company,NYSE
+KTF,Scudder Municiple Income Trust,NYSE
+LAZ,Lazard Ltd,NYSE
+LEG,Leggett & Platt Inc.,NYSE
+LH,Laboratory Corporation Of America,NYSE
+LIN,Lin Media Llc,NYSE
+LLY,Eli Lilly And Company,NYSE
+LMT,Lockheed Martin Corp.,NYSE
+LOW,Lowe's Companies,NYSE
+LTC,Ltc Properties,NYSE
+LUV,Southwest Airlines Company,NYSE
+LVS,Las Vegas Sands,NYSE
+LYB,Lyondellbasell Industries Nv,NYSE
+MA,Mastercard Inc.,NYSE
+MAA,Mid-America Apartment Communities,NYSE
+MAC,Macerich Company,NYSE
+MAIN,Main Street Capital Corp.,NYSE
+MAR,Marriot International,NYSE
+MATX,Matson Inc,NYSE
+MCD,Mcdonald's Corp.,NYSE
+MCO,Moody's Corp.,NYSE
+MDT,Medtronic,NYSE
+MED,Medifast Inc,NYSE
+MFL,Blackrock Muniholdings Investment,NYSE
+MGA,Magna International,NYSE
+MHD,Blackrock Muniholdings Fund,NYSE
+MKC,Mccormick & Company Inc.,NYSE
+MMC,Marsh & Mclennan Companies,NYSE
+MMM,3M Company,NYSE
+MO,Altria Group,NYSE
+MPW,Medical Properties Trust,NYSE
+MQT,Blackrock Muniyield Quality Fund II,NYSE
+MQY,Blackrock Muniyield Quality Fund,NYSE
+MRK,Merck & Company,NYSE
+MS,Morgan Stanley,NYSE
+MSA,Mine Safety Appliances Company,NYSE
+MSCI,MSCI Inc,NYSE
+MSM,Msc Industrial Direct Company,NYSE
+MUA,Blackrock Muniassets Fund,NYSE
+MUC,Blackrock Muniholdings California,NYSE
+MUE,Blackrock Muniholdings Quality Fund II,NYSE
+MUI,Blackrock Muni Intermediate Duration,NYSE
+MUJ,Blackrock Muniholdings New Jersey,NYSE
+MVT,Blackrock Munivest Fund II,NYSE
+MYD,Blackrock Muniyield Fund,NYSE
+MYI,Blackrock Muniyield Quality Fund III,NYSE
+NEE,Nextera Energy,NYSE
+NEM,Newmont Mining Corp.,NYSE
+NHI,National Health Investors,NYSE
+NIO,Nuveen Insured Muni Opportunity Fund,NYSE
+NKE,Nike,NYSE
+NLY,Annaly Capital Management Inc,NYSE
+NNN,National Retail Properties,NYSE
+NOC,Northrop Grumman Corp.,NYSE
+NP,Neenah Paper,NYSE
+NSC,Norfolk Souther Corp.,NYSE
+NU,Northeast Utilities,NYSE
+NUE,Nucor Corp.,NYSE
+NVO,Novo Nordisk A/S,NYSE
+NVS,Novartis Ag,NYSE
+NWL,Newell Rubbermaid Inc.,NYSE
+O,Realty Income Corp.,NYSE
+OHI,Omega Healthcare Investors,NYSE
+OIA,Invesco Muni Income Trust,NYSE
+OMC,Omnicom Group Inc.,NYSE
+ORCL,Oracle Corp.,NYSE
+ORI,Old Republic International Corp.,NYSE
+OXY,Occidental Petroleum Corp.,NYSE
+PANW,Palo Alto Networks Inc.,NYSE
+PBA,Pembina Pipeline Cor,NYSE
+PCI,Pimco Dynamic Credit Income Fun,NYSE
+PCN,Pimco Corporate,NYSE
+PCQ,Pimco California Muni,NYSE
+PDI,Pimco Dynamic Income Fund,NYSE
+PEP,Pepsico,NYSE
+PFE,Pfizer,NYSE
+PFL,Pimco Income Strategy Fund,NYSE
+PFN,Pimco Income Strategy Fund II,NYSE
+PG,Procter & Gamble Company,NYSE
+PGP,Pimco Global Stocksplus & Income,NYSE
+PH,Parker-Hannifin Corp.,NYSE
+PHK,Pimco High,NYSE
+PII,Polaris Industries Inc.,NYSE
+PKG,Packaging Corporation Of America,NYSE
+PKI,Perkinelmer,NYSE
+PKO,Pimco Income Opportunity Fund,NYSE
+PL,Protective Life Corp.,NYSE
+PLD,Prologis Inc,NYSE
+PM,Philip Morris International Inc,NYSE
+PMF,Pimco Muni,NYSE
+PMX,Pimco Muni Income Fund III,NYSE
+PPL,Ppl Corp.,NYSE
+PRLB,Proto Labs Inc.,NYSE
+PSA,Public Storage,NYSE
+PTY,Pimco Corporate Opportunity Fund,NYSE
+PXD,Pioneer Natural Resources Company,NYSE
+PZC,Pimco California Muni Income Fund III,NYSE
+RATE,Bankrate Inc.,NYSE
+RCL,Royal Caribbean Cruises Ltd,NYSE
+RCS,Rcm Strategic Global Government Fund,NYSE
+RDS.A,Royal Dutch Shell Plc,NYSE
+RE,Everest Re Group,NYSE
+RIG,Transocean Inc.,NYSE
+RIO,Rio Tinto Plc,NYSE
+RL,Ralph Lauren Corp.,NYSE
+RMD,Resmed Inc.,NYSE
+ROL,Rollins,NYSE
+ROP,Roper Industries,NYSE
+RPM,Rpm,NYSE
+RSG,Republic Services,NYSE
+RYN,Rayonier Inc. REIT,NYSE
+S,Sprint Corporation Series 1,NYSE
+SCCO,Southern Peru Copper Corp.,NYSE
+SCHW,The Charles Schwab Corp.,NYSE
+SCL,Stepan Company,NYSE
+SE,Spectra Energy Corp,NYSE
+SI,Siemens Ag,NYSE
+SKT,Tanger Factory Outlet Centers,NYSE
+SLB,Schlumberger N.V.,NYSE
+SNA,Snap-On Inc.,NYSE
+SOL,Renesola Ltd,NYSE
+SPG,Simon Property Group,NYSE
+SQM,Sociedad Quimica Y Minera S.A.,NYSE
+SRC,Spirit Realty Capital Inc.,NYSE
+SSTK,Shutterstock Inc.,NYSE
+STAG,STI Inc,NYSE
+STE,Steris Corp.,NYSE
+STWD,Starwood Property Trust,NYSE
+STZ,Constellation Brands Inc,NYSE
+SWK,Stanley Black & Decker Inc,NYSE
+SYK,Stryker Corp.,NYSE
+SYY,Sysco Corp.,NYSE
+T,AT&T Inc.,NYSE
+TAC,Transalta Corp.,NYSE
+TD,Toronto Dominion Bank,NYSE
+TDF,Templeton Dragon Fund,NYSE
+TDG,Transdigm Group Inc.,NYSE
+TER,Teradyne,NYSE
+TEVA,Teva Pharmaceutical Industries Limited,NYSE
+TGT,Target Corp.,NYSE
+THO,Thor Industries,NYSE
+TMHC,Taylor Morrison Home Corporatio,NYSE
+TMO,Thermo Fisher Scientific Inc,NYSE
+TMUS,T-Mobile US Inc.,NYSE
+TOL,Toll Brothers Inc.,NYSE
+TSM,Taiwan Semiconductor Manufacturing,NYSE
+TSN,Tyson Foods,NYSE
+TTC,Toro Company,NYSE
+TUP,Tupperware Corp.,NYSE
+TWO,Two Harbors Investments Corp,NYSE
+UBS,UBS Ag,NYSE
+UGI,Ugi Corp.,NYSE
+UHT,Universal Health Realty Income Trust,NYSE
+UNH,Unitedhealth Group Inc.,NYSE
+UNM,Unumprovident Corp.,NYSE
+UNP,Union Pacific Corp.,NYSE
+UPS,United Parcel Service,NYSE
+URI,United Rentals,NYSE
+USB,U.S. Bancorp,NYSE
+USPH,U.S. Physical Therapy,NYSE
+V,Visa Inc.,NYSE
+VALE,Vale S.A.,NYSE
+VBF,Invesco Van Kampen Bond Fund,NYSE
+WAB,Wabtec Corp.,NYSE
+XOM,Exxon Mobil Corp.,NYSE
+XYL,Xylem Inc. Common Stock New Whe,NYSE
+YUM,Yum! Brands,NYSE
+ZTS,Zoetis Inc. Class A Common Stoc,NYSE
+AAPL,Apple Inc.,NASDAQ
+AAXJ,All Country Asia Ex Jpn Idx MSCI Ishares,NASDAQ
+ABIO,Arca Biopharma,NASDAQ
+ACWI,ACWI Index MSCI Ishares,NASDAQ
+ACWX,ACWI Ex-US Index MSCI Ishares,NASDAQ
+ADBE,Adobe Systems Incorporated,NASDAQ
+ADP,Automatic Data Processing,NASDAQ
+ADSK,Autodesk,NASDAQ
+AGNC,American Capital Agency,NASDAQ
+AKAM,Akamai Technologies,NASDAQ
+ALGN,Align Technology,NASDAQ
+AMAT,Applied Materials,NASDAQ
+AMGN,Amgen Inc.,NASDAQ
+AMRS,Amyris,NASDAQ
+AMZN,Amazon.Com,NASDAQ
+ARCC,Ares Capital Corp.,NASDAQ
+ASML,Asml Holding N.V.,NASDAQ
+ATOS,Atossa Genetics Inc.,NASDAQ
+ATVI,Activision Blizzard Inc,NASDAQ
+AVGO,Avago Technologies,NASDAQ
+BBBY,Bed Bath & Beyond Inc.,NASDAQ
+BCPC,Balchem Corp.,NASDAQ
+BCRX,Biocryst Pharmaceuticals,NASDAQ
+BICK,BICK Index First Trust,NASDAQ
+BIDU,Baidu,NASDAQ
+BKCC,Blackrock Kelso Capital Corp.,NASDAQ
+BLDP,Ballard Power Systems,NASDAQ
+BNDX,Vanguard Total International Bo,NASDAQ
+BUR,Burcon Nutrascience,NASDAQ
+CAKE,The Cheesecake Factory Inc.,NASDAQ
+CDNS,Cadence Design Systems,NASDAQ
+CDW,Cdw Corporation,NASDAQ
+CGNX,Cognex Corp.,NASDAQ
+CHTR,Charter Communications,NASDAQ
+CLNE,Clean Energy Fuels,NASDAQ
+CMCSA,Comcast Corp.,NASDAQ
+COLM,Columbia Sportswear Company,NASDAQ
+COST,Costco Wholesale Corp.,NASDAQ
+CRIS,Curis,NASDAQ
+CSCO,Cisco Systems,NASDAQ
+CSIQ,Canadian Solar Inc.,NASDAQ
+CSWC,Capital Southwest Corp.,NASDAQ
+CTAS,Cintas Corp.,NASDAQ
+CTXS,Citrix Systems,NASDAQ
+CZR,Caesars Entertainment Corporati,NASDAQ
+DELL,Dell Inc.,NASDAQ
+DISCA,Discovery Communications Inc,NASDAQ
+DRIV,Digital River,NASDAQ
+DXJS,Wisdomtree Japan Hedged Smallca,NASDAQ
+EA,Electronic Arts Inc.,NASDAQ
+EBAY,Ebay Inc.,NASDAQ
+EEMA,Emrg Mkts Asia MSCI Ishares,NASDAQ
+EMCB,Emrg Mkts Corporate Bond ETF Wisdomtree,NASDAQ
+ENPH,Enphase Energy Inc.,NASDAQ
+EQIX,Equinix,NASDAQ
+EUFN,Europe Financials Index MSCI Ishares,NASDAQ
+EXPD,Expeditors International Of Washington,NASDAQ
+EXPE,Expedia,NASDAQ
+EXPO,Exponent,NASDAQ
+FANG,Diamondback Energy Inc.,NASDAQ
+FAST,Fastenal Company,NASDAQ
+FCEL,Fuelcell Energy,NASDAQ
+FELE,Franklin Electric Co.,NASDAQ
+FFIN,First Financial Bankshares,NASDAQ
+FSLR,First Solar,NASDAQ
+FTNT,Fortinet,NASDAQ
+GAIN,Gladstone Investment Corp.,NASDAQ
+GEVO,Gevo,NASDAQ
+GILD,Gilead Sciences,NASDAQ
+GILT,Gilat Satellite Networks Ltd,NASDAQ
+GK,G&K Services,NASDAQ
+GLAD,Gladstone Capital Corp.,NASDAQ
+GNMA,GNMA Bond Ishares,NASDAQ
+GOGO,Gogo Inc.,NASDAQ
+GOLD,Randgold Resources Limited,NASDAQ
+GOOD,Gladstone Commercial Corp.,NASDAQ
+GOOG,Google Inc.,NASDAQ
+GRMN,Garmin Ltd,NASDAQ
+GT,Goodyear Tire & Rubber Company,NASDAQ
+HAS,Hasbro,NASDAQ
+HERO,Hercules Offshore,NASDAQ
+HIMX,Himax Technologies,NASDAQ
+HWKN,Hawkins,NASDAQ
+HZNP,Horizon Pharma Inc.,NASDAQ
+IBB,Nasdaq Biotechnology Ishares,NASDAQ
+ICLN,S&P Global Clean Energy Index Ishares,NASDAQ
+IDXX,Idexx Laboratories,NASDAQ
+III,Information Services Group,NASDAQ
+IIVI,Ii-Vi Inc.,NASDAQ
+IMCB,Intermountain Comm,NASDAQ
+IMKTA,Ingles Markets Inc.,NASDAQ
+INDY,S&P India Nifty 50 Index Ishares,NASDAQ
+INFA,Informatica Corp.,NASDAQ
+INTC,Intel Corp.,NASDAQ
+INTU,Intuit Inc.,NASDAQ
+IRBT,Irobot Corp.,NASDAQ
+ISHG,S&P/Citi 1-3 Yr Intl Treasury Bd Ishares,NASDAQ
+ISRG,Intuitive Surgical,NASDAQ
+JBHT,J.B. Hunt Transport Services,NASDAQ
+JJSF,J & J Snack Foods,NASDAQ
+JKHY,Jack Henry & Associates,NASDAQ
+KLAC,Kla-Tencor Corp.,NASDAQ
+LAND,Gladstone Land Corporation,NASDAQ
+LMAT,Lemaitre Vascular,NASDAQ
+LPSN,Liveperson,NASDAQ
+LRCX,Lam Research Corp.,NASDAQ
+LULU,Lululemon Athletica Inc.,NASDAQ
+MANT,Mantech International Corp.,NASDAQ
+MBII,Marrone Bio Innovations Inc.,NASDAQ
+MCHP,Microchip Technology Inc.,NASDAQ
+MDLZ,Mondelez International Inc. Cl A,NASDAQ
+MELI,Mercadolibre,NASDAQ
+MGI,Moneygram International,NASDAQ
+MGIC,Magic Software Enterprises Ltd,NASDAQ
+MITK,Mitek Systems Inc,NASDAQ
+MMYT,Makemytrip Limited,NASDAQ
+MNDO,Mind C.T.I. Ltd,NASDAQ
+MORN,Morningstar,NASDAQ
+MSFT,Microsoft Corp.,NASDAQ
+MSTR,Microstrategy Inc.,NASDAQ
+MU,Micron Technology,NASDAQ
+MVIS,Microvision,NASDAQ
+NBIX,Neurocrine Biosciences,NASDAQ
+NDAQ,The Nasdaq Omx Group,NASDAQ
+NDSN,Nordson Corp.,NASDAQ
+NEOG,Neogen Corp.,NASDAQ
+NEWT,Newtek Business Services Inc.,NASDAQ
+NFLX,Netflix,NASDAQ
+NLST,Netlist,NASDAQ
+NSIT,Insight Enterprises,NASDAQ
+NTRS,Northern Trust Corp.,NASDAQ
+NVAX,Novavax,NASDAQ
+NVDA,Nvidia Corp.,NASDAQ
+NXPI,Nxp Semiconductors N.V.,NASDAQ
+NXST,Nexstar Broadcasting Group,NASDAQ
+NYMT,New York Mortgage Trust,NASDAQ
+ODFL,Old Dominion Freight Line,NASDAQ
+OLED,Universal Display Corp.,NASDAQ
+OPEN,Opentable,NASDAQ
+OSTK,Overstock.Com,NASDAQ
+PAAS,Pan American Silver,NASDAQ
+PATH,Nupathe Inc.,NASDAQ
+PAYX,Paychex,NASDAQ
+PETS,Petmed Express,NASDAQ
+PFLT,Pennantpark Floating Rate Capit,NASDAQ
+PLUG,Plug Power,NASDAQ
+PNNT,Pennantpark Investment Corp.,NASDAQ
+POOL,Pool Corp.,NASDAQ
+PRIM,Primoris Services Corp.,NASDAQ
+PSCT,S&P Smallcap Info Tech Powershares,NASDAQ
+PSEC,Prospect Capital Corp.,NASDAQ
+QCOM,Qualcomm Inc.,NASDAQ
+QLYS,Qualys Inc.,NASDAQ
+QQQ,Powershares QQQ,NASDAQ
+QQQX,Nasdaq Premium Income And Growth,NASDAQ
+RADA,Rada Electronics Industries Limited,NASDAQ
+RCII,Rent-A-Center Inc.,NASDAQ
+RDHL,Redhill Biopharma Ltd.,NASDAQ
+REGN,Regeneron Pharmaceuticals,NASDAQ
+RGLD,Royal Gold,NASDAQ
+RRGB,Red Robin Gourmet Burgers,NASDAQ
+SAFM,Sanderson Farms,NASDAQ
+SBLK,Star Bulk Carriers,NASDAQ
+SBNY,Signature Bank,NASDAQ
+SBRA,Sabra Healthcare REIT,NASDAQ
+SBUX,Starbucks Corp.,NASDAQ
+SEV,Sevcon Inc,NASDAQ
+SGMO,Sangamo Biosciences,NASDAQ
+SHIP,Seanergy Maritime Holdings Corp,NASDAQ
+SLGN,Silgan Holdings,NASDAQ
+SLRC,Solar Capital Ltd,NASDAQ
+SMCI,Super Micro Computer,NASDAQ
+SNPS,Synopsys,NASDAQ
+SOCL,G-X Social Media Index ETF,NASDAQ
+SOXX,PHLX Sox Semiconductor Sector Ishares,NASDAQ
+SPLK,Splunk Inc.,NASDAQ
+SPWR,Sunpower Corp.,NASDAQ
+SSNC,SS&C Technologies Holdings,NASDAQ
+SSYS,Stratasys,NASDAQ
+STEM,Stemcells,NASDAQ
+STKL,Sunopta,NASDAQ
+STLD,Steel Dynamics,NASDAQ
+SWKS,Skyworks Solutions,NASDAQ
+SYNA,Synaptics Inc.,NASDAQ
+TCPC,Tcp Capital Corp.,NASDAQ
+TNXP,Tonix Pharm Hldg Cor,NASDAQ
+TOPS,Top Ships Inc.,NASDAQ
+TRMB,Trimble Navigation Limited,NASDAQ
+TROW,T. Rowe Price Group,NASDAQ
+TSCO,Tractor Supply Company,NASDAQ
+TSLA,Tesla Motors,NASDAQ
+TTEK,Tetra Tech,NASDAQ
+TTWO,Take-Two Interactive Software,NASDAQ
+TXN,Texas Instruments Inc.,NASDAQ
+TXRH,Texas Roadhouse,NASDAQ
+UHAL,Amerco,NASDAQ
+UTHR,United Therapeutics Corp.,NASDAQ
+VCIT,Interm-Term Corp Bd Idx ETF Vanguard,NASDAQ
+VCLT,Long-Term Corp Bond Idx ETF Vanguard,NASDAQ
+VCSH,Short-Term Corp Bd Idx ETF Vanguard,NASDAQ
+VGIT,Interm-Term Govt Bd Idx ETF Vanguard,NASDAQ
+VGLT,Long-Term Govt Bond Idx ETF Vanguard,NASDAQ
+VGSH,Short-Term Govt Bd Idx ETF Vanguard,NASDAQ
+VMBS,Mortgage Backed Securities ETF Vanguard,NASDAQ
+VNQI,Global Ex-US Real Estate ETF Vanguard,NASDAQ
+VONE,Russell 1000 Index ETF Vanguard,NASDAQ
+VONG,Russell 1000 Growth Index ETF Vanguard,NASDAQ
+VONV,Russell 1000 Value Index ETF Vanguard,NASDAQ
+VRSK,Verisk Analytics,NASDAQ
+VRSN,Verisign,NASDAQ
+VRTX,Vertex Pharmaceuticals Inc.,NASDAQ
+VSEC,Vse Corp.,NASDAQ
+VTHR,Russell 3000 Index ETF Vanguard,NASDAQ
+VTIP,Vanguard Short-Term Inflation-P,NASDAQ
+VTWG,Russell 2000 Growth Index ETF Vanguard,NASDAQ
+VTWO,Russell 2000 Index ETF Vanguard,NASDAQ
+VTWV,Russell 2000 Value Index ETF Vanguard,NASDAQ
+VWOB,Vanguard Emerging Markets Gover,NASDAQ
+VXUS,Total Intl Stock Idx ETF Vanguard,NASDAQ
+WEN,The Wendy's Company,NASDAQ
+WILC,G. Willi-Food International Ltd,NASDAQ
+WINA,Winmark Corp.,NASDAQ
+WOOD,S&P Global Timber & Forestry Idx Ishares,NASDAQ
+XLNX,Xilinx,NASDAQ
+XRTX,Xyratex Ltd,NASDAQ
+YNDX,Yandex N.V.,NASDAQ
+ZNGA,Zynga Inc.,NASDAQ
