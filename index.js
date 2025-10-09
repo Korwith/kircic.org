@@ -300,7 +300,7 @@ function runSearch(name) {
     let search_holder = search_page.querySelector(`[search="${name}"]`);
     let search_box = search_holder.querySelector('.search_box');
     let search_url = search_data[name];
-    let formatted_url = `https://${search_url}${search_box.value.replaceAll(' ', '+')}`;
+    let formatted_url = `https://${search_url}${encodeURIComponent(search_box.value)}`;
     clearLastSearch();
     handleLastSearch(formatted_url);
     loadLastSearch(formatted_url);
@@ -501,20 +501,21 @@ function handleLastSearch(url) {
 
 function loadLastSearch(url) {
     if (!current_settings.saveLastSearch) { return false };
-    let query = url.split('=')[1].replaceAll('+', ' ');
+    let query = url.split('=')[1];
+    let decode_query = decodeURIComponent(query);
     if (query.length < 1) { return false };
     let clone = last_search_placeholder.cloneNode(true);
     let icon = clone.querySelector('.icon');
     let term = clone.querySelector('span');
 
-    clone.setAttribute('title', query);
+    clone.setAttribute('title', decode_query);
     clone.setAttribute('href', url);
     clone.removeAttribute('id');
     clone.style.order = '0';
-    if (query.length > 25) {
-        term.textContent = query.substring(0, 25) + '...'
+    if (decode_query.length > 25) {
+        term.textContent = decode_query.substring(0, 25) + '...';
     } else {
-        term.textContent = query;
+        term.textContent = decode_query;
     }
 
     bookmarks.appendChild(clone);
@@ -525,7 +526,7 @@ function loadLastSearch(url) {
         let search_box = search_page.querySelector(`.search_holder[search="${i}"]`);
         let search_input = search_box.querySelector('input');
         icon.style.backgroundImage = `url(icon/${i.toLowerCase()}.svg)`;
-        search_input.placeholder = query;
+        search_input.placeholder = decodeURIComponent(query);
         search_box.classList.add('previous');
     }
 }
