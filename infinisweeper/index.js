@@ -581,6 +581,7 @@ function loadFromFile() {
     });
     input.type = 'file';
     input.accept = '.kir';
+    input.style.display = 'none';
     document.body.appendChild(input);
     input.click();
 }
