@@ -18,8 +18,10 @@
 
 .mac_button_row button {
     display: block;
-    height: 16px;
     width: 16px;
+    height: 16px;
+    max-height: 16px;
+    max-width: 16px;
     box-sizing: border-box;
     border-width: 2px;
     border-style: solid;
