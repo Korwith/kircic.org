@@ -114,10 +114,10 @@ class MacDots {
         this.element.classList.add('mac_button_row');
         parent.appendChild(this.element);
 
-        let buttons: string[] = ['red', 'yellow', 'green', 'settings'];
+        let buttons: string[] = ['red', 'yellow', 'green'];
         for (var i = 0; i < buttons.length; i++) {
             let color: string = buttons[i];
-            let button: HTMLElement = document.createElement('button');
+            let button: HTMLElement = document.createElement('div');
             button.classList.add('mac_button');
             button.classList.add(color);
             this.element.appendChild(button);

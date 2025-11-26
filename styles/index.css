@@ -322,10 +322,9 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     gap: 10px;
-    width: fit-content;
-    ;
+    width: fit-content;;
     height: fit-content;
-    max-width: 85%;
+    max-width: 100%;
 }
 
 .icon_row div {

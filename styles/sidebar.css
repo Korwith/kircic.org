@@ -16,12 +16,10 @@
     margin: 12px;
 }
 
-.mac_button_row button {
+.mac_button_row div {
     display: block;
     width: 16px;
     height: 16px;
-    max-height: 16px;
-    max-width: 16px;
     box-sizing: border-box;
     border-width: 2px;
     border-style: solid;
@@ -30,26 +28,26 @@
     transition: filter 0.15s;
 }
 
-.mac_button_row button:hover {
+.mac_button_row div:hover {
     filter: brightness(0.8);
 }
 
-.mac_button_row button.red {
+.mac_button_row div.red {
     background-color: rgb(252, 97, 86);
     border-color: rgb(223, 71, 68);
 }
 
-.mac_button_row button.yellow {
+.mac_button_row div.yellow {
     background-color: rgb(252, 190, 43);
     border-color: rgb(222, 159, 52);
 }
 
-.mac_button_row button.green {
+.mac_button_row div.green {
     background-color: rgb(44, 201, 63);
     border-color: rgb(39, 170, 53);
 }
 
-.mac_button_row button.settings {
+.mac_button_row div.settings {
     position: absolute;
     right: 0;
     background-image: url(../icon/settings.svg);
