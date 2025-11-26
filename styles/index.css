@@ -1,0 +1,440 @@
+html,
+body {
+    background-color: black;
+    margin: 0;
+    overflow: hidden;
+}
+
+.blurred_bg {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: url(../icon/blurred.svg);
+    background-size: 120%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0);
+}
+
+::-webkit-scrollbar-thumb {
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    box-sizing: border-box;
+}
+
+::-webkit-scrollbar-corner {
+    background: rgba(0, 0, 0, 0);
+}
+
+.absolute {
+    position: absolute !important;
+}
+
+.page {
+    display: none !important;
+}
+
+.page.show {
+    display: flex !important;
+}
+
+.inline_pane {
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.scroll_pane_x,
+.scroll_pane_y {
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.scroll_pane_x {
+    flex-direction: row;
+    overflow-x: auto;
+}
+
+.scroll_pane_y {
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.nowrap {
+    flex-wrap: nowrap;
+}
+
+.nopadding {
+    padding: 0 !important;
+}
+
+.glass {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.darkglass {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.shadowglass {
+    background-color: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+.glass,
+.darkglass,
+.shadowglass {
+    box-sizing: border-box;
+    border-radius: 12px;
+    padding: 10px;
+}
+
+@keyframes breathe {
+    0% {
+        background-position-x: 0;
+    }
+
+    100% {
+        background-position-x: 100vw;
+    }
+}
+
+.glass.stripes,
+.darkglass.stripes,
+.shadowglass.stripes {
+    animation-name: breathe;
+    animation-duration: 60s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+
+    background:
+        repeating-linear-gradient(45deg,
+            transparent,
+            transparent 10px,
+            rgba(255, 255, 255, 0.06) 10px,
+            rgba(255, 255, 255, 0.06) 20px),
+        linear-gradient(to bottom,
+            rgba(255, 255, 255, 0.12),
+            rgba(255, 255, 255, 0.12));
+    background-size: 85px 100%;
+}
+
+.flex_padding {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.flex_glass {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.project_glass {
+    aspect-ratio: 480/360;
+    max-width: 300px;
+    max-height: 250px;
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.project_glass * {
+    z-index: 1;
+}
+
+.project_background {
+    aspect-ratio: 480/360;
+    position: absolute;
+    height: 100%;
+    top: 50%;
+    left: 50%;
+    opacity: 0;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.15s;
+    z-index: 0 !important;
+}
+
+.project_glass:hover .project_background {
+    opacity: 0.8;
+}
+
+.project_header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 10px;
+    height: 50px;
+    width: calc(100% - 20px);
+    display: flex;
+    gap: 10px;
+}
+
+.project_icon {
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    width: 50px;
+    height: 50px;
+}
+
+.project_title {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    font-size: 1.5rem;
+    font-weight: 700;
+    border: 0;
+}
+
+.project_description {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: fit-content;
+    text-align: center;
+    order: 1;
+    font-weight: 700;
+    z-index: 1;
+}
+
+.project_footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    height: 60px;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    box-shadow: 0 -4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.project_footer button,
+.project_footer a {
+    display: flex;
+    width: fit-content;
+    height: calc(100% - 20px);
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    border-radius: 999px;
+    transition: border 0.2s;
+    cursor: pointer;
+    font-size: 1.15em;
+    outline: none;
+}
+
+.project_footer a.launch {
+    display: flex;
+    gap: 3px;
+    order: 0;
+    padding-right: 15px;
+    text-decoration: none;
+}
+
+.project_footer a.launch::before {
+    content: '';
+    display: block;
+    height: 35px;
+    width: 35px;
+    background-image: url(../icon/launch.svg);
+    background-size: 80%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.project_footer button.peek {
+    order: 1;
+    width: 40px;
+    height: 40px;
+    background-image: url(../icon/code.svg);
+    background-size: 70%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.project_glass.plugin .project_footer button.peek {
+    display: none;
+}
+
+.project_footer button:hover,
+.project_footer a:hover,
+.project_footer button:focus,
+.project_footer a:focus {
+    border: 1px solid white;
+}
+
+.project_list {
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.project_list .project_glass {
+    max-width: 400px;
+    max-height: 280px;
+}
+
+.text_entry {
+    text-align: center;
+}
+
+.text_entry.text_header,
+.text_entry.text_subheader {
+    font-weight: 600;
+}
+
+.text_entry.text_entry.text_subheader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.icon_row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    width: fit-content;
+    ;
+    height: fit-content;
+    max-width: 85%;
+}
+
+.icon_row div {
+    height: 100%;
+    aspect-ratio: 1/1;
+    display: inline-block;
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    box-sizing: border-box;
+    border-radius: 12px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    transition: border 0.2s;
+}
+
+.icon_row.no_border div {
+    border: 0;
+}
+
+.icon_row:not(.no_border) div:hover {
+    border: 2px solid white;
+}
+
+.icon_row.inline {
+    display: inline-flex;
+}
+
+.icon_row:not(.inline) {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.header_button {
+    display: block;
+    width: 50px;
+    height: 50px;
+    transform: translate(-5px, -5px);
+    background-color: rgba(0, 0, 0, 0);
+    border: 0;
+    cursor: pointer;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.header_button.sidebar_toggle {
+    background-image: url(../icon/lines.svg);
+}
+
+.clock {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    height: fit-content;
+    width: fit-content;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.clock.left {
+    align-items: flex-start;
+    left: 0;
+}
+
+.clock.right {
+    align-items: flex-end;
+    right: 0;
+}
+
+.clock_entry {
+    display: flex;
+    gap: 5px;
+    height: fit-content;
+    width: fit-content;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.clock_entry::before,
+.clock_entry::after {
+    width: 20px;
+    height: 20px;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.8;
+}
+
+.clock.left .clock_entry.date::before,
+.clock.right .clock_entry.date::after {
+    content: '';
+    background-image: url(../icon/calender.svg);
+    background-size: 85%;
+}
+
+.clock.left .clock_entry.time::before,
+.clock.right .clock_entry.time::after {
+    content: '';
+    background-image: url(../icon/clock.svg);
+    background-size: 84%;
+}
+
+* {
+    color: white;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    text-shadow: 2px 2px 4px black;
+    user-select: none;
+}

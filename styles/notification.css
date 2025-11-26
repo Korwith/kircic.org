@@ -1,0 +1,109 @@
+.notification_holder {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
+    gap: 10px;
+    right: 0;
+    bottom: 0;
+    margin: 10px;
+    width: fit-content;
+    height: fit-content;
+    max-height: 600px;
+    overflow-y: hidden;
+    pointer-events: none;
+    z-index: 999;
+}
+
+.notification_holder * {
+    text-shadow: none;
+}
+
+.notification {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    position: relative;
+    width: fit-content;
+    height: fit-content;
+    min-width: 200px;
+    min-height: 40px;
+    padding: 5px;
+    border-radius: 12px;
+    box-sizing: border-box;
+    border-width: 1px;
+    border-style: solid;
+    opacity: 0.8;
+    font-weight: 700;
+    box-shadow: 0 0 4px 0 black;
+    transition: opacity 0.5s;
+}
+
+.notification::before {
+    content: '';
+    aspect-ratio: 1/1;
+    width: 30px;
+    height: 30px;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.notification.success {
+    background: linear-gradient(to bottom right, #C7E07F, #ABD25E);
+    border-color: #3A5310;
+    color: #3A5310;
+}
+
+.notification.success::before {
+    background-image: url(../icon/checkmark_green.svg)
+}
+
+.notification.error {
+    background: linear-gradient(to bottom right, #F26160, #DF3F40);
+    border-color: #93100C;
+    color: #93100C;
+}
+
+.notification.error::before {
+    background-image: url(../icon/exit_red.svg);
+}
+
+.notification.stock {
+    background: linear-gradient(to bottom right, #DAE4EA, #BBCED2);
+    border-color: #474E52;
+    color: #474E52;
+}
+
+.notification.stock::before {
+    background-image: url(../icon/info_gray.svg);
+    background-size: 80%;
+}
+
+.notification.warning {
+    background: linear-gradient(to bottom right, #FFF0BE, #FFE27E);
+    border-color: #82732A;
+    color: #82732A;
+}
+
+.notification.warning::before {
+    background-image: url(../icon/caution_yellow.svg);
+    background-size: 65%;
+}
+
+.notification.info {
+    background: linear-gradient(to bottom right, #CFECFE, #9BD8FE);
+    border-color: #0369A1;
+    color: #0369A1;
+}
+
+.notification.info::before {
+    background-image: url(../icon/info_blue.svg);
+    background-size: 80%;
+}
+
+.notification.fade {
+    pointer-events: none;
+    opacity: 0;
+}

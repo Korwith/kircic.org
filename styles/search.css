@@ -1,0 +1,283 @@
+.bookmarks_bar {
+    position: relative;
+    width: 100%;
+    height: 35px;
+    display: flex;
+    gap: 5px;
+}
+
+.bookmarks_bar.hide {
+    display: none;
+}
+
+.bookmarks_bar .add,
+.bookmarks_bar .trash {
+    height: 35px;
+    width: 35px;
+    padding: 0;
+    position: relative;
+}
+
+.bookmarks_bar .add {
+    order: -1;
+}
+
+.bookmarks_bar .add::after,
+.bookmarks_bar .trash::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-size: 75%;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.8;
+    transition: opacity 0.15s;
+}
+
+.bookmarks_bar .trash {
+    position: absolute;
+    right: 0;
+    order: 999;
+}
+
+.bookmarks_bar .add::after {
+    background-image: url(../icon/plus.svg);
+}
+
+.bookmarks_bar .trash::after {
+    background-image: url(../icon/delete.svg);
+}
+
+.bookmarks_bar button,
+.bookmarks_bar a,
+.bookmarks_bar .search_entry {
+    padding: 0;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: border 0.15s, background-color 0.15s;
+    outline: none;
+}
+
+.bookmarks_bar a {
+    display: block;
+    position: relative;
+    width: 35px;
+    height: 35px;
+    overflow: hidden;
+}
+
+.bookmarks_bar a::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.bookmarks_bar a.loading::after {
+    animation: spin 3s;
+    background-image: url(../icon/rotate.svg);
+    background-size: 90%;
+}
+
+.bookmarks_bar a.loaded::after {
+    background-image: var(--icon);
+}
+
+.bookmarks_bar a.default::after {
+    background-image: url(../icon/globe.svg);
+}
+
+.bookmarks_bar button:hover,
+.bookmarks_bar a:hover,
+.bookmarks_bar a:focus,
+.bookmarks_bar button:hover,
+.bookmarks_bar button:focus {
+    border: 1px solid white;
+}
+
+.bookmarks_bar .search_entry:hover::before,
+.bookmarks_bar .search_entry:hover .search_text,
+.bookmarks_bar .add:hover::after,
+.bookmarks_bar .trash:hover::after {
+    opacity: 1;
+}
+
+.bookmarks_bar .search_entry {
+    display: flex;
+    width: fit-content;
+    padding: 5px;
+    gap: 5px;
+    height: 35px;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.bookmarks_bar .search_entry::before {
+    content: '';
+    min-height: 25px;
+    min-width: 25px;
+    background-size: var(--icon-size);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: var(--icon-image);
+    opacity: 0.8;
+    transition: opacity 0.15s, filter 0.15s;
+}
+
+.bookmarks_bar .search_entry .search_text {
+    display: flex;
+    align-items: center;
+    height: 25px;
+    width: fit-content;
+    padding-right: 5px;
+    font-size: 1em;
+    font-weight: 700;
+    opacity: 0.8;
+    transition: opacity 0.15s, color 0.15s;
+}
+
+.bookmarks_bar .link_box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    min-width: 150px;
+    width: fit-content;
+    max-width: 300px;
+    outline: none;
+    resize: none;
+    overflow: hidden;
+    text-wrap: nowrap;
+    font-weight: 700;
+    order: -2;
+    color: rgba(255, 255, 255, 0.8);
+    transition: border 0.15s, color 0.15s;
+}
+
+.bookmarks_bar .link_box:hover {
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.bookmarks_bar .link_box:focus {
+    border: 1px solid white;
+}
+
+.bookmarks_bar .link_box::before {
+    content: 'Add page...';
+    position: absolute;
+    left: 0;
+    padding-left: 10px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s, color 0.15s;
+}
+
+.bookmarks_bar .link_box.error {
+    border: 1px solid rgb(255, 50, 50);
+    color: rgb(255, 50, 50);
+}
+
+.bookmarks_bar .link_box.error::before {
+    color: rgb(255, 50, 50);
+}
+
+.bookmarks_bar .link_box.error.invalid::before {
+    content: 'Invalid URL';
+}
+
+.bookmarks_bar .link_box.error.notext::before {
+    content: 'Add page...';
+}
+
+.bookmarks_bar .link_box.empty::before {
+    opacity: 1;
+}
+
+.bookmarks_bar.deletion .bookmark,
+.bookmarks_bar.deletion .search_entry {
+    background-color: rgba(255, 50, 50, 0.3);
+}
+
+.bookmarks_bar.deletion .bookmark:hover,
+.bookmarks_bar.deletion .search_entry:hover {
+    border: 1px solid rgba(255, 50, 50, 0.8);
+}
+
+.bookmarks_bar.deletion .search_entry:hover .search_text {
+    color: rgba(255, 50, 50, 0.8);
+    text-decoration: line-through;
+}
+
+.bookmarks_bar.deletion .search_entry:hover::before {
+    filter: brightness(0) saturate(100%) invert(21%) sepia(96%) saturate(2356%) hue-rotate(343deg) brightness(87%) contrast(89%);
+}
+
+.bookmarks_bar.deletion .trash {
+    border: 1px solid white;
+}
+
+.search_holder {
+    position: relative;
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    height: 50px;
+}
+
+.search_holder .search_icon {
+    width: 50px;
+    height: 50px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    transition: border 0.2s;
+}
+
+.search_holder .search_box {
+    display: block;
+    flex: 1;
+    outline: none;
+    font-weight: 700;
+    transition: border 0.2s;
+}
+
+.search_button {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    height: 40px;
+    width: 40px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url(../icon/send.svg);
+    background-size: 80%;
+    cursor: pointer;
+    transition: border 0.2s;
+}
+
+.search_holder .search_icon:hover,
+.search_holder .search_box:focus,
+.search_holder .search_button:hover {
+    border: 1px solid white;
+}
+
+.search_holder .search_box:hover {
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}

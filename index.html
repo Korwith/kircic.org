@@ -1,351 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
+    <head>
+        <title>kircic.org</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="kircic">
+        <meta name="description" content="Development portfolio.">
+        <meta property="og:title" content="kircic.org">
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://www.kircic.org">
+        <meta property="og:image" content="https://www.kircic.org/icon/favicon.png">
+        <meta property="og:description" content="Web based file explorer.">
+        <meta name="theme-color" content="#000001">
+        <meta name="darkreader-lock">
 
-<head>
-    <title>kircic.org</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="kircic">
-    <meta name="description" content="Collection of all of my personal projects and ideas.">
-    <meta property="og:title" content="kircic.org">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.kircic.org">
-    <meta property="og:image" content="https://www.kircic.org/icon/favicon.png">
-    <meta property="og:description" content="Collection of all of my personal projects and ideas.">
-    <meta name="theme-color" content="#000001">
-    <link rel="stylesheet" href="index.css">
-    <link rel="icon" type="image/x-icon" href="icon/favicon.png">
-    <meta name="darkreader-lock">
-</head>
+        <link rel="stylesheet" href="styles/notification.css">
+        <link rel="stylesheet" href="styles/sidebar.css">
+        <link rel="stylesheet" href="styles/social.css">
+        <link rel="stylesheet" href="styles/index.css">
+        <link rel="stylesheet" href="styles/search.css">
+        <link rel="stylesheet" href="styles/codebase.css">
+        <link rel="stylesheet" href="node_modules/file-icons-js/css/style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/vs2015.css">
+        <link rel="icon" type="image/x-icon" href="https://www.kircic.org/icon/favicon.png">
+    </head>
 
-<body>
-    <div class="blurred_img_bg"></div>
+    <body>
+        <!-- Dependencies -->
+        <script src="define/@web_saving.js"></script>
+        <script src="define/@css_management.js"></script>
+        <script src="define/@shared_classes.js"></script>
+        <script src="define/define_projects.js"></script>
+        <script src="define/define_icons.js"></script>
+        <script src="define/define_search.js"></script>
+        <script src="define/define_notifications.js"></script>
+        <script src="define/define_statistics.js"></script>
+        <script src="define/define_settings.js"></script>
 
-    <nav class="sidebar glass">
-        <div class="sidebar_container">
-            <div class="traffic">
-                <a href='https://google.com' aria-label="Escape">
-                    <div class="red"></div>
-                </a>
-                <div class="yellow"></div>
-                <div class="green"></div>
-                <div class="cog" title="Settings"></div>
-            </div>
+        <!-- Imported Dependencies -->
+        <script type="module" src="node_modules/file-icons-js/dist/file-icons.mjs"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
 
-            <div class="select hold">
-                <div class="icon stack"></div>
-                <span>kircic.org</span>
-            </div>
-            <a href="http://snap.red" target="_blank">
-                <div class="select">
-                    <div class="icon img"></div>
-                    <span>snap.red</span>
-                </div>
-            </a>
-        </div>
-
-        <hr>
-
-        <div class="sidebar_container mid navigate">
-            <span class="category">Navigation</span>
-
-            <a href="#home" aria-label="Home" pagelink>
-                <div class="select">
-                    <div class="icon home"></div>
-                    <span>Home</span>
-                </div>
-            </a>
-            <a href="#projects" aria-label="Projects" pagelink>
-                <div class="select">
-                    <div class="icon cube"></div>
-                    <span>Projects</span>
-                </div>
-            </a>
-            <a href="#search" aria-label="Search" pagelink>
-                <div class="select">
-                    <div class="icon search"></div>
-                    <span>Search</span>
-                </div>
-            </a>
-            <a href="#tasks" aria-label="Tasks" pagelink>
-                <div class="select">
-                    <div class="icon clipboard"></div>
-                    <span>Tasks</span>
-                </div>
-            </a>
-
-            <hr>
-            <span class="category">Support</span>
-
-            <a href="https://arielaraya.xyz" aria-label="arielaraya.xyz" target="_blank">
-                <div class="select">
-                    <div class="icon link"></div>
-                    <span>arielaraya.xyz</span>
-                </div>
-            </a>
-            <!-- Site Down
-            <a href="https://meitzler.xyz" aria-label="meitzler.xyz" target="_blank">
-                <div class="select">
-                    <div class="icon link"></div>
-                    <span>meitzler.xyz</span>
-                </div>
-            </a>
-            -->
-
-            <a href="https://www.prettycoolwebsite.com" aria-label="prettycoolwebsite" target=_blank>
-                <div class="select">
-                    <div class="icon link"></div>
-                    <span>prettycoolwebsite.com</span>
-                </div>
-            </a>
-        </div>
-
-        <div class="sidebar_container mid settings hide">
-            <span class="category">Customization</span>
-            <div class="settings_switch" alter="changePageHue">
-                <span>Page Color</span>
-                <div class="colorpicker darkglass">
-                    <input type="color">
-                </div>
-            </div>
-
-            <div class="settings_switch" alter="showTasks" class="hide">
-                <span>Show Tasks</span>
-                <button class="switch darkglass" aria-label="Show Tasks">
-                    <div class="shifter darkglass"></div>
-                </button>
-            </div>
-
-            <hr>
-
-            <span class="category">Search</span>
-            <div class="settings_switch" alter="hideBookmarks">
-                <span>Hide Bookmarks</span>
-                <button class="switch darkglass" aria-label="Hide Bookmarks">
-                    <div class="shifter darkglass"></div>
-                </button>
-            </div>
-
-            <div class="settings_switch" alter="saveLastSearch">
-                <span>Save Last Search</span>
-                <button class="switch darkglass" aria-label="Save Last Search">
-                    <div class="shifter darkglass"></div>
-                </button>
-            </div>
-
-            <div class="settings_switch" alter="searchNewTab">
-                <span>Open New Tab</span>
-                <button class="switch darkglass" aria-label="Open New Tab">
-                    <div class="shifter darkglass"></div>
-                </button>
-            </div>
-
-            <hr>
-
-            <span class='category'>Console</span>
-            <textarea class="console darkglass" spellcheck="false" placeholder="Enter a command.."></textarea>
-            <div class="settings_stat darkglass commit_name"></div>
-            <div class="settings_stat darkglass commit_hash"></div>
-            <div class="settings_stat darkglass commit_date"></div>
-        </div>
-
-        <div class="sidebar_footer">
-            <span class="commit_count darkglass">commits</span>
-            <span class="digital_size darkglass">MB</span>
-            <button class="reset_defaults darkglass hide" aria-label="Reset Settings">Reset Settings</button>
-        </div>
-    </nav>
-
-    <header class="glass">
-        <button class="sidebar_button" aria-label="Sidebar"></button>
-        <div class="clock">
-            <span>Date</span>
-            <span>Time</span>
-        </div>
-    </header>
-
-    <div class="content">
-        <div class="page home">
-            <div class="no_top_pad about glass">
-                <h1>About Me</h1>
-                <div class="image_holder">
-                    <div class="javascript"></div>
-                    <div class="html"></div>
-                    <div class="css"></div>
-                    <div class="lua"></div>
-                    <div class="java"></div>
-                    <div class="linux"></div>
-                    <div class="cert aplus"></div>
-                    <div class="cert security"></div>
-                    <div class="cert html"></div>
-                    <div class="cert java"></div>
-                </div>
-                <span>Thaddeus Mathewson-Wood</span>
-                <span>Fluent in JavaScript, HTML, CSS, Lua, Java</span>
-                <span class="linux_span">
-                    Linux
-                    <div class="linux"></div>
-                    <div class="kubuntu"></div>
-                    <div class="ubuntu"></div>
-                    <div class="debian"></div>
-                    <div class="opensuse"></div>
-                    <div class="fedora"></div>
-                </span>
-                <span class="view_cert">View Certifications</span>
-            </div>
-
-            <div class="no_top_pad glass certs hide forcehide">
-                <h1>Certifications</h1>
-                <ul class="cert_list">
-                    <li><div class="cert aplus"></div>CompTIA A+ Certification</li>
-                    <ul>
-                        <li>Hardware components and device connectors</li>
-                        <li>Networking concepts and types of network connections</li>
-                        <li>IP addressing, protocols, and Wi-Fi configuration</li>
-                        <li>Operating system types and installation</li>
-                        <li>Command-line tools and OS features</li>
-                    </ul>
-                    <li><div class="cert security"></div>CompTIA Security+ Certification</li>
-                    <ul>
-                        <li>Threats, vulnerabilities, and attack types</li>
-                        <li>Security assessments, penetration testing, and vulnerability scanning</li>
-                        <li>Authentication, authorization, and account management</li>
-                        <li>Cryptography, encryption, and public key infrastructure (PKI)</li>
-                        <li>Security architecture, design, and resilience</li>
-                    </ul>
-                    <li><div class="cert html"></div>IT Specialist - HTML and CSS</li>
-                    <ul>
-                        <li>HTML and CSS syntax and structure</li>
-                        <li>Text, links, images, and media tags</li>
-                        <li>Lists, tables, and forms</li>
-                        <li>Responsive design and media queries
-                        <li>Styling text, layout, and positioning with CSS</li>
-                    </ul>
-                    <li><div class="cert java"></div>IT Specialist - Java</li>
-                    <ul>
-                        <li>Java syntax and control structures</li>
-                        <li>Object-oriented programming principles</li>
-                        <li>Error handling</li>
-                        <li>Working with classes, objects, methods, and inheritance</li>
-                        <li>Data types, arrays, and collections</li>
-                    </ul>
-                </ul>
-            </div>
-
-            <div class="social_holder">
-                <a href="http://snap.red" aria-label="Photo Archive" target="_blank" class="site snapshot">
-                    <div></div>
-                    <span>snap.red</span>
-                </a>
-                <!--
-                <a href="https://kir.lol" aria-label="Stock Tracker" target="_blank" class="site kirlol">
-                    <div></div>
-                    <span>kir.lol</span>
-                </a>
-                -->
-                <a href="https://github.com/Korwith" aria-label="Github" target="_blank" class="github"></a>
-                <a href="https://www.instagram.com/thadcoolfr/" aria-label="Instagram" target="_blank" class="instagram"></a>
-                <a href="https://www.youtube.com/channel/UCLcCNfyLG_jQev4MdkHtCZw" aria-label="YouTube" target="_blank" class="youtube"></a>
-                <a href="https://discord.com/invite/p8ZZXZqnag" aria-label="Discord" target="_blank" class="discord"></a>
-                <a href="https://cash.app/$thadreal" aria-label="Cashapp" target="_blank" class="cashapp"></a>
-                <a href="https://monkeytype.com/profile/kircic" aria-label="Monkeytype" target="_blank" class="monkeytype"></a>
-            </div>
-
-            <div class="featured glass">
-                <h1>Featured Projects</h1>
-                <div class="horizontal_pane"></div>
-            </div>
-
-            <div class="copyright glass">© kircic.org (2023-2025)</div>
-        </div>
-
-        <div class="page projects">
-            <div class="segment glass no_top_pad app">
-                <h1>Apps</h1>
-            </div>
-            <div class="segment glass no_top_pad game">
-                <h1>Games</h1>
-            </div>
-        </div>
-
-        <div class="page search">
-            <div class="segment glass no_top_pad searcher">
-                <h1>Search</h1>
-                <span>Browser Homepage</span>
-                <div class="bookmarks">
-                    <button class="mark darkglass add" aria-label="Add Bookmark"></button>
-                    <button class="mark darkglass delete" aria-label="Delete Driver"></button>
-                </div>
-            </div>
-        </div>
-
-        <div class="page tasks">
-            <div class="segment glass no_top_pad holder">
-                <h1>Tasks</h1>
-                <span>Your personal to-do list</span>
-                <div class="tasklist_bar">
-                    <span class="darkglass input empty" contenteditable="plaintext-only">&nbsp</span>
-                    <button class="darkglass mark add" aria-label="Add Task"></button>
-                    <button class="darkglass edit" aria-label="Edit Tasks">Edit</button>
-                </div>
-            </div>
-
-            <div class="action_row">
-                <button class="import glass" aria-label="Import Tasks">Import</button>
-                <button class="export glass" aria-label="Export Tasks">Export</button>
-            </div>
-
-            <div class="segment glass no_top_pad previous hide">
-                <h1>Recent</h1>
-                <span>Tasks you've completed</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- Placeholder -->
-    <div class="project_holder darkglass" id="project_placeholder">
-        <img></img>
-        <video autoplay loop muted playsinline></video>
-        <div class="title">
-            <div class="icon"></div>
-            <span>--</span>
-        </div>
-        <div class="info">--</div>
-        <div class="action">
-            <a aria-label="Launch">Launch</a>
-        </div>
-    </div>
-
-    <div class="search_holder" id="search_placeholder">
-        <a class="service darkglass" href="index.html">
-            <div class="icon"></div>
-        </a>
-        <input class="search_box darkglass" placeholder="Search">
-        <button class="search_go darkglass" aria-label="Search"></button>
-    </div>
-
-    <a id="last_search_placeholder" aria-label="Last Search">
-        <div class="last_search darkglass">
-            <div class="icon"></div>
-            <span>Placeholder</span>
-        </div>
-    </a>
-
-    <div id="tasklist_entry_placeholder" class="tasklist_entry darkglass">
-        <span></span>
-        <div class="task_actions">
-            <button class="shift up" aria-label="Shift Up"></button>
-            <button class="shift down" aria-label="Shift Down"></button>
-            <button class="checkbox darkglass" aria-label="Check"></button>
-        </div>
-    </div>
-
-    <!-- Scripts -->
-    <script src="index.js"></script>
-    <script src="stats.js"></script>
-    <script src="clock.js"></script>
-    <script src="bookmarks.js"></script>
-    <script src="tasks.js"></script>
-</body>
-
+        <!-- Main -->
+        <script src="scripts/home.js"></script>
+        <script src="scripts/sidebar.js"></script>
+        <script src="scripts/projects.js"></script>
+        <script src="scripts/codebase.js"></script>
+        <script src="scripts/search.js"></script>
+    </body>
 </html>
