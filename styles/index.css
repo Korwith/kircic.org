@@ -107,6 +107,19 @@ body {
     padding: 10px;
 }
 
+button.glass,
+button.darkglass,
+button.shadowglass {
+    cursor: pointer;
+    padding: 5px;
+}
+
+button.glass:hover,
+button.darkglass:hover,
+button.shadowglass:hover {
+    border: 1px solid white;
+}
+
 @keyframes breathe {
     0% {
         background-position-x: 0;

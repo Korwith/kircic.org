@@ -8,18 +8,17 @@ class WebsiteStats {
         this.repo = repo;
         this.api_base = `https://api.github.com/repos/${owner}/${repo}`;
     }
-    async fetchCommitCount() {
+    async fetchLastCommit() {
         const pre_time = Date.now();
-        MainNotificationHolder.notify('Fetching commit count...', 'stock');
         try {
             const response = await fetch(`${this.api_base}/commits?per_page=1`);
             if (!response.ok)
                 throw new Error(`HTTP Error ${response.status}`);
             const header = response.headers.get('link');
-            if (!header) {
-                const commits = await response.json();
-                return commits.length;
-            }
+            if (!header)
+                throw new Error('Failed to fetch commit data!');
+            const commits = await response.json();
+            const latest = commits[0];
             const last_link = header.split(',').find((s) => s.includes('rel="last'));
             if (!last_link)
                 throw new Error(`Last Page Not Found!`);
@@ -29,7 +28,7 @@ class WebsiteStats {
             const last_url = new URL(match[1]);
             const post_time = Date.now();
             MainNotificationHolder.notify(`Commit count fetched! (${post_time - pre_time}ms)`, 'info');
-            return Number(last_url.searchParams.get('page'));
+            return { count: Number(last_url.searchParams.get('page')), name: latest.commit.message };
         }
         catch (error) {
             MainNotificationHolder.notify('Failed to fetch commit count!', 'error');
@@ -38,7 +37,6 @@ class WebsiteStats {
     }
     async fetchRepoSize() {
         const pre_time = Date.now();
-        MainNotificationHolder.notify('Fetching repo size...', 'stock');
         try {
             const response = await fetch(this.api_base);
             if (!response.ok)

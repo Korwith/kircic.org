@@ -3,7 +3,6 @@ const BookmarksData: StorageHandler = new StorageHandler('bookmarks');
 const ManageCSS: CSSManagement = new CSSManagement();
 
 // Website Stuff
-
 class BlurredImageBackground {
     element: HTMLElement;
 

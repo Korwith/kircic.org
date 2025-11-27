@@ -76,16 +76,27 @@ class SidebarFooter {
 }
 class SidebarFooterEntry {
     element;
-    constructor(parent, value) {
-        this.element = document.createElement('div');
-        this.element.classList.add('darkglass');
-        this.element.classList.add('footer_entry');
+    constructor(parent, value, type) {
+        this.element = document.createElement(type || 'div');
+        this.element.classList.add('darkglass', 'footer_entry');
         if (value)
             this.setText(value);
         parent.appendChild(this.element);
     }
     setText(value) {
         this.element.textContent = value;
+    }
+}
+class PreFooterEntry extends SidebarFooterEntry {
+    constructor(parent, value, type) {
+        super(parent, value, type);
+        ManageCSS.addDesktopEntry(this.element, { padding: '3px', 'font-weight': '700' });
+    }
+}
+class LastCommitEntry extends PreFooterEntry {
+    constructor(parent) {
+        super(parent);
+        ManageCSS.addDesktopEntry(this.element, { 'font-family': 'monospace' });
     }
 }
 // Misc
@@ -128,13 +139,15 @@ new TextSubheader(SettingsPane.element, 'Search');
 const HideBookmarks = new SettingsEntry(SettingsPane.element, 'Hide Bookmarks', 'switch');
 const SaveLastSearch = new SettingsEntry(SettingsPane.element, 'Save Last Search', 'switch');
 const OpenNewTab = new SettingsEntry(SettingsPane.element, 'Open New Tab', 'switch');
+const CommitChange = new LastCommitEntry(SettingsPane.element);
 const SideFooter = new SidebarFooter(Sidebar.element);
 const CommitCountEntry = new SidebarFooterEntry(SideFooter.element, 'commits');
-StatisticsManager.fetchCommitCount()
-    .then((e) => {
-    CommitCountEntry.setText(`${e} commits`);
-});
 const SizeEntry = new SidebarFooterEntry(SideFooter.element, 'KB');
+StatisticsManager.fetchLastCommit()
+    .then((data) => {
+    CommitCountEntry.setText(`${data.count} commits`);
+    CommitChange.setText(data.name);
+});
 StatisticsManager.fetchRepoSize()
     .then((e) => {
     SizeEntry.setText(e);

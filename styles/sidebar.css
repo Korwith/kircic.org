@@ -134,6 +134,7 @@
 .settings_pane {
     overflow-y: auto;
     overflow-x: hidden;
+    padding-bottom: 10px;
 }
 
 .settings_entry {

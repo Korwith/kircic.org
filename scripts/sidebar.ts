@@ -6,9 +6,9 @@ interface LinkEntry {
 class SidebarPane extends GlassPane {
     constructor(parent: HTMLElement) {
         super(parent, { width: '280px', height: 'calc(100vh - 20px)', top: '10px', left: '10px', transition: 'transform 0.5s, left 0.5s' });
-        ManageCSS.addDesktopEntry(this.element, {left: '-300px'}, 'body.shift');
-        ManageCSS.addMobileEntry(this.element, {width: 'calc(100dvw - 20px)', height: 'calc(100dvh - 90px)', top: '80px', transform: 'translateX(calc(-100% - 10px))'}, 'body');
-        ManageCSS.addMobileEntry(this.element, {transform: 'translateX(0)', left: '10px !important'}, 'body.shift');
+        ManageCSS.addDesktopEntry(this.element, { left: '-300px' }, 'body.shift');
+        ManageCSS.addMobileEntry(this.element, { width: 'calc(100dvw - 20px)', height: 'calc(100dvh - 90px)', top: '80px', transform: 'translateX(calc(-100% - 10px))' }, 'body');
+        ManageCSS.addMobileEntry(this.element, { transform: 'translateX(0)', left: '10px !important' }, 'body.shift');
 
         this.element.classList.add('glass', 'sidebar');
         this.setAbsolute();
@@ -92,16 +92,29 @@ class SidebarFooter {
 class SidebarFooterEntry {
     element: HTMLElement;
 
-    constructor(parent: HTMLElement, value?: string) {
-        this.element = document.createElement('div');
-        this.element.classList.add('darkglass');
-        this.element.classList.add('footer_entry');
+    constructor(parent: HTMLElement, value?: string, type?: 'div'|'button') {
+        this.element = document.createElement(type || 'div');
+        this.element.classList.add('darkglass', 'footer_entry');
         if (value) this.setText(value);
         parent.appendChild(this.element);
     }
 
     setText(value: string) {
         this.element.textContent = value;
+    }
+}
+
+class PreFooterEntry extends SidebarFooterEntry {
+    constructor(parent: HTMLElement, value?: string, type?: 'div'|'button') {
+        super(parent, value, type);
+        ManageCSS.addDesktopEntry(this.element, {padding: '3px', 'font-weight': '700'});
+    }
+}
+
+class LastCommitEntry extends PreFooterEntry {
+    constructor(parent: HTMLElement) {
+        super(parent);
+        ManageCSS.addDesktopEntry(this.element, {'font-family': 'monospace'});
     }
 }
 
@@ -153,13 +166,16 @@ const HideBookmarks = new SettingsEntry(SettingsPane.element, 'Hide Bookmarks', 
 const SaveLastSearch = new SettingsEntry(SettingsPane.element, 'Save Last Search', 'switch');
 const OpenNewTab = new SettingsEntry(SettingsPane.element, 'Open New Tab', 'switch');
 
+const CommitChange: LastCommitEntry = new LastCommitEntry(SettingsPane.element);
 const SideFooter: SidebarFooter = new SidebarFooter(Sidebar.element);
 const CommitCountEntry: SidebarFooterEntry = new SidebarFooterEntry(SideFooter.element, 'commits');
-StatisticsManager.fetchCommitCount()
-    .then((e: number) => {
-        CommitCountEntry.setText(`${e} commits`);
-    })
 const SizeEntry = new SidebarFooterEntry(SideFooter.element, 'KB');
+
+StatisticsManager.fetchLastCommit()
+    .then((data: CommitData) => {
+        CommitCountEntry.setText(`${data.count} commits`);
+        CommitChange.setText(data.name);
+    });
 StatisticsManager.fetchRepoSize()
     .then((e: string) => {
         SizeEntry.setText(e);
