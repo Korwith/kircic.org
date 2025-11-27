@@ -27,7 +27,7 @@ class WebsiteStats {
                 throw new Error('Improper link');
             const last_url = new URL(match[1]);
             const post_time = Date.now();
-            MainNotificationHolder.notify(`Commit count fetched! (${post_time - pre_time}ms)`, 'info');
+            MainNotificationHolder.notify(`Commit data fetched! (${post_time - pre_time}ms)`, 'info');
             return { count: Number(last_url.searchParams.get('page')), name: latest.commit.message };
         }
         catch (error) {
