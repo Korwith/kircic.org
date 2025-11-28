@@ -176,16 +176,16 @@ const About = new FlexGlassPane(Home.element, CSS_FullWidthFitHeight);
 About.addStripes();
 
 new TextHeader(About.element, 'About');
-new IconRow(About.element, '60px', language_icons);
+new IconRow(About.element, '60px', Language_Icons);
 new TextSubheader(About.element, 'Thaddeus MW');
 new TextSubheader(About.element, 'Fluent in JavaScript, TypeScript, Java, Lua, HTML, CSS');
 const OS_Subheader = new TextSubheader(About.element, 'Linux');
-const Linux_Icons = new IconRow(OS_Subheader.element, '20px', os_icons);
+const Linux_Icons = new IconRow(OS_Subheader.element, '20px', OS_Icons);
 Linux_Icons.removeBorderStyle();
 Linux_Icons.applyInline();
 
 // Inner Socials Row
-const Socials = new SocialRow(Home.element, social_icons);
+const Socials = new SocialRow(Home.element, Social_Icons);
 
 // Featured Projects Pane
 const FeaturedProjects = new FlexGlassPane(Home.element, CSS_FullWidthFitHeight);
