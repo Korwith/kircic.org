@@ -90,7 +90,7 @@ class SidebarFooterEntry {
 class PreFooterEntry extends SidebarFooterEntry {
     constructor(parent, value, type) {
         super(parent, value, type);
-        ManageCSS.addDesktopEntry(this.element, { padding: '3px', 'font-weight': '700' });
+        ManageCSS.addDesktopEntry(this.element, { padding: '3px', 'padding-left': '8px', 'padding-right': '8px', 'font-weight': '700' });
     }
 }
 class LastCommitEntry extends PreFooterEntry {
