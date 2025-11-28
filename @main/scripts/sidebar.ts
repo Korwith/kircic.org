@@ -143,17 +143,17 @@ Sidebar.setAbsolute();
 
 const PageControlButtons: MacDots = new MacDots(Sidebar.element);
 const ExternalPagePane: SidebarInnerPane = new SidebarInnerPane(Sidebar.element);
-const CurrentLink: SidebarButton = new SidebarButton(ExternalPagePane.element, { name: 'kircic.org' }, { icon: '../icon/stack.svg' });
+const CurrentLink: SidebarButton = new SidebarButton(ExternalPagePane.element, { name: 'kircic.org' }, { icon: '@main/icon/stack.svg' });
 CurrentLink.element.classList.add('active');
 
-const SnapshotLink: SidebarButton = new SidebarButton(ExternalPagePane.element, { name: 'snap.red', link: 'https://snap.red' }, { icon: '../icon/image.svg', size: '95%' });
+const SnapshotLink: SidebarButton = new SidebarButton(ExternalPagePane.element, { name: 'snap.red', link: 'https://snap.red' }, { icon: '@main/icon/image.svg', size: '95%' });
 new SidebarBreak(Sidebar.element);
 const InternalPagePane: SidebarInnerPane = new SidebarInnerPane(Sidebar.element);
 new TextSubheader(InternalPagePane.element, 'Navigation');
-const HomeLink: SidebarButton = new SidebarButton(InternalPagePane.element, { name: 'Home', link: '#home' }, { icon: '../icon/home.svg', size: '80%' });
-const ProjectsLink: SidebarButton = new SidebarButton(InternalPagePane.element, { name: 'Projects', link: '#projects' }, { icon: '../icon/cube.svg', size: '90%' });
-const CodeLink: SidebarButton = new SidebarButton(InternalPagePane.element, { name: 'Codebase', link: '#code' }, { icon: '../icon/code.svg', size: '92%' });
-const SearchLink: SidebarButton = new SidebarButton(InternalPagePane.element, { name: 'Search', link: '#search' }, { icon: '../icon/search.svg', size: '90%' });
+const HomeLink: SidebarButton = new SidebarButton(InternalPagePane.element, { name: 'Home', link: '#home' }, { icon: '@main/icon/home.svg', size: '80%' });
+const ProjectsLink: SidebarButton = new SidebarButton(InternalPagePane.element, { name: 'Projects', link: '#projects' }, { icon: '@main/icon/cube.svg', size: '90%' });
+const CodeLink: SidebarButton = new SidebarButton(InternalPagePane.element, { name: 'Codebase', link: '#code' }, { icon: '@main/icon/code.svg', size: '92%' });
+const SearchLink: SidebarButton = new SidebarButton(InternalPagePane.element, { name: 'Search', link: '#search' }, { icon: '@main/icon/search.svg', size: '90%' });
 new SidebarBreak(Sidebar.element);
 
 const SettingsPane = new SettingsInnerPane(Sidebar.element);
