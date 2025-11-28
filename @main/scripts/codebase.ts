@@ -459,6 +459,6 @@ class CodebasePage extends Page {
 }
 
 const Codebase = new CodebasePage('code', Content.element, { owner: 'Korwith', name: 'kircic.org' });
-Codebase.addRepo({ owner: 'Korwith', name: 'snap.red' })
-Codebase.addRepo({ owner: 'Korwith', name: 'file-manager' })
-Codebase.addRepo({ owner: 'Korwith', name: 'stock-watch' })
+// Codebase.addRepo({ owner: 'Korwith', name: 'snap.red' })
+// Codebase.addRepo({ owner: 'Korwith', name: 'file-manager' })
+// Codebase.addRepo({ owner: 'Korwith', name: 'stock-watch' })
