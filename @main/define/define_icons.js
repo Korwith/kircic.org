@@ -23,37 +23,37 @@ const OS_Icons = [
 const Social_Icons = {
     'cashapp': {
         gradient: { direction: 'to bottom right', colors: ['#0cdb62', '#046b23'] },
-        image: { icon: '../@main/icon/cashapp.svg', size: '58%' },
+        image: { icon: '/@main/icon/cashapp.svg', size: '58%' },
         link: 'https://cash.app/$thadreal',
         type: 'social',
     },
     'discord': {
         gradient: { direction: 'to bottom right', colors: ['#5975da', '#030d2f'] },
-        image: { icon: '../@main/icon/discord.svg', size: '85%' },
+        image: { icon: '/@main/icon/discord.svg', size: '85%' },
         link: 'https://discord.com/invite/p8ZZXZqnag',
         type: 'social',
     },
     'github': {
         gradient: { direction: 'to bottom right', colors: ['#15171a', '#2b2e31'] },
-        image: { icon: '../@main/icon/github.svg', size: '70%' },
+        image: { icon: '/@main/icon/github.svg', size: '70%' },
         link: 'https://github.com/Korwith',
         type: 'social',
     },
     'instagram': {
         gradient: { direction: 'to bottom left', colors: ['#7455A2', '#EC287C', '#F07B2B', '#F1C65C'] },
-        image: { icon: '../@main/icon/instagram.svg', size: '73%' },
+        image: { icon: '/@main/icon/instagram.svg', size: '73%' },
         link: 'https://www.instagram.com/thadcoolfr/',
         type: 'social',
     },
     'youtube': {
         gradient: { direction: 'to top left', colors: ['#ff2222', '#9c0000'] },
-        image: { icon: '../@main/icon/youtube.svg', size: '70%' },
+        image: { icon: '/@main/icon/youtube.svg', size: '70%' },
         link: 'https://www.youtube.com/channel/UCLcCNfyLG_jQev4MdkHtCZw',
         type: 'social',
     },
     'monkeytype': {
         gradient: { direction: 'to bottom right', colors: ['#414141', '#272727'] },
-        image: { icon: '../@main/icon/monkeytype.svg', size: '80%' },
+        image: { icon: '/@main/icon/monkeytype.svg', size: '80%' },
         link: 'https://monkeytype.com/profile/kircic',
         type: 'social',
     },
