@@ -70,7 +70,6 @@ class FileNode extends Entry {
             return this.explorer.closeTextViewer();
         this.explorer.resetTextViewer();
         const pre_time = Date.now();
-        MainNotificationHolder.notify('Attempting to load file...', 'stock');
         const url = `https://api.github.com/repos/${this.repo.owner}/${this.repo.name}/contents/${this.path}`;
         try {
             const res = await fetch(url);
@@ -135,7 +134,6 @@ class Folder extends Entry {
         }
         const url = `https://api.github.com/repos/${this.repo.owner}/${this.repo.name}/contents/${this.path}`;
         const pre_time = Date.now();
-        MainNotificationHolder.notify('Attempting to load folder...', 'stock');
         try {
             const res = await fetch(url);
             if (!res.ok) {
