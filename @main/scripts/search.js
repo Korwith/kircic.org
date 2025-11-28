@@ -199,6 +199,7 @@ class BookmarksBar {
         }, 1000);
     }
     #addInput() {
+        this.link_box.classList.add('empty');
         this.addBookmark(this.link_box.textContent);
     }
     #initializeSave() {

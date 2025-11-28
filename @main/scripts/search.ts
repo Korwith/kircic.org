@@ -228,6 +228,7 @@ class BookmarksBar {
     }
 
     #addInput(): void {
+        this.link_box.classList.add('empty');
         this.addBookmark(this.link_box.textContent);
     }
 
