@@ -128,7 +128,7 @@ class ProjectHolderGlassPane extends GlassPane {
         if (!category)
             return;
         let project_list = new ProjectList(this.element);
-        project_list.createProjectList(project_data, category, false);
+        project_list.createProjectList(Project_Data, category, false);
     }
 }
 class ScrollGlassPane extends FlexGlassPane {

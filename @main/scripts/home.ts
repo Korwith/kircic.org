@@ -192,7 +192,7 @@ const FeaturedProjects = new FlexGlassPane(Home.element, CSS_FullWidthFitHeight)
 new TextHeader(FeaturedProjects.element, 'Featured Projects');
 const Featured_Scroll = new ScrollGlassPane('x', FeaturedProjects.element, {width: '100%', height: '260px'});
 const Featured_List = new ProjectList(Featured_Scroll.element);
-Featured_List.createProjectList(project_data, null, true);
+Featured_List.createProjectList(Project_Data, null, true);
 
 // Copyrights
 const CopyrightPane = new GlassPane(Home.element, CSS_FullWidthFitHeight);

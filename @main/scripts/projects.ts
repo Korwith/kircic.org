@@ -4,7 +4,7 @@ const Featured = new FlexGlassPane(Projects.element, CSS_FullWidthFitHeight);
 new TextHeader(Featured.element, 'Featured');
 const FeaturedScroll = new ScrollGlassPane('x', Featured.element, {width: '100%', height: '260px'});
 const FeaturedList = new ProjectList(FeaturedScroll.element);
-FeaturedList.createProjectList(project_data, null, true);
+FeaturedList.createProjectList(Project_Data, null, true);
 
 const Apps = new GlassPane(Projects.element, CSS_FullWidthFitHeight);
 new TextHeader(Apps.element, 'Apps');

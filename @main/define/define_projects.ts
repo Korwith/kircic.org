@@ -12,7 +12,7 @@ interface ProjectEntryList {
     [key: string]: ProjectEntry;
 }
 
-const project_data: ProjectEntryList = {
+const Project_Data: ProjectEntryList = {
     'Wordle': {
         description: 'Recreation of Wordle. Use the clues to figure out the select word and solve the puzzle.',
         image: { icon: '@main/icon/wordle.png', size: '75%' },
@@ -84,7 +84,7 @@ const project_data: ProjectEntryList = {
     'Stock Tracker': {
         description: 'Provides real time stock graphs and detailed statistics about the market.',
         image: { icon: '@main/icon/stock.svg', size: '90%' },
-        href: 'https://www.kircic.org/finance',
+        href: 'https://finance.kircic.org',
         background: '@main/icon/stocktracker.jpg',
         featured: 1,
         category: 'app'
@@ -98,7 +98,7 @@ const project_data: ProjectEntryList = {
     'File Explorer': {
         description: 'Uses the File System Access API to let you view and edit your local files.',
         image: { icon: '@main/icon/openfolder.svg', size: '77%' },
-        href: 'https://www.kircic.org/files',
+        href: 'https://files.kircic.org',
         video: '@main/icon/files_preview.mp4',
         featured: 2,
         category: 'app'
