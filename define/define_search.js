@@ -1,5 +1,18 @@
 "use strict";
-const search_info = [
+const AssignedBookmarks = [
+    { icon: '../icon/bookmark/blackboard.ico', match: ['blackboard.com'] },
+    { icon: '../icon/bookmark/classroom.png', match: ['classroom.google.com', 'google.com/classroom'] },
+    { icon: '../icon/bookmark/docs.ico', match: ['docs.google.com', 'google.com/docs'] },
+    { icon: '../icon/bookmark/drive.png', match: ['drive.google.com', 'google.com/drive'] },
+    { icon: '../icon/bookmark/earth.ico', match: ['earth.google.com', 'google.com/earth'] },
+    { icon: '../icon/bookmark/gmail.ico', match: ['mail.google.com', 'google.com/mail', 'gmail.com'] },
+    { icon: '../icon/bookmark/maps.ico', match: ['maps.google.com', 'google.com/maps'] },
+    { icon: '../icon/bookmark/meet.png', match: ['meet.google.com', 'google.com/meet'] },
+    { icon: '../icon/bookmark/remotedesktop.png', match: ['remotedesktop.google.com', 'google.com/remotedesktop'] },
+    { icon: '../icon/bookmark/sites.ico', match: ['sites.google.com', 'google.com/sites'] },
+    { icon: '../icon/bookmark/slides.ico', match: ['slides.google.com', 'google.com/slides'] },
+];
+const SearchInfo = [
     {
         name: 'Google',
         base_url: 'https://google.com',

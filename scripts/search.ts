@@ -1,7 +1,3 @@
-interface BookmarkEntry {
-    link: string; // might have more later
-}
-
 class SearchPage extends Page {
     constructor(parent: HTMLElement) {
         super('search', parent);
@@ -58,6 +54,18 @@ class Bookmark {
     }
 
     #setWebsiteFavicon(link_info: BookmarkEntry): void {
+        for (var i = 0; i < AssignedBookmarks.length; i++) {
+            let this_boomark: BookmarkEntryIcon = AssignedBookmarks[i];
+            for (var j = 0; j < this_boomark.match.length; j++) {
+                let this_match: string = this_boomark.match[j];
+                if (!link_info.link.includes(this_match)) continue;
+                this.element.style.setProperty('--icon', `url(${this_boomark.icon})`);
+                this.element.classList.remove('loading');
+                this.element.classList.add('loaded');
+                return;
+            }
+        }
+
         let favicon: string = `https://www.google.com/s2/favicons?domain=${link_info.link}&sz=48`;
         let attempt: HTMLImageElement = new Image();
 
@@ -442,4 +450,4 @@ const Bookmarks = new BookmarksBar(Search.element);
 const SearchHolder = new SearchScrollGlassPane(Search.element);
 
 const List = new SearchList();
-List.createSearchList(SearchHolder.element, search_info, Bookmarks);
+List.createSearchList(SearchHolder.element, SearchInfo, Bookmarks);

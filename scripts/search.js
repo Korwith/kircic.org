@@ -47,6 +47,18 @@ class Bookmark {
         parent.appendChild(this.element);
     }
     #setWebsiteFavicon(link_info) {
+        for (var i = 0; i < AssignedBookmarks.length; i++) {
+            let this_boomark = AssignedBookmarks[i];
+            for (var j = 0; j < this_boomark.match.length; j++) {
+                let this_match = this_boomark.match[j];
+                if (!link_info.link.includes(this_match))
+                    continue;
+                this.element.style.setProperty('--icon', `url(${this_boomark.icon})`);
+                this.element.classList.remove('loading');
+                this.element.classList.add('loaded');
+                return;
+            }
+        }
         let favicon = `https://www.google.com/s2/favicons?domain=${link_info.link}&sz=48`;
         let attempt = new Image();
         attempt.onload = () => {
@@ -387,4 +399,4 @@ new TextSubheader(Search.element, 'Browser Homepage');
 const Bookmarks = new BookmarksBar(Search.element);
 const SearchHolder = new SearchScrollGlassPane(Search.element);
 const List = new SearchList();
-List.createSearchList(SearchHolder.element, search_info, Bookmarks);
+List.createSearchList(SearchHolder.element, SearchInfo, Bookmarks);
