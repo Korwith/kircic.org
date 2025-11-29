@@ -1,4 +1,31 @@
 "use strict";
+const Image_Extensions = new Set(['jpeg', 'jpg', 'png', 'gif', 'webp', 'avif', 'svg', 'ico']);
+const Text_Extensions = new Set([
+    'txt', 'md', 'markdown', 'js', 'ts', 'jsx', 'tsx', 'html', 'htm', 'css', 'scss',
+    'json', 'yaml', 'yml', 'xml', 'csv', 'svg', 'py', 'java', 'c', 'cpp', 'h',
+    'sh', 'bash', 'bat', 'ps1', 'php', 'rb', 'go', 'rs', 'swift', 'kt', 'kts',
+    'dart', 'lua', 'sql', 'log', 'ini', 'toml', 'gitignore'
+]);
+class CodebaseAPI {
+    api_content;
+    constructor(repo, path) {
+        this.api_content = `https://api.github.com/repos/${repo.owner}/${repo.name}/contents/${path}`;
+    }
+    decodeBase64(content) {
+        try {
+            return (atob(content));
+        }
+        catch {
+            return null;
+        }
+    }
+    async fetchJson() {
+        const res = await fetch(this.api_content);
+        if (!res.ok)
+            throw new Error(`HTTP ${res.status}`);
+        return res.json();
+    }
+}
 class Entry {
     repo;
     path;
@@ -10,13 +37,21 @@ class Entry {
     constructor(repo, path, parent, explorer, name) {
         this.repo = repo;
         this.path = path;
-        this.name = name || path.split('/').pop() || '(root)';
+        this.name = name ?? path.split('/').pop() ?? '(root)';
         this.parent = parent;
         this.explorer = explorer;
         this.sidebarEntry = document.createElement('div');
         this.explorerEntry = document.createElement('div');
         this.explorerEntry.className = 'file-item';
         this.explorerEntry.textContent = this.name;
+    }
+    applyFileIcon() {
+        const file_icon = FileIcons.getClassWithColor(this.name);
+        if (!file_icon)
+            return;
+        const add_classes = ['has-icon', ...file_icon.split(' ')];
+        this.sidebarEntry.classList.add(...add_classes);
+        this.explorerEntry.classList.add(...add_classes);
     }
 }
 class FileNode extends Entry {
@@ -25,82 +60,61 @@ class FileNode extends Entry {
         super(repo, path, parent, explorer, file.name);
         this.sidebarEntry.className = 'file-item';
         this.sidebarEntry.textContent = this.name;
+        this.sidebarEntry.onclick = () => this.loadFileText();
         this.explorerEntry.className = 'file-item file';
-        this.explorerEntry.onclick = () => this.click();
-        this.sidebarEntry.onclick = () => this.click();
-        let file_icon = FileIcons.getClassWithColor(this.name);
-        if (file_icon) {
-            let add_classes = ['has-icon', ...file_icon.split(' ')];
-            this.sidebarEntry.classList.add(...add_classes);
-            this.explorerEntry.classList.add(...add_classes);
+        this.explorerEntry.setAttribute('item-name', this.name);
+        this.explorerEntry.onclick = () => this.loadFileText();
+        this.applyFileIcon();
+        const ext = this.ext();
+        if (Image_Extensions.has(ext)) {
+            const img = new Image();
+            img.onerror = () => { img.src = '../icon/globe.svg'; };
+            img.src = `https://raw.githubusercontent.com/${repo.owner}/${repo.name}/main/${this.path}`;
+            this.explorerEntry.appendChild(img);
         }
-        if (!this.name.includes('.'))
-            return;
-        let format = this.name.split('.')[1].toLowerCase();
-        let images = ['jpeg', 'jpg', 'png', 'gif', 'webp', 'avif', 'svg', 'ico'];
-        if (!images.includes(format))
-            return;
-        let img = new Image();
-        img.onload = () => {
-            //img.style.aspectRatio = `${img.width}/${img.height}`;
-        };
-        img.onerror = () => {
-            img.src = '../icon/globe.svg';
-        };
-        img.src = `https://raw.githubusercontent.com/${this.repo.owner}/${this.repo.name}/main/${this.path}`;
-        this.explorerEntry.appendChild(img);
     }
     render() {
-        this.parent?.sidebarContents.appendChild(this.sidebarEntry);
-        this.explorer.explorer.appendChild(this.explorerEntry);
+        if (this.parent)
+            this.parent.sidebarContents.appendChild(this.sidebarEntry);
+        else
+            this.explorer.sidebar.appendChild(this.sidebarEntry);
     }
-    click() {
-        this.loadFileText();
+    ext() {
+        const p = this.name.split('.');
+        return p.length > 1 ? p[p.length - 1].toLowerCase() : '';
     }
     async loadFileText() {
-        const text_extensions = [
-            '.txt', '.md', '.markdown', '.js', '.ts', '.jsx', '.tsx',
-            '.html', '.htm', '.css', '.scss', '.json', '.yaml', '.yml',
-            '.xml', '.csv', '.svg', '.py', '.java', '.c', '.cpp', '.h',
-            '.sh', '.bash', '.bat', '.ps1', '.php', '.rb', '.go', '.rs',
-            '.swift', '.kt', '.kts', '.dart', '.lua', '.sql', '.log', '.ini', '.toml',
-            '.gitignore'
-        ];
-        if (!text_extensions.includes('.' + this.name.split('.').pop()))
+        const ext = this.ext();
+        if (!Text_Extensions.has(ext))
             return this.explorer.closeTextViewer();
         this.explorer.resetTextViewer();
-        const pre_time = Date.now();
-        const url = `https://api.github.com/repos/${this.repo.owner}/${this.repo.name}/contents/${this.path}`;
+        const pre = Date.now();
         try {
-            const res = await fetch(url);
-            if (!res.ok) {
-                throw new Error('API fetch unsuccessful!');
-            }
-            const data = await res.json();
-            if (!data.content) {
-                throw new Error('API fetch had no content!');
-            }
-            if (data.encoding !== 'base64') {
-                throw new Error('This file is not a text file!');
-            }
+            const file_api = new CodebaseAPI(this.repo, this.path);
+            const data = await file_api.fetchJson();
+            if (!data.content)
+                throw new Error('No content');
+            if (data.encoding !== 'base64')
+                throw new Error('Not base64 encoded');
+            const decoded = file_api.decodeBase64(data.content);
+            if (decoded === null)
+                throw new Error('Decoding failed');
             this.explorer.explorer.parentElement?.classList.add('view_text');
-            const decoded = atob(data.content);
             this.explorer.text_viewer.textContent = decoded;
             hljs.highlightElement(this.explorer.text_viewer);
+            // breadcrumb
             this.explorer.path.innerHTML = '';
-            if (this.parent) {
+            if (this.parent)
                 this.explorer.showPath(this.parent);
-            }
-            let file_entry = document.createElement('div');
-            file_entry.classList.add('file-item');
+            const file_entry = document.createElement('div');
+            file_entry.className = 'file-item';
             file_entry.textContent = this.name;
             this.explorer.path.appendChild(file_entry);
-            const post_time = Date.now();
-            MainNotificationHolder.notify(`Text file loaded! (${post_time - pre_time}ms)`, 'success');
+            MainNotificationHolder.notify(`Text file loaded! (${Date.now() - pre}ms)`, 'success');
         }
-        catch (error) {
+        catch (err) {
             this.explorer.closeTextViewer();
-            MainNotificationHolder.notify('The API request failed! ' + error, 'error');
+            MainNotificationHolder.notify('The API request failed! ' + err, 'error');
             return this.explorer.closeTextViewer();
         }
     }
@@ -111,59 +125,69 @@ class Folder extends Entry {
     expanded = false;
     loaded = false;
     sidebarContents;
+    // quick lookup
+    childrenByName = new Map();
+    // to avoid duplication
+    childrenByPath = new Set();
     constructor(repo, path, parent, explorer, name) {
         super(repo, path, parent, explorer, name);
         this.sidebarEntry.className = 'folder';
-        this.explorerEntry.className = 'folder-label';
-        this.explorerEntry.textContent = this.name;
-        this.explorerEntry.onclick = (e) => { e.stopPropagation(); this.open(); };
         const label = document.createElement('div');
         label.className = 'folder-label';
         label.textContent = this.name;
         label.onclick = (e) => { e.stopPropagation(); this.toggle(); };
         this.sidebarEntry.appendChild(label);
+        this.explorerEntry.className = 'folder-label';
+        this.explorerEntry.setAttribute('item-name', this.name);
+        this.explorerEntry.textContent = this.name;
+        this.explorerEntry.onclick = (e) => { e.stopPropagation(); this.open(); };
         this.sidebarContents = document.createElement('div');
         this.sidebarContents.className = 'folder-contents';
         this.sidebarContents.style.display = 'none';
         this.sidebarEntry.appendChild(this.sidebarContents);
+    }
+    render() {
+        if (this.parent)
+            this.parent.sidebarContents.appendChild(this.sidebarEntry);
+        else
+            this.explorer.sidebar.appendChild(this.sidebarEntry);
     }
     async load() {
         if (this.loaded) {
             MainNotificationHolder.notify('Folder cached!', 'info');
             return;
         }
-        const url = `https://api.github.com/repos/${this.repo.owner}/${this.repo.name}/contents/${this.path}`;
-        const pre_time = Date.now();
+        const folder_api = new CodebaseAPI(this.repo, this.path);
+        const pre = Date.now();
         try {
-            const res = await fetch(url);
-            if (!res.ok) {
-                throw new Error(res.status.toString());
-            }
-            const files = await res.json();
+            const files = await folder_api.fetchJson();
             for (const f of files) {
-                const child = f.type === 'dir'
-                    ? new Folder(this.repo, f.path, this, this.explorer, f.name)
-                    : new FileNode(this.repo, f.path, this, this.explorer, f);
+                if (this.childrenByPath.has(f.path))
+                    continue;
+                let child;
+                if (f.type === 'dir')
+                    child = new Folder(this.repo, f.path, this, this.explorer, f.name);
+                else
+                    child = new FileNode(this.repo, f.path, this, this.explorer, f);
                 this.children.push(child);
-                child.render();
+                this.childrenByName.set(child.name, child);
+                this.childrenByPath.add(f.path);
             }
             this.loaded = true;
-            const post_time = Date.now();
-            MainNotificationHolder.notify(`Folder loaded successfully (${post_time - pre_time}ms)`, 'success');
+            MainNotificationHolder.notify(`Folder loaded successfully (${Date.now() - pre}ms)`, 'success');
         }
-        catch (error) {
-            MainNotificationHolder.notify(`GitHub API Error! ${error.toString()}`, 'error');
+        catch (err) {
+            MainNotificationHolder.notify(`GitHub API Error! ${err?.toString?.() ?? err}`, 'error');
+            this.loaded = false;
         }
-        this.loaded = true;
     }
     async toggle() {
         if (this.expanded) {
             this.expanded = false;
             this.sidebarContents.style.display = 'none';
+            return;
         }
-        else {
-            await this.open();
-        }
+        await this.open();
     }
     async open() {
         this.explorer.current_directory = this;
@@ -172,26 +196,19 @@ class Folder extends Entry {
         this.explorer.showPath(this);
         this.sidebarContents.style.display = 'flex';
         await this.load();
+        for (const child of this.children) {
+            if (!child.sidebarEntry.isConnected)
+                child.render();
+        }
         this.explorer.showChildren(this);
         this.expanded = true;
     }
+    // O(1) lookup (awesome sauce)
     async findChild(name) {
-        if (!this.expanded) {
+        if (!this.loaded)
             await this.load();
-        }
-        for (var i = 0; i < this.children.length; i++) {
-            let entry = this.children[i];
-            if (entry.name != name)
-                continue;
-            return entry;
-        }
-        return null;
-    }
-    render() {
-        if (this.parent)
-            this.parent.sidebarContents.appendChild(this.sidebarEntry);
-        else
-            this.explorer.sidebar.appendChild(this.sidebarEntry);
+        const entry = this.childrenByName.get(name);
+        return entry ?? null;
     }
 }
 class FileExplorer {
@@ -220,10 +237,13 @@ class FileExplorer {
         this.path.classList.remove('glass');
     }
     addRoot(repo) {
+        const exists = this.roots.find(r => r.repo.owner === repo.owner && r.repo.name === repo.name);
+        if (exists)
+            return exists;
         const root = new Folder(repo, '', null, this, repo.name);
         this.roots.push(root);
         root.render();
-        root.open();
+        // void root.open().catch(() => { console.log('hello') });
         MainNotificationHolder.notify('Fetching codebase...', 'success');
         return root;
     }
@@ -233,35 +253,44 @@ class FileExplorer {
     }
     async loadProjectPath(url) {
         const pre_time = Date.now();
-        let domain_array = window.location.href.split('/');
+        const domain_array = window.location.href.split('/');
         let domain = domain_array[2];
-        if (domain == '127.0.0.1:5500') {
-            domain = 'https://www.kircic.org/';
-        }
+        if (domain === '127.0.0.1:5500')
+            domain = 'https://www.kircic.org/'; // for live server vscode extension
         if (url.startsWith('http') && !url.includes(domain)) {
             MainNotificationHolder.notify('Selected project is not hosted here', 'error');
             return;
         }
         if (!url.endsWith('index.html')) {
-            if (!url.endsWith('/')) {
+            if (!url.endsWith('/'))
                 url = url + '/';
-            }
             url = url + 'index.html';
         }
         if (url.includes(domain) || url.includes('www.' + domain)) {
             url = url.split(domain)[1];
         }
-        let subpage_array = url.split('/');
+        const subpage_array = url.split('/');
         let origin_folder = this.roots[0];
         let target_file = null;
-        for (var i = 0; i < subpage_array.length; i++) {
-            let folder_name = subpage_array[i];
-            if (folder_name.length == 0)
+        if (!origin_folder) {
+            MainNotificationHolder.notify('No repo root loaded', 'error');
+            return;
+        }
+        for (let i = 0; i < subpage_array.length; i++) {
+            const folder_name = subpage_array[i];
+            if (!folder_name)
                 continue;
-            let folder_entry = await origin_folder.findChild(folder_name);
+            const folder_entry = await origin_folder.findChild(folder_name);
+            if (!folder_entry) {
+                if (i === subpage_array.length - 1) {
+                    MainNotificationHolder.notify('Path not found!', 'error');
+                }
+                break;
+            }
             if (folder_entry instanceof Folder) {
                 origin_folder = folder_entry;
-                origin_folder.open();
+                // attempt to open
+                await origin_folder.open();
                 MainNotificationHolder.notify('Subfolder indexed...', 'info');
                 continue;
             }
@@ -270,15 +299,10 @@ class FileExplorer {
                 MainNotificationHolder.notify('Target file found!', 'success');
                 break;
             }
-            if (i == subpage_array.length - 1) {
-                MainNotificationHolder.notify('Path not found!', 'error');
-            }
         }
         if (target_file) {
-            //await target_file.loadFileText();
             this.sidebar.scrollIntoView({ behavior: 'auto', block: 'center', inline: 'center' });
-            const post_time = Date.now();
-            MainNotificationHolder.notify(`Operation completed! (${post_time - pre_time}ms)`, 'info');
+            MainNotificationHolder.notify(`Operation completed! (${Date.now() - pre_time}ms)`, 'info');
         }
     }
     showPath(folder) {
@@ -294,22 +318,16 @@ class FileExplorer {
             const el = document.createElement('div');
             el.className = 'folder-label breadcrumb-item';
             el.textContent = f.name;
-            el.onclick = () => {
-                if (f !== this.current_directory) {
-                    f.open();
-                }
-            };
+            el.onclick = () => { if (f !== this.current_directory)
+                void f.open(); };
             this.path.appendChild(el);
         }
     }
     showChildren(folder) {
+        this.explorer.innerHTML = '';
         for (const child of folder.children) {
-            if (child instanceof FileNode) {
+            if (!child.explorerEntry.isConnected)
                 this.explorer.appendChild(child.explorerEntry);
-            }
-            else if (child instanceof Folder) {
-                this.explorer.appendChild(child.explorerEntry);
-            }
         }
     }
     resetTextViewer() {
@@ -354,16 +372,16 @@ class CodebasePage extends Page {
     }
     showPage() {
         this.element.classList.add('show');
-        if (!this.loaded) {
-            let main_folder = this.explorer.addRoot(this.main_repo);
-            for (var i = 0; i < this.repo_queue.length; i++) {
-                let this_repo = this.repo_queue[i];
-                this.explorer.addRoot(this_repo);
+        if (this.loaded)
+            return;
+        const main_folder = this.explorer.addRoot(this.main_repo);
+        void main_folder.open().then(() => {
+            void this.explorer.loadProjectPath(main_folder.path);
+            for (let i = 0; i < this.repo_queue.length; i++) {
+                this.explorer.addRoot(this.repo_queue[i]);
             }
-            this.explorer.loadProjectPath(main_folder.path);
-            this.explorer.showPath(main_folder);
-            this.loaded = true;
-        }
+        });
+        this.loaded = true;
     }
     addRepo(repo) {
         if (!this.loaded) {
@@ -375,7 +393,7 @@ class CodebasePage extends Page {
     loadProjectPath(url) {
         this.hideOtherPages();
         this.showPage();
-        this.explorer.loadProjectPath(url);
+        void this.explorer.loadProjectPath(url);
     }
 }
 const Codebase = new CodebasePage('code', Content.element, { owner: 'Korwith', name: 'kircic.org' });
