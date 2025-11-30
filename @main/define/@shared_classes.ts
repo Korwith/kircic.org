@@ -1,6 +1,12 @@
+interface PageDictionary {
+    [key: string]: Page;
+}
+
 const SettingsData: StorageHandler = new StorageHandler('settings');
 const BookmarksData: StorageHandler = new StorageHandler('bookmarks');
 const ManageCSS: CSSManagement = new CSSManagement();
+const PageIndex: PageDictionary = {};
+
 
 // Website Stuff
 class BlurredImageBackground {
@@ -76,17 +82,12 @@ class Pane {
     }
 }
 
-interface PageDictionary {
-    [key: string]: Page;
-}
-
-let page_index: PageDictionary = {};
 class Page extends Pane {
     constructor(name: string, parent: HTMLElement) {
         super(parent, CSS_FullSize);
         this.element.classList.add('page');
         this.element.setAttribute('page', name);
-        page_index[name] = this;
+        PageIndex[name] = this;
     }
 
     showPage() {

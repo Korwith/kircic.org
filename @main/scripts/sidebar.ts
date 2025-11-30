@@ -58,7 +58,7 @@ class SidebarButton {
         let inner_page = this.link_info.link && this.link_info.link.includes('#');
         if (!inner_page) return;
         if (!this.link_info.link) return;
-        let page = page_index[this.link_info.link.replace('#', '')];
+        let page = PageIndex[this.link_info.link.replace('#', '')];
         if (!page) return;
         page.hideOtherPages();
         page.showPage();

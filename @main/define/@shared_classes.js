@@ -2,6 +2,7 @@
 const SettingsData = new StorageHandler('settings');
 const BookmarksData = new StorageHandler('bookmarks');
 const ManageCSS = new CSSManagement();
+const PageIndex = {};
 // Website Stuff
 class BlurredImageBackground {
     element;
@@ -71,13 +72,12 @@ class Pane {
         this.element.classList.toggle('hide', status);
     }
 }
-let page_index = {};
 class Page extends Pane {
     constructor(name, parent) {
         super(parent, CSS_FullSize);
         this.element.classList.add('page');
         this.element.setAttribute('page', name);
-        page_index[name] = this;
+        PageIndex[name] = this;
     }
     showPage() {
         this.element.classList.add('show');
