@@ -4,6 +4,7 @@ class RecognizeURL {
     constructor() {
         let index: string = (window.location.href.split('#').pop() || 'home');
         this.page = PageIndex[index];
+        this.recognize();
     }
 
     recognize(): void {
@@ -14,4 +15,3 @@ class RecognizeURL {
 }
 
 const Loader: RecognizeURL = new RecognizeURL();
-Loader.recognize();
