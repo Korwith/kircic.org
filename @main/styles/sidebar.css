@@ -2,8 +2,9 @@
     display: flex;
     flex-direction: column;
     gap: 5px;
-    padding: 5px !important;
+    padding: 0 !important;
     padding-bottom: 35px !important;
+    overflow: hidden;
     transition: left 0.5s, transform 0.5s;
 }
 
@@ -61,7 +62,8 @@
 .inline_pane.sidebar_pane {
     align-items: center;
     gap: 0;
-    transform: translateX(-5px);
+    width: 100%;
+    padding-bottom: 5px;
 }
 
 .sidebar_button {
@@ -97,6 +99,7 @@
 }
 
 .sidebar_break {
+    display: inline-block;
     margin: 0;
     padding: 0;
     border: 0;
@@ -104,6 +107,10 @@
     min-height: 1px;
     transform: translateX(-5px);
     background-color: rgba(255, 255, 255, 0.1);
+}
+
+.footer_entry {
+    max-width: calc(100% - 20px);
 }
 
 .sidebar_footer {
@@ -129,12 +136,6 @@
     padding-right: 10px;
     font-weight: 700;
     font-size: 0.85rem;
-}
-
-.settings_pane {
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding-bottom: 10px;
 }
 
 .settings_entry {

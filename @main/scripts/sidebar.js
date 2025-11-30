@@ -15,10 +15,10 @@ class SidebarInnerPane extends Pane {
         this.element.classList.add('sidebar_pane');
     }
 }
-class SettingsInnerPane extends SidebarInnerPane {
+class ScrollingSidebarInnerPane extends SidebarInnerPane {
     constructor(parent) {
         super(parent);
-        this.element.classList.add('settings_pane');
+        ManageCSS.addDesktopEntry(this.element, { overflowX: 'hidden', overflowY: 'auto' });
     }
 }
 class SidebarButton {
@@ -59,11 +59,9 @@ class SidebarButton {
 class SidebarBreak {
     element;
     constructor(parent) {
-        let hr = document.createElement('hr');
-        hr.classList.add('sidebar_break');
-        hr.style.display = 'inline-block';
-        parent.appendChild(hr);
-        this.element = hr;
+        this.element = document.createElement('hr');
+        this.element.classList.add('sidebar_break');
+        parent.appendChild(this.element);
     }
 }
 class SidebarFooter {
@@ -124,14 +122,15 @@ const CurrentLink = new SidebarButton(ExternalPagePane.element, { name: 'kircic.
 CurrentLink.element.classList.add('active');
 const SnapshotLink = new SidebarButton(ExternalPagePane.element, { name: 'snap.red', link: 'https://snap.red' }, { icon: '@main/icon/image.svg', size: '95%' });
 new SidebarBreak(Sidebar.element);
-const InternalPagePane = new SidebarInnerPane(Sidebar.element);
+const InternalPageHolder = new ScrollingSidebarInnerPane(Sidebar.element);
+const InternalPagePane = new SidebarInnerPane(InternalPageHolder.element);
 new TextSubheader(InternalPagePane.element, 'Navigation');
 const HomeLink = new SidebarButton(InternalPagePane.element, { name: 'Home', link: '#home' }, { icon: '@main/icon/home.svg', size: '80%' });
 const ProjectsLink = new SidebarButton(InternalPagePane.element, { name: 'Projects', link: '#projects' }, { icon: '@main/icon/cube.svg', size: '90%' });
 const CodeLink = new SidebarButton(InternalPagePane.element, { name: 'Codebase', link: '#code' }, { icon: '@main/icon/code.svg', size: '92%' });
 const SearchLink = new SidebarButton(InternalPagePane.element, { name: 'Search', link: '#search' }, { icon: '@main/icon/search.svg', size: '90%' });
-new SidebarBreak(Sidebar.element);
-const SettingsPane = new SettingsInnerPane(Sidebar.element);
+new SidebarBreak(InternalPageHolder.element);
+const SettingsPane = new SidebarInnerPane(InternalPageHolder.element);
 new TextSubheader(SettingsPane.element, 'Customization');
 const PageColor = new SettingsEntry(SettingsPane.element, 'Page Color', 'color');
 new SidebarBreak(SettingsPane.element);
