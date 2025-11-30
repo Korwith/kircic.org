@@ -179,6 +179,7 @@ class ProjectGlassPane extends FlexGlassPane {
     footer: HTMLElement;
     launch: HTMLElement;
     code: HTMLElement;
+    repo?: string;
 
     constructor(parent: HTMLElement, css: CSS, mobile_css?: CSS) {
         super(parent, css, mobile_css);
@@ -197,6 +198,8 @@ class ProjectGlassPane extends FlexGlassPane {
         this.footer = footer_info.footer;
         this.launch = footer_info.launch;
         this.code = footer_info.code;
+        
+        this.code.onclick = () => this.#codebaseButtonClicked();
     }
 
     setProjectIcon(icon: string, size?: string) {
@@ -217,9 +220,6 @@ class ProjectGlassPane extends FlexGlassPane {
     setProjectLink(href: string) {
         this.launch.setAttribute('href', href);
         this.launch.setAttribute('target', '_blank');
-        this.code.onclick = () => {
-            Codebase.loadProjectPath(href);
-        }
     }
 
     setProjectVideo(url: string) {
@@ -238,6 +238,16 @@ class ProjectGlassPane extends FlexGlassPane {
         if (!order) return;
         order = order.toString();
         this.element.style.order = order;
+    }
+
+    setProjectRepo(name: string) {
+        this.repo = name;
+    }
+
+    #codebaseButtonClicked() {
+        let href: string | null = this.launch.getAttribute('href');
+        if (this.repo) Codebase.loadProjectRoot(this.repo)
+        else if (href) Codebase.loadProjectPath(href);
     }
 
     #getElementSource(parent: HTMLElement): HTMLSourceElement {
@@ -347,12 +357,9 @@ class ProjectList {
         this_frame.setProjectDescription(data.description);
         this_frame.setProjectLink(data.href);
         this_frame.setProjectIcon(data.image.icon, data.image.size);
-        if (data.video) {
-            this_frame.setProjectVideo(data.video);
-        }
-        if (data.background) {
-            this_frame.setProjectBackground(data.background);
-        }
+        if (data.video) this_frame.setProjectVideo(data.video);
+        if (data.background) this_frame.setProjectBackground(data.background);
+        if (data.external_repo) this_frame.setProjectRepo(data.external_repo);
     }
 
     createProjectList(data: ProjectEntryList, filter_category: string | null, filter_featured: boolean) {

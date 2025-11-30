@@ -307,12 +307,26 @@ class FileExplorer {
         return root;
     }
 
-    clear() {
+    clear(): void {
         this.explorer.innerHTML = '';
         this.path.innerHTML = '';
     }
 
-    async loadProjectPath(url: string) {
+    getRootFolder(name: string): Folder | null {
+        for (var i = 0; i < this.roots.length; i++) {
+            let root: Folder = this.roots[i];
+            if (root.name == name) return root;
+        }
+        return null;
+    }
+
+    async loadProjectRoot(name: string): Promise<void> {
+        let root: Folder | null = this.getRootFolder(name);
+        if (!root) return;
+        await root.open();
+    }
+
+    async loadProjectPath(url: string): Promise<void> {
         const pre_time = Date.now();
         const domain_array = window.location.href.split('/');
         let domain = domain_array[2];
@@ -468,10 +482,16 @@ class CodebasePage extends Page {
         this.explorer.addRoot(repo);
     }
 
+    loadProjectRoot(name: string): void {
+        this.hideOtherPages();
+        this.showPage();
+        this.explorer.loadProjectRoot(name);
+    }
+
     loadProjectPath(url: string): void {
         this.hideOtherPages();
         this.showPage();
-        void this.explorer.loadProjectPath(url);
+        this.explorer.loadProjectPath(url);
     }
 }
 

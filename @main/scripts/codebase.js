@@ -251,6 +251,20 @@ class FileExplorer {
         this.explorer.innerHTML = '';
         this.path.innerHTML = '';
     }
+    getRootFolder(name) {
+        for (var i = 0; i < this.roots.length; i++) {
+            let root = this.roots[i];
+            if (root.name == name)
+                return root;
+        }
+        return null;
+    }
+    async loadProjectRoot(name) {
+        let root = this.getRootFolder(name);
+        if (!root)
+            return;
+        await root.open();
+    }
     async loadProjectPath(url) {
         const pre_time = Date.now();
         const domain_array = window.location.href.split('/');
@@ -390,10 +404,15 @@ class CodebasePage extends Page {
         }
         this.explorer.addRoot(repo);
     }
+    loadProjectRoot(name) {
+        this.hideOtherPages();
+        this.showPage();
+        this.explorer.loadProjectRoot(name);
+    }
     loadProjectPath(url) {
         this.hideOtherPages();
         this.showPage();
-        void this.explorer.loadProjectPath(url);
+        this.explorer.loadProjectPath(url);
     }
 }
 const Codebase = new CodebasePage('code', Content.element, { owner: 'Korwith', name: 'kircic.org' });

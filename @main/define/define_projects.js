@@ -6,7 +6,7 @@ const Project_Data = {
         href: 'https://www.kircic.org/sub/wordle/game.html',
         video: '@main/icon/wordle_preview.mp4',
         featured: 4,
-        category: 'game'
+        category: 'game',
     },
     'Infinisweeper': {
         description: 'An infinite minesweeper sandbox. Just like the original minesweeper, but with proceduraly generating terrain.',
@@ -74,7 +74,8 @@ const Project_Data = {
         href: 'https://finance.kircic.org',
         background: '@main/icon/stocktracker.jpg',
         featured: 1,
-        category: 'app'
+        category: 'app',
+        external_repo: 'stock-watch'
     },
     'Word Hunt': {
         description: 'Swipe the letters together to create words.',
@@ -88,6 +89,7 @@ const Project_Data = {
         href: 'https://files.kircic.org',
         video: '@main/icon/files_preview.mp4',
         featured: 2,
-        category: 'app'
+        category: 'app',
+        external_repo: 'file-manager',
     }
 };
