@@ -1,16 +1,16 @@
 "use strict";
 const AssignedBookmarks = [
-    { icon: '@main/icon/bookmark/blackboard.ico', match: ['blackboard.com'] },
-    { icon: '@main/icon/bookmark/classroom.png', match: ['classroom.google.com', 'google.com/classroom'] },
-    { icon: '@main/icon/bookmark/docs.ico', match: ['docs.google.com', 'google.com/docs'] },
-    { icon: '@main/icon/bookmark/drive.png', match: ['drive.google.com', 'google.com/drive'] },
-    { icon: '@main/icon/bookmark/earth.ico', match: ['earth.google.com', 'google.com/earth'] },
-    { icon: '@main/icon/bookmark/gmail.ico', match: ['mail.google.com', 'google.com/mail', 'gmail.com'] },
-    { icon: '@main/icon/bookmark/maps.ico', match: ['maps.google.com', 'google.com/maps'] },
-    { icon: '@main/icon/bookmark/meet.png', match: ['meet.google.com', 'google.com/meet'] },
-    { icon: '@main/icon/bookmark/remotedesktop.png', match: ['remotedesktop.google.com', 'google.com/remotedesktop'] },
-    { icon: '@main/icon/bookmark/sites.ico', match: ['sites.google.com', 'google.com/sites'] },
-    { icon: '@main/icon/bookmark/slides.ico', match: ['slides.google.com', 'google.com/slides'] },
+    { icon: '/@main/icon/bookmark/blackboard.ico', match: ['blackboard.com'] },
+    { icon: '/@main/icon/bookmark/classroom.png', match: ['classroom.google.com', 'google.com/classroom'] },
+    { icon: '/@main/icon/bookmark/docs.ico', match: ['docs.google.com', 'google.com/docs'] },
+    { icon: '/@main/icon/bookmark/drive.png', match: ['drive.google.com', 'google.com/drive'] },
+    { icon: '/@main/icon/bookmark/earth.ico', match: ['earth.google.com', 'google.com/earth'] },
+    { icon: '/@main/icon/bookmark/gmail.ico', match: ['mail.google.com', 'google.com/mail', 'gmail.com'] },
+    { icon: '/@main/icon/bookmark/maps.ico', match: ['maps.google.com', 'google.com/maps'] },
+    { icon: '/@main/icon/bookmark/meet.png', match: ['meet.google.com', 'google.com/meet'] },
+    { icon: '/@main/icon/bookmark/remotedesktop.png', match: ['remotedesktop.google.com', 'google.com/remotedesktop'] },
+    { icon: '/@main/icon/bookmark/sites.ico', match: ['sites.google.com', 'google.com/sites'] },
+    { icon: '/@main/icon/bookmark/slides.ico', match: ['slides.google.com', 'google.com/slides'] },
 ];
 const SearchInfo = [
     {
