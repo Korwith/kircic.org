@@ -264,6 +264,10 @@ class BookmarksBar {
             let value = e.detail.data;
             this.#settingLinksOpenInNewTab(value);
         }));
+        document.addEventListener('More Saved Searches', ((e) => {
+            let value = e.detail.data;
+            this.#handleSavedSearchLimit(value);
+        }));
     }
     #settingLinksOpenInNewTab(status) {
         let search_list = this.element.querySelectorAll('.search_entry, .bookmark');
@@ -277,6 +281,20 @@ class BookmarksBar {
         for (var i = 0; i < search_list.length; i++) {
             let element = search_list[i];
             this.#handleLinkDeletion(element, true);
+        }
+    }
+    #handleSavedSearchLimit(increase_max) {
+        let max;
+        if (increase_max != null)
+            max = increase_max ? 3 : 1;
+        else
+            max = SettingsData.getItem('More Saved Searches') == true ? 3 : 1;
+        let all_search = this.element.querySelectorAll('.search_entry');
+        if (all_search.length <= max)
+            return;
+        for (var i = 0; i < all_search.length - max; i++) {
+            let search = all_search[i];
+            this.#handleLinkDeletion(search, true);
         }
     }
     addBookmark(url, internal) {
@@ -305,6 +323,7 @@ class BookmarksBar {
             return;
         let search = new SavedSearch(this.element, search_info, search_term, search_link);
         search.element.onclick = (e) => this.#handleLinkDeletion(e);
+        this.#handleSavedSearchLimit();
         if (!internal) {
             this.#initializeSave();
             let search_save = BookmarksData.getItem('search_array');

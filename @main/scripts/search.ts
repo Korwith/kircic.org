@@ -298,9 +298,14 @@ class BookmarksBar {
             let value: boolean = e.detail.data as boolean;
             this.#settingLinksOpenInNewTab(value);
         }) as EventListener)
+
+        document.addEventListener('More Saved Searches', ((e: CustomEvent<SettingsEventData>) => {
+            let value: boolean = e.detail.data as boolean;
+            this.#handleSavedSearchLimit(value);
+        }) as EventListener)
     }
 
-    #settingLinksOpenInNewTab(status: boolean) {
+    #settingLinksOpenInNewTab(status: boolean): void {
         let search_list: NodeListOf<HTMLElement> = this.element.querySelectorAll('.search_entry, .bookmark');
         for (var i = 0; i < search_list.length; i++) {
             let element: HTMLElement = search_list[i];
@@ -308,11 +313,25 @@ class BookmarksBar {
         }
     }
 
-    #deleteSearches() {
+    #deleteSearches(): void {
         let search_list: NodeListOf<HTMLElement> = this.element.querySelectorAll('.search_entry');
         for (var i = 0; i < search_list.length; i++) {
             let element: HTMLElement = search_list[i];
             this.#handleLinkDeletion(element, true);
+        }
+    }
+
+    #handleSavedSearchLimit(increase_max?: boolean): void {
+        let max: number;
+        if (increase_max != null) max = increase_max ? 3 : 1;
+        else max = SettingsData.getItem('More Saved Searches') == true ? 3 : 1;
+
+        let all_search: NodeListOf<HTMLElement> = this.element.querySelectorAll('.search_entry');
+        if (all_search.length <= max) return;
+        
+        for (var i = 0; i < all_search.length - max; i++) {
+            let search: HTMLElement = all_search[i];
+            this.#handleLinkDeletion(search, true);
         }
     }
 
@@ -323,7 +342,7 @@ class BookmarksBar {
         if (url.charAt(url.indexOf('.') + 1) == '') return this.#handleLinkBoxError('invalid');
         url = url.trim();
 
-        let mark = new Bookmark(this.element, { link: url }, this);
+        let mark: Bookmark = new Bookmark(this.element, { link: url }, this);
         mark.element.onclick = (e) => this.#handleLinkDeletion(e);
         this.link_box.innerHTML = '&nbsp';
         this.link_box.classList.add('empty');
@@ -341,7 +360,8 @@ class BookmarksBar {
 
         let search = new SavedSearch(this.element, search_info, search_term, search_link)
         search.element.onclick = (e) => this.#handleLinkDeletion(e);
-
+        this.#handleSavedSearchLimit();
+        
         if (!internal) {
             this.#initializeSave();
             let search_save: SearchEntrySave[] = BookmarksData.getItem('search_array') as SearchEntrySave[];

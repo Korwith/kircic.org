@@ -4,6 +4,7 @@ const DefaultSettings = {
     'Hide Bookmarks': false,
     'Save Last Search': true,
     'Open New Tab': false,
+    'More Saved Searches': false,
 };
 class SettingsEntry {
     save;

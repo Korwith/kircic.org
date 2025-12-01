@@ -1,11 +1,13 @@
 type SettingsEventData = {data: string|boolean|null};
 type SettingType = 'switch' | 'color';
+type ValidSetting = 'Page Color' | 'Hide Bookmarks' | 'Save Last Search' | 'Open New Tab' | 'More Saved Searches'
 
-const DefaultSettings: Record<string, string | boolean> = {
+const DefaultSettings: Record<ValidSetting, string | boolean> = {
     'Page Color': '#0c3365',
     'Hide Bookmarks': false,
     'Save Last Search': true,
     'Open New Tab': false,
+    'More Saved Searches': false,
 }
 
 class SettingsEntry {
@@ -17,7 +19,7 @@ class SettingsEntry {
     color?: HTMLElement;
     name: string;
 
-    constructor(parent: HTMLElement, name: string, type: SettingType) {
+    constructor(parent: HTMLElement, name: ValidSetting, type: SettingType) {
         this.save = new StorageHandler('settings');
         this.save.initializeKeys(DefaultSettings);
 

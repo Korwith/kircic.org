@@ -166,6 +166,7 @@ new SidebarBreak(SettingsPane.element);
 new TextSubheader(SettingsPane.element, 'Search');
 const HideBookmarks = new SettingsEntry(SettingsPane.element, 'Hide Bookmarks', 'switch');
 const SaveLastSearch = new SettingsEntry(SettingsPane.element, 'Save Last Search', 'switch');
+const MoreSavedSearches = new SettingsEntry(SettingsPane.element, 'More Saved Searches', 'switch');
 const OpenNewTab = new SettingsEntry(SettingsPane.element, 'Open New Tab', 'switch');
 
 const CommitChange: LastCommitEntry = new LastCommitEntry(SettingsPane.element);
