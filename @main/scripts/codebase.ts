@@ -438,8 +438,8 @@ class CodebasePage extends Page {
     explorer_pane: GlassPane;
     explorer: FileExplorer;
 
-    constructor(name: string, parent: HTMLElement, repo: GitHubRepo) {
-        super(name, parent);
+    constructor(parent: HTMLElement, repo: GitHubRepo) {
+        super('codebase', parent);
         this.main_repo = repo;
 
         this.sidebar_pane = new GlassPane(this.element, { width: '280px', height: '100%', overflowY: 'auto' });
@@ -483,19 +483,18 @@ class CodebasePage extends Page {
     }
 
     loadProjectRoot(name: string): void {
-        this.hideOtherPages();
-        this.showPage();
+        this.repo_queue = [];
+        ManagePages.showPage('codebase');
         this.explorer.loadProjectRoot(name);
     }
 
     loadProjectPath(url: string): void {
-        this.hideOtherPages();
-        this.showPage();
+        ManagePages.showPage('codebase');
         this.explorer.loadProjectPath(url);
     }
 }
 
-const Codebase = new CodebasePage('code', Content.element, { owner: 'Korwith', name: 'kircic.org' });
+const Codebase = new CodebasePage(Content.element, { owner: 'Korwith', name: 'kircic.org' });
 Codebase.addRepo({ owner: 'Korwith', name: 'snap.red' });
 Codebase.addRepo({ owner: 'Korwith', name: 'file-manager' });
 Codebase.addRepo({ owner: 'Korwith', name: 'stock-watch' });

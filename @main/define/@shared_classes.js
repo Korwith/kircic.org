@@ -2,7 +2,6 @@
 const SettingsData = new StorageHandler('settings');
 const BookmarksData = new StorageHandler('bookmarks');
 const ManageCSS = new CSSManagement();
-const PageIndex = {};
 // Website Stuff
 class BlurredImageBackground {
     element;
@@ -70,29 +69,6 @@ class Pane {
     }
     setHidden(status) {
         this.element.classList.toggle('hide', status);
-    }
-}
-class Page extends Pane {
-    constructor(name, parent) {
-        super(parent, CSS_FullSize);
-        this.element.classList.add('page');
-        this.element.setAttribute('page', name);
-        PageIndex[name] = this;
-    }
-    showPage() {
-        this.element.classList.add('show');
-    }
-    hidePage() {
-        this.element.classList.remove('show');
-    }
-    hideOtherPages() {
-        let pages = document.querySelectorAll('.page');
-        for (var i = 0; i < pages.length; i++) {
-            let found_page = pages[i];
-            if (found_page == this.element)
-                continue;
-            found_page.classList.remove('show');
-        }
     }
 }
 class ScrollPane extends Pane {

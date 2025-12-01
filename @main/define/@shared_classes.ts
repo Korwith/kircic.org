@@ -1,12 +1,6 @@
-interface PageDictionary {
-    [key: string]: Page;
-}
-
 const SettingsData: StorageHandler = new StorageHandler('settings');
 const BookmarksData: StorageHandler = new StorageHandler('bookmarks');
 const ManageCSS: CSSManagement = new CSSManagement();
-const PageIndex: PageDictionary = {};
-
 
 // Website Stuff
 class BlurredImageBackground {
@@ -79,32 +73,6 @@ class Pane {
 
     setHidden(status: boolean) {
         this.element.classList.toggle('hide', status);
-    }
-}
-
-class Page extends Pane {
-    constructor(name: string, parent: HTMLElement) {
-        super(parent, CSS_FullSize);
-        this.element.classList.add('page');
-        this.element.setAttribute('page', name);
-        PageIndex[name] = this;
-    }
-
-    showPage() {
-        this.element.classList.add('show');
-    }
-
-    hidePage() {
-        this.element.classList.remove('show');
-    }
-
-    hideOtherPages() {
-        let pages: NodeListOf<HTMLElement> = document.querySelectorAll('.page');
-        for (var i = 0; i < pages.length; i++) {
-            let found_page: HTMLElement = pages[i];
-            if (found_page == this.element) continue;
-            found_page.classList.remove('show');
-        }
     }
 }
 

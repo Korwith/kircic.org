@@ -47,11 +47,7 @@ class SidebarButton {
             return;
         if (!this.link_info.link)
             return;
-        let page = PageIndex[this.link_info.link.replace('#', '')];
-        if (!page)
-            return;
-        page.hideOtherPages();
-        page.showPage();
+        ManagePages.showPage(this.link_info.link.replace('#', ''));
         if (window.innerWidth < 767 && document.body.classList.contains('shift'))
             document.body.classList.remove('shift');
     }
@@ -127,7 +123,7 @@ const InternalPagePane = new SidebarInnerPane(InternalPageHolder.element);
 new TextSubheader(InternalPagePane.element, 'Navigation');
 const HomeLink = new SidebarButton(InternalPagePane.element, { name: 'Home', link: '#home' }, { icon: '@main/icon/home.svg', size: '80%' });
 const ProjectsLink = new SidebarButton(InternalPagePane.element, { name: 'Projects', link: '#projects' }, { icon: '@main/icon/cube.svg', size: '90%' });
-const CodeLink = new SidebarButton(InternalPagePane.element, { name: 'Codebase', link: '#code' }, { icon: '@main/icon/code.svg', size: '92%' });
+const CodeLink = new SidebarButton(InternalPagePane.element, { name: 'Codebase', link: '#codebase' }, { icon: '@main/icon/code.svg', size: '92%' });
 const SearchLink = new SidebarButton(InternalPagePane.element, { name: 'Search', link: '#search' }, { icon: '@main/icon/search.svg', size: '90%' });
 new SidebarBreak(InternalPageHolder.element);
 const SettingsPane = new SidebarInnerPane(InternalPageHolder.element);
