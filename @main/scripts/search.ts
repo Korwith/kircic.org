@@ -105,7 +105,7 @@ class SavedSearch {
         this.element = document.createElement('a');
         this.element.classList.add('darkglass');
         this.element.classList.add('search_entry');
-        this.element.style.setProperty('--icon-image', `url('/${search_info.image.icon}')`);
+        this.element.style.setProperty('--icon-image', `url('${search_info.image.icon}')`);
         this.element.style.setProperty('--icon-size', '100%');
 
         let target_attribute: string = parent.classList.contains('deletion') ? 'fakehref' : 'href';
