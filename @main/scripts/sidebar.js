@@ -128,13 +128,15 @@ const SearchLink = new SidebarButton(InternalPagePane.element, { name: 'Search',
 new SidebarBreak(InternalPageHolder.element);
 const SettingsPane = new SidebarInnerPane(InternalPageHolder.element);
 new TextSubheader(SettingsPane.element, 'Customization');
-const PageColor = new SettingsEntry(SettingsPane.element, 'Page Color', 'color');
+const PageColor = new ColorSettingsEntry(SettingsPane.element, 'Page Color');
+// Page Background Selector
+const PageBackground = new ImageSettingsEntry(SettingsPane.element, 'Background');
 new SidebarBreak(SettingsPane.element);
 new TextSubheader(SettingsPane.element, 'Search');
-const HideBookmarks = new SettingsEntry(SettingsPane.element, 'Hide Bookmarks', 'switch');
-const SaveLastSearch = new SettingsEntry(SettingsPane.element, 'Save Last Search', 'switch');
-const MoreSavedSearches = new SettingsEntry(SettingsPane.element, 'More Saved Searches', 'switch');
-const OpenNewTab = new SettingsEntry(SettingsPane.element, 'Open New Tab', 'switch');
+const HideBookmarks = new SwitchSettingsEntry(SettingsPane.element, 'Hide Bookmarks');
+const SaveLastSearch = new SwitchSettingsEntry(SettingsPane.element, 'Save Last Search');
+const MoreSavedSearches = new SwitchSettingsEntry(SettingsPane.element, 'More Saved Searches');
+const OpenNewTab = new SwitchSettingsEntry(SettingsPane.element, 'Open New Tab');
 const CommitChange = new LastCommitEntry(SettingsPane.element);
 const SideFooter = new SidebarFooter(Sidebar.element);
 const CommitCountEntry = new SidebarFooterEntry(SideFooter.element, 'commits');

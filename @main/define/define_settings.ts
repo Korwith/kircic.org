@@ -1,9 +1,10 @@
-type SettingsEventData = {data: string|boolean|null};
-type SettingType = 'switch' | 'color';
-type ValidSetting = 'Page Color' | 'Hide Bookmarks' | 'Save Last Search' | 'Open New Tab' | 'More Saved Searches'
+type SettingsEventData = { data: string | boolean | null };
+type SettingType = 'switch' | 'color' | 'image';
+type ValidSetting = 'Page Color' | 'Hide Bookmarks' | 'Save Last Search' | 'Open New Tab' | 'More Saved Searches' | 'Background'
 
 const DefaultSettings: Record<ValidSetting, string | boolean> = {
     'Page Color': '#0c3365',
+    'Background': '/icon/blurred.svg',
     'Hide Bookmarks': false,
     'Save Last Search': true,
     'Open New Tab': false,
@@ -11,32 +12,24 @@ const DefaultSettings: Record<ValidSetting, string | boolean> = {
 }
 
 class SettingsEntry {
-    private save: StorageHandler;
-    private event_detail: SettingsEventData = {data: null};
+    save: StorageHandler;
+    event_detail: SettingsEventData;
 
     element: HTMLElement;
-    switch?: HTMLElement;
-    color?: HTMLElement;
     name: string;
 
-    constructor(parent: HTMLElement, name: ValidSetting, type: SettingType) {
+    constructor(parent: HTMLElement, name: ValidSetting) {
         this.save = new StorageHandler('settings');
         this.save.initializeKeys(DefaultSettings);
+        this.event_detail = { data: null };
 
         this.name = name;
         this.element = this.#makeElement();
         this.element.textContent = name;
         parent.appendChild(this.element);
-
-        if (type == 'switch') {
-            this.switch = this.#makeSwitch();
-        }
-        if (type == 'color') {
-            this.color = this.#makeColor();
-        }
     }
 
-    #dispatchChange(): void {
+    dispatchChange(): void {
         let event: CustomEvent<SettingsEventData> = new CustomEvent<SettingsEventData>(this.name, {
             detail: this.event_detail,
             bubbles: true,
@@ -50,25 +43,14 @@ class SettingsEntry {
         block.classList.add('settings_entry');
         return block;
     }
+}
 
-    #makeSwitch(): HTMLElement {
-        let previous_save: unknown = this.save.getItem(this.name);
-        let toggle = document.createElement('div');
-        toggle.classList.add('darkglass', 'settings_switch');
-        toggle.classList.toggle('active', previous_save ? true : false);
-        toggle.onclick = () => {
-            let status: boolean = toggle.classList.toggle('active');
-            this.event_detail.data = status;
-            this.#dispatchChange();
-            this.save.setItem(this.name, status);
-        }
-        this.element.appendChild(toggle);
+class ColorSettingsEntry extends SettingsEntry {
+    color: HTMLElement;
 
-        let dot = document.createElement('div');
-        dot.classList.add('darkglass');
-        dot.classList.add('settings_dot');
-        toggle.appendChild(dot);
-        return toggle;
+    constructor(parent: HTMLElement, name: ValidSetting) {
+        super(parent, name);
+        this.color = this.#makeColor();
     }
 
     #makeColor(): HTMLElement {
@@ -81,7 +63,7 @@ class SettingsEntry {
 
         let setColor = () => {
             this.event_detail.data = input.value;
-            this.#dispatchChange();
+            this.dispatchChange();
         }
         input.addEventListener('input', () => {
             setColor();
@@ -96,5 +78,43 @@ class SettingsEntry {
 
         this.element.appendChild(picker);
         return picker;
+    }
+}
+
+class SwitchSettingsEntry extends SettingsEntry {
+    switch: HTMLElement;
+
+    constructor(parent: HTMLElement, name: ValidSetting) {
+        super(parent, name);
+        this.switch = this.#makeSwitch();
+    }
+
+    #makeSwitch(): HTMLElement {
+        let previous_save: unknown = this.save.getItem(this.name);
+        let toggle = document.createElement('div');
+        toggle.classList.add('darkglass', 'settings_switch');
+        toggle.classList.toggle('active', previous_save ? true : false);
+        toggle.onclick = () => {
+            let status: boolean = toggle.classList.toggle('active');
+            this.event_detail.data = status;
+            this.dispatchChange();
+            this.save.setItem(this.name, status);
+        }
+        this.element.appendChild(toggle);
+
+        let dot = document.createElement('div');
+        dot.classList.add('darkglass');
+        dot.classList.add('settings_dot');
+        toggle.appendChild(dot);
+        return toggle;
+    }
+}
+
+class ImageSettingsEntry extends SettingsEntry {
+    images: HTMLElement[];
+
+    constructor(parent: HTMLElement, name: ValidSetting) {
+        super(parent, name);
+        this.images = [];
     }
 }
