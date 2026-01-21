@@ -197,5 +197,5 @@ Featured_List.createProjectList(Project_Data, null, true);
 // Copyrights
 const CopyrightPane = new GlassPane(Home.element, CSS_FullWidthFitHeight);
 CopyrightPane.element.classList.add('nopadding');
-new TextSubheader(CopyrightPane.element, '© Copyright (2022 - 2025)');
+new TextSubheader(CopyrightPane.element, '© Copyright (2022 - 2026)');
 Home.showPage();
