@@ -146,7 +146,7 @@ class HeaderPane extends GlassPane {
 
 class ContentPane extends ScrollPane {
     constructor() {
-        super('y', document.body, { width: 'calc(100dvw - 310px)', height: 'calc(100dvh - 80px)', top: '80px', left: '300px', transition: 'width 0.5s, left 0.5s, transform 0.5s'});
+        super('y', document.body, { width: 'calc(100dvw - 310px)', height: 'calc(100dvh - 90px)', top: '80px', left: '300px', transition: 'width 0.5s, left 0.5s, transform 0.5s'});
         ManageCSS.addDesktopEntry(this.element, {width: 'calc(100dvw - 20px)', left: '10px'}, 'body.shift');
         ManageCSS.addMobileEntry(this.element, {width: 'calc(100dvw - 20px)', left: '10px'}, 'body')
         ManageCSS.addMobileEntry(this.element, {transform: 'translateX(calc(100% + 10px))'}, 'body.shift')
