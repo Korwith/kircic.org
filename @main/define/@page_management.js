@@ -5,6 +5,9 @@ class Page extends Pane {
         this.element.classList.add('page');
         this.element.setAttribute('page', name);
         ManagePages.registerPage(name, this);
+        if (ManagePages.getPageCount() == 1) {
+            this.showPage();
+        }
     }
     showPage() {
         this.element.classList.add('show');
@@ -23,6 +26,9 @@ class PageManagement {
     }
     getPage(name) {
         return this.PageIndex[name];
+    }
+    getPageCount() {
+        return Object.keys(this.PageIndex).length;
     }
     showPage(name) {
         let keys = Object.keys(this.PageIndex);
