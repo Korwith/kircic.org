@@ -71,7 +71,7 @@ const Project_Data = {
     'Stock Tracker': {
         description: 'Provides real time stock graphs and detailed statistics about the market.',
         image: { icon: '@main/icon/stock.svg', size: '90%' },
-        href: 'https://finance.kircic.org',
+        href: 'https://finance.kircic.org/#news',
         background: '@main/icon/stocktracker.jpg',
         featured: 1,
         category: 'app',
