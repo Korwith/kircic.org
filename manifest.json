@@ -1,0 +1,11 @@
+{
+  "name": "kircic.org",
+  "short_name": "kircic.org",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000001",
+  "theme_color": "#000001",
+  "icons": [
+    { "src": "/@main/icon/favicon.png", "sizes": "any", "type": "image/png" }
+  ]
+}

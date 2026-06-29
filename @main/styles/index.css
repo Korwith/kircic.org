@@ -455,3 +455,26 @@ button.shadowglass:hover {
     text-shadow: 2px 2px 4px black;
     user-select: none;
 }
+
+.header {
+    top: calc(10px + env(safe-area-inset-top)) !important;
+}
+
+.sidebar {
+    top: calc(10px + env(safe-area-inset-top)) !important;
+    height: calc(100dvh - 20px - env(safe-area-inset-top) - env(safe-area-inset-bottom)) !important;
+    padding-bottom: calc(35px + env(safe-area-inset-bottom)) !important;
+}
+
+.content {
+    top: calc(80px + env(safe-area-inset-top)) !important;
+    height: calc(100dvh - 90px - env(safe-area-inset-top) - env(safe-area-inset-bottom)) !important;
+    padding-bottom: env(safe-area-inset-bottom);
+}
+
+@media (max-width: 767px) {
+    .sidebar {
+        top: calc(80px + env(safe-area-inset-top)) !important;
+        height: calc(100dvh - 90px - env(safe-area-inset-top) - env(safe-area-inset-bottom)) !important;
+    }
+}
