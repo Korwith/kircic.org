@@ -380,7 +380,6 @@ class FileExplorer {
         }
 
         if (target_file) {
-            this.sidebar.scrollIntoView({ behavior: 'auto', block: 'center', inline: 'center' });
             MainNotificationHolder.notify(`Operation completed! (${Date.now() - pre_time}ms)`, 'info');
         }
     }
@@ -462,7 +461,7 @@ class CodebasePage extends Page {
     }
 
     showPage(): void {
-        this.element.classList.add('show');
+        super.showPage();
         if (this.loaded) return;
 
         const main_folder = this.explorer.addRoot(this.main_repo);

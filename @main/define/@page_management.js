@@ -10,6 +10,8 @@ class Page extends Pane {
         }
     }
     showPage() {
+        if (this.element.parentElement)
+            this.element.parentElement.scrollTop = 0;
         this.element.classList.add('show');
     }
     hidePage() {
