@@ -31,6 +31,7 @@ const Language_Icons: IconEntry[] = [
     { icon: '@main/icon/certification2.png', size: '88%' },
     { icon: '@main/icon/certification3.png', size: '88%' },
     { icon: '@main/icon/certification4.png', size: '88%' },
+    { icon: '@main/icon/hood.webp', size: '70%' },
 ];
 
 const OS_Icons: IconEntry[] = [
@@ -40,6 +41,7 @@ const OS_Icons: IconEntry[] = [
     { icon: '@main/icon/kubuntu.svg' },
     { icon: '@main/icon/opensuse.svg' },
     { icon: '@main/icon/fedora.svg' },
+    { icon: '@main/icon/kali.svg' },
 ];
 
 const Social_Icons: SocialEntryList = {
