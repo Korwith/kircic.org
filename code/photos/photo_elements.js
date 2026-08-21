@@ -4,6 +4,7 @@
 class PhotoRow extends PageElementScroll {
     segment;
     frames = [];
+    show = 5;
     constructor(segment) {
         super('x');
         this.segment = segment;
@@ -27,7 +28,7 @@ class PhotoRow extends PageElementScroll {
         const count = Math.floor(bounds.width / 210);
         for (const i in this.frames) {
             const frame = this.frames[i];
-            frame.toggle(parseInt(i) < count || parseInt(i) < 4);
+            frame.toggle(parseInt(i) < count || parseInt(i) < this.show);
         }
         this.element.classList.toggle('overflowing', this.element.scrollWidth - 1 > Math.ceil(bounds.width));
     }

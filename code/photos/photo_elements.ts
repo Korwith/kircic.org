@@ -3,6 +3,7 @@
 class PhotoRow extends PageElementScroll {
     segment: PhotosSegment;
     frames: PhotoFrame[] = [];
+    show: number = 5;
 
     constructor(segment: PhotosSegment) {
         super('x');
@@ -31,7 +32,7 @@ class PhotoRow extends PageElementScroll {
 
         for (const i in this.frames) {
             const frame: PhotoFrame = this.frames[i];
-            frame.toggle(parseInt(i) < count || parseInt(i) < 4);
+            frame.toggle(parseInt(i) < count || parseInt(i) < this.show);
         }
         this.element.classList.toggle('overflowing', this.element.scrollWidth - 1 > Math.ceil(bounds.width));
     }
