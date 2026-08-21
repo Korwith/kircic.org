@@ -1,3 +1,10 @@
 
 files/index.html
 files/index.css
+
+# Compiled TypeScript output
+code/**/*.js
+code/*.js
+!code/file-icons/
+!code/file-icons/**
+
