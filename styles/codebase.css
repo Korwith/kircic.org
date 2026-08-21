@@ -1,0 +1,226 @@
+.content .segment.codebase_header {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 5px;
+    align-items: center;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 35px;
+    padding: 5px;
+    min-height: unset;
+}
+
+.content .segment.codebase_header button {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    height: 25px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.content .segment.codebase_header button.root::after {
+    content: '';
+    display: block;
+    height: 18px;
+    width: 18px;
+    background-size: cover;
+    background-image: url(../icon/favicon.png);
+    order: -1;
+}
+
+/* the vertical file explorer (sidebar) and all the elements inside of it */
+.content .segment.codebase_sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: calc(100% - 45px);
+    min-height: unset;
+    width: 280px;
+    overflow-y: auto;
+}
+
+.content .segment.codebase_sidebar .entry {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+}
+
+.content .segment.codebase_sidebar .entry button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: fit-content;
+    height: 30px;
+    gap: 4px;
+    padding-right: 10px;
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0);
+    transition: border 0.15s;
+}
+
+.content .segment.codebase_sidebar .entry button:hover {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.content .segment.codebase_sidebar .entry button::before {
+    opacity: 0;
+    transition: opacity 0.15s;
+}
+
+.content .segment.codebase_sidebar .entry button:hover::before {
+    opacity: 1;
+}
+
+.content .segment.codebase_sidebar .entry button::after {
+    content: '';
+    height: 30px;
+    width: 30px;
+    order: -1;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.content .segment.codebase_sidebar .entry.folder > button::after {
+    background-image: url(../icon/folder.svg);
+    background-size: 65%;
+}
+
+.content .segment.codebase_sidebar .entry.folder .children {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+    overflow-y: auto;
+    border-left: 2px solid rgba(255, 255, 255, 0.1)
+}
+
+.content .segment.codebase_sidebar .entry.folder .children.hidden {
+    display: none;
+}
+
+/* everything in the main element of the codebase */
+/* contains large labels for the elements */
+.content .segment.codebase_main {
+    display: flex;
+    flex-direction: row;
+    align-content: flex-start;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: calc(100% - 290px);
+    height: calc(100% - 45px);
+    min-height: unset;
+    overflow-y: auto;
+}
+
+.content .segment.codebase_main:empty::after {
+    content: 'No folder is currently selected.';
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: fit-content;
+    width: fit-content;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.content .segment.codebase_main.loading:empty::after {
+    content: 'Loading...';
+    display: none;
+}
+
+.content .segment.codebase_main .entry {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 90px;
+    height: 90px;
+    cursor: pointer;
+    transition: background-color 0.15s;
+}
+
+.content .segment.codebase_main .entry:hover {
+    background-color: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.content .segment.codebase_main .entry::before {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 65px;
+    height: 65px;
+    background-position: center;
+    background-repeat: no-repeat;
+    font-size: 55px;
+}
+
+.content .segment.codebase_main .entry.folder {
+    order: -1;
+}
+
+.content .segment.codebase_main .entry.folder::before {
+    background-size: 80%;
+    background-image: url(../icon/folder.svg);
+}
+
+.content .segment.codebase_main .entry.file.none::before {
+    background-size: 70%;
+    background-image: url(../icon/file.svg);
+}
+
+.content .segment.codebase_main .entry::after {
+    content: attr(name);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 25px;
+    font-size: 0.8rem;
+}
+
+/* global file icon stuff for the entries */
+.content .segment.codebase_sidebar .entry.folder {
+    order: -1;
+}
+
+.content .segment.codebase_sidebar .entry:not(.has_icon):not(.folder) button::after {
+    background-image: url(../icon/file.svg);
+    background-size: 70%;
+}
+
+.content .segment.codebase_main .entry:not(.has_icon)::before {
+    content: '';
+}
+
+@media screen and (max-width: 767px) {
+
+    .content .segment.codebase_header,
+    .content .segment.codebase_sidebar,
+    .content .segment.codebase_main {
+        position: unset;
+    }
+
+    .content .segment.codebase_sidebar,
+    .content .segment.codebase_main {
+        flex: 1;
+        width: 100%;
+    }
+}

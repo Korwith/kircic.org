@@ -1,0 +1,80 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    padding-bottom: 10px;
+    overflow-y: auto;
+}
+
+.page:not(.show) {
+    display: none;
+}
+
+.content .segment {
+    display: flex;
+    flex-shrink: 0;
+    gap: 10px;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    min-height: fit-content;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    user-select: none;
+}
+
+.content .segment.hide {
+    display: none;
+}
+
+.content .segment.scroll_x {
+    overflow-x: auto;
+}
+
+.content .segment.scroll_y {
+    overflow-y: auto;
+}
+
+.content .segment.no_padding {
+    padding: 0;
+}
+
+.content .segment > h1 {
+    text-align: center;
+    padding: 0;
+    margin: 0;
+}
+
+.content .segment > span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    height: fit-content;
+    text-align: center;
+    font-weight: 700;
+}
+
+.content .segment > a:not(.social) {
+    display: flex;
+    font-weight: 700;
+    width: fit-content;
+    gap: 4px;
+    padding: 4px;
+    padding-left: 8px;
+    text-decoration: none;
+}
+
+.content .segment > a:not(.social)::after {
+    content: '';
+    height: 20px;
+    aspect-ratio: 1/1;
+    background-size: cover;
+    background-image: url(../icon/arrow.svg);
+    transform: rotate(90deg);
+}

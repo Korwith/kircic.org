@@ -1,0 +1,89 @@
+body>.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 290px;
+    margin: 10px;
+    width: calc(100vw - 310px);
+    height: 60px;
+    transition: left 0.5s, width 0.5s;
+}
+
+body.shift>.header {
+    left: 0;
+    width: calc(100vw - 20px);
+}
+
+body>.header .segment {
+    height: 100%;
+    width: fit-content;
+}
+
+body>.header button {
+    aspect-ratio: 1/1;
+    height: calc(100% - 10px);
+    margin: 5px;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+}
+
+body>.header button.sidebar_button {
+    background-image: url(../icon/lines.svg);
+}
+
+body>.header .clock {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    height: 100%;
+    padding-right: 10px;
+    padding-left: 10px;
+    width: fit-content;
+}
+
+body>.header .clock time {
+    position: relative;
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    justify-content: right;
+    width: fit-content;
+    font-weight: 700;
+    text-wrap: nowrap;
+    font-size: 0.95rem;
+    opacity: 0.8;
+    user-select: none;
+}
+
+body>.header .clock time::after {
+    content: '';
+    height: 100%;
+    aspect-ratio: 1/1;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+body>.header .clock time.date::after {
+    background-image: url(../icon/calender.svg);
+    background-size: 85%;
+}
+
+body>.header .clock time.time::after {
+    background-image: url(../icon/clock.svg);
+    background-size: 84%;
+}
+
+@media screen and (max-width: 767px) {
+    body>.header {
+        left: 0;
+        width: calc(100vw - 20px);
+    }
+}

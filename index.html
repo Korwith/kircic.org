@@ -1,57 +1,98 @@
-<html>
-    <head>
-        <title>kircic.org</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-        <meta name="apple-mobile-web-app-title" content="kircic.org">
-        <link rel="apple-touch-icon" href="/@main/icon/favicon.png">
-        <link rel="manifest" href="/manifest.json">
-        <meta name="author" content="kircic">
-        <meta name="description" content="Development portfolio.">
-        <meta property="og:title" content="kircic.org">
-        <meta property="og:type" content="website">
-        <meta property="og:url" content="https://www.kircic.org">
-        <meta property="og:image" content="https://www.kircic.org/@main/icon/favicon.png">
-        <meta property="og:description" content="Web based file explorer.">
-        <meta name="theme-color" content="#000001">
-        <meta name="darkreader-lock">
+<!DOCTYPE html>
+<html lang="en">
 
-        <link rel="stylesheet" href="@main/styles/notification.css">
-        <link rel="stylesheet" href="@main/styles/sidebar.css">
-        <link rel="stylesheet" href="@main/styles/social.css">
-        <link rel="stylesheet" href="@main/styles/index.css">
-        <link rel="stylesheet" href="@main/styles/search.css">
-        <link rel="stylesheet" href="@main/styles/codebase.css">
-        <link rel="stylesheet" href="@main/scripts/file-icons-js/css/style.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/vs2015.css">
-        <link rel="icon" type="image/x-icon" href="https://www.kircic.org/@main/icon/favicon.png">
-    </head>
+<head>
+    <!-- CSS -->
+    <title>kircic.org</title>
 
-    <body>
-        <!-- Dependencies -->
-        <script src="@main/define/@web_saving.js"></script>
-        <script src="@main/define/@css_management.js"></script>
-        <script src="@main/define/@shared_classes.js"></script>
-        <script src="@main/define/@page_management.js"></script>
-        <script src="@main/define/define_projects.js"></script>
-        <script src="@main/define/define_icons.js"></script>
-        <script src="@main/define/define_search.js"></script>
-        <script src="@main/define/define_notifications.js"></script>
-        <script src="@main/define/define_statistics.js"></script>
-        <script src="@main/define/define_settings.js"></script>
+    <!-- Favicon -->
+    <meta property="og:image" content="https://kircic.org/icon/favicon.png">
 
-        <!-- Imported -->
-        <script type="module" src="@main/scripts/file-icons-js/dist/file-icons.mjs"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+    <!-- Metadata -->
+    <meta charset="UTF-8">
+    <meta name="description" content="Development Portfolio">
+    <meta name="keywords" content="development, portfolio, kircic">
+    <meta name="author" content="kircic">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#000001">
+    <meta property="og:title" content="kircic.org">
+    <meta property="og:description" content="Development Portfolio">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://kircic.org">
+    <meta property="og:site_name" content="snap.red">
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="kircic.org">
+    <meta name="twitter:description" content="Development Portfolio">
+    <meta name="twitter:image:alt" content="Development Portfolio">
+    <meta name="darkreader-lock">
 
-        <!-- Main -->
-        <script src="@main/scripts/home.js"></script>
-        <script src="@main/scripts/sidebar.js"></script>
-        <script src="@main/scripts/projects.js"></script>
-        <script src="@main/scripts/codebase.js"></script>
-        <script src="@main/scripts/search.js"></script>
-        <script src="@main/scripts/pageload.js"></script>
-    </body>
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/index.css">
+    <link rel="stylesheet" href="styles/glass.css">
+    <link rel="stylesheet" href="styles/icons.css">
+    <link rel="stylesheet" href="styles/header.css">
+    <link rel="stylesheet" href="styles/sidebar.css">
+    <link rel="stylesheet" href="styles/page.css">
+    <link rel="stylesheet" href="styles/photos.css">
+    <link rel="stylesheet" href="styles/projects.css">
+    <link rel="stylesheet" href="styles/home.css">
+    <link rel="stylesheet" href="styles/content.css">
+    <link rel="stylesheet" href="styles/search.css">
+    <link rel="stylesheet" href="styles/codebase.css">
+    <link rel="stylesheet" href="styles/notifications.css">
+
+    <!-- File Icon Styles -->
+    <link rel="stylesheet" href="code/file-icons/css/style.css">
+</head>
+
+<body>
+    <!-- Define -->
+    <script src="code/define/elements.js"></script>
+    <script src="code/define/icon_definitions.js"></script>
+    <script src="code/define/icon_elements.js"></script>
+    <script src="code/define/glass.js"></script>
+    <script src="code/define/page.js"></script>
+    <script src="code/define/statistics.js"></script>
+
+    <!-- Page Elements -->
+    <script src="code/functionality/header.js"></script>
+    <script src="code/functionality/sidebar.js"></script>
+    
+    <!-- (snap.red) Photos and Home Page -->
+    <script src="https://snap.red/code/data.js"></script>
+    <script src="code/photos/photo_definitions.js"></script>
+    <script src="code/photos/photo_elements.js"></script>
+    <script src="code/functionality/home.js"></script>
+
+    <!-- Project Page -->
+    <script src="code/projects/project_definitions.js"></script>
+    <script src="code/projects/project_elements.js"></script>
+    <script src="code/projects/project_page.js"></script>
+
+    <!-- Bookmarks (abstract) -->
+    <script src="code/bookmarks/bookmark_elements.js"></script>
+
+    <!-- Search Page -->
+    <script src="code/search/search_definitions.js"></script>
+    <script src="code/search/search_elements.js"></script>
+    <script src="code/search/search_page.js"></script>
+
+    <!-- Codebase Page -->
+    <script src="code/file-icons/index.js"></script>
+    <script src="code/codebase/codebase_definitions.js"></script>
+    <script src="code/codebase/codebase_page.js"></script>
+    <script src="code/codebase/codebase_elements.js"></script>
+
+    <!-- Content -->
+    <script src="code/functionality/content.js"></script>
+    <script src="code/functionality/manager.js"></script>
+
+    <!-- Notifications -->
+    <script src="code/notifications/notifications.js"></script>
+
+    <!-- Run -->
+    <script src="code/run.js"></script>
+</body>
+
 </html>

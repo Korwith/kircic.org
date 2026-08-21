@@ -1,0 +1,73 @@
+.glass {
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-sizing: border-box;
+    border-radius: 8px;
+    overflow: hidden;
+    outline: none;
+}
+
+.glass:focus-visible {
+    border: 1px solid white !important;
+}
+
+.glass.dark {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.glass.darker {
+    background-color: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+.glass.gradient {
+    background-color: unset;
+}
+
+.glass.gradient.hoverchange:hover {
+    border: 1px solid rgba(255, 255, 255, 0.05);;
+    transition: border 0.15s;
+}
+
+.glass.gradient::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0));
+    transition: filter 0.15s;
+}
+
+.glass.gradient.hoverchange:hover::before {
+    filter: invert(0.5);
+}
+
+.glass.stripes {
+    animation-name: breathe;
+    animation-duration: 60s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    background: repeating-linear-gradient(45deg,
+            transparent,
+            transparent 10px,
+            rgba(255, 255, 255, 0.06) 10px,
+            rgba(255, 255, 255, 0.06) 20px),
+        linear-gradient(to bottom,
+            rgba(255, 255, 255, 0.05),
+            rgba(255, 255, 255, 0.05));
+    background-size: 85px 100%;
+}
+
+@keyframes breathe {
+    0% {
+        background-position-x: 0;
+    }
+
+    100% {
+        background-position-x: 100vw;
+    }
+}

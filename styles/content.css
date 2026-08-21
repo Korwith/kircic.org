@@ -1,0 +1,27 @@
+body>.content {
+    position: fixed;
+    left: 290px;
+    top: 70px;
+    margin: 10px;
+    width: calc(100vw - 310px);
+    height: calc(100vh - 90px);
+    box-sizing: border-box;
+    transition: left 0.5s, width 0.5s;
+}
+
+body.shift>.content {
+    left: 0;
+    width: calc(100vw - 20px);
+}
+
+@media screen and (max-width: 767px) {
+    body>.content {
+        left: 0;
+        width: calc(100vw - 20px);
+        height: calc(100dvh - 80px);
+    }
+
+    body.shift>.content {
+        left: 100vw;
+    }
+}

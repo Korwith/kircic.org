@@ -1,0 +1,76 @@
+.icon_row {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.content .segment.icon_row {
+    flex-direction: row;
+    min-height: 40px;
+}
+
+.icon_row.block {
+    flex-wrap: wrap;
+    max-width: 90%;
+}
+
+.icon_row i, .icon_row a {
+    position: relative;
+    height: 100%;
+    aspect-ratio: 1/1;
+    background-image: var(--icon-url);
+    background-size: var(--icon-size, 100%);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.icon_row.block i {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    box-sizing: border-box;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: border 0.15s;
+}
+
+.icon_row.block i:hover {
+    border: 2px solid rgba(255, 255, 255, 0.05);
+}
+
+.icon_row.block i:hover::before {
+    filter: invert(0.5);
+}
+
+.icon_row a {
+    border-radius: 8px;
+    overflow: hidden;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: var(--icon-url);
+    background-size: var(--icon-size, 100%);
+}
+
+.icon_row a::before, .icon_row a::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    border-radius: 8px;
+}
+
+.icon_row a::before {
+    background: var(--gradient);
+    z-index: -1;
+}
+
+.icon_row a::after {
+    border: 2px solid rgba(0, 0, 0, 0.5);
+    transition: border 0.15s;
+}
+
+.icon_row a:hover::after {
+    border: 2px solid white;
+}

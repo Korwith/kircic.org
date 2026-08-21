@@ -1,0 +1,114 @@
+.project_holder {
+    display: flex;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.project_holder.scroll_x {
+    overflow-x: auto;
+}
+
+.project_holder.scroll_y {
+    overflow-y: auto;
+}
+
+.project_holder:not(.row) {
+    justify-content: center;
+    min-height: fit-content;
+}
+
+.project_holder.row {
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    padding-top: 0;
+}
+
+.project_holder h1 {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: fit-content;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+}
+
+.project_holder figure {
+    display: flex;
+    flex-direction: column;
+    min-height: 250px;
+    min-width: calc(250px * 4/3);
+    max-height: 250px;
+    max-width: calc(250px * 4/3);
+    margin: 0;
+}
+
+.project_holder figure>div {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    font-weight: 700;
+}
+
+.project_holder figure .top {
+    height: 70px;
+    gap: 5px;
+    padding: 5px;
+}
+
+.project_holder figure .top i {
+    height: calc(100% - 10px);
+    margin: 5px;
+    aspect-ratio: 1/1;
+    background-image: var(--icon-url);
+    background-size: var(--icon-size, 100%);
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.project_holder figure .top span {
+    font-size: 1.5rem;
+}
+
+.project_holder figure .center {
+    flex: 1;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.project_holder figure .bottom {
+    height: 60px;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.15);
+    box-shadow: 0 -4px 8px 0 rgba(0, 0, 0, 0.15);
+}
+
+.project_holder figure .bottom a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    height: 40px;
+    padding-left: 6px;
+    padding-right: 14px;
+    border-radius: 999px;
+    text-decoration: none;
+}
+
+.project_holder figure .bottom a::after {
+    content: '';
+    display: block;
+    height: 100%;
+    aspect-ratio: 1/1;
+    order: -1;
+    background-size: 68%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url(../icon/launch.svg)
+}

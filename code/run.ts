@@ -1,0 +1,1 @@
+const Manager: PageManager = new PageManager();

@@ -1,0 +1,111 @@
+.photo_row {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    height: 200px;
+    padding: 10px;
+    padding-top: 0;
+    box-sizing: border-box;
+    overflow-x: auto;
+}
+
+.photo_row.overflowing {
+    justify-content: flex-start;
+}
+
+.photo_row a {
+    position: relative;
+    display: flex;
+    flex-shrink: 0;
+    height: 100%;
+    aspect-ratio: 1/1;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.photo_row a.hide {
+    display: none;
+}
+
+.photo_row a::after, .photo_row a img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.photo_row a::after {
+    content: '';
+    box-sizing: border-box;
+    border: 4px solid rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    pointer-events: none;
+    transition: border 0.15s;
+}
+
+.photo_row a span {
+    display: flex;
+    gap: 2px;
+    align-items: center;
+    position: absolute;
+    margin: 4px;
+    height: 30px;
+    background-color: rgba(0, 0, 0, 0.5);
+    font-weight: 700;
+}
+
+.photo_row a span.date {
+    border-top-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    padding-right: 8px;
+}
+
+.photo_row a span.caption {
+    justify-content: center;
+    width: calc(100% - 8px);
+    bottom: 0;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+.photo_row a span.date::before, .photo_row a span.caption::before {
+    content: '';
+    display: block;
+    height: 100%;
+    aspect-ratio: 1/1;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.photo_row a span.date::before {
+    background-image: url(https://snap.red/icon/day.svg);
+    background-size: 70%;
+}
+
+.photo_row a span.caption::before {
+    background-image: url(https://snap.red/icon/location.svg);
+    background-size: 60%;
+}
+
+.photo_row a.featured span.caption::before {
+    background-image: url(https://snap.red/icon/star.svg);
+}
+
+.photo_row a:hover::after {
+    border: 4px solid white;
+}
+
+@media screen and (max-width: 767px) {
+    .photo_row {
+        height: 160px;
+    }
+    
+    .photo_row a span {
+        font-size: 0.85rem;
+    }
+
+    .photo_row a span.date {
+        height: 28px;
+    }
+}
