@@ -121,6 +121,11 @@ class SearchBookmarkBar extends GeneralBookmarkBar {
         // handle saved search terms later
     }
 
+    // requests that the current configuration is saved
+    protected requestSave(): void {
+        this.page.saveSearchData();
+    }
+
     // adds a bookmark
     public addURL(force?: string): void {
         const url: string = this.formatLink(force || this.input.getText());
@@ -132,12 +137,16 @@ class SearchBookmarkBar extends GeneralBookmarkBar {
         console.log(this.input)
         this.input.reset();
 
-        if (!force) this.page.saveSearchData();
+        if (!force) this.requestSave();
     }
 
     // toggles delete mode
     public toggleDelete(): void {
         this.element.classList.toggle('deletion');
+        const deleting: boolean = this.element.classList.contains('deletion');
+        const set_attr: string = deleting ? 'fakehref' : 'href';
+        const remove_attr: string = deleting ? 'href' : 'fakehref';
+        for (const button of this.buttons) button.toggleDeletionMode(deleting);
     }
 
     // makes sure a link has https:// so it opens an external page
@@ -201,6 +210,9 @@ class SearchBookmarkPlus extends BookmarkButtonPlus {
     public onclick() {
         this.bookmarks.addURL();
     }
+
+    // maybe update this later to hide
+    toggleDeletionMode(deletion: boolean): void {}
 }
 
 class SearchBookmarkDelete extends BookmarkButtonTrash {
@@ -214,6 +226,9 @@ class SearchBookmarkDelete extends BookmarkButtonTrash {
     onclick(): void {
         this.bookmarks.toggleDelete();
     }
+
+    // not needed
+    toggleDeletionMode(deletion: boolean): void {}
 }
 
 // bookmarked website entry
@@ -229,6 +244,14 @@ class BookmarkButtonWebsite extends BookmarkButton {
         this.element.textContent = this.bookmarks.cleanLink(link);
         this.element.setAttribute('href', this.bookmarks.formatLink(link));
         this.setButtonImage(link);
+        this.element.onclick = () => this.onclick();
+    }
+
+    public toggleDeletionMode(deletion: boolean): void {
+        const set_attr: string = deletion ? 'fakehref' : 'href';
+        const remove_attr: string = deletion ? 'href' : 'fakehref';
+        this.element.setAttribute(set_attr, this.element.getAttribute(remove_attr) || 'error');
+        this.element.removeAttribute(remove_attr);
     }
 
     private async setButtonImage(link: string): Promise<void> {
@@ -237,6 +260,7 @@ class BookmarkButtonWebsite extends BookmarkButton {
 
         const status = await this.testWebsiteFavicon(link);
         this.element.classList.remove('loading');
+        this.element.classList.toggle('has_image', status);;
         this.element.style.setProperty('--icon-url', status ? `url(${favicon})` : null);
     }
 
@@ -260,9 +284,9 @@ class BookmarkButtonWebsite extends BookmarkButton {
         return this.link;
     }
 
-    // it's already a link element
-    // no need to complicate
-    onclick(): void { };
+    public onclick(): void {
+        if (this.bookmarks.inDeleteMode()) this.delete();
+    };
 }
 
 
@@ -275,6 +299,7 @@ class BookmarkButtonSearch extends BookmarkButton {
         super(bar, 'a');
         this.service = service;
         this.term = term;
+        this.element.onclick = () => this.onclick();
     }
 
     fetchSearchData(): {service: string, term: string} {
@@ -286,4 +311,7 @@ class BookmarkButtonSearch extends BookmarkButton {
 
     // see comment on previous class
     onclick(): void { };
+
+    // possibly handle this later
+    toggleDeletionMode(deletion: boolean): void {}
 }

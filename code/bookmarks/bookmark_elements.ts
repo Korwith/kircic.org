@@ -11,8 +11,25 @@ abstract class GeneralBookmarkBar extends PageSegment {
         this.setParent(page);
     }
 
+    public toggleDeletion(): void {
+        this.element.classList.toggle('deletion');
+    }
+
+    public inDeleteMode(): boolean {
+        return this.element.classList.contains('deletion');
+    }
+
+    public delete(entry: BookmarkButton) {
+        const found: number = this.buttons.indexOf(entry);
+        if (found === -1) return;
+        this.buttons.splice(found, 1);
+        entry.element.remove();
+        this.requestSave();
+    }
+
     public abstract fetchSaveData(): any; // add specific later
     protected abstract loadPreviousSave(): void;
+    protected abstract requestSave(): void;
 }
 
 // general input box for varying bookmark things
@@ -53,8 +70,13 @@ abstract class BookmarkButton extends PageElement {
         this.setParent(bar);
     }
 
+    public delete(): void {
+        this.bookmarks.delete(this);
+    }
+
     // on click
     abstract onclick(): void;
+    abstract toggleDeletionMode(deletion: boolean): void;
 }
 
 // same as above.. except square
