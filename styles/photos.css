@@ -3,7 +3,7 @@
     justify-content: center;
     gap: 10px;
     width: 100%;
-    height: 200px;
+    height: 230px;
     padding: 10px;
     padding-top: 0;
     box-sizing: border-box;
@@ -56,6 +56,7 @@
 }
 
 .photo_row a span.date {
+    max-height: 26px;
     border-top-left-radius: 6px;
     border-bottom-right-radius: 6px;
     padding-right: 8px;
@@ -64,15 +65,23 @@
 .photo_row a span.caption {
     justify-content: center;
     width: calc(100% - 8px);
+    height: fit-content;
+    padding-top: 2px;
+    padding-bottom: 0;
     bottom: 0;
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
+    transition: padding-bottom 0.15s;
+}
+
+.photo_row a:hover span.caption {
+    padding-bottom: 2px;
 }
 
 .photo_row a span.date::before, .photo_row a span.caption::before {
     content: '';
     display: block;
-    height: 100%;
+    height: 26px;
     aspect-ratio: 1/1;
     background-position: center;
     background-repeat: no-repeat;
@@ -98,14 +107,10 @@
 
 @media screen and (max-width: 767px) {
     .photo_row {
-        height: 160px;
+        height: 165px;
     }
     
     .photo_row a span {
         font-size: 0.85rem;
-    }
-
-    .photo_row a span.date {
-        height: 28px;
     }
 }
