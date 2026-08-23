@@ -24,9 +24,11 @@ abstract class GeneralBookmarkBar extends PageSegment {
         if (found === -1) return;
         this.buttons.splice(found, 1);
         entry.element.remove();
+        this.handleButtonOverflow();
         this.requestSave();
     }
 
+    protected abstract handleButtonOverflow(): void;
     public abstract fetchSaveData(): any; // add specific later
     protected abstract loadPreviousSave(): void;
     protected abstract requestSave(): void;

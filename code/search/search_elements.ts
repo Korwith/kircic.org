@@ -41,10 +41,10 @@ class SearchBar extends PageElement {
         this.go.classList.add('go', 'glass', 'gradient', 'hoverchange');
 
         this.propogate(data);
-        
+
         // Keydown listener on the input field
         this.input.onkeydown = (e: KeyboardEvent) => this.keydown(e);
-        
+
         // Click listener on the go button
         this.go.onclick = () => this.executeSearch();
 
@@ -96,6 +96,7 @@ class SearchBookmarkBar extends GeneralBookmarkBar {
         this.plus = new SearchBookmarkPlus(this)
         this.trash = new SearchBookmarkDelete(this);
         this.loadPreviousSave();
+        window.onresize = () => this.handleButtonOverflow();
     }
 
     // gathers and returns bookmark url data for saving
@@ -133,10 +134,9 @@ class SearchBookmarkBar extends GeneralBookmarkBar {
 
         const button: BookmarkButton = new BookmarkButtonWebsite(this, url);
         this.buttons.push(button);
-
-        console.log(this.input)
         this.input.reset();
 
+        this.handleButtonOverflow();
         if (!force) this.requestSave();
     }
 
@@ -144,9 +144,21 @@ class SearchBookmarkBar extends GeneralBookmarkBar {
     public toggleDelete(): void {
         this.element.classList.toggle('deletion');
         const deleting: boolean = this.element.classList.contains('deletion');
-        const set_attr: string = deleting ? 'fakehref' : 'href';
-        const remove_attr: string = deleting ? 'href' : 'fakehref';
         for (const button of this.buttons) button.toggleDeletionMode(deleting);
+    }
+
+    public handleButtonOverflow(): void {
+        // was it previously overflowing
+        const overflowing: boolean = this.element.classList.contains('overflow');
+        if (overflowing) this.element.classList.remove('overflow');
+
+        // measures natural fit-width bounds
+        const last_button: BookmarkButton = this.buttons[this.buttons.length - 1];
+        const last_bounds: DOMRect = last_button.element.getBoundingClientRect();
+        const trash_bounds: DOMRect = this.trash.element.getBoundingClientRect();
+
+        // will it overflow the trash icon? if so apply class
+       this.element.classList.toggle('overflow', last_bounds.right >= (trash_bounds.left - 10));
     }
 
     // makes sure a link has https:// so it opens an external page
@@ -158,8 +170,8 @@ class SearchBookmarkBar extends GeneralBookmarkBar {
 
     // makes a link look like: google.com, for display
     public cleanLink(text: string): string {
-        const formatted = text.match(/^https?:\/\//i) 
-            ? text 
+        const formatted = text.match(/^https?:\/\//i)
+            ? text
             : `https://${text}`;
         const host: string = new URL(formatted).hostname;
         const parts: string[] = host.split('.');
@@ -228,7 +240,7 @@ class SearchBookmarkDelete extends BookmarkButtonTrash {
     }
 
     // not needed
-    toggleDeletionMode(deletion: boolean): void {}
+    toggleDeletionMode(deletion: boolean): void { }
 }
 
 // bookmarked website entry
@@ -242,7 +254,7 @@ class BookmarkButtonWebsite extends BookmarkButton {
         this.link = link;
         this.element.classList.add('gradient', 'hoverchange');
         this.element.textContent = this.bookmarks.cleanLink(link);
-        this.element.setAttribute('href', this.bookmarks.formatLink(link));
+        this.element.setAttribute(!this.bookmarks.inDeleteMode() ? 'href' : 'fakehref', this.bookmarks.formatLink(link));
         this.setButtonImage(link);
         this.element.onclick = () => this.onclick();
     }
@@ -302,7 +314,7 @@ class BookmarkButtonSearch extends BookmarkButton {
         this.element.onclick = () => this.onclick();
     }
 
-    fetchSearchData(): {service: string, term: string} {
+    fetchSearchData(): { service: string, term: string } {
         return {
             service: this.service,
             term: this.term
@@ -313,5 +325,5 @@ class BookmarkButtonSearch extends BookmarkButton {
     onclick(): void { };
 
     // possibly handle this later
-    toggleDeletionMode(deletion: boolean): void {}
+    toggleDeletionMode(deletion: boolean): void { }
 }

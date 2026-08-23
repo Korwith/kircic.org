@@ -61,9 +61,13 @@
     background-repeat: no-repeat;
 }
 
-.content .segment.bookmarks button.square {
+.content .segment.bookmarks button.square, .content .segment.bookmarks.overflow a {
     width: 30px;
     padding: 0;
+}
+
+.content .segment.bookmarks.overflow a {
+    color: transparent;
 }
 
 .content .segment.bookmarks button.plus {
@@ -77,6 +81,11 @@
     right: 0;
     background-image: url(../icon/delete.svg);
     background-size: 80%;
+}
+
+.content .segment.bookmarks button.hide {
+    opacity: 0;
+    pointer-events: none;
 }
 
 .content .segment.bookmarks a {
@@ -108,6 +117,9 @@
 
 .content .segment.bookmarks.deletion a:hover {
     background-color: rgba(255, 0, 0, 0.3);
+}
+
+.content .segment.bookmarks.deletion:not(.overflow) a:hover {
     color: red;
 }
 
