@@ -46,7 +46,7 @@ interface PhotoEntry {
     id: Array<string | number>;
     people?: string[];
     featured?: number;
-    camera?: string;
+    camera?: {name: string, mp?: number};
     caption?: string;
     gps?: Record<string | number, [number, number]>
     hover_color?: HexColor;
