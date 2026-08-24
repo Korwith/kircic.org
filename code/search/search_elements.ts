@@ -148,6 +148,9 @@ class SearchBookmarkBar extends GeneralBookmarkBar {
     }
 
     public handleButtonOverflow(): void {
+        // don't run if the bar hasn't loaded yet
+        if (this.buttons.length == 0) return;
+
         // was it previously overflowing
         const overflowing: boolean = this.element.classList.contains('overflow');
         if (overflowing) this.element.classList.remove('overflow');
