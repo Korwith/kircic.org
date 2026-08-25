@@ -23,7 +23,7 @@ abstract class ProjectHolder extends PageElementScroll {
             const data: ProjectEntry = Project_Data[name];
             if (category && data.category != category) continue;
             category_projects[name] = data;
-            
+
             if (data.featured) featured_projects[name] = data;
             else non_featured_projects[name] = data;
         }
@@ -63,6 +63,7 @@ class ProjectFrame extends DarkGlassPane {
     name: string;
     data: ProjectEntry;
 
+    background?: HTMLImageElement | HTMLVideoElement;
     header: ProjectHeader;
     description: ProjectDescription;
     footer: ProjectFooter;
@@ -72,6 +73,24 @@ class ProjectFrame extends DarkGlassPane {
         this.name = name;
         this.data = Project_Data[name];
         if (!this.data) throw new Error('The specified project does not exist');
+
+        const background_src: string | undefined = this.data.video || this.data.background;
+        if (background_src) {
+            const background_type: 'video' | 'img' = this.data.video ? 'video' : 'img';
+            
+            this.background = document.createElement(background_type);
+            this.background.setAttribute('src', background_src);
+            this.element.appendChild(this.background);
+
+            if (background_type == 'video') {
+                this.background.setAttribute('muted', 'true');
+                this.background.setAttribute('playsinline', 'true');
+                this.background.setAttribute('loop', 'true');
+                this.background.setAttribute('width', '400');
+                this.background.setAttribute('height', '300');
+                (this.background as HTMLVideoElement).play();
+            }
+        }
 
         this.header = new ProjectHeader(this);
         this.description = new ProjectDescription(this);
