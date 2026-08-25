@@ -88,17 +88,17 @@
 }
 
 .photo_row a span.date::before {
-    background-image: url(https://snap.red/icon/day.svg);
+    background-image: url(../icon/day.svg);
     background-size: 70%;
 }
 
 .photo_row a span.caption::before {
-    background-image: url(https://snap.red/icon/location.svg);
+    background-image: url(../icon/location.svg);
     background-size: 60%;
 }
 
 .photo_row a.featured span.caption::before {
-    background-image: url(https://snap.red/icon/star.svg);
+    background-image: url(../icon/star.svg);
 }
 
 .photo_row a:hover::after {

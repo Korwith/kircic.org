@@ -10,6 +10,7 @@ class PhotoRow extends PageElementScroll {
         this.segment = segment;
         this.element.classList.add('photo_row');
         this.setParent(segment);
+        this.attemptImagePreloads();
         this.createImageElements();
         window.onresize = () => this.handleImageVisibility();
     }
@@ -42,14 +43,15 @@ class PhotoRow extends PageElementScroll {
     protected fetchImages(featured?: boolean): PhotoDatabase {
         // incase Data does not exist
         // most likely the user doesn't have an internet connection
+        let photos: PhotoDatabase | undefined;
         try {
-            let photos = Data['Thaddeus'];
+            photos = Data['Thaddeus'].images;
         } catch (error: unknown) {
-            this.segment.hide();
-            return {};
+            photos = Data_Backup;
+            //this.segment.hide();
         }
 
-        const user_photos: PhotoDatabase = Data['Thaddeus'].images;
+        const user_photos: PhotoDatabase = photos;
         const featured_database: PhotoDatabase = {};
         const non_featured_database: PhotoDatabase = {};
 
@@ -84,6 +86,33 @@ class PhotoRow extends PageElementScroll {
         const list = [...featured_dates, ...non_featured_dates].slice(0, 10);
 
         return list;
+    }
+
+    // checks an iamge id to see if it matches one already saved
+    public isImageSaved(id: number | string): boolean {
+        const saved: Array<string> = [];
+        for (const date in Data_Backup) {
+            const entry: PhotoEntry = Data_Backup[date];
+            saved.push(entry.id[0].toString());
+        }
+        return saved.includes(id.toString());
+    }
+
+    // attempts to preload images shown on photos page
+    private attemptImagePreloads(): void {
+        let photos: PhotoDatabase | undefined;
+
+        try {
+            photos = Data_Backup;
+        } catch(error: unknown) {
+            console.info('Fallback snap.red image loading appears to have failed (no big deal)');
+        }
+
+        for (const date in photos) {
+            const entry: PhotoEntry = photos[date];
+            const img: HTMLImageElement = new Image();
+            img.src = `../code/photos/fallback/IMG_${entry.id[0]}.jpg`;
+        }
     }
 }
 
@@ -144,6 +173,14 @@ class PhotoFrame extends MediaFrame {
         this.element.setAttribute('name', entry.name);
         this.caption.textContent = entry.name;
         this.element.classList.toggle('featured', entry.featured != undefined);
-        this.image.setAttribute('src', `https://snap.red/media/Thaddeus/IMG_${entry.id[0]}.jpg`);
+        this.image.setAttribute('src', this.fetchHref(entry.id[0]));
+    }
+
+    // gets href based on the id
+    private fetchHref(number: number | string) {
+        const local: boolean = this.row.isImageSaved(number);
+        return local
+        ? `../code/photos/fallback/IMG_${number}.jpg`
+        : `https://snap.red/media/Thaddeus/IMG_${number}.jpg`
     }
 }
