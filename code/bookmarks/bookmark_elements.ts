@@ -44,7 +44,18 @@ abstract class BookmarkInputBox extends PageElement {
         this.element.classList.add('glass', 'empty');
         this.element.setAttribute('contenteditable', 'true');
         this.element.setAttribute('placeholder', 'Add Page...');
+
         this.setParent(bar);
+    }
+
+    // handles if the placeholder text is visible or not
+    // rejects newlines
+    protected changed(e: KeyboardEvent): void {
+        if (e.key == 'Enter' && e.type == 'keydown') {
+            e.preventDefault();
+            if (e.type == 'keydown') this.handleInputComplete();
+        }
+        this.element.classList.toggle('empty', this.element.textContent.length < 1);
     }
 
     // called to get textcontent
@@ -58,7 +69,7 @@ abstract class BookmarkInputBox extends PageElement {
         this.element.classList.add('empty');
     }
 
-    protected abstract changed(e: KeyboardEvent): void;
+    protected abstract handleInputComplete(): void;
 }
 
 // general class for buttons found in bookmark segment

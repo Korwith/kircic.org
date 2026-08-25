@@ -83,12 +83,14 @@ class ProjectFrame extends DarkGlassPane {
             this.element.appendChild(this.background);
 
             if (background_type == 'video') {
-                this.background.setAttribute('muted', 'true');
-                this.background.setAttribute('playsinline', 'true');
-                this.background.setAttribute('loop', 'true');
-                this.background.setAttribute('width', '400');
-                this.background.setAttribute('height', '300');
-                (this.background as HTMLVideoElement).play();
+                const video_background: HTMLVideoElement = this.background as HTMLVideoElement;
+                video_background.setAttribute('muted', 'true');
+                video_background.setAttribute('playsinline', 'true');
+                video_background.setAttribute('loop', 'true');
+                video_background.setAttribute('width', '400');
+                video_background.setAttribute('height', '300');
+                this.element.addEventListener('mouseenter', () => video_background.play());
+                this.element.addEventListener('mouseleave', () => video_background.pause());
             }
         }
 

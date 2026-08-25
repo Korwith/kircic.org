@@ -215,12 +215,12 @@ class SidebarSegmentNavigation extends SidebarSegment {
 // tools pannel
 class SidebarSegmentTools extends SidebarSegment {
     search: SidebarButtonSearch;
-    //checklist: SidebarButtonChecklist;
+   // planner: SidebarButtonPlanner;
 
     constructor(parent: SidebarSegment) {
         super(parent);
         this.search = new SidebarButtonSearch(this);
-        //this.checklist = new SidebarButtonChecklist(this);
+        //this.planner = new SidebarButtonPlanner(this);
 
         this.element.classList.add('tools');
         this.addCaption('Tools');
@@ -318,6 +318,14 @@ class SidebarButtonSearch extends SidebarButtonPage {
     constructor(segment: SidebarSegment) {
         super(segment, {icon: '../icon/search.svg', size: '90%'}, 'search');
         this.setText('Search');
+    }
+}
+
+// planner button
+class SidebarButtonPlanner extends SidebarButtonPage {
+    constructor(segment: SidebarSegment) {
+        super(segment, {icon: '../icon/tasks.svg', size: '80%'}, 'planner');
+        this.setText('Planner');
     }
 }
 

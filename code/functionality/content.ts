@@ -5,6 +5,7 @@ class PageContent extends PageElement {
     projects: ProjectPage;
     search: SearchPage;
     codebase: CodebasePage;
+    planner: PlannerPage;
 
     constructor(manager: PageManager) {
         super();
@@ -15,6 +16,7 @@ class PageContent extends PageElement {
         this.projects = new ProjectPage(this);
         this.search = new SearchPage(this);
         this.codebase = new CodebasePage(this);
+        this.planner = new PlannerPage(this);
 
         this.setParent(manager.element);        
     }

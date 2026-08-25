@@ -203,14 +203,8 @@ class SearchBookmarkInput extends BookmarkInputBox {
         this.element.onkeyup = (e: KeyboardEvent) => this.changed(e);
     }
 
-    // handles if the placeholder text is visible or not
-    // rejects newlines
-    protected changed(e: KeyboardEvent): void {
-        if (e.key == 'Enter' && e.type == 'keydown') {
-            e.preventDefault();
-            if (e.type == 'keydown') this.bookmarks.addURL();
-        }
-        this.element.classList.toggle('empty', this.element.textContent.length < 1);
+    protected handleInputComplete(): void {
+        this.bookmarks.addURL();
     }
 }
 

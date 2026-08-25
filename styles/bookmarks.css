@@ -35,7 +35,7 @@
 }
 
 .content .segment.bookmarks strong::after {
-    content: 'Add Page...';
+    content: attr(placeholder);
     position: absolute;
     color: rgba(255, 255, 255, 0.7);
     pointer-events: none;

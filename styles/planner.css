@@ -1,0 +1,79 @@
+.page.planner .segment.tasks, .page.planner .segment.calender {
+    position: absolute;
+    top: 40px;
+    width: calc(50% - 5px);
+    height: calc(100% - 40px);
+}
+
+.page.planner .segment.tasks {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    left: 0;
+}
+
+.page.planner .segment.calender {
+    right: 0;
+}
+
+.page.planner .segment.tasks .group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+    height: fit-content;
+}
+
+.page.planner .segment.tasks .group::before {
+    content: attr(label);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: fit-content;
+    font-weight: 700;
+    color: white;
+}
+
+.task {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 40px;
+    gap: 5px;
+    font-weight: 700;
+    transition: opacity 0.5s;
+}
+
+.task.resolve {
+    opacity: 0;
+}
+
+.task .resolve_button {
+    display: block;
+    height: 30px;
+    width: 30px;
+    margin: 5px;
+    order: -1;
+    cursor: pointer;
+}
+
+.task .resolve_button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(../icon/check.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 85%;
+    opacity: 0;
+    transition: opacity 0.15s;
+}
+
+.task .resolve_button:hover::after {
+    opacity: 0.8;
+}
