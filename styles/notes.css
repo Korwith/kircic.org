@@ -1,0 +1,22 @@
+.page.notes {
+    display: flex;
+
+    .segment {
+        position: absolute;
+        height: 100%;
+        width: calc(50% - 5px);
+    }
+
+    .segment.input_holder {
+        left: 0;
+
+        .selector {
+            width: 100%;
+            height: fit-content;
+        }
+    }
+
+    .segment.display_holder {
+        right: 0;
+    }
+}
