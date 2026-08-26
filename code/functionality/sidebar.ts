@@ -206,7 +206,7 @@ class SidebarSegmentNavigation extends SidebarSegment {
         this.home = new SidebarButtonHome(this);
         this.projects = new SidebarButtonProject(this);
         this.codebase = new SidebarButtonCode(this);
-        
+
         this.element.classList.add('navigation');
         this.addCaption('Navigation');
     }
@@ -215,12 +215,14 @@ class SidebarSegmentNavigation extends SidebarSegment {
 // tools pannel
 class SidebarSegmentTools extends SidebarSegment {
     search: SidebarButtonSearch;
-   // planner: SidebarButtonPlanner;
+    // planner: SidebarButtonPlanner;
+    //notes: SidebarButtonNotes;
 
     constructor(parent: SidebarSegment) {
         super(parent);
         this.search = new SidebarButtonSearch(this);
         //this.planner = new SidebarButtonPlanner(this);
+        //this.notes = new SidebarButtonNotes(this);
 
         this.element.classList.add('tools');
         this.addCaption('Tools');
@@ -274,7 +276,7 @@ abstract class SidebarButtonLink extends SidebarButton {
 // displays the current website
 class SidebarButtonLinkKircic extends SidebarButtonLink {
     constructor(segment: SidebarSegment) {
-        super(segment, {icon: '../icon/stack.svg'});
+        super(segment, { icon: '../icon/stack.svg' });
         this.setText('kircic.org');
         this.setHref('#home');
     }
@@ -283,7 +285,7 @@ class SidebarButtonLinkKircic extends SidebarButtonLink {
 // displays snap.red
 class SidebarButtonLinkSnap extends SidebarButtonLink {
     constructor(segment: SidebarSegment) {
-        super(segment, {icon: '../icon/image.svg', size: '95%'});
+        super(segment, { icon: '../icon/image.svg', size: '95%' });
         this.setText('snap.red');
         this.setHref('https://snap.red');
     }
@@ -292,7 +294,7 @@ class SidebarButtonLinkSnap extends SidebarButtonLink {
 // home button
 class SidebarButtonHome extends SidebarButtonPage {
     constructor(segment: SidebarSegment) {
-        super(segment, {icon: '../icon/home.svg', size: '80%'}, 'home');
+        super(segment, { icon: '../icon/home.svg', size: '80%' }, 'home');
         this.setText('Home');
     }
 }
@@ -300,7 +302,7 @@ class SidebarButtonHome extends SidebarButtonPage {
 // project button
 class SidebarButtonProject extends SidebarButtonPage {
     constructor(segment: SidebarSegment) {
-        super(segment, {icon: '../icon/cube.svg', size: '90%'}, 'projects');
+        super(segment, { icon: '../icon/cube.svg', size: '90%' }, 'projects');
         this.setText('Projects');
     }
 }
@@ -308,7 +310,7 @@ class SidebarButtonProject extends SidebarButtonPage {
 // codebase button
 class SidebarButtonCode extends SidebarButtonPage {
     constructor(segment: SidebarSegment) {
-        super(segment, {icon: '../icon/code.svg', size: '92%'}, 'codebase');
+        super(segment, { icon: '../icon/code.svg', size: '92%' }, 'codebase');
         this.setText('Codebase');
     }
 }
@@ -316,7 +318,7 @@ class SidebarButtonCode extends SidebarButtonPage {
 // search button
 class SidebarButtonSearch extends SidebarButtonPage {
     constructor(segment: SidebarSegment) {
-        super(segment, {icon: '../icon/search.svg', size: '90%'}, 'search');
+        super(segment, { icon: '../icon/search.svg', size: '90%' }, 'search');
         this.setText('Search');
     }
 }
@@ -324,15 +326,15 @@ class SidebarButtonSearch extends SidebarButtonPage {
 // planner button
 class SidebarButtonPlanner extends SidebarButtonPage {
     constructor(segment: SidebarSegment) {
-        super(segment, {icon: '../icon/tasks.svg', size: '80%'}, 'planner');
+        super(segment, { icon: '../icon/tasks.svg', size: '80%' }, 'planner');
         this.setText('Planner');
     }
 }
 
-// checklist button
-class SidebarButtonChecklist extends SidebarButtonPage {
+// notes button
+class SidebarButtonNotes extends SidebarButtonPage {
     constructor(segment: SidebarSegment) {
-        super(segment, {icon: '../icon/checklist.svg', size: '74%'}, 'checklist');
-        this.setText('Checklist');
+        super(segment, { icon: '../icon/notes.svg', size: '116%' }, 'notes');
+        this.setText('Notes');
     }
 }
