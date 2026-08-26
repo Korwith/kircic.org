@@ -1,132 +1,143 @@
-.content .segment.bookmarks {
-    flex-direction: row;
-    min-height: 30px;
-}
+.content {
+    .segment.bookmarks {
+        flex-direction: row;
+        min-height: 30px;
 
-.content .segment.bookmarks strong {
-    position: relative;
-    display: flex;
-    align-items: center;
-    height: 100%;
-    width: fit-content;
-    min-width: 200px;
-    max-width: 320px;
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    padding-left: 35px;
-    padding-right: 10px;
-    font-weight: 700;
-    outline: none;
-}
+        strong {
+            position: relative;
+            display: flex;
+            align-items: center;
+            height: 100%;
+            width: fit-content;
+            min-width: 200px;
+            max-width: 320px;
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            padding-left: 35px;
+            padding-right: 10px;
+            font-weight: 700;
+            outline: none;
+        }
 
-.content .segment.bookmarks strong::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    height: 30px;
-    width: 30px;
-    background-image: url(../icon/pencil.svg);
-    background-size: 60%;
-    background-repeat: no-repeat;
-    background-position: center;
-    opacity: 0.7;
-    transition: opacity 0.1s;
-}
+        strong::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            height: 30px;
+            width: 30px;
+            background-image: url(../icon/pencil.svg);
+            background-size: 60%;
+            background-repeat: no-repeat;
+            background-position: center;
+            opacity: 0.7;
+            transition: opacity 0.1s;
+        }
 
-.content .segment.bookmarks strong::after {
-    content: attr(placeholder);
-    position: absolute;
-    color: rgba(255, 255, 255, 0.7);
-    pointer-events: none;
-    transition: opacity 0.1s;
-}
+        strong::after {
+            content: attr(placeholder);
+            position: absolute;
+            color: rgba(255, 255, 255, 0.7);
+            pointer-events: none;
+            transition: opacity 0.1s;
+        }
 
-.content .segment.bookmarks strong:not(.empty)::before {
-    opacity: 1;
-}
+        strong:not(.empty)::before {
+            opacity: 1;
+        }
 
-.content .segment.bookmarks strong:not(.empty)::after {
-    opacity: 0;
-}
+        strong:not(.empty)::after {
+            opacity: 0;
+        }
 
-.content .segment.bookmarks button, .content .segment.bookmarks a {
-    display: flex;
-    height: 30px;
-    width: fit-content;
-    padding-left: 10px;
-    padding-right: 10px;
-    cursor: pointer;
-    background-position: center;
-    background-repeat: no-repeat;
-}
+        button,
+        a {
+            display: flex;
+            height: 30px;
+            width: fit-content;
+            padding-left: 10px;
+            padding-right: 10px;
+            cursor: pointer;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
 
-.content .segment.bookmarks button.square, .content .segment.bookmarks.overflow a {
-    width: 30px;
-    padding: 0;
-}
+        a {
+            min-width: 30px;
+            padding-left: 32px;
+            padding-right: 5px;
+            font-weight: 700;
+            transition: background-color 0.15s, color 0.15s, border 0.15s !important;
+        }
 
-.content .segment.bookmarks.overflow a {
-    color: transparent;
-}
+        a.loading {
+            background-image: url(../icon/rotate.svg);
+        }
 
-.content .segment.bookmarks button.plus {
-    background-image: url(../icon/plus.svg);
-    background-size: 80%;
-    order: 0;
-}
+        a::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 24px;
+            width: 24px;
+            margin: 3px;
+            background-image: var(--icon-url, url(../icon/globe.svg));
+            background-size: cover;
+            border-radius: 6px;
+            transform: unset;
+            transition: filter 0.15s;
+        }
 
-.content .segment.bookmarks button.trash {
-    position: absolute;
-    right: 0;
-    background-image: url(../icon/delete.svg);
-    background-size: 80%;
-}
+        button.square {
+            width: 30px;
+            padding: 0;
+        }
 
-.content .segment.bookmarks button.hide {
-    opacity: 0;
-    pointer-events: none;
-}
+        button.plus {
+            background-image: url(../icon/plus.svg);
+            background-size: 80%;
+            order: 0;
+        }
 
-.content .segment.bookmarks a {
-    min-width: 30px;
-    padding-left: 32px;
-    padding-right: 5px;
-    font-weight: 700;
-    transition: background-color 0.15s, color 0.15s, border 0.15s !important;
-}
+        button.trash {
+            position: absolute;
+            right: 0;
+            background-image: url(../icon/delete.svg);
+            background-size: 80%;
+        }
 
-.content .segment.bookmarks a::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 24px;
-    width: 24px;
-    margin: 3px;
-    background-image: var(--icon-url, url(../icon/globe.svg));
-    background-size: cover;
-    border-radius: 6px;
-    transform: unset;
-    transition: filter 0.15s;
-}
+        button.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+    }
 
-.content .segment.bookmarks.deletion a {
-    background-color: rgba(255, 0, 0, 0.2)
-}
+    .segment.bookmarks.overflow {
+        a {
+            width: 30px;
+            padding: 0;
+            color: transparent;
+        }
+    }
 
-.content .segment.bookmarks.deletion a:hover {
-    background-color: rgba(255, 0, 0, 0.3);
-}
+    .segment.bookmarks.deletion {
+        a {
+            background-color: rgba(255, 0, 0, 0.2)
+        }
 
-.content .segment.bookmarks.deletion:not(.overflow) a:hover {
-    color: red;
-}
+        a:hover {
+            background-color: rgba(255, 0, 0, 0.3);
+        }
 
-.content .segment.bookmarks.deletion a:not(.has_image):hover::after {
-    filter: brightness(0) saturate(100%) invert(15%) sepia(73%) saturate(7485%) hue-rotate(358deg) brightness(108%) contrast(118%);
-}
+        a:not(.has_image):hover::after {
+            filter: brightness(0) saturate(100%) invert(15%) sepia(73%) saturate(7485%) hue-rotate(358deg) brightness(108%) contrast(118%);
+        }
+    }
 
-.content .segment.bookmarks a.loading {
-    background-image: url(../icon/rotate.svg);
+    .segment.bookmarks.deletion:not(.overflow) {
+        a:hover {
+            color: red;
+        }
+    }
 }
