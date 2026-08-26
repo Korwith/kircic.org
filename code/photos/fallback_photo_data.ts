@@ -1,7 +1,8 @@
 const Data_Backup: PhotoDatabase = {
     '08/22/26': {
         name: 'Downtown Frederick',
-        id: ['4842', '4829', '4824', '4859', '4860', '4851'],
+        id: ['4841', '4829', '4824', '4859', '4860', '4851'],
+        // 4482 exists
         people: ['Brittany'],
         featured: 5,
         camera: { name: 'iPhone 14', mp: 12 },
