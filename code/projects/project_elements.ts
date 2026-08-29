@@ -89,6 +89,7 @@ class ProjectFrame extends DarkGlassPane {
                 video_background.setAttribute('loop', 'true');
                 video_background.setAttribute('width', '400');
                 video_background.setAttribute('height', '300');
+                if (this.data.featured) video_background.setAttribute('preload', 'auto');
                 this.element.addEventListener('mouseenter', () => video_background.play());
                 this.element.addEventListener('mouseleave', () => video_background.pause());
             }
