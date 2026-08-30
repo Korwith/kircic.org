@@ -167,7 +167,7 @@ class PhotoFrame extends MediaFrame {
         this.element.setAttribute('href', `https://snap.red/#user=Thaddeus&date=${this.date.replaceAll('/', '')}`);
         this.element.setAttribute('date', this.date);
         this.image.setAttribute('loading', 'lazy');
-        this.date_label.textContent = this.date;
+        this.date_label.textContent = this.date.replace(/\b0+/g, '');
 
         if (!entry) throw new Error('Entry does not exist, cannot apply image');
         this.element.setAttribute('name', entry.name);
