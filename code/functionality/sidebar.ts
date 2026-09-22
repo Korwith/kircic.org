@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2026 Thaddeus MW.
+ *   
+ */
+
 class PageSidebar extends GlassPane {
     manager: PageManager;
     header: SidebarSegmentHeader;

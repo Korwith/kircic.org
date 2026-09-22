@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2026 Thaddeus MW.
+ *   
+ */
+
 class CodebasePage extends Page {
     api: CodebaseAPI;
     cache: Record<string, FileEntryListing> = {};

@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2026 Thaddeus MW.
+ *   
+ */
+
 // various imported libraries for handling file display
 declare const FileIcons: {
     getClassWithColor(filename: string): string,

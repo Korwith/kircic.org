@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2026 Thaddeus MW.
+ *   
+ */
+
 class PageManager {
     element: HTMLElement;
     header: PageHeader;

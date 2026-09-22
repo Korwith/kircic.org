@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2026 Thaddeus MW.
+ *   
+ */
+
 abstract class GeneralBookmarkBar extends PageSegment {
     page: Page;
     buttons: BookmarkButton[] = [];

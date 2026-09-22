@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2026 Thaddeus MW.
+ *   
+ */
+
 // abstract class which every page will branch off of
 abstract class Page extends PageElement {
     content: PageContent;

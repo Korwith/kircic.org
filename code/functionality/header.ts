@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2026 Thaddeus MW.
+ *   
+ */
+
 // shown at the top of the page
 class PageHeader extends GlassPane {
     manager: PageManager;

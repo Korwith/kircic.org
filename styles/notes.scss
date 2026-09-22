@@ -1,22 +1,159 @@
-.page.notes {
-    display: flex;
+.content {
+    .page.notes {
+        .segment_holder {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            flex: 1;
+            padding-top: 0;
 
-    .segment {
-        position: absolute;
-        height: 100%;
-        width: calc(50% - 5px);
-    }
+            .segment {
+                height: 100%;
+                width: calc(50% - 5px);
+            }
 
-    .segment.input_holder {
-        left: 0;
+            .segment.input_holder {
+                .editor {
+                    width: 100%;
+                    padding: 8px;
 
-        .selector {
-            width: 100%;
-            height: fit-content;
+                    span.header {
+                        display: flex;
+                        align-items: center;
+                        width: 100%;
+                        height: 40px;
+                        padding: 8px;
+                    }
+
+                    p.content {
+                        width: 100%;
+                        height: fit-content;
+                        min-height: 180px;
+                        padding: 8px;
+                    }
+
+                    span.header::before,
+                    span.header::after,
+                    p.content::before,
+                    p.content::after {
+                        content: '';
+                        position: absolute;
+                        opacity: 0;
+                        transition: opacity 0.15s;
+                    }
+
+                    span.header::before,
+                    p.content::before {
+                        background-repeat: no-repeat;
+                        background-position: center;
+                    }
+
+                    span.header::after,
+                    p.content::after {
+                        display: flex;
+                        align-items: center;
+                        top: 0;
+                        height: 28px;
+                        margin: 5px;
+                        margin-left: 28px;
+                        font-weight: 700;
+                    }
+
+                    span.header::before,
+                    p.content::before {
+                        top: 0;
+                        left: 0;
+                        width: 4px;
+                        width: 28px;
+                        height: 28px;
+                        margin: 5px;
+                    }
+
+                    span.header::before {
+                        background-image: url(../icon/notes.svg);
+                        background-size: 100%;
+                    }
+
+                    p.content::before {
+                        background-image: url(../icon/pencil.svg);
+                        background-size: 60%;
+                    }
+
+                    span.header::after {
+                        content: 'Note title...';
+                    }
+
+                    p.content::after {
+                        content: 'Write some text...';
+                    }
+
+                    span.header.empty::before,
+                    span.header.empty::after,
+                    p.content.empty::before,
+                    p.content.empty::after {
+                        opacity: 0.7;
+                    }
+                }
+
+                .option_list {
+                    display: flex;
+                    flex-direction: column;
+                    width: 100%;
+                    height: fit-content;
+                    padding: 8px;
+                    gap: 10px;
+
+                    button {
+                        display: flex;
+                        align-items: center;
+                        width: 100%;
+                        height: 40px;
+                        font-weight: 700;
+                        font-size: 1rem;
+                        cursor: pointer;
+                    }
+                }
+            }
+
+            .segment.display_holder {
+                .category {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    width: 100%;
+                    height: fit-content;
+                    font-weight: 700;
+                    font-size: 1rem;
+                    padding: 8px;
+
+                    span.name {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        width: 100%;
+                        height: 30px;
+                    }
+
+                    .note {
+                        display: flex;
+                        flex-direction: column;
+
+                        span {
+                            display: flex;
+                            width: 100%;
+                            min-height: 30px;
+                        }
+
+                        span.note_header {
+                            align-items: center;
+                        }
+
+                        span.note_content {
+                            height: fit-content;
+                        }
+                    }
+                }
+            }
         }
-    }
-
-    .segment.display_holder {
-        right: 0;
     }
 }

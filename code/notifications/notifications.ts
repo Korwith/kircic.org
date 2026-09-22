@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2026 Thaddeus MW.
+ *   
+ */
+
 type NotificationType = 'info' | 'warn' | 'error';
 
 // invisible holder for page notifications

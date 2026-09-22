@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2026 Thaddeus MW.
+ *   
+ */
+
 const Data_Backup: PhotoDatabase = {
     '08/22/26': {
         name: 'Downtown Frederick',

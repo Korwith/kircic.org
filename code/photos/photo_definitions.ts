@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2026 Thaddeus MW.
+ *   
+ */
+
 type HexColor = `#${string}`;
 type RGBColor = `rgb(${number}, ${number}, ${number})`;
 type RGBAColor = `rgba(${number}, ${number}, ${number}, ${number})`;

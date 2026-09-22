@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2026 Thaddeus MW.
+ *   
+ */
+
 // various file and folder displays
 abstract class EntryElement extends PageElement {
     page: CodebasePage;

@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2026 Thaddeus MW.
+ *   
+ */
+
 // abstract base for rows of icons 
 // primarily used for the homepage
 

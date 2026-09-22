@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2026 Thaddeus MW.
+ *   
+ */
+
 // emulates my css styles on snap.red
 // a row dedicated to photo elements leading the user to snap.red
 class PhotoRow extends PageElementScroll {
@@ -179,8 +184,19 @@ class PhotoFrame extends MediaFrame {
     // gets href based on the id
     private fetchHref(number: number | string) {
         const local: boolean = this.row.isImageSaved(number);
+        const year: string = this.fetchYearByDate(this.date);
+        const month: string = this.fetchMonthByDate(this.date);
+
         return local
         ? `../code/photos/fallback/IMG_${number}.jpg`
-        : `https://snap.red/media/Thaddeus/IMG_${number}.jpg`
+        : `https://snap.red/media/Thaddeus/20${year}/${month}/IMG_${number}.jpg`
+    }
+
+    private fetchMonthByDate(date: string): string {
+        return date.slice(0, 2);
+    }
+
+    private fetchYearByDate(date: string): string {
+        return date.slice(-2);
     }
 }

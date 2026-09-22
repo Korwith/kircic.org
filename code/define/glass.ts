@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2026 Thaddeus MW.
+ *   
+ */
+
 abstract class GlassPane extends PageElement {
     constructor(tag?: string) {
         super(tag);
