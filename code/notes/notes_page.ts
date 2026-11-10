@@ -1,7 +1,21 @@
 /*
  *   Copyright (c) 2026 Thaddeus MW.
- *   
+ *
  */
+
+interface NotesSaveData {
+    categories: NoteCategorySave[];
+}
+
+interface NoteCategorySave {
+    name: string;
+    notes: NoteSave[];
+}
+
+interface NoteSave {
+    header: string;
+    content: string;
+}
 
 // page dedicated for note-taking
 class NotesPage extends Page {
@@ -15,6 +29,24 @@ class NotesPage extends Page {
 
         this.element.classList.add('notes');
         this.content.registerPage('notes', this);
+        this.segment_holder.display_holder.loadPreviousSave();
+    }
+
+    // gathers data from the display holder and puts it in a savable format
+    // requests the save from the page manager
+    public saveNotesData(): void {
+        const data: NotesSaveData = this.segment_holder.display_holder.fetchSaveData();
+        this.content.manager.saveData('notes', data);
+    }
+
+    public getSavedNotesData(): NotesSaveData {
+        const data: NotesSaveData = this.content.manager.fetchData('notes') as NotesSaveData;
+        return data;
+    }
+
+    // sends a page notification
+    public notify(type: NotificationType, text: string): void {
+        this.content.manager.notifications.sendNotification(type, text);
     }
 }
 
@@ -22,11 +54,13 @@ class NotesPage extends Page {
 // left half: user input
 // right half: finished note display
 class NotesSegmentHolder extends PageSegment {
+    page: NotesPage;
     input_holder: NoteInputHolder;
     display_holder: NoteDisplayHolder;
 
     constructor(page: NotesPage) {
         super(page);
+        this.page = page;
         this.element.classList.add('segment_holder');
         this.input_holder = new NoteInputHolder(this);
         this.display_holder = new NoteDisplayHolder(this);
@@ -35,38 +69,145 @@ class NotesSegmentHolder extends PageSegment {
 
 // user input segment
 class NoteInputHolder extends PageElement {
+    holder: NotesSegmentHolder;
     editor: NoteEditor;
     option_list: NoteOptionList;
+    editing: Note | null = null;
 
     constructor(holder: NotesSegmentHolder) {
         super('div');
+        this.holder = holder;
         this.editor = new NoteEditor(this);
         this.option_list = new NoteOptionList(this);
         this.element.classList.add('segment', 'input_holder');
-        
+
         this.setParent(holder);
+    }
+
+    // creates a note from the editor
+    // or updates the note currently being edited
+    public submit(): void {
+        const header: string = this.editor.header.getText();
+        const content: string = this.editor.content.getText();
+        const display: NoteDisplayHolder = this.holder.display_holder;
+
+        if (!header && !content) {
+            this.holder.page.notify('warn', 'Note is empty');
+            return;
+        }
+
+        if (this.editing) {
+            this.editing.setHeader(header);
+            this.editing.setContent(content);
+        } else display.getSelectedCategory().addNote(header, content);
+
+        this.clear();
+        display.requestSave();
+    }
+
+    // loads an existing note into the editor
+    public edit(note: Note): void {
+        this.editing?.element.classList.remove('editing');
+        this.editing = note;
+        note.element.classList.add('editing');
+
+        this.editor.header.setText(note.getHeader());
+        this.editor.content.setText(note.getContent());
+        this.option_list.create.displayEditing(true);
+    }
+
+    // empties the editor and leaves edit mode
+    public clear(): void {
+        this.editing?.element.classList.remove('editing');
+        this.editing = null;
+
+        this.editor.header.setText('');
+        this.editor.content.setText('');
+        this.option_list.create.displayEditing(false);
     }
 }
 
 // note display segment
 class NoteDisplayHolder extends PageElement {
+    holder: NotesSegmentHolder;
     category_list: NoteCategory[] = [];
+    selected: NoteCategory | null = null;
 
     constructor(holder: NotesSegmentHolder) {
         super('div');
+        this.holder = holder;
         this.element.classList.add('segment', 'display_holder');
         this.setParent(holder);
-
-        const test: NoteCategory = this.createCategory('display test');
-        const note: Note = new Note(test);
-        note.setHeader('test header');
-        note.setContent('test description');
     }
 
     public createCategory(name: string): NoteCategory {
         const category: NoteCategory = new NoteCategory(this);
         category.displayCategory(name);
         this.category_list.push(category);
+        if (!this.selected) this.selectCategory(category);
         return category;
+    }
+
+    // finds a category by name (case insensitive)
+    public findCategory(name: string): NoteCategory | undefined {
+        const search: string = name.toLowerCase();
+        return this.category_list.find((category: NoteCategory) => category.getName().toLowerCase() == search);
+    }
+
+    // new notes are placed inside of the selected category
+    public selectCategory(category: NoteCategory | null): void {
+        this.selected?.element.classList.remove('selected');
+        this.selected = category;
+        category?.element.classList.add('selected');
+        this.holder.input_holder.option_list.category.displayCategory(category);
+    }
+
+    // selects the category after the current one (wraps around)
+    public selectNextCategory(): void {
+        if (this.category_list.length == 0) return;
+        const index: number = this.selected ? this.category_list.indexOf(this.selected) : -1;
+        this.selectCategory(this.category_list[(index + 1) % this.category_list.length]);
+    }
+
+    // returns the selected category.. creates a default one if none exist
+    public getSelectedCategory(): NoteCategory {
+        return this.selected || this.createCategory('General');
+    }
+
+    public deleteCategory(category: NoteCategory): void {
+        const found: number = this.category_list.indexOf(category);
+        if (found === -1) return;
+
+        // stop editing a note that no longer exists
+        const editing: Note | null = this.holder.input_holder.editing;
+        if (editing && category.notes.includes(editing)) this.holder.input_holder.clear();
+
+        this.category_list.splice(found, 1);
+        category.element.remove();
+        if (this.selected == category) this.selectCategory(this.category_list[0] || null);
+        this.requestSave();
+    }
+
+    // gathers every category and note for saving
+    public fetchSaveData(): NotesSaveData {
+        return {
+            categories: this.category_list.map((category: NoteCategory) => category.fetchSaveData()),
+        };
+    }
+
+    // loads data from the previous save
+    public loadPreviousSave(): void {
+        const save_data: NotesSaveData = this.holder.page.getSavedNotesData();
+        if (!save_data) return;
+
+        for (const category_data of save_data.categories) {
+            const category: NoteCategory = this.createCategory(category_data.name);
+            for (const note of category_data.notes) category.addNote(note.header, note.content);
+        }
+    }
+
+    // requests that the current notes are saved
+    public requestSave(): void {
+        this.holder.page.saveNotesData();
     }
 }

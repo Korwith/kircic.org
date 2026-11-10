@@ -13,6 +13,10 @@
             }
 
             .segment.input_holder {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+
                 .editor {
                     width: 100%;
                     padding: 8px;
@@ -112,10 +116,23 @@
                         font-size: 1rem;
                         cursor: pointer;
                     }
+
+                    button.category {
+                        padding-left: 36px;
+                        background-image: url(../icon/folder.svg);
+                        background-size: 20px;
+                        background-position: 8px center;
+                        background-repeat: no-repeat;
+                    }
                 }
             }
 
             .segment.display_holder {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                overflow-y: auto;
+
                 .category {
                     display: flex;
                     flex-direction: column;
@@ -125,6 +142,9 @@
                     font-weight: 700;
                     font-size: 1rem;
                     padding: 8px;
+                    gap: 8px;
+                    flex-shrink: 0;
+                    transition: border 0.15s;
 
                     span.name {
                         display: flex;
@@ -132,16 +152,55 @@
                         align-items: center;
                         width: 100%;
                         height: 30px;
+                        padding-left: 30px;
+                        padding-right: 30px;
+                        box-sizing: border-box;
+                        cursor: pointer;
+                    }
+
+                    button.trash {
+                        position: absolute;
+                        width: 26px;
+                        height: 26px;
+                        padding: 0;
+                        background-image: url(../icon/delete.svg);
+                        background-size: 80%;
+                        background-position: center;
+                        background-repeat: no-repeat;
+                        opacity: 0;
+                        cursor: pointer;
+                        transition: opacity 0.15s;
+                    }
+
+                    >button.trash {
+                        top: 10px;
+                        right: 10px;
+                    }
+
+                    >button.trash:hover,
+                    .note button.trash:hover {
+                        opacity: 1 !important;
+                    }
+
+                    >span.name:hover~button.trash,
+                    >button.trash:focus-visible {
+                        opacity: 0.7;
                     }
 
                     .note {
                         display: flex;
                         flex-direction: column;
+                        padding: 8px;
+                        gap: 4px;
+                        cursor: pointer;
+                        transition: border 0.15s;
 
                         span {
                             display: flex;
                             width: 100%;
-                            min-height: 30px;
+                            min-height: 22px;
+                            padding-right: 30px;
+                            box-sizing: border-box;
                         }
 
                         span.note_header {
@@ -149,9 +208,54 @@
                         }
 
                         span.note_content {
+                            display: block;
                             height: fit-content;
+                            font-weight: 400;
+                            white-space: pre-wrap;
+                            overflow-wrap: anywhere;
+                        }
+
+                        span:empty {
+                            display: none;
+                        }
+
+                        button.trash {
+                            top: 6px;
+                            right: 6px;
                         }
                     }
+
+                    .note:hover {
+                        border: 1px solid rgba(255, 255, 255, 0.25);
+
+                        button.trash {
+                            opacity: 0.7;
+                        }
+                    }
+
+                    .note.editing {
+                        border: 1px solid rgba(255, 255, 255, 0.6);
+                    }
+                }
+
+                .category.selected {
+                    border: 1px solid rgba(255, 255, 255, 0.35);
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .content {
+        .page.notes {
+            .segment_holder {
+                flex-direction: column;
+                flex: unset;
+
+                .segment {
+                    height: fit-content;
+                    width: 100%;
                 }
             }
         }

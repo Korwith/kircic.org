@@ -221,13 +221,13 @@ class SidebarSegmentNavigation extends SidebarSegment {
 class SidebarSegmentTools extends SidebarSegment {
     search: SidebarButtonSearch;
     // planner: SidebarButtonPlanner;
-    //notes: SidebarButtonNotes;
+    notes: SidebarButtonNotes;
 
     constructor(parent: SidebarSegment) {
         super(parent);
         this.search = new SidebarButtonSearch(this);
         //this.planner = new SidebarButtonPlanner(this);
-        //this.notes = new SidebarButtonNotes(this);
+        this.notes = new SidebarButtonNotes(this);
 
         this.element.classList.add('tools');
         this.addCaption('Tools');
