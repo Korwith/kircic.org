@@ -98,7 +98,7 @@ class PhotoRow extends PageElementScroll {
         const saved: Array<string> = [];
         for (const date in Data_Backup) {
             const entry: PhotoEntry = Data_Backup[date];
-            saved.push(entry.id[0].toString());
+            saved.push(PhotoIDManager.first(entry).toString());
         }
         return saved.includes(id.toString());
     }
@@ -116,7 +116,7 @@ class PhotoRow extends PageElementScroll {
         for (const date in photos) {
             const entry: PhotoEntry = photos[date];
             const img: HTMLImageElement = new Image();
-            img.src = `../code/photos/fallback/IMG_${entry.id[0]}.jpg`;
+            img.src = `../code/photos/fallback/IMG_${PhotoIDManager.first(entry)}.jpg`;
         }
     }
 }
@@ -178,7 +178,7 @@ class PhotoFrame extends MediaFrame {
         this.element.setAttribute('name', entry.name);
         this.caption.textContent = entry.name;
         this.element.classList.toggle('featured', entry.featured != undefined);
-        this.image.setAttribute('src', this.fetchHref(entry.id[0]));
+        this.image.setAttribute('src', this.fetchHref(PhotoIDManager.first(entry)));
     }
 
     // gets href based on the id
