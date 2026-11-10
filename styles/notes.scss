@@ -1,5 +1,12 @@
 .content {
     .page.notes {
+        .segment.bookmarks {
+            strong {
+                min-width: min(200px, calc(50% - 45px));
+                white-space: nowrap;
+            }
+        }
+
         .segment_holder {
             display: flex;
             flex-direction: row;

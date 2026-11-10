@@ -38,6 +38,7 @@
             content: attr(placeholder);
             position: absolute;
             color: rgba(255, 255, 255, 0.7);
+            white-space: nowrap;
             pointer-events: none;
             transition: opacity 0.1s;
         }
@@ -92,6 +93,7 @@
         button.square {
             width: 30px;
             padding: 0;
+            flex-shrink: 0;
         }
 
         button.plus {
