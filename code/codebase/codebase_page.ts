@@ -111,6 +111,24 @@ public async openEntry(path: string[]): Promise<FileEntryListing | null> {
     return current_entry;
 }
 
+    // fetches a file and shows it in the main viewer
+    public async openFile(listing: FileEntryListing): Promise<void> {
+        this.header.specifyPath(listing.path.split('/'));
+        this.main.clearExplorer();
+
+        if (!CodebaseFileViewer.isTextFile(listing.name)) {
+            this.main.displayFile(listing);
+            return;
+        }
+
+        this.main.toggleLoading(true);
+        const text: string | null = await this.api.fetchFile(listing);
+        this.main.toggleLoading(false);
+        if (text === null) return;
+
+        this.main.displayFile(listing, text);
+    }
+
     // CodebasePage (in codebase page class)
     public resolvePath(path: string[]): FileEntryListing | null {
         if (path.length == 0) return this.root || null;
@@ -187,6 +205,8 @@ class CodebaseHeaderEntry extends PageElement {
                 this.header.page.main.clearExplorer();
                 folder.showMainElement();
                 this.header.specifyPath(subpath);
+            } else if (this.entry?.entryElement instanceof EntryElementFile) {
+                this.header.page.openFile(this.entry);
             } else if (this.entry?.path) {
                 this.header.page.openEntry(this.entry.path.split('/'));
             }
@@ -227,6 +247,7 @@ class CodebaseSidebar extends FileExplorer {
 // large icons displayed on the codebase page
 class CodebaseMain extends FileExplorer {
     entries: EntryElement[] = [];
+    viewer?: CodebaseFileViewer;
 
     constructor(codebase: CodebasePage) {
         super(codebase);
@@ -265,11 +286,25 @@ class CodebaseMain extends FileExplorer {
         delete entry.main_entry;
     }
 
+    // replaces the explorer with a file viewer
+    public displayFile(listing: FileEntryListing, text?: string): void {
+        this.viewer = new CodebaseFileViewer(this.codebase, listing);
+        if (text !== undefined) this.viewer.displayText(text);
+        else this.viewer.displayMedia();
+
+        this.element.classList.add('viewing');
+        this.viewer.setParent(this);
+    }
+
     // resets the main file explorer
     public clearExplorer(): void {
         while (this.entries.length > 0) {
             this.deleteEntry(this.entries[0]);
         }
+
+        this.viewer?.element.remove();
+        delete this.viewer;
+        this.element.classList.remove('viewing');
     }
 
     // handles the loading class which depicts text

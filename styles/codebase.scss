@@ -194,6 +194,159 @@
         }
     }
 
+    /* the file viewer which replaces the main explorer when a file is opened */
+    .segment.codebase_main.viewing {
+        flex-wrap: nowrap;
+        overflow: hidden;
+    }
+
+    .file_viewer {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+
+        .viewer_bar {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+            height: 40px;
+            padding: 0 6px 0 10px;
+            background-color: rgba(255, 255, 255, 0.03);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .viewer_name {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+            max-width: 60%;
+            font-weight: 700;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .viewer_name.has_icon::before {
+            font-size: 18px;
+        }
+
+        .viewer_info {
+            font-size: 0.8rem;
+            min-width: 0;
+            opacity: 0.5;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .viewer_actions {
+            display: flex;
+            gap: 5px;
+            flex-shrink: 0;
+            margin-left: auto;
+
+            button,
+            a {
+                display: flex;
+                align-items: center;
+                height: 26px;
+                padding: 0 10px;
+                font-size: 0.8rem;
+                font-weight: 700;
+                color: inherit;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+            button.close {
+                justify-content: center;
+                width: 26px;
+                padding: 0;
+            }
+
+            /* sized in em so the x matches the cap height of the neighbouring text */
+            button.close::after {
+                content: '';
+                width: 1.1em;
+                height: 1.1em;
+                background-image: url(../icon/close.svg);
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: contain;
+            }
+        }
+
+        .viewer_body {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            flex: 1;
+            overflow: auto;
+
+            pre,
+            code {
+                font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+            }
+
+            pre {
+                margin: 0;
+                padding: 12px 0;
+                font-size: 0.8rem;
+                line-height: 1.6;
+                tab-size: 4;
+            }
+
+            pre:not(.viewer_gutter) {
+                flex: 1;
+                padding-right: 16px;
+            }
+
+            code.hljs {
+                padding: 0;
+                background: none;
+                overflow: visible;
+            }
+        }
+
+        /* line numbers sticking to the left while scrolling sideways */
+        .viewer_gutter {
+            position: sticky;
+            left: 0;
+            min-height: 100%;
+            padding-left: 12px !important;
+            padding-right: 12px !important;
+            margin-right: 12px !important;
+            text-align: right;
+            color: rgba(255, 255, 255, 0.25);
+            background-color: rgba(10, 10, 12, 0.85);
+            border-right: 1px solid rgba(255, 255, 255, 0.06);
+            user-select: none;
+        }
+
+        .viewer_body.media {
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+
+            img {
+                max-width: 100%;
+                max-height: 100%;
+                object-fit: contain;
+                border-radius: 6px;
+                image-rendering: auto;
+            }
+        }
+
+        .viewer_body.unsupported::after {
+            content: 'This file cannot be previewed.';
+            opacity: 0.5;
+        }
+    }
+
     .segment.codebase_main:empty::after {
         content: 'No folder is currently selected.';
         display: flex;

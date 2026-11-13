@@ -12,6 +12,8 @@ declare const FileIcons: {
 
 declare const hljs: {
     highlightElement(element: HTMLElement): void,
+    highlight(code: string, options: { language: string }): { value: string },
+    getLanguage(name: string): object | undefined,
 }
 
 // various interfaces for dealing with GitHub fetching
@@ -72,6 +74,23 @@ class CodebaseAPI {
             this.page.content.manager.notifications.sendNotification(
                 'error',
                 `Failed to fetch path: /${pathStr}`
+            );
+            return null;
+        }
+    }
+
+    // grabs the raw text of a file (through raw.githubusercontent)
+    public async fetchFile(listing: FileEntryListing): Promise<string | null> {
+        if (!listing.download_url) return null;
+
+        try {
+            const response = await fetch(listing.download_url);
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            return await response.text();
+        } catch (error: unknown) {
+            this.page.content.manager.notifications.sendNotification(
+                'error',
+                `Failed to fetch file: /${listing.path}`
             );
             return null;
         }
