@@ -22,114 +22,57 @@
             .segment.input_holder {
                 display: flex;
                 flex-direction: column;
-                gap: 10px;
 
-                .editor {
-                    width: 100%;
-                    padding: 8px;
+                .note_viewer {
+                    flex: 1;
+                    min-height: 0;
 
-                    span.header {
-                        display: flex;
-                        align-items: center;
-                        width: 100%;
-                        height: 40px;
-                        padding: 8px;
+                    .viewer_name {
+                        flex: 1;
+                        min-width: 80px;
+                        max-width: unset;
+
+                        span.title {
+                            position: relative;
+                            display: block;
+                            flex: 1;
+                            min-width: 0;
+                            overflow: hidden;
+                            white-space: nowrap;
+                            cursor: text;
+                            outline: none;
+                        }
+
+                        span.title.empty::after {
+                            content: attr(placeholder);
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            color: rgba(255, 255, 255, 0.5);
+                            pointer-events: none;
+                        }
                     }
 
-                    p.content {
-                        width: 100%;
-                        height: fit-content;
-                        min-height: 180px;
-                        padding: 8px;
-                    }
-
-                    span.header::before,
-                    span.header::after,
-                    p.content::before,
-                    p.content::after {
+                    .viewer_name::before {
                         content: '';
-                        position: absolute;
-                        opacity: 0;
-                        transition: opacity 0.15s;
-                    }
-
-                    span.header::before,
-                    p.content::before {
+                        flex-shrink: 0;
+                        width: 18px;
+                        height: 18px;
+                        background-image: url(../icon/notes.svg);
+                        background-size: contain;
                         background-repeat: no-repeat;
                         background-position: center;
                     }
 
-                    span.header::after,
-                    p.content::after {
-                        display: flex;
-                        align-items: center;
-                        top: 0;
-                        height: 28px;
-                        margin: 5px;
-                        margin-left: 28px;
-                        font-weight: 700;
+                    .viewer_actions button.category {
+                        max-width: 120px;
+                        overflow: hidden;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
                     }
 
-                    span.header::before,
-                    p.content::before {
-                        top: 0;
-                        left: 0;
-                        width: 4px;
-                        width: 28px;
-                        height: 28px;
-                        margin: 5px;
-                    }
-
-                    span.header::before {
-                        background-image: url(../icon/notes.svg);
-                        background-size: 100%;
-                    }
-
-                    p.content::before {
-                        background-image: url(../icon/pencil.svg);
-                        background-size: 60%;
-                    }
-
-                    span.header::after {
-                        content: 'Note title...';
-                    }
-
-                    p.content::after {
-                        content: 'Write some text...';
-                    }
-
-                    span.header.empty::before,
-                    span.header.empty::after,
-                    p.content.empty::before,
-                    p.content.empty::after {
-                        opacity: 0.7;
-                    }
-                }
-
-                .option_list {
-                    display: flex;
-                    flex-direction: column;
-                    width: 100%;
-                    height: fit-content;
-                    padding: 8px;
-                    gap: 10px;
-
-                    button {
-                        display: flex;
-                        align-items: center;
-                        width: 100%;
-                        height: 40px;
-                        font-weight: 700;
-                        font-size: 1rem;
-                        cursor: pointer;
-                    }
-
-                    button.category {
-                        padding-left: 36px;
-                        background-image: url(../icon/folder.svg);
-                        background-size: 20px;
-                        background-position: 8px center;
-                        background-repeat: no-repeat;
+                    textarea::placeholder {
+                        color: rgba(255, 255, 255, 0.35);
                     }
                 }
             }
@@ -140,86 +83,174 @@
                 gap: 10px;
                 overflow-y: auto;
 
-                .category {
+                .empty_notice {
                     display: flex;
                     flex-direction: column;
-                    justify-content: center;
-                    width: 100%;
-                    height: fit-content;
-                    font-weight: 700;
-                    font-size: 1rem;
-                    padding: 8px;
-                    gap: 8px;
+                    align-items: center;
+                    gap: 10px;
                     flex-shrink: 0;
-                    transition: border 0.15s;
+                    width: 100%;
+                    padding: 20px 10px;
+                    box-sizing: border-box;
 
-                    span.name {
+                    span.notice_text {
                         display: flex;
-                        justify-content: center;
+                        flex-direction: column;
                         align-items: center;
-                        width: 100%;
+                        gap: 8px;
+                        font-weight: 700;
+                        text-align: center;
+                    }
+
+                    span.notice_text::before {
+                        content: '';
+                        width: 32px;
+                        height: 32px;
+                        background-image: url(../icon/notes.svg);
+                        background-size: contain;
+                        background-repeat: no-repeat;
+                        background-position: center;
+                        opacity: 0.5;
+                    }
+
+                    button {
+                        display: flex;
+                        align-items: center;
+                        gap: 6px;
                         height: 30px;
-                        padding-left: 30px;
-                        padding-right: 30px;
-                        box-sizing: border-box;
+                        padding: 0 10px 0 8px;
+                        font-size: 0.8rem;
+                        font-weight: 700;
+                        color: inherit;
                         cursor: pointer;
                     }
 
+                    button::after {
+                        content: '';
+                        order: -1;
+                        width: 1.25em;
+                        height: 1.25em;
+                        background-image: url(../icon/plus.svg);
+                        background-size: contain;
+                        background-repeat: no-repeat;
+                        background-position: center;
+                    }
+                }
+
+                .empty_notice.hide {
+                    display: none;
+                }
+
+                .category {
+                    display: flex;
+                    flex-direction: column;
+                    flex-shrink: 0;
+                    width: 100%;
+                    height: fit-content;
+                    transition: border 0.15s;
+
+                    .category_bar {
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                        gap: 10px;
+                        height: 40px;
+                        padding: 0 6px 0 10px;
+                        box-sizing: border-box;
+                        background-color: rgba(255, 255, 255, 0.03);
+                        cursor: pointer;
+                    }
+
+                    span.name {
+                        display: flex;
+                        align-items: center;
+                        gap: 6px;
+                        min-width: 0;
+                        font-weight: 700;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+
+                    span.name::before {
+                        content: '';
+                        flex-shrink: 0;
+                        width: 18px;
+                        height: 18px;
+                        background-image: url(../icon/folder.svg);
+                        background-size: contain;
+                        background-repeat: no-repeat;
+                        background-position: center;
+                    }
+
+                    span.count {
+                        flex-shrink: 0;
+                        font-size: 0.8rem;
+                        opacity: 0.5;
+                        white-space: nowrap;
+                    }
+
                     button.trash {
-                        position: absolute;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        flex-shrink: 0;
                         width: 26px;
                         height: 26px;
                         padding: 0;
-                        background-image: url(../icon/delete.svg);
-                        background-size: 80%;
-                        background-position: center;
-                        background-repeat: no-repeat;
+                        margin-left: auto;
+                        font-size: 0.8rem;
                         opacity: 0;
                         cursor: pointer;
                         transition: opacity 0.15s;
                     }
 
-                    >button.trash {
-                        top: 10px;
-                        right: 10px;
+                    button.trash::after {
+                        content: '';
+                        width: 1.25em;
+                        height: 1.25em;
+                        background-image: url(../icon/delete.svg);
+                        background-position: center;
+                        background-repeat: no-repeat;
+                        background-size: contain;
                     }
 
-                    >button.trash:hover,
-                    .note button.trash:hover {
-                        opacity: 1 !important;
-                    }
-
-                    >span.name:hover~button.trash,
-                    >button.trash:focus-visible {
+                    .category_bar:hover button.trash,
+                    .note:hover button.trash,
+                    button.trash:focus-visible {
                         opacity: 0.7;
                     }
 
+                    button.trash:hover {
+                        opacity: 1 !important;
+                    }
+
                     .note {
+                        position: relative;
                         display: flex;
                         flex-direction: column;
-                        padding: 8px;
                         gap: 4px;
+                        padding: 8px 40px 8px 10px;
+                        border-top: 1px solid rgba(255, 255, 255, 0.08);
                         cursor: pointer;
-                        transition: border 0.15s;
-
-                        span {
-                            display: flex;
-                            width: 100%;
-                            min-height: 22px;
-                            padding-right: 30px;
-                            box-sizing: border-box;
-                        }
+                        transition: background-color 0.15s;
 
                         span.note_header {
-                            align-items: center;
+                            font-weight: 700;
+                            overflow-wrap: anywhere;
                         }
 
                         span.note_content {
-                            display: block;
-                            height: fit-content;
-                            font-weight: 400;
+                            display: -webkit-box;
+                            -webkit-box-orient: vertical;
+                            -webkit-line-clamp: 4;
+                            overflow: hidden;
+                            font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+                            font-size: 0.8rem;
+                            line-height: 1.6;
                             white-space: pre-wrap;
                             overflow-wrap: anywhere;
+                            opacity: 0.6;
                         }
 
                         span:empty {
@@ -227,21 +258,20 @@
                         }
 
                         button.trash {
-                            top: 6px;
+                            position: absolute;
+                            top: 7px;
                             right: 6px;
                         }
                     }
 
                     .note:hover {
-                        border: 1px solid rgba(255, 255, 255, 0.25);
-
-                        button.trash {
-                            opacity: 0.7;
-                        }
+                        background-color: rgba(255, 255, 255, 0.03);
                     }
 
+                    /* the note currently in the editor */
                     .note.editing {
-                        border: 1px solid rgba(255, 255, 255, 0.6);
+                        background-color: rgba(255, 255, 255, 0.05);
+                        box-shadow: inset 2px 0 0 rgba(255, 255, 255, 0.6);
                     }
                 }
 
@@ -263,6 +293,10 @@
                 .segment {
                     height: fit-content;
                     width: 100%;
+                }
+
+                .segment.input_holder {
+                    height: 360px;
                 }
             }
         }

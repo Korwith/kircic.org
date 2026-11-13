@@ -125,193 +125,210 @@ class NoteBookmarkCategoryPlus extends BookmarkButtonPlus {
     toggleDeletionMode(deletion: boolean): void {};
 }
 
-// the list of buttons under the input holder
-class NoteOptionList extends GlassPane {
+// code editor style note editing
+// title in the bar, markdown text in the body
+class NoteViewer extends TextViewer {
     holder: NoteInputHolder;
-    category: NoteOptionCategory;
-    create: NoteOptionCreate;
-    clear: NoteOptionClear;
+    title: HTMLElement;
+    category: HTMLButtonElement;
+    save: HTMLButtonElement;
 
     constructor(holder: NoteInputHolder) {
-        super('div');
+        super();
         this.holder = holder;
-        this.category = new NoteOptionCategory(this);
-        this.create = new NoteOptionCreate(this);
-        this.clear = new NoteOptionClear(this);
+        this.element.classList.add('note_viewer');
+        this.setLanguage('markdown');
 
-        this.element.classList.add('option_list');
+        // the editable span only holds text, the icon stays on the name
+        // keeps the cursor from landing on the icon or placeholder
+        this.title = document.createElement('span');
+        this.title.classList.add('title', 'empty');
+        this.title.setAttribute('contenteditable', 'true');
+        this.title.setAttribute('placeholder', 'Note title...');
+        this.title.setAttribute('spellcheck', 'false');
+        this.title.addEventListener('keydown', (e: KeyboardEvent) => this.handleHeaderKeydown(e));
+        this.title.addEventListener('input', () => this.updateEmptyHeader());
+        this.title.addEventListener('paste', (e: ClipboardEvent) => this.handleHeaderPaste(e));
+        this.name.appendChild(this.title);
 
-        this.setParent(this.holder);;
-    }
-}
+        this.category = this.addAction('General', () => this.holder.holder.display_holder.selectNextCategory(), '../icon/folder.svg');
+        this.category.classList.add('category');
+        this.addAction('Copy', () => this.copy(), '../icon/clipboard.svg');
+        this.save = this.addAction('Create', () => this.holder.submit(), '../icon/plus.svg');
 
-class NoteEditor extends GlassPane {
-    holder: NoteInputHolder;
-    header: NoteEditorHeader;
-    content: NoteEditorContent;
-
-    constructor(holder: NoteInputHolder) {
-        super('div');
-        this.holder = holder;
-        this.header = new NoteEditorHeader(this);
-        this.content = new NoteEditorContent(this);
-        this.element.classList.add('editor');
+        this.displayEditor('');
+        this.input?.setAttribute('placeholder', 'Write some text...');
+        this.handleInput();
         this.setParent(this.holder);
     }
-}
 
-abstract class NoteEditorInput extends PageElement {
-    editor: NoteEditor;
-
-    constructor(editor: NoteEditor, tag?: 'span' | 'p') {
-        super(tag);
-        this.editor = editor;
-        this.element.classList.add('glass', 'dark', 'empty');
-        this.element.setAttribute('contenteditable', 'true');
-        this.element.addEventListener('keydown', (e: KeyboardEvent) => this.handleInput(e));
-        // fires right after any change
-        this.element.addEventListener('input', () => this.updateEmpty());
-
-        this.setParent(this.editor);
+    public getHeader(): string {
+        return (this.title.textContent ?? '').trim();
     }
 
-    protected handleInput(input: KeyboardEvent) {}
+    public setHeader(text: string): void {
+        this.title.textContent = text;
+        this.updateEmptyHeader();
+    }
 
     // handles if the placeholder text is visible or not
-    protected updateEmpty(): void {
-        const text: string = this.element.innerText.replace(/\n$/, '');
-        this.element.classList.toggle('empty', text.length == 0);
+    // a leftover <br> would otherwise keep the span from being empty
+    protected updateEmptyHeader(): void {
+        const empty: boolean = (this.title.textContent ?? '').length == 0;
+        if (empty) this.title.replaceChildren();
+        this.title.classList.toggle('empty', empty);
     }
 
-    // innerText keeps line breaks
-    public getText(): string {
-        return this.element.innerText.trim();
+    // pastes as plain text on a single line
+    protected handleHeaderPaste(e: ClipboardEvent): void {
+        e.preventDefault();
+        const text: string = (e.clipboardData?.getData('text/plain') ?? '').replace(/\s*\n\s*/g, ' ');
+        const selection: Selection | null = window.getSelection();
+        if (!selection || selection.rangeCount == 0) return;
+
+        const range: Range = selection.getRangeAt(0);
+        range.deleteContents();
+        range.insertNode(document.createTextNode(text));
+        range.collapse(false);
+        this.title.normalize();
+        this.updateEmptyHeader();
     }
 
     public setText(text: string): void {
-        this.element.innerText = text;
-        this.updateEmpty();
-    }
-}
-
-class NoteEditorHeader extends NoteEditorInput {
-    constructor(editor: NoteEditor) {
-        super(editor, 'span');
-        this.element.classList.add('header');
+        super.setText(text);
+        this.handleInput();
     }
 
-    // rejects newlines, enter moves to the content box
-    protected handleInput(input: KeyboardEvent) {
-        if (input.key == 'Enter') {
-            input.preventDefault();
-            if (input.type == 'keydown') this.editor.content.element.focus();
+    // rejects newlines, enter moves to the text box
+    protected handleHeaderKeydown(e: KeyboardEvent): void {
+        if (e.key != 'Enter') return;
+        e.preventDefault();
+        this.input?.focus();
+    }
+
+    // ctrl + enter or ctrl + s saves the note
+    protected handleKeydown(e: KeyboardEvent): void {
+        if (e.ctrlKey && (e.key == 'Enter' || e.key == 's')) {
+            e.preventDefault();
+            this.holder.submit();
+            return;
         }
-        super.handleInput(input);
-    }
-}
-
-class NoteEditorContent extends NoteEditorInput {
-    constructor(editor: NoteEditor) {
-        super(editor, 'p');
-        this.element.classList.add('content');
+        super.handleKeydown(e);
     }
 
-    // ctrl + enter submits the note
-    protected handleInput(input: KeyboardEvent) {
-        if (input.key == 'Enter' && input.ctrlKey) {
-            input.preventDefault();
-            if (input.type == 'keydown') this.editor.holder.submit();
-        }
-        super.handleInput(input);
-    }
-}
-
-// abstract class for note choices
-abstract class NoteOptionButton extends PageElement {
-    list: NoteOptionList;
-
-    constructor(list: NoteOptionList) {
-        super('button');
-        this.element.classList.add('glass', 'gradient', 'hoverchange');
-        this.list = list;
-        this.element.onclick = () => this.onclick();
-        this.setParent(this.list);
-    }
-
-    protected abstract onclick(): void;
-}
-
-// displays the selected category, cycles through categories on click
-class NoteOptionCategory extends NoteOptionButton {
-    constructor(list: NoteOptionList) {
-        super(list);
-        this.element.classList.add('category');
-        this.displayCategory(null);
+    // keeps the line count up to date
+    protected handleInput(): void {
+        const lines: number = this.getLineCount();
+        const characters: number = this.getText().length;
+        this.setInfo(`${lines} ${lines == 1 ? 'line' : 'lines'} · ${characters} ${characters == 1 ? 'character' : 'characters'}`);
     }
 
     public displayCategory(category: NoteCategory | null): void {
-        this.element.textContent = `Category: ${category?.getName() ?? 'General'}`;
+        this.category.textContent = category?.getName() ?? 'General';
     }
 
-    protected onclick(): void {
-        this.list.holder.holder.display_holder.selectNextCategory();
-    }
-}
-
-// creates or updates the note in the editor
-class NoteOptionCreate extends NoteOptionButton {
-    constructor(list: NoteOptionList) {
-        super(list);
-        this.element.classList.add('create');
-        this.displayEditing(false);
-    }
-
+    // plus when creating, check when updating
     public displayEditing(editing: boolean): void {
-        this.element.textContent = editing ? 'Update' : 'Create';
+        this.save.textContent = editing ? 'Update' : 'Create';
+        this.save.style.setProperty('--icon-url', `url('../icon/${editing ? 'check' : 'plus'}.svg')`);
     }
 
-    protected onclick(): void {
-        this.list.holder.submit();
+    private async copy(): Promise<void> {
+        const header: string = this.getHeader();
+        const text: string = header ? `${header}\n\n${this.getText()}` : this.getText();
+        try {
+            await navigator.clipboard.writeText(text);
+            this.holder.holder.page.notify('info', 'Copied note to clipboard.');
+        } catch (error: unknown) {
+            this.holder.holder.page.notify('error', 'Unable to copy to clipboard.');
+        }
+    }
+
+    // empties the editor
+    public close(): void {
+        this.holder.clear();
     }
 }
 
-// empties the editor
-class NoteOptionClear extends NoteOptionButton {
-    constructor(list: NoteOptionList) {
-        super(list);
-        this.element.classList.add('clear');
-        this.element.textContent = 'Clear';
+// shown in place of the categories when there are none
+class NoteEmptyNotice extends ShadowGlassPane {
+    holder: NoteDisplayHolder;
+    text: HTMLElement;
+    create: HTMLButtonElement;
+
+    constructor(holder: NoteDisplayHolder) {
+        super('div');
+        this.holder = holder;
+        this.text = document.createElement('span');
+        this.create = document.createElement('button');
+
+        this.element.classList.add('empty_notice');
+        this.text.classList.add('notice_text');
+        this.create.classList.add('glass', 'gradient', 'hoverchange');
+
+        this.text.textContent = 'You have no categories yet.';
+        this.create.textContent = 'Create Category';
+        this.create.onclick = () => this.onclick();
+
+        this.element.append(this.text, this.create);
+        this.setParent(holder);
     }
 
+    public toggle(show: boolean): void {
+        this.element.classList.toggle('hide', !show);
+    }
+
+    // uses the name typed in the category box, otherwise General
     protected onclick(): void {
-        this.list.holder.clear();
+        const bookmarks: NoteBookmarkPane = this.holder.holder.page.bookmark_pane;
+        if (bookmarks.category.getText()) {
+            bookmarks.addCategory();
+            return;
+        }
+        this.holder.selectCategory(this.holder.createCategory('General'));
+        this.holder.requestSave();
     }
 }
-
 
 // specifically for displaying notes
-class NoteCategory extends GlassPane {
+// top bar: name, note count and delete
+class NoteCategory extends ShadowGlassPane {
     holder: NoteDisplayHolder;
+    bar: HTMLElement;
     name: HTMLElement;
+    count: HTMLElement;
     trash: HTMLElement;
     notes: Note[] = [];
 
     constructor(holder: NoteDisplayHolder) {
         super('div');
         this.holder = holder;
+        this.bar = document.createElement('div');
         this.name = document.createElement('span');
+        this.count = document.createElement('span');
         this.trash = document.createElement('button');
 
         this.element.classList.add('category');
+        this.bar.classList.add('category_bar');
         this.name.classList.add('name');
-        this.trash.classList.add('glass', 'darker', 'trash');
+        this.count.classList.add('count');
+        this.trash.classList.add('glass', 'gradient', 'hoverchange', 'trash');
+        this.trash.title = 'Delete category';
 
-        this.name.onclick = () => this.holder.selectCategory(this);
-        this.trash.onclick = () => this.delete();
+        this.bar.onclick = () => this.holder.selectCategory(this);
+        this.trash.onclick = (e: PointerEvent) => {
+            e.stopPropagation();
+            this.delete();
+        };
 
-        this.element.appendChild(this.name);
-        this.element.appendChild(this.trash);
+        this.bar.append(this.name, this.count, this.trash);
+        this.element.appendChild(this.bar);
+        this.updateCount();
         this.setParent(holder);
+    }
+
+    public updateCount(): void {
+        this.count.textContent = `${this.notes.length} ${this.notes.length == 1 ? 'note' : 'notes'}`;
     }
 
     public displayCategory(text: string): void {
@@ -327,6 +344,7 @@ class NoteCategory extends GlassPane {
         note.setHeader(header);
         note.setContent(content);
         this.notes.push(note);
+        this.updateCount();
         return note;
     }
 
@@ -336,6 +354,7 @@ class NoteCategory extends GlassPane {
         if (this.holder.holder.input_holder.editing == note) this.holder.holder.input_holder.clear();
         this.notes.splice(found, 1);
         note.element.remove();
+        this.updateCount();
         this.holder.requestSave();
     }
 
@@ -366,10 +385,12 @@ class Note extends PageElement {
         this.content = document.createElement('span');
         this.trash = document.createElement('button');
 
-        this.element.classList.add('glass', 'dark', 'note');
+        this.element.classList.add('note');
         this.header.classList.add('note_header');
         this.content.classList.add('note_content');
-        this.trash.classList.add('glass', 'darker', 'trash');
+        this.trash.classList.add('glass', 'gradient', 'hoverchange', 'trash');
+        this.trash.title = 'Delete note';
+
 
         // clicking a note loads it into the editor
         this.element.onclick = () => this.category.holder.holder.input_holder.edit(this);

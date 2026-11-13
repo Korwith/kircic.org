@@ -70,15 +70,13 @@ class NotesSegmentHolder extends PageSegment {
 // user input segment
 class NoteInputHolder extends PageElement {
     holder: NotesSegmentHolder;
-    editor: NoteEditor;
-    option_list: NoteOptionList;
+    viewer: NoteViewer;
     editing: Note | null = null;
 
     constructor(holder: NotesSegmentHolder) {
         super('div');
         this.holder = holder;
-        this.editor = new NoteEditor(this);
-        this.option_list = new NoteOptionList(this);
+        this.viewer = new NoteViewer(this);
         this.element.classList.add('segment', 'input_holder');
 
         this.setParent(holder);
@@ -87,8 +85,8 @@ class NoteInputHolder extends PageElement {
     // creates a note from the editor
     // or updates the note currently being edited
     public submit(): void {
-        const header: string = this.editor.header.getText();
-        const content: string = this.editor.content.getText();
+        const header: string = this.viewer.getHeader();
+        const content: string = this.viewer.getText().trim();
         const display: NoteDisplayHolder = this.holder.display_holder;
 
         if (!header && !content) {
@@ -111,9 +109,9 @@ class NoteInputHolder extends PageElement {
         this.editing = note;
         note.element.classList.add('editing');
 
-        this.editor.header.setText(note.getHeader());
-        this.editor.content.setText(note.getContent());
-        this.option_list.create.displayEditing(true);
+        this.viewer.setHeader(note.getHeader());
+        this.viewer.setText(note.getContent());
+        this.viewer.displayEditing(true);
     }
 
     // empties the editor and leaves edit mode
@@ -121,21 +119,23 @@ class NoteInputHolder extends PageElement {
         this.editing?.element.classList.remove('editing');
         this.editing = null;
 
-        this.editor.header.setText('');
-        this.editor.content.setText('');
-        this.option_list.create.displayEditing(false);
+        this.viewer.setHeader('');
+        this.viewer.setText('');
+        this.viewer.displayEditing(false);
     }
 }
 
 // note display segment
 class NoteDisplayHolder extends PageElement {
     holder: NotesSegmentHolder;
+    notice: NoteEmptyNotice;
     category_list: NoteCategory[] = [];
     selected: NoteCategory | null = null;
 
     constructor(holder: NotesSegmentHolder) {
         super('div');
         this.holder = holder;
+        this.notice = new NoteEmptyNotice(this);
         this.element.classList.add('segment', 'display_holder');
         this.setParent(holder);
     }
@@ -145,7 +145,13 @@ class NoteDisplayHolder extends PageElement {
         category.displayCategory(name);
         this.category_list.push(category);
         if (!this.selected) this.selectCategory(category);
+        this.updateNotice();
         return category;
+    }
+
+    // the notice only shows when there are no categories
+    public updateNotice(): void {
+        this.notice.toggle(this.category_list.length == 0);
     }
 
     // finds a category by name (case insensitive)
@@ -159,7 +165,7 @@ class NoteDisplayHolder extends PageElement {
         this.selected?.element.classList.remove('selected');
         this.selected = category;
         category?.element.classList.add('selected');
-        this.holder.input_holder.option_list.category.displayCategory(category);
+        this.holder.input_holder.viewer.displayCategory(category);
     }
 
     // selects the category after the current one (wraps around)
@@ -185,6 +191,7 @@ class NoteDisplayHolder extends PageElement {
         this.category_list.splice(found, 1);
         category.element.remove();
         if (this.selected == category) this.selectCategory(this.category_list[0] || null);
+        this.updateNotice();
         this.requestSave();
     }
 
