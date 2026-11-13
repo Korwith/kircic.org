@@ -49,17 +49,23 @@ abstract class BookmarkInputBox extends PageElement {
         this.element.classList.add('glass', 'empty');
         this.element.setAttribute('contenteditable', 'true');
         this.element.setAttribute('placeholder', 'Add Page...');
+        // fires right after any change
+        this.element.addEventListener('input', () => this.updateEmpty());
 
         this.setParent(bar);
     }
 
-    // handles if the placeholder text is visible or not
     // rejects newlines
     protected changed(e: KeyboardEvent): void {
         if (e.key == 'Enter' && e.type == 'keydown') {
             e.preventDefault();
-            if (e.type == 'keydown') this.handleInputComplete();
+            this.handleInputComplete();
         }
+        this.updateEmpty();
+    }
+
+    // handles if the placeholder text is visible or not
+    protected updateEmpty(): void {
         this.element.classList.toggle('empty', this.element.textContent.length < 1);
     }
 

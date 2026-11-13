@@ -169,20 +169,18 @@ abstract class NoteEditorInput extends PageElement {
         this.element.classList.add('glass', 'dark', 'empty');
         this.element.setAttribute('contenteditable', 'true');
         this.element.addEventListener('keydown', (e: KeyboardEvent) => this.handleInput(e));
-        this.element.addEventListener('keyup', (e: KeyboardEvent) => this.handleInput(e))
+        // fires right after any change
+        this.element.addEventListener('input', () => this.updateEmpty());
 
         this.setParent(this.editor);
     }
 
-    protected handleInput(input: KeyboardEvent) {
-        this.updateEmpty();
-    }
+    protected handleInput(input: KeyboardEvent) {}
 
     // handles if the placeholder text is visible or not
     protected updateEmpty(): void {
-        const characters: RegExpMatchArray | null = this.element.textContent.match(/[a-z0-9]/gi);
-        const length: number = characters?.length ?? 0;
-        this.element.classList.toggle('empty', length == 0);
+        const text: string = this.element.innerText.replace(/\n$/, '');
+        this.element.classList.toggle('empty', text.length == 0);
     }
 
     // innerText keeps line breaks
