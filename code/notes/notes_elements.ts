@@ -67,6 +67,8 @@ class NoteBookmarkInput extends BookmarkInputBox {
         super(bar);
         this.bookmarks = bar;
         this.plus = new NoteBookmarkInputPlus(bar);
+        this.element.classList.add('quick_note');
+        this.plus.element.classList.add('quick_note');
         this.element.setAttribute('placeholder', 'Quick Note...');
         this.element.onkeydown = (e: KeyboardEvent) => this.changed(e);
         this.element.onkeyup = (e: KeyboardEvent) => this.changed(e);
@@ -224,12 +226,12 @@ class NoteViewer extends TextViewer {
     }
 
     public displayCategory(category: NoteCategory | null): void {
-        this.category.textContent = category?.getName() ?? 'General';
+        TextViewer.setActionText(this.category, category?.getName() ?? 'General');
     }
 
     // plus when creating, check when updating
     public displayEditing(editing: boolean): void {
-        this.save.textContent = editing ? 'Update' : 'Create';
+        TextViewer.setActionText(this.save, editing ? 'Update' : 'Create');
         this.save.style.setProperty('--icon-url', `url('../icon/${editing ? 'check' : 'plus'}.svg')`);
     }
 

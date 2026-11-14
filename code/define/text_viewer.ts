@@ -59,14 +59,24 @@ abstract class TextViewer extends PageElement {
     public addAction(text: string, onclick: () => void, icon?: string): HTMLButtonElement {
         const button: HTMLButtonElement = document.createElement('button');
         button.classList.add('glass', 'gradient', 'hoverchange');
-        button.textContent = text;
         button.onclick = () => onclick();
         if (icon) {
             button.classList.add('has_icon');
             button.style.setProperty('--icon-url', `url('${icon}')`);
         }
+        TextViewer.setActionText(button, text);
         this.actions.appendChild(button);
         return button;
+    }
+
+    // the text sits in its own span so it can be hidden
+    public static setActionText(button: HTMLElement, text: string): void {
+        if (!text) return;
+        const label: HTMLElement = button.querySelector('span.label') ?? document.createElement('span');
+        label.classList.add('label');
+        label.textContent = text;
+        button.title = text;
+        if (!label.parentElement) button.appendChild(label);
     }
 
     // adds a link which opens in a new tab
