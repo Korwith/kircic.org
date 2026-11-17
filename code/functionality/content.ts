@@ -12,6 +12,7 @@ class PageContent extends PageElement {
     codebase: CodebasePage;
     //planner: PlannerPage;
     notes: NotesPage;
+    current?: string;
 
     constructor(manager: PageManager) {
         super();
@@ -25,7 +26,11 @@ class PageContent extends PageElement {
         //this.planner = new PlannerPage(this);
         this.notes = new NotesPage(this);
 
-        this.setParent(manager.element);        
+        this.setParent(manager.element);
+
+        // open the page found in the url (#home, #projects, etc)
+        this.loadFromURL();
+        window.addEventListener('hashchange', () => this.loadFromURL());
     }
 
     public registerPage(key: string, page: Page): void {
@@ -38,6 +43,18 @@ class PageContent extends PageElement {
             const foundPage: Page = this.pages[pageName];
             foundPage.toggle(key == pageName);
         }
+        this.current = key;
+        if (window.location.hash != `#${key}`) history.pushState(null, '', `#${key}`);
         if (window.innerWidth <= 767) this.manager.shiftView(false);
+    }
+
+    // opens the page matching the url hash
+    // invalid hashes reset the url back to the current page
+    public loadFromURL(): void {
+        const key: string = decodeURIComponent(window.location.hash.slice(1));
+        if (key == this.current) return;
+        if (key in this.pages) return this.showPage(key);
+        const url: string = this.current ? `#${this.current}` : window.location.pathname + window.location.search;
+        history.replaceState(null, '', url);
     }
 }
