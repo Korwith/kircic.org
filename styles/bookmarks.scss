@@ -1,13 +1,20 @@
+/*
+ *   Copyright (c) 2026 Thaddeus MW.
+ *   
+ */
+
 .content {
     .segment.bookmarks {
         flex-direction: row;
         min-height: 30px;
 
+        // block + line-height instead of flex centering
+        // an empty flex container has no line box, so the caret landed too low
         strong {
             position: relative;
-            display: flex;
-            align-items: center;
-            height: 100%;
+            display: block;
+            height: 30px;
+            line-height: 28px;
             width: fit-content;
             min-width: 200px;
             max-width: 320px;
@@ -24,7 +31,8 @@
             content: '';
             position: absolute;
             left: 0;
-            height: 30px;
+            top: 0;
+            height: 100%;
             width: 30px;
             background-image: url(../icon/pencil.svg);
             background-size: 60%;
@@ -37,6 +45,8 @@
         strong::after {
             content: attr(placeholder);
             position: absolute;
+            top: 0;
+            left: 35px;
             color: rgba(255, 255, 255, 0.7);
             white-space: nowrap;
             pointer-events: none;

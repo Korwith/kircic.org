@@ -43,7 +43,7 @@ abstract class GeneralBookmarkBar extends PageSegment {
 abstract class BookmarkInputBox extends PageElement {
     bookmarks: GeneralBookmarkBar;
 
-    constructor(bar: GeneralBookmarkBar) {
+    constructor(bar: GeneralBookmarkBar) {  
         super('strong');
         this.bookmarks = bar;
         this.element.classList.add('glass', 'empty');
@@ -66,7 +66,9 @@ abstract class BookmarkInputBox extends PageElement {
 
     // handles if the placeholder text is visible or not
     protected updateEmpty(): void {
-        this.element.classList.toggle('empty', this.element.textContent.length < 1);
+        const empty: boolean = this.element.textContent.length < 1;
+        if (empty) this.element.replaceChildren();
+        this.element.classList.toggle('empty', empty);
     }
 
     // called to get textcontent
