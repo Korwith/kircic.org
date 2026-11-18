@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2026 Thaddeus MW.
+ *   
+ */
+
 // holds all the various boxes for different search engines
 class SearchHolder extends GlassPageSegment {
     page: SearchPage;
@@ -11,11 +16,29 @@ class SearchHolder extends GlassPageSegment {
         this.addDescription('Browser Homepage');
         this.addSearchBars();
         this.setParent(this.page);
+
+        document.addEventListener('keydown', (e: KeyboardEvent) => this.handleTab(e));
     }
+
+    bars: SearchBar[] = [];
 
     // adds the SearchBar elements
     protected addSearchBars(): void {
-        for (const data of SearchInfo) new SearchBar(this, data);
+        for (const data of SearchInfo) this.bars.push(new SearchBar(this, data));
+    }
+
+    // tab cycles focus through the search inputs
+    protected handleTab(e: KeyboardEvent): void {
+        if (e.key !== 'Tab' || e.ctrlKey || e.altKey || e.metaKey) return;
+        if (this.page.content.current !== 'search' || this.bars.length == 0) return;
+
+        e.preventDefault();
+        const count: number = this.bars.length;
+        const index: number = this.bars.findIndex(bar => bar.input === document.activeElement);
+        const next: number = index === -1
+            ? (e.shiftKey ? count - 1 : 0)
+            : (index + (e.shiftKey ? -1 : 1) + count) % count;
+        this.bars[next].input.focus();
     }
 }
 
