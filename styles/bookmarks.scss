@@ -82,6 +82,14 @@
             transition: background-color 0.15s, color 0.15s, border 0.15s !important;
         }
 
+        a.saved_search {
+            display: block;
+            max-width: 150px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
         a.loading {
             background-image: url(../icon/rotate.svg);
             filter: invert(var(--icon-invert));

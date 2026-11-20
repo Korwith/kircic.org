@@ -99,8 +99,9 @@ class SearchBar extends PageElement {
         const query = this.input.value.trim();
         if (!query) return;
 
-        const target_url = this.search_url + encodeURIComponent(query);
-        window.open(target_url, '_blank');
+        const settings = searchSettings();
+        if (settings.save_searches) this.holder.page.bookmarks.addSearch(this.input.id, query);
+        window.open(this.search_url + encodeURIComponent(query), settings.search_new_tab ? '_blank' : '_self');
     }
 }
 
@@ -130,8 +131,8 @@ class SearchBookmarkBar extends GeneralBookmarkBar {
         };
 
         for (const button of this.buttons) {
-            if (button instanceof BookmarkButtonWebsite) save_data.bookmarks.push(button.fetchBookmarkLink());
             if (button instanceof BookmarkButtonSearch) save_data.searches.push(button.fetchSearchData());
+            else if (button instanceof BookmarkButtonWebsite) save_data.bookmarks.push(button.fetchBookmarkLink());
         }
 
         return save_data;
@@ -142,7 +143,16 @@ class SearchBookmarkBar extends GeneralBookmarkBar {
         const save_data: SearchSaveData = this.page.getSavedSearchData();
         if (!save_data) return;
         for (const url of save_data.bookmarks) this.addURL(url);
-        // handle saved search terms later
+        if (searchSettings().save_searches) for (const s of save_data.searches) this.addSearch(s.service, s.term, true);
+    }
+
+    // adds a saved search, keeping only the 3 most recent
+    public addSearch(service: string, term: string, loading?: boolean): void {
+        this.buttons.push(new BookmarkButtonSearch(this, service, term));
+        const searches = this.buttons.filter(b => b instanceof BookmarkButtonSearch);
+        if (searches.length > 3) searches[0].delete();
+        else if (!loading) this.requestSave();
+        this.handleButtonOverflow();
     }
 
     // requests that the current configuration is saved
@@ -318,20 +328,28 @@ class BookmarkButtonWebsite extends BookmarkButton {
 
     public onclick(): void {
         if (this.bookmarks.inDeleteMode()) this.delete();
+        else this.element.setAttribute('target', searchSettings().search_new_tab ? '_blank' : '_self');
     };
+}
+
+// reads the current settings save (or nothing if never saved)
+function searchSettings(): Partial<SettingsSaveData> {
+    return new SettingsStorage().fetch() || {};
 }
 
 
 // saved search entry
-class BookmarkButtonSearch extends BookmarkButton {
+class BookmarkButtonSearch extends BookmarkButtonWebsite {
     service: string;
     term: string;
 
     constructor(bar: SearchBookmarkBar, service: string, term: string) {
-        super(bar, 'a');
+        const info = SearchInfo.find(s => s.name == service) || SearchInfo[0];
+        super(bar, info.search_url + encodeURIComponent(term));
         this.service = service;
         this.term = term;
-        this.element.onclick = () => this.onclick();
+        this.element.textContent = term;
+        this.element.classList.add('saved_search');
     }
 
     fetchSearchData(): { service: string, term: string } {
@@ -340,10 +358,4 @@ class BookmarkButtonSearch extends BookmarkButton {
             term: this.term
         }
     }
-
-    // see comment on previous class
-    onclick(): void { };
-
-    // possibly handle this later
-    toggleDeletionMode(deletion: boolean): void { }
 }

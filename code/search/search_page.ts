@@ -30,6 +30,12 @@ class SearchPage extends Page {
         this.storage.save(data);
     }
 
+    // bookmark widths can only be measured while visible
+    public toggle(force?: boolean): void {
+        super.toggle(force);
+        this.bookmarks.handleButtonOverflow();
+    }
+
     public getSavedSearchData(): SearchSaveData {
         return this.storage.fetch();
     }

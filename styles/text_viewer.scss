@@ -134,6 +134,11 @@
                 background: none;
                 overflow: visible;
             }
+
+            /* line height fix */
+            code.hljs span {
+                font-family: inherit;
+            }
         }
 
         /* editable text, the textarea sits over the highlighted text */
