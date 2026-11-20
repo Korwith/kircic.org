@@ -53,6 +53,7 @@
     height: 100%;
     aspect-ratio: 1/1;
     background-image: url(../icon/send.svg);
+    filter: invert(var(--icon-invert));
     background-size: 80%;
     background-position: center;
     background-repeat: no-repeat;

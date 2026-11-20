@@ -60,6 +60,7 @@
             aspect-ratio: 1/1;
             background-size: cover;
             background-image: url(../icon/arrow.svg);
+            filter: invert(var(--icon-invert));
             transform: rotate(90deg);
         }
     }

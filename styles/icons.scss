@@ -50,7 +50,7 @@
     }
 
     a:hover::after {
-        border: 2px solid white;
+        border: 2px solid var(--fg);
     }
 }
 
@@ -63,14 +63,14 @@
         width: 60px;
         height: 60px;
         box-sizing: border-box;
-        border: 2px solid rgba(255, 255, 255, 0.1);
+        border: 2px solid color-mix(in srgb, var(--fg) 10%, transparent);
         border-radius: 12px;
         overflow: hidden;
         transition: border 0.15s;
     }
 
     i:hover {
-        border: 2px solid rgba(255, 255, 255, 0.05);
+        border: 2px solid color-mix(in srgb, var(--fg) 5%, transparent);
     }
 
     i:hover::before {

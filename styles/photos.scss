@@ -28,6 +28,10 @@
             height: 30px;
             background-color: rgba(0, 0, 0, 0.5);
             font-weight: 700;
+
+            // captions sit on top of photos, so keep them light in every theme
+            --text: white;
+            --text-shadow: black;
         }
 
         span.date {

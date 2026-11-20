@@ -463,8 +463,12 @@ class SettingOptionSlider extends SettingOptionType {
         this.element.appendChild(this.inner);
     }
 
+    // optional hook run whenever the slider changes state (click or load)
+    public onToggle?: (on: boolean) => void;
+
     public toggle(force?: boolean) {
         this.element.classList.toggle('on', force);
+        this.onToggle?.(this.isOn());
     }
 
     public isOn(): boolean {
@@ -517,6 +521,33 @@ class OptionPageColor extends SettingOption {
     }
 }
 
+// switches the page between the dark and light themes
+// theme colors live as css variables on :root (see styles/index.scss)
+class PageTheme {
+    private static initialized: boolean = false;
+
+    public static apply(dark: boolean): void {
+        const root: HTMLElement = document.documentElement;
+
+        // applies during startup (default + saved theme) skip the transition
+        if (!PageTheme.initialized) {
+            root.classList.add('no_theme_transition');
+            root.classList.toggle('light', !dark);
+            // setTimeout (not requestAnimationFrame) so this still runs in background tabs
+            setTimeout(() => {
+                void root.offsetHeight;
+                root.classList.remove('no_theme_transition');
+                PageTheme.initialized = true;
+            }, 50);
+        } else {
+            root.classList.toggle('light', !dark);
+        }
+
+        const meta: HTMLMetaElement | null = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.content = dark ? '#000001' : '#eceef3';
+    }
+}
+
 // option for dark theme
 class OptionDarkTheme extends SettingOption {
     slider: SettingOptionSlider;
@@ -524,6 +555,7 @@ class OptionDarkTheme extends SettingOption {
     constructor(parent: SidebarSettingsGeneral) {
         super(parent);
         this.slider = new SettingOptionSlider(this);
+        this.slider.onToggle = (on: boolean) => PageTheme.apply(on);
         this.slider.toggle(true);
 
         this.element.classList.add('theme');

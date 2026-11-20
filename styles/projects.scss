@@ -101,7 +101,8 @@
                 background-size: 68%;
                 background-position: center;
                 background-repeat: no-repeat;
-                background-image: url(../icon/launch.svg)
+                background-image: url(../icon/launch.svg);
+                filter: invert(var(--icon-invert));
             }
         }
     }

@@ -66,7 +66,7 @@
             }
 
             button:hover {
-                border: 1px solid rgba(255, 255, 255, 0.1);
+                border: 1px solid color-mix(in srgb, var(--fg) 10%, transparent);
             }
 
             button::before {
@@ -93,6 +93,7 @@
 
             >button::after {
                 background-image: url(../icon/folder.svg);
+                filter: invert(var(--icon-invert));
                 background-size: 65%;
             }
 
@@ -101,7 +102,7 @@
                 flex-direction: column;
                 margin-left: 20px;
                 overflow-y: auto;
-                border-left: 2px solid rgba(255, 255, 255, 0.1)
+                border-left: 2px solid color-mix(in srgb, var(--fg) 10%, transparent)
             }
 
             >.children.hidden {
@@ -112,6 +113,7 @@
         .entry.file {
             >button::after {
                 background-image: url(../icon/file.svg);
+                filter: invert(var(--icon-invert));
                 background-size: 65%;
             }
         }
@@ -145,8 +147,8 @@
         }
 
         .entry:hover {
-            background-color: rgba(255, 255, 255, 0.025);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background-color: color-mix(in srgb, var(--fg) 2.5%, transparent);
+            border: 1px solid color-mix(in srgb, var(--fg) 10%, transparent);
         }
 
         .entry::before {
@@ -167,11 +169,13 @@
         .entry.folder::before {
             background-size: 80%;
             background-image: url(../icon/folder.svg);
+            filter: invert(var(--icon-invert));
         }
 
         .entry.file.none::before {
             background-size: 70%;
             background-image: url(../icon/file.svg);
+            filter: invert(var(--icon-invert));
         }
 
         .entry::after {
@@ -186,6 +190,7 @@
 
         .entry:not(.has_icon):not(.folder) button::after {
             background-image: url(../icon/file.svg);
+            filter: invert(var(--icon-invert));
             background-size: 70%;
         }
 
@@ -212,8 +217,8 @@
         padding-right: 10px;
         margin-left: auto;
         margin-right: auto;
-        background-color: rgba(0, 0, 0, 0.4);
-        border: 1px solid rgba(0, 0, 0, 0.4);
+        background-color: var(--glass-bg-darker);
+        border: 1px solid var(--glass-border-darker);
         border-radius: 8px;
         box-sizing: border-box;
     }

@@ -3,8 +3,99 @@
  *   
  */
 
+// theme tokens
+// registered with @property so the colors themselves can transition,
+// which lets gradients and inherited values animate between themes
+@property --page-bg { syntax: '<color>'; inherits: true; initial-value: black; }
+@property --text { syntax: '<color>'; inherits: true; initial-value: white; }
+@property --fg { syntax: '<color>'; inherits: true; initial-value: white; }
+@property --gutter-bg { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --text-shadow { syntax: '<color>'; inherits: true; initial-value: black; }
+@property --icon-invert { syntax: '<number>'; inherits: true; initial-value: 0; }
+@property --backdrop-opacity { syntax: '<number>'; inherits: true; initial-value: 1; }
+@property --backdrop-saturate { syntax: '<number>'; inherits: true; initial-value: 1; }
+@property --glass-bg { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --glass-border { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --glass-bg-dark { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --glass-bg-darker { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --glass-border-darker { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --glass-gradient { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --glass-hover-border { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --glass-stripe { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --glass-focus { syntax: '<color>'; inherits: true; initial-value: white; }
+
+// dark theme (default)
+:root {
+    --page-bg: black;
+    --text: white;
+    --fg: white;
+    --gutter-bg: rgba(10, 10, 12, 0.85);
+    --text-shadow: black;
+    --icon-invert: 0;
+    --backdrop-opacity: 1;
+    --backdrop-saturate: 1;
+
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-bg-dark: rgba(0, 0, 0, 0.05);
+    --glass-bg-darker: rgba(0, 0, 0, 0.4);
+    --glass-border-darker: rgba(0, 0, 0, 0.4);
+    --glass-gradient: rgba(255, 255, 255, 0.08);
+    --glass-hover-border: rgba(255, 255, 255, 0.05);
+    --glass-stripe: rgba(255, 255, 255, 0.06);
+    --glass-focus: white;
+
+    transition:
+        --page-bg 0.4s ease,
+        --text 0.4s ease,
+        --fg 0.4s ease,
+        --gutter-bg 0.4s ease,
+        --text-shadow 0.4s ease,
+        --icon-invert 0.4s ease,
+        --backdrop-opacity 0.4s ease,
+        --backdrop-saturate 0.4s ease,
+        --glass-bg 0.4s ease,
+        --glass-border 0.4s ease,
+        --glass-bg-dark 0.4s ease,
+        --glass-bg-darker 0.4s ease,
+        --glass-border-darker 0.4s ease,
+        --glass-gradient 0.4s ease,
+        --glass-hover-border 0.4s ease,
+        --glass-stripe 0.4s ease,
+        --glass-focus 0.4s ease;
+}
+
+// light theme (prototype)
+// glass flips from white tints to black tints so it reads darker than the page
+:root.light {
+    --page-bg: #eceef3;
+    --text: #15161a;
+    --fg: black;
+    --gutter-bg: rgba(0, 0, 0, 0.08);
+    --text-shadow: rgba(255, 255, 255, 0);
+    --icon-invert: 1;
+    // the glow washes out against a pale page, so show it fully and push saturation
+    --backdrop-opacity: 1;
+    --backdrop-saturate: 1.6;
+
+    --glass-bg: rgba(0, 0, 0, 0.06);
+    --glass-border: rgba(0, 0, 0, 0.14);
+    --glass-bg-dark: rgba(0, 0, 0, 0.1);
+    --glass-bg-darker: rgba(0, 0, 0, 0.22);
+    --glass-border-darker: rgba(0, 0, 0, 0.25);
+    --glass-gradient: rgba(0, 0, 0, 0.07);
+    --glass-hover-border: rgba(0, 0, 0, 0.08);
+    --glass-stripe: rgba(0, 0, 0, 0.06);
+    --glass-focus: black;
+}
+
+// used while restoring a saved theme on load so it doesn't animate in
+:root.no_theme_transition {
+    transition: none !important;
+}
+
 html, body {
-    background-color: black;
+    background-color: var(--page-bg);
     touch-action: manipulation;
     overflow: hidden;
 }
@@ -20,6 +111,8 @@ body::before {
     background-repeat: no-repeat;
     background-position: center;
     background-size: 120%;
+    opacity: var(--backdrop-opacity);
+    filter: saturate(var(--backdrop-saturate));
 }
 
 ::-webkit-scrollbar {
@@ -32,16 +125,25 @@ body::before {
 }
 
 ::-webkit-scrollbar-thumb {
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
     border-radius: 8px;
     box-sizing: border-box;
 }
 
+// Firefox (no ::-webkit-scrollbar support). Scoped so Chromium keeps the
+// richer webkit styles above, since scrollbar-color overrides them there.
+@supports not selector(::-webkit-scrollbar) {
+    * {
+        scrollbar-width: thin;
+        scrollbar-color: var(--glass-bg) transparent;
+    }
+}
+
 * {
-    color: white;
+    color: var(--text);
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    text-shadow: 2px 2px 4px black;
+    text-shadow: 2px 2px 4px var(--text-shadow);
 }
 
 @media screen and (max-width: 767px) {

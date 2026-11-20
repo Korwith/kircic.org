@@ -33,7 +33,7 @@
             cursor: pointer;
 
             &:hover {
-                background-color: rgba(255, 255, 255, 0.1);
+                background-color: var(--glass-border);
             }
         }
 
@@ -83,6 +83,7 @@
                 background-repeat: no-repeat;
                 background-position: center;
                 opacity: 0.5;
+                filter: invert(var(--icon-invert));
                 transition: opacity 0.15s;
             }
 
@@ -102,13 +103,14 @@
         padding-left: 16px !important;
         padding-right: 16px !important;
         font-weight: 700;
-        color: rgba(255, 255, 255, 0.9);
+        color: var(--text);
+        opacity: 0.9;
         cursor: pointer;
         transition: background-color 0.15s, color 0.15s;
 
         &:hover {
-            background-color: rgba(255, 255, 255, 0.05);
-            color: white;
+            background-color: var(--glass-bg);
+            opacity: 1;
         }
     }
 }

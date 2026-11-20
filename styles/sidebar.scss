@@ -4,188 +4,187 @@
  */
 
 body {
-    &:not(.shift) {
-        .sidebar {
-            display: flex;
-            flex-direction: column;
-            position: fixed;
-            top: 0;
-            left: 0;
-            margin: 10px;
-            height: calc(100vh - 20px);
-            width: 280px;
-            transition: left 0.5s, width 0.5s;
+    .sidebar {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        left: 0;
+        margin: 10px;
+        height: calc(100vh - 20px);
+        width: 280px;
+        transition: left 0.5s, width 0.5s;
 
-            .segment,
-            .group {
+        .segment,
+        .group {
+            display: flex;
+            gap: 4px;
+            flex-direction: column;
+            width: 100%;
+            height: fit-content;
+            box-sizing: border-box;
+            border-bottom: 1px solid color-mix(in srgb, var(--fg) 10%, transparent);
+        }
+
+        .segment {
+            &.traffic {
                 display: flex;
-                gap: 4px;
-                flex-direction: column;
-                width: 100%;
-                height: fit-content;
-                box-sizing: border-box;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                flex-direction: row;
+                gap: 10px;
+                min-height: 16px;
+                border-bottom: none;
+                padding-bottom: 0;
+
+                button {
+                    position: relative;
+                    display: flex;
+                    height: 16px;
+                    width: 16px;
+                    padding: 0;
+                    border-radius: 50%;
+                    border: none;
+                    cursor: pointer;
+                    transition: filter 0.15s;
+
+                    &.red {
+                        background-color: rgb(252, 97, 86);
+
+                        &::after {
+                            background-image: url(../icon/close.svg);
+                            background-size: 70%;
+                            filter: brightness(0) saturate(100%) invert(21%) sepia(54%) saturate(1636%) hue-rotate(331deg) brightness(85%) contrast(88%);
+                        }
+                    }
+
+                    &.yellow {
+                        background-color: rgb(252, 190, 43);
+
+                        &::after {
+                            background-image: url(../icon/line.svg);
+                            background-size: 90%;
+                            filter: brightness(0) saturate(100%) invert(35%) sepia(68%) saturate(519%) hue-rotate(4deg) brightness(91%) contrast(90%);
+                        }
+                    }
+
+                    &.green {
+                        background-color: rgb(44, 201, 63);
+
+                        &::after {
+                            background-image: url(../icon/fullscreen.svg);
+                            background-size: 72%;
+                            filter: brightness(0) saturate(100%) invert(31%) sepia(13%) saturate(2644%) hue-rotate(76deg) brightness(93%) contrast(93%);
+                        }
+                    }
+
+                    &::before,
+                    &::after {
+                        content: '';
+                        position: absolute;
+                        width: 100%;
+                        height: 100%;
+                        box-sizing: border-box;
+                    }
+
+                    &::before {
+                        border-radius: 50%;
+                        border: 2px solid rgba(0, 0, 0, 0.5);
+                    }
+
+                    &::after {
+                        background-repeat: no-repeat;
+                        background-position: center;
+                        opacity: 0;
+                        transition: opacity 0.15s;
+                    }
+
+                    &:hover {
+                        filter: brightness(0.8);
+
+                        &::after {
+                            opacity: 1;
+                        }
+                    }
+                }
+            }
+
+            &.footer {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                min-height: 35px;
+                padding: 5px;
+                border-bottom: none;
+
+                span {
+                    padding-left: 10px;
+                    padding-right: 10px;
+                    font-weight: 700;
+                    font-size: 0.85rem;
+                    user-select: none;
+                }
+            }
+        }
+
+        .group {
+            &.center {
+                flex: 1;
+                overflow-y: auto;
             }
 
             .segment {
-                &.traffic {
+                padding: 10px;
+
+
+                .caption {
                     display: flex;
-                    flex-direction: row;
-                    gap: 10px;
-                    min-height: 16px;
-                    border-bottom: none;
-                    padding-bottom: 0;
-
-                    button {
-                        position: relative;
-                        display: flex;
-                        height: 16px;
-                        width: 16px;
-                        padding: 0;
-                        border-radius: 50%;
-                        border: none;
-                        cursor: pointer;
-                        transition: filter 0.15s;
-
-                        &.red {
-                            background-color: rgb(252, 97, 86);
-
-                            &::after {
-                                background-image: url(../icon/close.svg);
-                                background-size: 70%;
-                                filter: brightness(0) saturate(100%) invert(21%) sepia(54%) saturate(1636%) hue-rotate(331deg) brightness(85%) contrast(88%);
-                            }
-                        }
-
-                        &.yellow {
-                            background-color: rgb(252, 190, 43);
-
-                            &::after {
-                                background-image: url(../icon/line.svg);
-                                background-size: 90%;
-                                filter: brightness(0) saturate(100%) invert(35%) sepia(68%) saturate(519%) hue-rotate(4deg) brightness(91%) contrast(90%);
-                            }
-                        }
-
-                        &.green {
-                            background-color: rgb(44, 201, 63);
-
-                            &::after {
-                                background-image: url(../icon/fullscreen.svg);
-                                background-size: 72%;
-                                filter: brightness(0) saturate(100%) invert(31%) sepia(13%) saturate(2644%) hue-rotate(76deg) brightness(93%) contrast(93%);
-                            }
-                        }
-
-                        &::before,
-                        &::after {
-                            content: '';
-                            position: absolute;
-                            width: 100%;
-                            height: 100%;
-                            box-sizing: border-box;
-                        }
-
-                        &::before {
-                            border-radius: 50%;
-                            border: 2px solid rgba(0, 0, 0, 0.5);
-                        }
-
-                        &::after {
-                            background-repeat: no-repeat;
-                            background-position: center;
-                            opacity: 0;
-                            transition: opacity 0.15s;
-                        }
-
-                        &:hover {
-                            filter: brightness(0.8);
-
-                            &::after {
-                                opacity: 1;
-                            }
-                        }
-                    }
+                    justify-content: center;
+                    font-weight: 700;
+                    user-select: none;
+                    order: -1;
                 }
 
-                &.footer {
+                .sidebar_button {
                     display: flex;
-                    flex-direction: row;
-                    justify-content: space-between;
-                    min-height: 35px;
-                    padding: 5px;
-                    border-bottom: none;
+                    align-items: center;
+                    gap: 6px;
+                    height: 40px;
+                    width: 100%;
+                    border: 1px solid rgba(0, 0, 0, 0);
+                    font-size: 1.05rem;
+                    font-weight: 700;
+                    cursor: pointer;
+                    text-decoration: none;
+                    user-select: none;
+                    transition: border 0.15s;
 
-                    span {
-                        padding-left: 10px;
-                        padding-right: 10px;
-                        font-weight: 700;
-                        font-size: 0.85rem;
-                        user-select: none;
+                    &::before {
+                        opacity: 0;
+                        transition: opacity 0.15s;
                     }
-                }
-            }
 
-            .group {
-                &.center {
-                    flex: 1;
-                    overflow-y: auto;
-                }
-
-                .segment {
-                    padding: 10px;
-
-
-                    .caption {
-                        display: flex;
-                        justify-content: center;
-                        font-weight: 700;
-                        user-select: none;
+                    &::after {
+                        content: '';
+                        height: 100%;
+                        aspect-ratio: 1/1;
                         order: -1;
+                        background-image: var(--icon-url);
+                        background-size: var(--icon-size, 100%);
+                        background-position: center;
+                        background-repeat: no-repeat;
+                        filter: invert(var(--icon-invert));
                     }
 
-                    .sidebar_button {
-                        display: flex;
-                        align-items: center;
-                        gap: 6px;
-                        height: 40px;
-                        width: 100%;
-                        border: 1px solid rgba(0, 0, 0, 0);
-                        font-size: 1.05rem;
-                        font-weight: 700;
-                        cursor: pointer;
-                        text-decoration: none;
-                        user-select: none;
-                        transition: border 0.15s;
+                    &:hover {
+                        border: 1px solid var(--glass-border);
 
                         &::before {
-                            opacity: 0;
-                            transition: opacity 0.15s;
-                        }
-
-                        &::after {
-                            content: '';
-                            height: 100%;
-                            aspect-ratio: 1/1;
-                            order: -1;
-                            background-image: var(--icon-url);
-                            background-size: var(--icon-size, 100%);
-                            background-position: center;
-                            background-repeat: no-repeat;
-                        }
-
-                        &:hover {
-                            border: 1px solid rgba(255, 255, 255, 0.1);
-
-                            &::before {
-                                opacity: 1;
-                            }
+                            opacity: 1;
                         }
                     }
+                }
 
-                    * {
-                        padding: 0;
-                    }
+                * {
+                    padding: 0;
                 }
             }
         }
@@ -200,13 +199,11 @@ body {
 
 @media screen and (max-width: 767px) {
     body {
-        &:not(.shift) {
-            .sidebar {
-                top: 70px;
-                height: calc(100dvh - 90px);
-                width: calc(100vw - 20px);
-                left: -100vw;
-            }
+        .sidebar {
+            top: 70px;
+            height: calc(100dvh - 90px);
+            width: calc(100vw - 20px);
+            left: -100vw;
         }
 
         &.shift {

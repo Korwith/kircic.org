@@ -30,6 +30,7 @@ body {
 
         button.sidebar_button {
             background-image: url(../icon/lines.svg);
+            filter: invert(var(--icon-invert));
         }
 
         .clock {
@@ -67,11 +68,13 @@ body {
 
             time.date::after {
                 background-image: url(../icon/calender.svg);
+                filter: invert(var(--icon-invert));
                 background-size: 85%;
             }
 
             .time.time::after {
                 background-image: url(../icon/clock.svg);
+                filter: invert(var(--icon-invert));
                 background-size: 84%;
             }
         }
