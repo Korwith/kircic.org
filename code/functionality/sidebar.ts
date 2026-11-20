@@ -44,7 +44,7 @@ abstract class SidebarSegment extends PageElement {
 
 // groups for segments
 abstract class SidebarSegmentGroup extends SidebarSegment {
-    constructor(sidebar: PageSidebar) {
+    constructor(sidebar: PageSidebar | SidebarSegment) {
         super(sidebar);
         this.element.classList.remove('segment');
         this.element.classList.add('group');
@@ -73,12 +73,14 @@ class SidebarSegmentHeader extends SidebarSegmentGroup {
 class SidebarSegmentCenter extends SidebarSegmentGroup {
     navigation: SidebarSegmentNavigation;
     tools: SidebarSegmentTools;
+    settings: SidebarSegmentSettings;
 
     constructor(sidebar: PageSidebar) {
         super(sidebar);
         this.element.classList.add('center');
         this.navigation = new SidebarSegmentNavigation(this);
         this.tools = new SidebarSegmentTools(this);
+        this.settings = new SidebarSegmentSettings(this);
         this.setParent(this.sidebar);
     }
 }
@@ -341,5 +343,213 @@ class SidebarButtonNotes extends SidebarButtonPage {
     constructor(segment: SidebarSegment) {
         super(segment, { icon: '../icon/notes.svg', size: '116%' }, 'notes');
         this.setText('Notes');
+    }
+}
+
+// settings panel
+class SidebarSegmentSettings extends SidebarSegmentGroup {
+    general: SidebarSettingsGeneral;
+    search: SidebarSettingsSearch;
+    other: SidebarSettingsOther;
+
+    constructor(parent: SidebarSegmentCenter) {
+        super(parent);
+        this.element.classList.add('settings');
+        this.general = new SidebarSettingsGeneral(this);
+        this.search = new SidebarSettingsSearch(this);
+        this.other = new SidebarSettingsOther(this);
+
+        this.setParent(parent);
+    }
+}
+
+// an individual setting
+abstract class SettingOption extends PageElement {
+    span: HTMLElement;
+
+    constructor(parent: SidebarSegment) {
+        super();
+        this.span = document.createElement('span');
+
+        this.element.classList.add('option');
+        this.element.appendChild(this.span);
+        this.setParent(parent);
+    }
+
+    public setName(text: string): void {
+        this.span.textContent = text;
+    }
+}
+
+// setting config (eg slider, color picker)
+abstract class SettingOptionType extends PageElement {
+    option: SettingOption;
+
+    constructor(option: SettingOption, tag: string) {
+        super(tag);
+        this.option = option;
+
+        this.setParent(option);
+    }
+}
+
+// various settings
+abstract class SidebarSettingsButton extends PageElement {
+    constructor(parent: SidebarSegment) {
+        super('button');
+        this.element.classList.add('settings_button', 'glass', 'dark', 'gradient');
+        this.setParent(parent);
+        this.element.onclick = () => this.onclick();
+    }
+
+    protected setText(text: string) {
+        this.element.textContent = text;
+    }
+
+    protected abstract onclick(): void;
+}
+
+// setting config (slider)
+class SettingOptionSlider extends SettingOptionType {
+    inner: HTMLElement;
+
+    constructor(option: SettingOption) {
+        super(option, 'div');
+        this.element.classList.add('glass', 'gradient', 'slider');
+
+        this.inner = document.createElement('div');
+        this.inner.classList.add('glass', 'gradient', 'inner');
+
+        this.element.onclick = () => this.toggle();
+        this.element.appendChild(this.inner);
+    }
+
+    public toggle(force?: boolean) {
+        this.element.classList.toggle('on', force);
+    }
+}
+
+// setting config (color picker)
+class SettingOptionColor extends SettingOptionType {
+    inner: HTMLInputElement;
+
+    constructor(option: SettingOption) {
+        super(option, 'div');
+        this.element.classList.add('glass', 'gradient', 'color');
+
+        this.inner = document.createElement('input');
+        this.inner.type = 'color';
+
+        this.element.onclick = () => this.inner.click();
+        this.element.appendChild(this.inner);
+    }
+}
+
+// general page settings
+class SidebarSettingsGeneral extends SidebarSegment {
+    hue: OptionPageColor;
+    theme: OptionDarkTheme;
+
+    constructor(parent: SidebarSegmentSettings) {
+        super(parent);
+        this.element.classList.add('general');
+        this.addCaption('General');
+
+        this.hue = new OptionPageColor(this);
+        this.theme = new OptionDarkTheme(this);
+    }
+}
+
+// option for page color hue
+class OptionPageColor extends SettingOption {
+    picker: SettingOptionColor;
+
+    constructor(parent: SidebarSettingsGeneral) {
+        super(parent);
+        this.picker = new SettingOptionColor(this);
+
+        this.element.classList.add('hue');
+        this.setName('Page Color');
+    }
+}
+
+// option for dark theme
+class OptionDarkTheme extends SettingOption {
+    slider: SettingOptionSlider;
+
+    constructor(parent: SidebarSettingsGeneral) {
+        super(parent);
+        this.slider = new SettingOptionSlider(this);
+
+        this.element.classList.add('theme');
+        this.setName('Dark Theme');
+    }
+}
+
+// search page configuration
+class SidebarSettingsSearch extends SidebarSegment {
+    search_save: OptionSearchSave;
+    search_new_tab: OptionSearchNewTab;
+
+    constructor(parent: SidebarSegmentSettings) {
+        super(parent);
+        this.element.classList.add('search');
+        this.addCaption('Search');
+
+        this.search_save = new OptionSearchSave(this);
+        this.search_new_tab = new OptionSearchNewTab(this);
+        this.setParent(parent);
+    }    
+}
+
+class OptionSearchSave extends SettingOption {
+    slider: SettingOptionSlider;
+
+    constructor(parent: SidebarSettingsSearch) {
+        super(parent);
+        this.slider = new SettingOptionSlider(this);
+
+        this.element.classList.add('save_searches');
+        this.setName('Save Searches');
+        this.setParent(parent);
+    }
+}
+
+class OptionSearchNewTab extends SettingOption {
+    slider: SettingOptionSlider;
+
+    constructor(parent: SidebarSettingsSearch) {
+        super(parent);
+        this.slider = new SettingOptionSlider(this);
+
+        this.element.classList.add('search_new_tab');
+        this.setName('Open in New Tab');
+        this.setParent(parent);
+    }
+}
+
+// other settigns (doesnt fit the other categories)
+class SidebarSettingsOther extends SidebarSegment {
+    reset: SidebarSettingsButtonReset;
+
+    constructor(parent: SidebarSegmentSettings) {
+        super(parent);
+        this.element.classList.add('other');
+
+        this.reset = new SidebarSettingsButtonReset(this);
+        this.addCaption('Other');
+
+        this.setParent(parent);
+    }
+}
+
+class SidebarSettingsButtonReset extends SidebarSettingsButton {
+    constructor(parent: SidebarSettingsOther) {
+        super(parent);
+        this.setText('Reset Settings');
+    }
+
+    protected onclick(): void {
+        console.log('settings should be reset')
     }
 }
