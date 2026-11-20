@@ -112,7 +112,8 @@ body::before {
     background-position: center;
     background-size: 120%;
     opacity: var(--backdrop-opacity);
-    filter: saturate(var(--backdrop-saturate));
+    // #page_color is injected by PageColor (sidebar.ts)
+    filter: url(#page_color) saturate(var(--backdrop-saturate));
 }
 
 ::-webkit-scrollbar {

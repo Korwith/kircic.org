@@ -376,7 +376,7 @@ class SidebarSegmentSettings extends SidebarSegmentGroup {
     public loadSettingsData(): void {
         const data: SettingsSaveData = this.storage.fetch();
         if (!data) return;
-        this.general.hue.picker.inner.value = data.page_color;
+        this.general.hue.picker.set(data.page_color);
         this.general.theme.slider.toggle(data.dark_theme);
         this.search.search_save.slider.toggle(data.save_searches);
         this.search.search_new_tab.slider.toggle(data.search_new_tab);
@@ -488,8 +488,17 @@ class SettingOptionColor extends SettingOptionType {
         this.inner.type = 'color';
 
         this.element.onclick = () => this.inner.click();
+        this.inner.addEventListener('input', () => this.onChange?.(this.inner.value));
         this.inner.addEventListener('change', () => this.changed());
         this.element.appendChild(this.inner);
+    }
+
+    // optional hook run whenever the color changes (picking or load)
+    public onChange?: (hex: string) => void;
+
+    public set(hex: string): void {
+        this.inner.value = hex;
+        this.onChange?.(hex);
     }
 }
 
@@ -515,9 +524,28 @@ class OptionPageColor extends SettingOption {
     constructor(parent: SidebarSettingsGeneral) {
         super(parent);
         this.picker = new SettingOptionColor(this);
+        this.picker.onChange = (hex: string) => PageColor.apply(hex);
+        this.picker.set('#1f80ff');
 
         this.element.classList.add('hue');
         this.setName('Page Color');
+    }
+}
+
+// recolors the blue backdrop (icon/blurred.svg) to the page color
+// an svg color matrix swaps every pixel's rgb for the picked color and keeps its alpha,
+// so the result is exact (css hue-rotate/sepia chains only approximate it)
+class PageColor {
+    private static matrix: SVGFEColorMatrixElement;
+
+    public static apply(hex: string): void {
+        if (!PageColor.matrix) {
+            document.body.insertAdjacentHTML('beforeend', '<svg width="0" height="0" style="position: absolute"><filter id="page_color" color-interpolation-filters="sRGB"><feColorMatrix type="matrix"/></filter></svg>');
+            PageColor.matrix = document.querySelector('#page_color feColorMatrix')!;
+        }
+
+        const [r, g, b]: number[] = [1, 3, 5].map((i: number) => parseInt(hex.slice(i, i + 2), 16) / 255);
+        PageColor.matrix.setAttribute('values', `0 0 0 0 ${r}  0 0 0 0 ${g}  0 0 0 0 ${b}  0 0 0 1 0`);
     }
 }
 
