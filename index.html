@@ -21,6 +21,12 @@
     <meta name="keywords" content="development, portfolio, kircic">
     <meta name="author" content="kircic">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Handles iOS Zoom-->
+    <script>
+        if (/iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) {
+            document.querySelector('meta[name=viewport]').setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0');
+        }
+    </script>
     <meta name="theme-color" content="#000001">
     <meta property="og:title" content="kircic.org">
     <meta property="og:description" content="Development Portfolio">
@@ -34,47 +40,58 @@
     <meta name="twitter:image:alt" content="Development Portfolio">
     <meta name="darkreader-lock" content="">
 
-    <!-- Styles -->
-    <link rel="stylesheet" href="styles/index.css">
-    <link rel="stylesheet" href="styles/glass.css">
-    <link rel="stylesheet" href="styles/icons.css">
-    <link rel="stylesheet" href="styles/header.css">
-    <link rel="stylesheet" href="styles/settings.css">
-    <link rel="stylesheet" href="styles/sidebar.css">
-    <link rel="stylesheet" href="styles/page.css">
-    <link rel="stylesheet" href="styles/photos.css">
-    <link rel="stylesheet" href="styles/projects.css">
-    <link rel="stylesheet" href="styles/home.css">
-    <link rel="stylesheet" href="styles/content.css">
-    <link rel="stylesheet" href="styles/bookmarks.css">
-    <link rel="stylesheet" href="styles/search.css">
-    <link rel="stylesheet" href="styles/text_viewer.css">
-    <link rel="stylesheet" href="styles/codebase.css">
-    <link rel="stylesheet" href="styles/planner.css">
-    <link rel="stylesheet" href="styles/notes.css">
-    <link rel="stylesheet" href="styles/notifications.css">
-
     <!-- File Icon Styles -->
     <link rel="stylesheet" href="code/file-icons/css/style.css">
 
     <!-- Code Highlighting Styles -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/index.css">
+    <link rel="stylesheet" href="styles/glass.css">
+    <link rel="stylesheet" href="styles/icons.css">
+    <link rel="stylesheet" href="styles/header.css">
+    <link rel="stylesheet" href="styles/sidebar.css">
+    <link rel="stylesheet" href="styles/settings.css">
+    <link rel="stylesheet" href="styles/content.css">
+    <link rel="stylesheet" href="styles/page.css">
+    <link rel="stylesheet" href="styles/notifications.css">
+    <link rel="stylesheet" href="styles/text_viewer.css">
+    <link rel="stylesheet" href="styles/bookmarks.css">
+    <link rel="stylesheet" href="styles/home.css">
+    <link rel="stylesheet" href="styles/photos.css">
+    <link rel="stylesheet" href="styles/projects.css">
+    <link rel="stylesheet" href="styles/search.css">
+    <link rel="stylesheet" href="styles/codebase.css">
+    <link rel="stylesheet" href="styles/planner.css">
+    <link rel="stylesheet" href="styles/notes.css">
 </head>
 
 <body>
     <!-- Define -->
     <script src="code/define/elements.js"></script>
+    <script src="code/define/glass.js"></script>
+    <script src="code/define/page.js"></script>
+    <script src="code/define/text_viewer.js"></script>
     <script src="code/define/icon_definitions.js"></script>
     <script src="code/define/icon_elements.js"></script>
-    <script src="code/define/glass.js"></script>
-    <script src="code/define/text_viewer.js"></script>
-    <script src="code/define/page.js"></script>
     <script src="code/define/statistics.js"></script>
+
+    <!-- Content -->
+    <script src="code/functionality/content.js"></script>
+    <script src="code/functionality/saving.js"></script>
+    <script src="code/functionality/manager.js"></script>
 
     <!-- Page Elements -->
     <script src="code/functionality/header.js"></script>
     <script src="code/functionality/sidebar.js"></script>
+
+    <!-- Notifications -->
+    <script src="code/notifications/notifications.js"></script>
+
+    <!-- Bookmarks (abstract) -->
+    <script src="code/bookmarks/bookmark_elements.js"></script>
 
     <!-- (snap.red) Photos and Home Page -->
     <script src="code/photos/fallback_photo_data.js"></script>
@@ -88,9 +105,6 @@
     <script src="code/projects/project_elements.js"></script>
     <script src="code/projects/project_page.js"></script>
 
-    <!-- Bookmarks (abstract) -->
-    <script src="code/bookmarks/bookmark_elements.js"></script>
-
     <!-- Search Page -->
     <script src="code/search/search_definitions.js"></script>
     <script src="code/search/search_elements.js"></script>
@@ -100,24 +114,16 @@
     <script src="code/file-icons/index.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
     <script src="code/codebase/codebase_definitions.js"></script>
-    <script src="code/codebase/codebase_page.js"></script>
     <script src="code/codebase/codebase_elements.js"></script>
+    <script src="code/codebase/codebase_page.js"></script>
 
     <!-- Planner / Checklist --> <!-- Not Finished -->
-    <script src="code/planner/planner_page.js"></script>
     <script src="code/planner/planner_elements.js"></script>
+    <script src="code/planner/planner_page.js"></script>
 
     <!-- Notes Page --> <!-- Not Finished-->
-    <script src="code/notes/notes_page.js"></script>
     <script src="code/notes/notes_elements.js"></script>
-
-    <!-- Content -->
-    <script src="code/functionality/content.js"></script>
-    <script src="code/functionality/saving.js"></script>
-    <script src="code/functionality/manager.js"></script>
-
-    <!-- Notifications -->
-    <script src="code/notifications/notifications.js"></script>
+    <script src="code/notes/notes_page.js"></script>
 
     <!-- Run -->
     <script src="code/run.js"></script>
