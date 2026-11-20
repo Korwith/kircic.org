@@ -374,15 +374,43 @@ class SidebarSegmentSettings extends SidebarSegmentGroup {
         this.setParent(parent);
     }
 
+    // the value of every option on a fresh visit, used for loading and resetting
+    public static defaults(): SettingsSaveData {
+        return {
+            page_color: PageColor.default,
+            dark_theme: true,
+            background_size: PageBackdrop.default_size,
+            background_blur: PageBackdrop.default_blur,
+            save_searches: false,
+            search_new_tab: false,
+        };
+    }
+
     // applies the previous save to every option
+    // keys missing from older saves fall back to their defaults
     public loadSettingsData(): void {
-        const data: SettingsSaveData = this.storage.fetch();
-        if (!data) return;
-        // older saves stored the untouched picker (#000000) or nothing, so fall back to the blue
-        this.general.hue.picker.set(data.page_color && data.page_color !== '#000000' ? data.page_color : PageColor.default);
+        const saved: Partial<SettingsSaveData> = this.storage.fetch() || {};
+        const data: SettingsSaveData = { ...SidebarSegmentSettings.defaults() };
+        for (const key of Object.keys(data) as (keyof SettingsSaveData)[]) {
+            if (typeof saved[key] === typeof data[key]) (data as any)[key] = saved[key];
+        }
+        // older saves stored the untouched picker (#000000), so fall back to the blue
+        if (data.page_color === '#000000') data.page_color = PageColor.default;
+        this.applySettingsData(data);
+    }
+
+    // puts every option back to its default and saves that
+    public resetSettingsData(): void {
+        this.applySettingsData(SidebarSegmentSettings.defaults());
+        this.saveSettingsData();
+    }
+
+    // sets every option (and through their hooks, the page) to the given values
+    private applySettingsData(data: SettingsSaveData): void {
+        this.general.hue.picker.set(data.page_color);
         this.general.theme.toggle.toggle(data.dark_theme);
-        if (typeof data.background_size === 'number') this.general.background_size.slider.set(data.background_size);
-        if (typeof data.background_blur === 'number') this.general.background_blur.slider.set(data.background_blur);
+        this.general.background_size.slider.set(data.background_size);
+        this.general.background_blur.slider.set(data.background_blur);
         this.search.search_save.toggle.toggle(data.save_searches);
         this.search.search_new_tab.toggle.toggle(data.search_new_tab);
     }
@@ -868,12 +896,16 @@ class SidebarSettingsOther extends SidebarSegment {
 }
 
 class SidebarSettingsButtonReset extends SidebarSettingsButton {
+    settings: SidebarSegmentSettings;
+
     constructor(parent: SidebarSettingsOther) {
         super(parent);
+        this.settings = parent.parent as SidebarSegmentSettings;
         this.setText('Reset Settings');
     }
 
     protected onclick(): void {
-        console.log('settings should be reset')
+        this.settings.resetSettingsData();
+        this.settings.sidebar.manager.notifications.sendNotification('info', 'Settings reset to defaults.');
     }
 }
