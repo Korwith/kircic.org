@@ -21,6 +21,7 @@ interface NoteSave {
 class NotesPage extends Page {
     bookmark_pane: NoteBookmarkPane;
     segment_holder: NotesSegmentHolder;
+    storage: NotesStorage = new NotesStorage();
 
     constructor(content: PageContent) {
         super(content);
@@ -36,12 +37,11 @@ class NotesPage extends Page {
     // requests the save from the page manager
     public saveNotesData(): void {
         const data: NotesSaveData = this.segment_holder.display_holder.fetchSaveData();
-        this.content.manager.saveData('notes', data);
+        this.storage.save(data);
     }
 
     public getSavedNotesData(): NotesSaveData {
-        const data: NotesSaveData = this.content.manager.fetchData('notes') as NotesSaveData;
-        return data;
+        return this.storage.fetch();
     }
 
     // sends a page notification

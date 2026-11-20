@@ -12,6 +12,7 @@ interface SavedSearch {
 class SearchPage extends Page {
     bookmarks: SearchBookmarkBar;
     search_holder: SearchHolder;
+    storage: SearchStorage = new SearchStorage();
 
     constructor(content: PageContent) {
         super(content);
@@ -26,11 +27,10 @@ class SearchPage extends Page {
     // requests the save from the page manager
     public saveSearchData(): void {
         const data: SearchSaveData = this.bookmarks.fetchSaveData();
-        this.content.manager.saveData('search', data);
+        this.storage.save(data);
     }
 
     public getSavedSearchData(): SearchSaveData {
-        const data: SearchSaveData = this.content.manager.fetchData('search') as SearchSaveData;
-        return data;
+        return this.storage.fetch();
     }
 }

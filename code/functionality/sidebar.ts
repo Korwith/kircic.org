@@ -346,11 +346,19 @@ class SidebarButtonNotes extends SidebarButtonPage {
     }
 }
 
+interface SettingsSaveData {
+    page_color: string;
+    dark_theme: boolean;
+    save_searches: boolean;
+    search_new_tab: boolean;
+}
+
 // settings panel
 class SidebarSegmentSettings extends SidebarSegmentGroup {
     general: SidebarSettingsGeneral;
     search: SidebarSettingsSearch;
     other: SidebarSettingsOther;
+    storage: SettingsStorage = new SettingsStorage();
 
     constructor(parent: SidebarSegmentCenter) {
         super(parent);
@@ -359,7 +367,30 @@ class SidebarSegmentSettings extends SidebarSegmentGroup {
         this.search = new SidebarSettingsSearch(this);
         this.other = new SidebarSettingsOther(this);
 
+        this.element.addEventListener('setting', () => this.saveSettingsData());
+        this.loadSettingsData();
         this.setParent(parent);
+    }
+
+    // applies the previous save to every option
+    public loadSettingsData(): void {
+        const data: SettingsSaveData = this.storage.fetch();
+        if (!data) return;
+        this.general.hue.picker.inner.value = data.page_color;
+        this.general.theme.slider.toggle(data.dark_theme);
+        this.search.search_save.slider.toggle(data.save_searches);
+        this.search.search_new_tab.slider.toggle(data.search_new_tab);
+    }
+
+    // gathers every option's value and puts them in a savable format
+    public saveSettingsData(): void {
+        const data: SettingsSaveData = {
+            page_color: this.general.hue.picker.inner.value,
+            dark_theme: this.general.theme.slider.isOn(),
+            save_searches: this.search.search_save.slider.isOn(),
+            search_new_tab: this.search.search_new_tab.slider.isOn(),
+        };
+        this.storage.save(data);
     }
 }
 
@@ -391,6 +422,11 @@ abstract class SettingOptionType extends PageElement {
 
         this.setParent(option);
     }
+
+    // notifies the settings panel that this option changed
+    protected changed(): void {
+        this.element.dispatchEvent(new Event('setting', { bubbles: true }));
+    }
 }
 
 // various settings
@@ -420,12 +456,19 @@ class SettingOptionSlider extends SettingOptionType {
         this.inner = document.createElement('div');
         this.inner.classList.add('glass', 'gradient', 'inner');
 
-        this.element.onclick = () => this.toggle();
+        this.element.onclick = () => {
+            this.toggle();
+            this.changed();
+        };
         this.element.appendChild(this.inner);
     }
 
     public toggle(force?: boolean) {
         this.element.classList.toggle('on', force);
+    }
+
+    public isOn(): boolean {
+        return this.element.classList.contains('on');
     }
 }
 
@@ -441,6 +484,7 @@ class SettingOptionColor extends SettingOptionType {
         this.inner.type = 'color';
 
         this.element.onclick = () => this.inner.click();
+        this.inner.addEventListener('change', () => this.changed());
         this.element.appendChild(this.inner);
     }
 }
@@ -480,6 +524,7 @@ class OptionDarkTheme extends SettingOption {
     constructor(parent: SidebarSettingsGeneral) {
         super(parent);
         this.slider = new SettingOptionSlider(this);
+        this.slider.toggle(true);
 
         this.element.classList.add('theme');
         this.setName('Dark Theme');
