@@ -376,7 +376,8 @@ class SidebarSegmentSettings extends SidebarSegmentGroup {
     public loadSettingsData(): void {
         const data: SettingsSaveData = this.storage.fetch();
         if (!data) return;
-        this.general.hue.picker.set(data.page_color);
+        // older saves stored the untouched picker (#000000) or nothing, so fall back to the blue
+        this.general.hue.picker.set(data.page_color && data.page_color !== '#000000' ? data.page_color : PageColor.default);
         this.general.theme.slider.toggle(data.dark_theme);
         this.search.search_save.slider.toggle(data.save_searches);
         this.search.search_new_tab.slider.toggle(data.search_new_tab);
@@ -524,7 +525,7 @@ class OptionPageColor extends SettingOption {
         super(parent);
         this.picker = new SettingOptionColor(this);
         this.picker.onChange = (hex: string) => PageColor.apply(hex);
-        this.picker.set('#1f80ff');
+        this.picker.set(PageColor.default);
 
         this.element.classList.add('hue');
         this.setName('Page Color');
@@ -535,6 +536,7 @@ class OptionPageColor extends SettingOption {
 // an svg color matrix swaps every pixel's rgb for the picked color and keeps its alpha,
 // so the result is exact (css hue-rotate/sepia chains only approximate it)
 class PageColor {
+    public static readonly default: string = '#1f80ff';
     private static matrix: SVGFEColorMatrixElement;
 
     public static apply(hex: string): void {
