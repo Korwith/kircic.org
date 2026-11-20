@@ -110,10 +110,11 @@ body::before {
     background-image: url(../icon/blurred.svg);
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 120%;
+    // --backdrop-size is set by PageBackdrop (sidebar.ts)
+    background-size: var(--backdrop-size, 120%);
     opacity: var(--backdrop-opacity);
-    // #page_color is injected by PageColor (sidebar.ts)
-    filter: url(#page_color) saturate(var(--backdrop-saturate));
+    // #page_color is injected by PageColor, --backdrop-blur is set by PageBackdrop (sidebar.ts)
+    filter: url(#page_color) saturate(var(--backdrop-saturate)) blur(var(--backdrop-blur, 0px));
 }
 
 ::-webkit-scrollbar {
@@ -149,6 +150,7 @@ body::before {
 
 @media screen and (max-width: 767px) {
     body::before {
-        background-size: 200%;
+        // phones start at 200% instead of 120%, still scaled by the size setting
+        background-size: calc(var(--backdrop-size, 120%) * 200 / 120);
     }
 }

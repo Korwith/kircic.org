@@ -349,6 +349,8 @@ class SidebarButtonNotes extends SidebarButtonPage {
 interface SettingsSaveData {
     page_color: string;
     dark_theme: boolean;
+    background_size: number;
+    background_blur: number;
     save_searches: boolean;
     search_new_tab: boolean;
 }
@@ -378,18 +380,22 @@ class SidebarSegmentSettings extends SidebarSegmentGroup {
         if (!data) return;
         // older saves stored the untouched picker (#000000) or nothing, so fall back to the blue
         this.general.hue.picker.set(data.page_color && data.page_color !== '#000000' ? data.page_color : PageColor.default);
-        this.general.theme.slider.toggle(data.dark_theme);
-        this.search.search_save.slider.toggle(data.save_searches);
-        this.search.search_new_tab.slider.toggle(data.search_new_tab);
+        this.general.theme.toggle.toggle(data.dark_theme);
+        if (typeof data.background_size === 'number') this.general.background_size.slider.set(data.background_size);
+        if (typeof data.background_blur === 'number') this.general.background_blur.slider.set(data.background_blur);
+        this.search.search_save.toggle.toggle(data.save_searches);
+        this.search.search_new_tab.toggle.toggle(data.search_new_tab);
     }
 
     // gathers every option's value and puts them in a savable format
     public saveSettingsData(): void {
         const data: SettingsSaveData = {
             page_color: this.general.hue.picker.inner.value,
-            dark_theme: this.general.theme.slider.isOn(),
-            save_searches: this.search.search_save.slider.isOn(),
-            search_new_tab: this.search.search_new_tab.slider.isOn(),
+            dark_theme: this.general.theme.toggle.isOn(),
+            background_size: this.general.background_size.slider.value,
+            background_blur: this.general.background_blur.slider.value,
+            save_searches: this.search.search_save.toggle.isOn(),
+            search_new_tab: this.search.search_new_tab.toggle.isOn(),
         };
         this.storage.save(data);
     }
@@ -413,7 +419,7 @@ abstract class SettingOption extends PageElement {
     }
 }
 
-// setting config (eg slider, color picker)
+// setting config (eg toggle, step slider, color picker)
 abstract class SettingOptionType extends PageElement {
     option: SettingOption;
 
@@ -446,13 +452,15 @@ abstract class SidebarSettingsButton extends PageElement {
     protected abstract onclick(): void;
 }
 
-// setting config (slider)
-class SettingOptionSlider extends SettingOptionType {
+// setting config (on/off toggle switch)
+class SettingOptionToggle extends SettingOptionType {
     inner: HTMLElement;
 
     constructor(option: SettingOption) {
         super(option, 'div');
-        this.element.classList.add('glass', 'gradient', 'slider');
+        this.element.classList.add('glass', 'gradient', 'toggle');
+        this.element.tabIndex = 0;
+        this.element.setAttribute('role', 'switch');
 
         this.inner = document.createElement('div');
         this.inner.classList.add('glass', 'gradient', 'inner');
@@ -461,19 +469,148 @@ class SettingOptionSlider extends SettingOptionType {
             this.toggle();
             this.changed();
         };
+        this.element.addEventListener('keydown', (e: KeyboardEvent) => {
+            if (e.key !== ' ' && e.key !== 'Enter') return;
+            e.preventDefault();
+            this.element.click();
+        });
         this.element.appendChild(this.inner);
     }
 
-    // optional hook run whenever the slider changes state (click or load)
+    // optional hook run whenever the toggle changes state (click or load)
     public onToggle?: (on: boolean) => void;
 
     public toggle(force?: boolean) {
         this.element.classList.toggle('on', force);
+        this.element.setAttribute('aria-checked', String(this.isOn()));
         this.onToggle?.(this.isOn());
     }
 
     public isOn(): boolean {
         return this.element.classList.contains('on');
+    }
+}
+
+// setting config (multi-step slider)
+// a glass rail with a fill and a draggable glass knob, snapping to fixed steps between min and max
+// subclasses decide how the stored value is shown inside the knob
+abstract class SettingOptionStepSlider extends SettingOptionType {
+    label: HTMLElement;
+    track: HTMLElement;
+    rail: HTMLElement;
+    fill: HTMLElement;
+    thumb: HTMLElement;
+    min: number;
+    max: number;
+    step: number;
+    value: number;
+
+    constructor(option: SettingOption, min: number, max: number, step: number) {
+        super(option, 'div');
+        this.min = min;
+        this.max = max;
+        this.step = step;
+        this.value = min;
+        this.element.classList.add('step_slider');
+
+        this.label = document.createElement('span');
+        this.label.classList.add('value');
+
+        // track is the (invisible) hit area, the rail is what's drawn
+        this.track = document.createElement('div');
+        this.track.classList.add('track');
+        this.track.tabIndex = 0;
+        this.track.setAttribute('role', 'slider');
+        this.track.setAttribute('aria-valuemin', String(min));
+        this.track.setAttribute('aria-valuemax', String(max));
+
+        this.rail = document.createElement('div');
+        this.rail.classList.add('glass', 'gradient', 'rail');
+
+        this.fill = document.createElement('div');
+        this.fill.classList.add('fill');
+
+        this.thumb = document.createElement('div');
+        this.thumb.classList.add('glass', 'gradient', 'thumb');
+
+        // the value sits inside the knob
+        this.thumb.appendChild(this.label);
+        this.rail.appendChild(this.fill);
+        this.track.appendChild(this.rail);
+        this.track.appendChild(this.thumb);
+        this.element.appendChild(this.track);
+
+        this.track.addEventListener('pointerdown', (e: PointerEvent) => this.dragStart(e));
+        this.track.addEventListener('keydown', (e: KeyboardEvent) => this.keydown(e));
+    }
+
+    // optional hook run whenever the value changes (dragging or load)
+    public onChange?: (value: number) => void;
+
+    // how the stored value is presented inside the knob
+    protected abstract format(value: number): string;
+
+    public set(value: number): void {
+        const stepped: number = Math.round((value - this.min) / this.step) * this.step + this.min;
+        this.value = Math.min(this.max, Math.max(this.min, Number(stepped.toFixed(4))));
+
+        const fraction: number = (this.value - this.min) / (this.max - this.min);
+        this.track.style.setProperty('--step-fraction', String(fraction));
+        this.label.textContent = this.format(this.value);
+        this.track.setAttribute('aria-valuenow', String(this.value));
+        this.track.setAttribute('aria-valuetext', this.label.textContent);
+        this.onChange?.(this.value);
+    }
+
+    // maps a pointer position on the track to a value
+    private fromPointer(e: PointerEvent): void {
+        const rect: DOMRect = this.track.getBoundingClientRect();
+        const knob: number = this.thumb.offsetWidth;
+        const fraction: number = (e.clientX - rect.left - knob / 2) / Math.max(1, rect.width - knob);
+        this.set(this.min + Math.min(1, Math.max(0, fraction)) * (this.max - this.min));
+    }
+
+    private dragStart(e: PointerEvent): void {
+        const start: number = this.value;
+        this.track.setPointerCapture(e.pointerId);
+        this.element.classList.add('dragging');
+        this.fromPointer(e);
+
+        const move = (ev: PointerEvent) => this.fromPointer(ev);
+        const end = () => {
+            this.track.removeEventListener('pointermove', move);
+            this.track.removeEventListener('pointerup', end);
+            this.track.removeEventListener('pointercancel', end);
+            this.element.classList.remove('dragging');
+            if (this.value !== start) this.changed();
+        };
+        this.track.addEventListener('pointermove', move);
+        this.track.addEventListener('pointerup', end);
+        this.track.addEventListener('pointercancel', end);
+    }
+
+    private keydown(e: KeyboardEvent): void {
+        const keys: Record<string, number> = { ArrowRight: 1, ArrowUp: 1, ArrowLeft: -1, ArrowDown: -1 };
+        if (!(e.key in keys)) return;
+        e.preventDefault();
+        const start: number = this.value;
+        this.set(this.value + keys[e.key] * this.step);
+        if (this.value !== start) this.changed();
+    }
+}
+
+// step slider shown as a percentage relative to a baseline
+// eg a baseline of 120 shows a stored 120 as 100%
+class SettingOptionPercentSlider extends SettingOptionStepSlider {
+    baseline: number;
+
+    constructor(option: SettingOption, min: number, max: number, step: number, baseline: number = 100) {
+        super(option, min, max, step);
+        this.baseline = baseline;
+    }
+
+    protected format(value: number): string {
+        return `${Math.round(value / this.baseline * 100)}%`;
     }
 }
 
@@ -506,6 +643,8 @@ class SettingOptionColor extends SettingOptionType {
 class SidebarSettingsGeneral extends SidebarSegment {
     hue: OptionPageColor;
     theme: OptionDarkTheme;
+    background_size: OptionBackgroundSize;
+    background_blur: OptionBackgroundBlur;
 
     constructor(parent: SidebarSegmentSettings) {
         super(parent);
@@ -514,6 +653,8 @@ class SidebarSettingsGeneral extends SidebarSegment {
 
         this.hue = new OptionPageColor(this);
         this.theme = new OptionDarkTheme(this);
+        this.background_size = new OptionBackgroundSize(this);
+        this.background_blur = new OptionBackgroundBlur(this);
     }
 }
 
@@ -579,16 +720,93 @@ class PageTheme {
 
 // option for dark theme
 class OptionDarkTheme extends SettingOption {
-    slider: SettingOptionSlider;
+    toggle: SettingOptionToggle;
 
     constructor(parent: SidebarSettingsGeneral) {
         super(parent);
-        this.slider = new SettingOptionSlider(this);
-        this.slider.onToggle = (on: boolean) => PageTheme.apply(on);
-        this.slider.toggle(true);
+        this.toggle = new SettingOptionToggle(this);
+        this.toggle.onToggle = (on: boolean) => PageTheme.apply(on);
+        this.toggle.toggle(true);
 
         this.element.classList.add('theme');
         this.setName('Dark Theme');
+    }
+}
+
+// scales and blurs the backdrop behind the page (body::before in styles/index.scss)
+class PageBackdrop {
+    // real background-size in %, presented to the user as 100%
+    public static readonly default_size: number = 120;
+
+    // icon/blurred.svg is already blurred (stdDeviation 175 on a 2439px wide image)
+    // so blur is measured as a % of the image width, starting at that built in amount
+    public static readonly inherent_blur: number = 175 / 2439 * 100;
+    public static readonly default_blur: number = Math.round(PageBackdrop.inherent_blur);
+
+    private static size: number = PageBackdrop.default_size;
+    private static blur: number = PageBackdrop.default_blur;
+    private static listening: boolean = false;
+
+    public static setSize(percent: number): void {
+        PageBackdrop.size = percent;
+        document.documentElement.style.setProperty('--backdrop-size', `${percent}%`);
+        PageBackdrop.applyBlur();
+    }
+
+    public static setBlur(percent: number): void {
+        PageBackdrop.blur = percent;
+        PageBackdrop.applyBlur();
+    }
+
+    // gaussian blurs stack as sqrt(a² + b²), so add only what's missing to reach the target
+    // the image's on screen width depends on the viewport, so this reruns on resize
+    private static applyBlur(): void {
+        if (!PageBackdrop.listening) {
+            window.addEventListener('resize', () => PageBackdrop.applyBlur());
+            PageBackdrop.listening = true;
+        }
+
+        // read the rendered size since phones scale it differently (see styles/index.scss)
+        const rendered: number = parseFloat(getComputedStyle(document.body, '::before').backgroundSize) || PageBackdrop.size;
+        const width: number = window.innerWidth * rendered / 100;
+        const target: number = PageBackdrop.blur / 100 * width;
+        const inherent: number = PageBackdrop.inherent_blur / 100 * width;
+        const extra: number = Math.sqrt(Math.max(0, target * target - inherent * inherent));
+        document.documentElement.style.setProperty('--backdrop-blur', `${extra.toFixed(1)}px`);
+    }
+}
+
+// option for the backdrop size
+// stored as the real css percentage, shown relative to the default
+class OptionBackgroundSize extends SettingOption {
+    slider: SettingOptionPercentSlider;
+
+    constructor(parent: SidebarSettingsGeneral) {
+        super(parent);
+        const base: number = PageBackdrop.default_size;
+        this.slider = new SettingOptionPercentSlider(this, base * 0.5, base * 2, base * 0.05, base);
+        this.slider.onChange = (value: number) => PageBackdrop.setSize(value);
+        this.slider.set(base);
+
+        this.element.classList.add('background_size');
+        this.setName('Background Size');
+    }
+}
+
+// option for the backdrop blur
+// stored as % of the image width, can't go below the image's own blur
+class OptionBackgroundBlur extends SettingOption {
+    slider: SettingOptionPercentSlider;
+
+    constructor(parent: SidebarSettingsGeneral) {
+        super(parent);
+        const base: number = PageBackdrop.default_blur;
+        this.slider = new SettingOptionPercentSlider(this, base, 25, 1);
+        this.slider.onChange = (value: number) => PageBackdrop.setBlur(value);
+        this.slider.set(base);
+
+        this.element.classList.add('background_blur');
+        this.setName('Background Blur');
     }
 }
 
@@ -609,11 +827,11 @@ class SidebarSettingsSearch extends SidebarSegment {
 }
 
 class OptionSearchSave extends SettingOption {
-    slider: SettingOptionSlider;
+    toggle: SettingOptionToggle;
 
     constructor(parent: SidebarSettingsSearch) {
         super(parent);
-        this.slider = new SettingOptionSlider(this);
+        this.toggle = new SettingOptionToggle(this);
 
         this.element.classList.add('save_searches');
         this.setName('Save Searches');
@@ -622,11 +840,11 @@ class OptionSearchSave extends SettingOption {
 }
 
 class OptionSearchNewTab extends SettingOption {
-    slider: SettingOptionSlider;
+    toggle: SettingOptionToggle;
 
     constructor(parent: SidebarSettingsSearch) {
         super(parent);
-        this.slider = new SettingOptionSlider(this);
+        this.toggle = new SettingOptionToggle(this);
 
         this.element.classList.add('search_new_tab');
         this.setName('Open in New Tab');
