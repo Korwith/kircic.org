@@ -487,7 +487,6 @@ class SettingOptionColor extends SettingOptionType {
         this.inner = document.createElement('input');
         this.inner.type = 'color';
 
-        this.element.onclick = () => this.inner.click();
         this.inner.addEventListener('input', () => this.onChange?.(this.inner.value));
         this.inner.addEventListener('change', () => this.changed());
         this.element.appendChild(this.inner);
