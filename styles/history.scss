@@ -1,0 +1,456 @@
+/*
+ *   Copyright (c) 2026 Thaddeus MW.
+ *
+ */
+
+// diff colors (shared by stats, file rows and status badges)
+$addition: #3fb950;
+$deletion: #f85149;
+$modified: #d29922;
+$renamed: #a371f7;
+
+.content {
+    /* button in the codebase header that switches between files and history */
+    .segment.codebase_header {
+        .count {
+            margin-left: 5px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            opacity: 0.5;
+        }
+
+        button.switch {
+            order: 1;
+            margin-left: auto;
+            padding-left: 6px;
+        }
+
+        /* ::before is taken by the glass gradient */
+        button.switch::after {
+            content: '';
+            order: -1;
+            width: 16px;
+            height: 16px;
+            background-image: var(--icon-url);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+            filter: invert(var(--icon-invert));
+        }
+    }
+
+    /* list of days to the left of the history page */
+    .segment.history_sidebar {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 4px;
+        padding: 10px;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        height: calc(100% - 45px);
+        min-height: unset;
+        width: 280px;
+        overflow-y: auto;
+
+        .day_entry {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            flex-shrink: 0;
+            gap: 4px;
+            height: 30px;
+            padding-right: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            border: 1px solid rgba(0, 0, 0, 0);
+            transition: border 0.15s;
+
+            .count {
+                margin-left: auto;
+                font-size: 0.75rem;
+                opacity: 0.5;
+            }
+        }
+
+        .day_entry:hover {
+            border: 1px solid color-mix(in srgb, var(--fg) 10%, transparent);
+        }
+
+        .day_entry::before {
+            opacity: 0;
+            transition: opacity 0.15s;
+        }
+
+        .day_entry:hover::before {
+            opacity: 1;
+        }
+
+        /* small calendar icon, same sizing as the codebase sidebar entries */
+        .day_entry::after {
+            content: '';
+            flex-shrink: 0;
+            height: 30px;
+            width: 30px;
+            order: -1;
+            background-image: url(../icon/calender.svg);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 55%;
+            filter: invert(var(--icon-invert));
+        }
+    }
+
+    .segment.history_sidebar:empty::after {
+        content: 'No commits loaded.';
+        align-self: center;
+        font-size: 0.8rem;
+        opacity: 0.5;
+    }
+
+    /* the commit list */
+    .segment.history_main {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        padding: 10px;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: calc(100% - 290px);
+        height: calc(100% - 45px);
+        min-height: unset;
+        overflow-y: auto;
+
+        .history_list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .day {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            scroll-margin-top: 10px;
+        }
+
+        .day_label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding-left: 4px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            opacity: 0.6;
+        }
+
+        /* timeline line after the label */
+        .day_label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background-color: color-mix(in srgb, var(--fg) 15%, transparent);
+        }
+
+        .day_commits {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .commit {
+            flex-shrink: 0;
+            transition: border 0.15s, background-color 0.15s;
+        }
+
+        .commit:hover,
+        .commit.open {
+            background-color: color-mix(in srgb, var(--fg) 2.5%, transparent);
+            border: 1px solid color-mix(in srgb, var(--fg) 10%, transparent);
+        }
+
+        .commit_summary {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 10px;
+            cursor: pointer;
+        }
+
+        .avatar {
+            flex-shrink: 0;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 1px solid var(--glass-border);
+            box-sizing: border-box;
+        }
+
+        .avatar.none {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 700;
+            background-color: var(--glass-bg);
+        }
+
+        .commit_text {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            min-width: 0;
+            flex: 1;
+        }
+
+        .commit_title {
+            font-weight: 700;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .commit_meta {
+            font-size: 0.8rem;
+            opacity: 0.55;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+
+            time {
+                color: inherit;
+            }
+        }
+
+        .commit_actions {
+            display: flex;
+            gap: 5px;
+            flex-shrink: 0;
+
+            button,
+            a {
+                display: flex;
+                align-items: center;
+                height: 26px;
+                padding: 0 10px;
+                font-size: 0.8rem;
+                font-weight: 700;
+                color: inherit;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+            .sha {
+                font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+            }
+        }
+
+        /* expanded section: body, stats and changed files */
+        .commit_details {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 10px;
+            padding-left: 52px;
+            border-top: 1px solid color-mix(in srgb, var(--fg) 8%, transparent);
+            background-color: color-mix(in srgb, var(--fg) 2%, transparent);
+        }
+
+        .commit_details.hidden {
+            display: none;
+        }
+
+        .commit_details.loading::after {
+            content: 'Loading...';
+            font-size: 0.8rem;
+            opacity: 0.5;
+        }
+
+        .commit_body {
+            margin: 0;
+            font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+            font-size: 0.8rem;
+            white-space: pre-wrap;
+            opacity: 0.8;
+        }
+
+        .commit_stats {
+            display: flex;
+            gap: 8px;
+            font-size: 0.8rem;
+            font-weight: 700;
+
+            .count {
+                opacity: 0.6;
+            }
+        }
+
+        .additions {
+            color: $addition;
+        }
+
+        .deletions {
+            color: $deletion;
+        }
+
+        .commit_files {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .commit_file {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 8px;
+            height: 30px;
+            padding: 0 10px 0 6px;
+            font-size: 0.8rem;
+            text-align: left;
+            cursor: pointer;
+
+            .status {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-shrink: 0;
+                width: 18px;
+                height: 18px;
+                border-radius: 4px;
+                font-size: 0.7rem;
+                font-weight: 700;
+                color: $modified;
+                background-color: color-mix(in srgb, $modified 15%, transparent);
+            }
+
+            .status.added {
+                color: $addition;
+                background-color: color-mix(in srgb, $addition 15%, transparent);
+            }
+
+            .status.removed {
+                color: $deletion;
+                background-color: color-mix(in srgb, $deletion 15%, transparent);
+            }
+
+            .status.renamed,
+            .status.copied {
+                color: $renamed;
+                background-color: color-mix(in srgb, $renamed 15%, transparent);
+            }
+
+            .file_icon {
+                display: flex;
+                flex-shrink: 0;
+                width: 16px;
+                justify-content: center;
+            }
+
+            .file_icon::before {
+                font-size: 16px;
+            }
+
+            .file_icon.none::before {
+                content: '';
+                width: 16px;
+                height: 16px;
+                background-image: url(../icon/file.svg);
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: contain;
+                filter: invert(var(--icon-invert));
+            }
+
+            .name {
+                flex: 1;
+                min-width: 0;
+                font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .additions,
+            .deletions {
+                flex-shrink: 0;
+                font-weight: 700;
+            }
+        }
+
+        .more {
+            flex-shrink: 0;
+            align-self: center;
+            height: 30px;
+            padding: 0 14px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .more.hidden {
+            display: none;
+        }
+
+        /* the diff viewer which replaces the list when a file is opened */
+        .diff_viewer .viewer_body.unsupported::after {
+            content: 'No diff is available for this file (binary or too large).';
+            margin: auto;
+        }
+    }
+
+    .segment.history_main.viewing {
+        overflow: hidden;
+
+        .history_list,
+        .more {
+            display: none;
+        }
+    }
+
+    .segment.history_main.loading::after {
+        content: 'Loading...';
+        align-self: center;
+        padding: 5px 10px;
+        background-color: var(--glass-bg-darker);
+        border: 1px solid var(--glass-border-darker);
+        border-radius: 8px;
+    }
+
+    .segment.history_main.loading .more {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .content {
+
+        .segment.history_sidebar,
+        .segment.history_main {
+            position: unset;
+            width: 100%;
+        }
+
+        .segment.history_sidebar {
+            flex: 0 0 auto;
+            height: unset;
+            max-height: 160px;
+        }
+
+        .segment.history_main {
+            flex: 1;
+            height: unset;
+            min-height: 60vh;
+        }
+
+        .segment.history_main .commit_details {
+            padding-left: 10px;
+        }
+
+        .segment.history_main .commit_actions .link {
+            display: none;
+        }
+    }
+}

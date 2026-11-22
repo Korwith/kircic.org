@@ -10,6 +10,7 @@ class PageContent extends PageElement {
     projects: ProjectPage;
     search: SearchPage;
     codebase: CodebasePage;
+    history: HistoryPage;
     //planner: PlannerPage;
     notes: NotesPage;
     current?: string;
@@ -23,6 +24,7 @@ class PageContent extends PageElement {
         this.projects = new ProjectPage(this);
         this.search = new SearchPage(this);
         this.codebase = new CodebasePage(this);
+        this.history = new HistoryPage(this, this.codebase);
         //this.planner = new PlannerPage(this);
         this.notes = new NotesPage(this);
 

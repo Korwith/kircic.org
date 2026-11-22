@@ -166,6 +166,7 @@ class CodebaseHeader extends GlassPageSegment {
         this.page = codebase;
 
         this.setParent(this.page);
+        new CodebaseSwitchButton(this, 'History', '../icon/clock.svg', HistoryPage.KEY);
     }
 
     // creates the current file path at the top of the codebase page
