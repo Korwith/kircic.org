@@ -5,6 +5,7 @@
   },
   "include": [
     "code/**/*.ts",
-    "code/**/*.d.ts"
+    "code/**/*.d.ts",
+    "sw.ts"
   ]
 }

@@ -5,7 +5,8 @@
  */
 // Network-first service worker: every successful GET is stored so the
 // site can still load from cache when the network is unavailable.
-// Compiled separately (tsconfig.sw.json) to /sw.js so its scope is the whole site.
+// Lives at the site root so its compiled /sw.js controls every page.
+// Worker-only types are declared in code/worker/service_worker.d.ts.
 const worker = self;
 const CACHE_NAME = 'kircic-cache-v1';
 // assets only requested on demand (css background images), stored up front
@@ -72,7 +73,7 @@ worker.addEventListener('fetch', (event) => {
 });
 // pages ask on load whether they were served from cache
 worker.addEventListener('message', (event) => {
-    if (event.data?.type !== 'offline-status' || !(event.source instanceof Client))
+    if (event.data?.type !== 'offline-status' || !event.source || !('id' in event.source))
         return;
     const id = event.source.id;
     event.source.postMessage({ type: 'offline-status', offline: offlineClients.has(id) });
